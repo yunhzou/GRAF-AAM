@@ -104,7 +104,8 @@ class FinalFamily:
                 witness=dict(witness), blocks=blocks, exact_fixed=[],
                 automorph_blocks=[], automorph_generators=generators))
         records = [match(tuple(range(n)), witness=self.mapping)]
-        for kind, data in reversed(self.actions):
+        from .action_reduction import absorb_subgroups
+        for kind, data in reversed(absorb_subgroups(self.actions, n)):
             records.append(match((), blocks=(dict(r_atoms=(), p_atoms=data),))
                            if kind == 'pool' else match((), generators=data))
         states = [SearchState(i, 0, self.mapping if i == len(records) else (),
