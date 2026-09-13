@@ -1,79 +1,53 @@
-\section{Supporting Information}
-\setcounter{figure}{0}
-\renewcommand{\thefigure}{S\arabic{figure}}
+\section{Reproducibility details}
+\label{sec:reproducibility}
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
 
-\subsection{SLAP single-edge ablation and completion}
-Binary single-edge sweeps recover 1,785 Golden references and weighted sweeps recover 1,762; their complementary outputs yield 1,795 recoveries in union (\Cref{fig:slap-ablation}). SLAP's initialization is rebuilt after every cut, following the protocol in Methods.
+\subsection{Search and comparison protocols}
 
-\begin{figure}[htb]
-\centering\includegraphics[width=.83\linewidth]{figs/figS1_slap_ablation.pdf}
-\caption{\textbf{Supporting single-edge ablation in SLAP.} The control and sweep use the same original ordering, both directions, and binary and weighted modes. The sweep unions the uncut output with outputs from individual source-edge deletions. Recovery increases by 134 cases (7.24 percentage points). All 1,851 records remain in the denominator, including incomplete variants. This experiment evaluates the cut policy in SLAP, not the individual components of GRAFT.}
-\label{fig:slap-ablation}
-\end{figure}
+The active-edge floor is $b=0.2$ and the matching tolerance is $\tau_{\mathrm{iso}}=1.0$. Seed streams are deterministic with root seed 42. Sweeps retain the uncut search and individual source-edge deletions. Bidirectional Golden output is a union of returned relations; branches from opposite directions are not spliced. Growth and branch caps bound compressed candidates rather than explicit mapping counts.
 
-Of 355,104 planned calls, 352,210 are recorded: 352,208 succeeded and two had upstream exceptions. All returned mappings pass strict format and endpoint-preservation checks. Of 7,404 direction/mode variants, 65 reached the watchdog; their completed cuts remain included. Standalone nonrecoveries comprise 52 fully swept misses and four unresolved cases (1503, 1665, 1723, 1776), containing nine unfinished variants. Case 1665 timed out in both directions. Incomplete nonrecovery does not establish absence.
+Golden uses dataset revision \texttt{793475e}. Its heavy-atom evaluator compares correspondence relations modulo endpoint chemical symmetry, retains unmatched atoms, and rejects altered endpoint chemistry. Hydrogen atoms participate in search but their individual identities are not reference labels. All 1,851 records remain in the denominator. All reported configurations were rerun against the final algorithm source, commit \texttt{3a9ef9a}. Execution manifests and component hashes accompany the per-case results. Golden evaluates the fragment-search stage, while the coordinate protocol also evaluates competition and event decoding.
 
-Earlier expanded SLAP uses an additional ordering budget and recovers 1,691 (91.36\%). Its union with the sweep adds cases 1071 and 1595, reaching 1,797 (97.08\%); 50 completed misses and four unresolved cases remain. This separate union is excluded from the ablation figure.
+Each search or evaluation subprocess has a 300-second watchdog and an initial 3 GiB sampled-memory limit. Externally interrupted phases can resume their completed cuts for at most two bounded continuations with a 6 GiB allowance. Golden reference evaluation has a 220-second internal budget. Completed raw cuts can also be finalized and verified individually, without new search. A positive result requires a verified witness; it can establish recovery even when another direction or the combined archive is incomplete. A negative result requires completed verification of the saved output; other cases remain unknown.
 
-\subsection{Default competitor reproduction}
-All 1,851 Golden records were submitted to the released configurations in \Cref{tab:competitors}. These are saved common-evaluator results, not literature numbers. SLAP's first output is not asserted to be a separately ranked top-1. Chython denotes its released ONNX implementation rather than a historical GraphormerMapper checkpoint.
+The campaign begins on an Apple M4 Pro Mac with 14 logical CPUs and 48 GiB RAM, using at most eight single-core workers, and continues on Linux CPU nodes with a final concurrency limit of 150 single-thread workers. Python 3.12.14, RDKit 2026.3.6, pynauty 2.8.8.1, SymPy 1.14.0, and Z3 5.1.0.0 are fixed across hosts. Native extensions are rebuilt on Linux; source-hash checks, focused tests, and two search/reference parity cases verify the port. Numerical-library threads are fixed to one. CPU averages use \CommonCases{} common reactions with both one- and two-order searches completed on the Mac and complete comparator output. Search-call timing includes checkpoint I/O and excludes imports, preparation, reference evaluation, and interrupted work; SLAP's instrumented workflow excludes I/O. Higher-order searches use mixed hosts and are excluded from this timing comparison.
 
-\begin{table}[h]
+The SLAP comparator uses SLAPMapper 1.0.0, revision \texttt{ea248fd}, with both directions and binary and weighted modes. Each sweep variant uses one original ordering and rebuilds initialization for the uncut input and each single-edge deletion. Returned labels are restored to the original endpoint structures before evaluation. Its \SlapRecovered{} verified Golden recoveries leave \SlapAbsent{} completed misses and \SlapUnknown{} unresolved records; all remain in the denominator. The sweep perturbs SLAP's input graph and assignment objective, whereas GRAFT relaxes fragment-preservation constraints.
+
+On the coordinate collection, the exact original XYZ-derived SLAP adjacency matrices are restored from the saved graph records and verified against every source-edge deletion. Atom order and atomic numbers are retained; mapping labels are reset. Fresh native and bidirectional single-edge SLAP runs use binary graphs and the original initialization. The XYZ-to-graph preparation itself is not rerun. GRAFT uses the cached WBO matrices. Each returned SLAP heavy-atom assignment receives a symbolic hydrogen refinement under the comparator's original bond-change objective, and its witness is rescored on the original WBO matrices using \Cref{eq:events}. Tied hydrogen optima can give different signed-event classes; the reported comparator set comprises the returned witnesses, not the entire hydrogen label relation. This compares the stated endpoint workflows rather than isolated solvers on identical graph representations.
+
+\begin{table}[H]
 \centering\small
-\caption{\textbf{Released implementations under the common evaluator.} Correctness columns give counts out of 1,851. Output cardinalities and search budgets differ.}
-\label{tab:competitors}
-\begin{tabular}{lrrr}\toprule
-Implementation & First correct & Any correct & Exceptions\\\midrule
-RXNMapper 0.4.3 & 1,547 & 1,547 & 0\\
-LocalMapper 0.1.5 & 1,605 & 1,605 & 0\\
-Chython 2.18 / chython-rxnmap 2.0 & 1,561 & 1,561 & 5\\
-SLAPMapper 1.0.0, binary & 1,399 & 1,591 & 0\\
-SLAPMapper 1.0.0, weighted & 1,401 & 1,564 & 0\\
-Indigo 1.46.0 & 692 & 692 & 133\\
-RDT 4.0.0 & 1,030 & 1,030 & 0 after retry\\\bottomrule
-\end{tabular}
+\caption{\textbf{Golden recovery and seed diversity.} Recovery uses all 1,851 records. CPU averages use the same \CommonCases{} completed one- and two-order reactions on the Mac, summed over directions and cuts. Dashes mark mixed-host configurations whose times are not compared. ``Absent'' means excluded from saved families; ``unknown'' denotes unresolved verification.}
+\label{tab:seeds}
+\input{includes/generated-seed-table}
 \end{table}
 
-Indigo returned 503 predictions with duplicate heavy-atom labels and seven with changed endpoint chemistry, in addition to exceptions. Duplicate labels were observed in its native API on an inspected example. The score should not be generalized to historical Indigo benchmarks. Chython returned 29 endpoint-modifying predictions. RDT required worker restart and retry after a JVM failure and broken-pipe cascade; 232 affected initial attempts remain archived. Three final RDT candidates failed validation.
+\subsection{Bounded fragment competition}
 
-\subsection{Separate experimental versions}
-The seed ablation uses \texttt{98b01b1}; the earlier publication run uses \texttt{bb0a7d7}. The former's ten-order evaluation has 1,836 recoveries, five absences, and ten unknowns. The latter has 1,839 recoveries, nine absences, and three unknowns. Similar high-level settings do not establish output equivalence. The earlier run completed 3,689 of 3,702 directional searches; 13 reached the watchdog. Its representative top-5 recovery is 1,789/1,851 (96.65\%), distinct from top-5 family and event-window recovery.
+The coordinate configuration uses one seed ordering, cap 2,000, up to eight lowest-event distinct parent source partitions, at most two successive priority changes, and at most 128 proposal-growth calls and 128 completion calls per reaction. Smaller challenger fragments are visited first, with deterministic contact order. A proposed challenger is rematched with a single contacting source atom. Conflicting source assignments and occupied target images are released; attached components of at most eight atoms can also be released around the affected region. Remaining assignments are anchors for completion.
 
-Relative to ten orders, one order no longer verifies cases 44, 602, 850, 912, 1314, 1384, and 1568; 912 is unknown and the other six are absent. Two orders no longer verify 44, 602, 850, 1314, 1384, and 1568; 850 and 1568 are unknown. Both fresh runs verify 1033, 1786, 1799, and 1823, previously unknown. Identifiers are zero-based.
+The admission check evaluates every complete representative against the original endpoint weights and its required fragment constraints. A completion graph is excluded if any checked complete representative violates these constraints. Only accepted graphs contribute to reported coverage. The ordinary search output is retained in union. Pending queue entries, omitted parent partitions, and capped continuations are not covered by decoding certificates.
 
-\subsection{Concrete recovery beyond minimum event score: earlier engine}
+Competition and decoding use five-minute per-case watchdogs with persisted results. Complete family certificates survive continuation, and unfinished families remain explicit. The full coordinate search, competition, and decoder stages are rerun from the original endpoint inputs. Timing for complete final decoding includes all of its bounded passes; it excludes the preceding search and competition stages.
 
-The earlier publication engine verifies 1,839/1,851 references (99.35\%) bidirectionally, with nine absences and three unknowns. Its representative top-1 result is 1,434/1,851 (77.47\%). This gap illustrates why family recovery cannot be presented as single-answer accuracy.
+\subsection{Event windows and output equivalence}
 
-Extraction from those archives recovers all 1,839 as concrete candidates within six additional bond events of the best collected candidate (\Cref{fig:windows}). At minimum score alone, recovery is 1,692 (91.41\%); allowing two additional events gives 1,817 (98.16\%). This is an event window, not top-$k$. Extraction remains bounded: 20,916 visited families are unresolved and only 409 bidirectional records have exhaustive extraction certificates. The result shows useful higher-event candidates without establishing that all are chemically plausible.
+A signed event class contains the nonzero atom-pair signs from \Cref{eq:events}, modulo source permutations preserving the full event-response coloring relative to the opposite endpoint. This coloring retains every threshold comparison needed to transport a pattern without changing its identity. It is separate from the intrinsic fragment matching symmetry in \Cref{eq:response}. The exported witness records both the atom mapping and the formed/strengthened and broken/weakened pair lists.
 
-\begin{figure}[tb]
-\centering\includegraphics[width=.82\linewidth]{figs/figS2_event_windows.pdf}
-\caption{\textbf{Recovery among collected concrete candidates.} This uses the earlier publication engine, separately from the seed ablation. Event windows are relative to the best collected score at maximum coverage. All 1,851 records remain in the denominator. Extraction does not enumerate every represented mapping.}
-\label{fig:windows}
-\end{figure}
+The 140-case comparison uses fixed per-case windows from the evaluation protocol. Each limit is one event above the larger of the native-SLAP and SLAP-sweep minima under the common signed-event definition. All \FlatFamilies{} retained flat families are exhausted in these windows without a class-count cap; higher-event patterns are outside the completeness claim.
 
-\subsection{Adaptive no-sweep search: a separate policy}
-\label{sec:adaptive}
-This experiment uses revision \texttt{0ce0f17} and one CPU per direction. A balanced seed agenda uses saved budgets of 400, 1,600, and 6,400 growth operations and a 30 CPU-second soft limit per direction. It retains the native growth cap of 100 but replaces the synchronized frontier cap with an agenda budget. Its last saved checkpoint defines output. Budget completion does not imply agenda exhaustion or successful symbolic verification.
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Complete final decoding on all 140 reactions.} Every retained family is certified within the listed per-case event limit.}
+\input{includes/generated-decoder-table}
+\end{table}
 
-The separate adaptive no-sweep policy verifies 1,723/1,851 Golden references (93.08\%) bidirectionally, with 33 verified absences and 95 unknowns. All 3,702 directional Golden searches complete under their budgets. On the 140 coordinate pairs, it returns full mappings for every case and matches the original ten-order sweep's best saved score in 138 cases; two scores are worse. Thus high mapping availability and score agreement on coordinate inputs do not establish equivalent reference recovery or retained families. This experiment does not isolate the effect of removing cuts from the original scheduler.
+For the schematic oxygen example, source weights $(W_R(C,O_1),W_R(C,O_2))=(1.0,0.9)$ map to target weights $(0.51,0.49)$. Both oxygen assignments pass matching at $\tau_{\mathrm{iso}}=1$. The direct assignment has changes $(-0.49,-0.41)$ and no event at threshold $0.5$. Exchanging the oxygen images gives $(-0.51,-0.39)$ and one negative event. The weights are illustrative; this example establishes the distinction between matching and event equivalence rather than modeling a particular reaction.
 
-\subsection{Accounting scopes}
-Across all Golden records, fresh one-, two-, and three-order searches consume 27,084.86, 49,161.91, and 70,570.73 instrumented CPU-seconds. Holdout totals are 1,475.45, 2,417.94, and 3,348.29 seconds. Full-workload totals differ from the common subset.
+\subsection{Lossless flattening}
 
-Completed SLAP sweep calls consume 14.479 CPU-hours of native mapping; mapping plus preparation and export uses 14.934 CPU-hours. Interrupted calls lack final readings. Scheduler TotalCPU fields cannot recover missing consumption on this cluster. Neither these totals nor reserved CPU-hours establish actual total campaign CPU. Mapping spans 8 minutes 9 seconds and separate evaluation spans 35 seconds under allocations different from GRAFT's. These spans are not a matched-latency comparison.
+For each complete search path, flattening retains its terminal representative, the union of required fragment-bond constraints, and the allowed action sequence with prefix locks already applied. It removes only representation choices that leave the admissible relation unchanged. Reordering disjoint-support factors preserves their product; adjacent nested factors satisfy $HG=GH=G$ when $H\leq G$. Subgroup containment is checked by exact generator membership using a stabilizer chain. Other factors with overlapping support retain their order. Identical resulting records are shared, and final branch grouping stores the union of their family identifiers. Consequently, the union of mappings before and after grouping is the same. The procedure does not infer equality merely from a shared fragment partition or a shared automorphism group.
 
-\subsection{Holdout follow-ups}
-At tolerance 1.0 and cap 100, case 123 has no full R-to-P output and a 19-event P-to-R representative. Its separate cap-200 follow-up returns a three-event mapping, yielding 134 score ties, six GRAFT-lower cases, and no SLAP-lower cases. Substitution changes SLAP-class membership from 159 represented, 12 excluded, and five unknown to 160 represented, 11 excluded, and five unknown. It is excluded from the fixed-cap panels.
-
-Earlier tolerance-0.5 and proposal-guided studies use distinct policies. In an exploratory uncut holdout ablation, one random ordering matches the full-search best score in 133/140 cases and ten orderings in 138/140. These are score-agreement observations, not Golden accuracy or proof of family equivalence.
-
-\subsection{Supplementary animations}
-\textbf{Movie 1: continuous growth and retained placements.}
-Carbocation example \texttt{pr16.carbocation\_ts5} (case 64) displays actual extension events and two terminal representatives from an uncut, one-order replay. Changing assignments reflect candidate refinement, not physical reaction motion.
-
-\textbf{Movie 2: deferred boundaries and successive fragments.}
-TEMPO example \texttt{pr1.tempo\_ts10} (case 1) follows first-branch events through four fragment decisions and eight deferred-edge observations. A deferred boundary is search evidence, not automatically a chemically broken bond.
-
-The standalone HTML viewer provides playback, event scrubbing, sampled witnesses, terminal selection, H display, and coordinate rotation. Extension views sample at most five witnesses, without enumerating all compressed assignments. Inputs, events, frozen source hashes, and the bookkeeping-binary hash accompany the figure data.
+The event decoder obtains completeness by invariance certificates, valid lower bounds, or an unsatisfiability result after excluding every discovered output class. Budget exhaustion is recorded as incomplete. This distinguishes preservation of a saved mapping union, exhaustive decoding of a specified event window, and exhaustive atom-mapping search.

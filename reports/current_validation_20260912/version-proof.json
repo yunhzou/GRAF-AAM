@@ -1,0 +1,16 @@
+{
+  "current_commit": "3a9ef9a8aec3e129ea5f4ee67df47ce2c25ade3c",
+  "search_commit": "eb1a7d150e9c3c80da79639ea59c300d8f834038",
+  "changed_paths": [
+    "src/rxn_core/action_reduction.py",
+    "src/rxn_core/final_branches.py",
+    "tests/test_action_reduction.py"
+  ],
+  "optimized_engine_manifest_sha256": "ea998976067b899ed1381b85ab02ea000950cf2611b382b687806e334886fe71",
+  "source_hashes": {
+    "src/rxn_core/action_reduction.py": "60b11787311bb77aaa59edef607698c334a3ecc422645c52cc5ac689c4d04d9e",
+    "src/rxn_core/final_branches.py": "9010459836bad1fda3483123f830c875fc3df38977b685245e63aa3eb6169fc1",
+    "tests/test_action_reduction.py": "a7feb2fd5a279fa89c6507accca5df914e38ae451cf3907644ef4d8640379831"
+  },
+  "explanation": "Golden search and evaluation and coordinate search/competition sources are unchanged. The only runtime change is lazy final-family action reduction in as_path, which those stages do not invoke. All 140 final catalogues are separately decoded with the changed code."
+}

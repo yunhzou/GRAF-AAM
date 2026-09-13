@@ -1,5 +1,6 @@
 \documentclass[numbers]{assets/matterlab}
-\input{assets/shared-preamble.tex}
+\input{assets/paper-preamble.tex}
+\input{includes/generated-results.tex}
 \renewcommand{\arraystretch}{1.2}
 \setlength{\emergencystretch}{2em}
 \title{GRAFT: Symmetry-Aware Atom Mapping through Continuous Fragment Growth}
@@ -23,17 +24,13 @@
 \affiliation[10]{Department of Organic Chemistry, Universidade de Vigo, Spain}
 \contribution[]{Principal investigators: Varinia Bernales and Al\'an Aspuru-Guzik}
 \abstract{\input{includes/include-abstract}}
-\date{September 10, 2026}
-\metadata[Status]{First manuscript draft}
+\date{September 12, 2026}
+\metadata[Status]{Preprint}
 \begin{document}
 \maketitle
 \input{includes/include-body}
-\section*{Acknowledgments}
-\input{includes/include-acknowledgement}
-\section*{Data and code availability}
-The implementation, frozen configurations, per-case evaluations, and compressed search archives are retained with this study. Figure data, source hashes, and scripts accompany this draft. Public repository and permanent archive identifiers will be specified before submission. Golden data are available from the original authors' repository~\citep{lin2022}.
-\section*{Author contributions and competing interests}
-Varinia Bernales and Al\'an Aspuru-Guzik are the principal investigators. Individual contributions and competing-interest declarations will be completed and approved by all authors before submission.
+\section*{Code and data}
+Source code, benchmark summaries, and figure-generation scripts accompany the repository at \url{https://github.com/yunhzou/coordinate_alignment}, branch \texttt{paper/continuous-fragment-growth}. Golden is distributed by its original authors~\citep{lin2022}. Per-case results and the configurations used for each measurement are supplied with this manuscript.
 \FloatBarrier
 {\small\bibliography{references}\bibliographystyle{assets/plainnat}}
 \clearpage

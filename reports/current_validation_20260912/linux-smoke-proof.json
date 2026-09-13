@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "rows": [
+    {
+      "index": 819,
+      "task": {
+        "kind": "aam",
+        "seed": 3,
+        "case": 1754,
+        "direction": "R_to_P"
+      },
+      "status": "passed"
+    },
+    {
+      "index": 4716,
+      "task": {
+        "kind": "slap_score",
+        "case": 1
+      },
+      "status": "passed"
+    },
+    {
+      "index": 6567,
+      "task": {
+        "kind": "coordinate_audit",
+        "case": 1
+      },
+      "status": "passed"
+    }
+  ],
+  "scope": "Actual HPC wrapper executed one new AAM search/evaluation, one saved SLAP verification, and one relocated coordinate archive audit. Results retained and skipped by the array."
+}

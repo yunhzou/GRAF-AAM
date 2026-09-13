@@ -1,0 +1,18 @@
+{
+  "repository": "Laboratoire-de-Chemoinformatique/Reaction_Data_Cleaning",
+  "upstream_commit": "793475e",
+  "download_url": "https://raw.githubusercontent.com/Laboratoire-de-Chemoinformatique/Reaction_Data_Cleaning/793475e/data/golden_dataset.zip",
+  "zip_sha256": "baf10464a6cd92dc4719f8becd5f001ab4b6bdafd363d74c5ae9dee77755f3d6",
+  "rdf_sha256": "4e287d49b70791ec30acee6d12babc26a8b7d15bd5730a3a4464e78e43eb74ce",
+  "rdkit_version": "2026.03.6",
+  "total_records": 1851,
+  "parsed_records": 1851,
+  "parse_or_sanitize_errors": 0,
+  "both_sides": 1851,
+  "balanced_heavy": 1015,
+  "balanced_explicit_H": 733,
+  "duplicate_map_label_records": 0,
+  "duplicate_input_records": 0,
+  "reference_mapped_H_records": 11,
+  "note": "Input audit only, not AAM accuracy. No repairs, filtering, or byproduct completion applied."
+}

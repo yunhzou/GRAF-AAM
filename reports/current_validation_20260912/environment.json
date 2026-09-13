@@ -1,0 +1,18 @@
+{
+  "python": "3.12.14",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "packages": {
+    "numpy": "2.3.5",
+    "scipy": "1.16.3",
+    "networkx": "3.6.1",
+    "pynauty": "2.8.8.1",
+    "sympy": "1.14.0",
+    "z3-solver": "5.1.0.0",
+    "rdkit": "2026.3.6",
+    "pybind11": "3.1.0"
+  },
+  "compiler": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Library/Developer/CommandLineTools/usr/bin\n",
+  "hardware": "hw.memsize: 51539607552\nhw.logicalcpu: 14\nmachdep.cpu.brand_string: Apple M4 Pro\n",
+  "concurrency": "5 single-core AAM jobs + at most 3 single-core decoder/comparator jobs; BLAS threads fixed to 1",
+  "watchdog_seconds": 300
+}

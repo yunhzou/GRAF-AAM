@@ -1,0 +1,58 @@
+\begin{thebibliography}{6}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Chen et~al.(2024)Chen, An, Babazade, and Jung]{chen2024}
+Shuan Chen, Sunggi An, Ramil Babazade, and Yousung Jung.
+\newblock Precise atom-to-atom mapping for organic reactions via
+  human-in-the-loop machine learning.
+\newblock \emph{Nature Communications}, 15:\penalty0 2250, 2024.
+\newblock \doi{10.1038/s41467-024-46364-y}.
+
+\bibitem[de~Moura and Bj{\o}rner(2008)]{demoura2008}
+Leonardo de~Moura and Nikolaj Bj{\o}rner.
+\newblock {Z3}: An efficient {SMT} solver.
+\newblock In \emph{Tools and Algorithms for the Construction and Analysis of
+  Systems}, pages 337--340. Springer, 2008.
+\newblock \doi{10.1007/978-3-540-78800-3_24}.
+
+\bibitem[Koda and Saito(2025)]{koda2025}
+Shin-ichi Koda and Shinji Saito.
+\newblock General and scalable atom-to-atom mapping via
+  {Weisfeiler--Lehman}-like approximate graph matching.
+\newblock \emph{ChemRxiv}, 2025.
+\newblock \doi{10.26434/chemrxiv-2025-hthwn}.
+\newblock Preprint, version 1, 25 November 2025.
+
+\bibitem[Lin et~al.(2022)Lin, Dyubankova, Madzhidov, Nugmanov, Verhoeven,
+  Gimadiev, Afonina, Ibragimova, Rakhimbekova, Sidorov, Gedich, Suleymanov,
+  Mukhametgaleev, Wegner, Ceulemans, and Varnek]{lin2022}
+Arkadii Lin, Natalia Dyubankova, Timur~I. Madzhidov, Ramil~I. Nugmanov, Jonas
+  Verhoeven, Timur~R. Gimadiev, Valentina~A. Afonina, Zarina Ibragimova, Assima
+  Rakhimbekova, Pavel Sidorov, Andrei Gedich, Rail Suleymanov, Ravil
+  Mukhametgaleev, Joerg Wegner, Hugo Ceulemans, and Alexandre Varnek.
+\newblock Atom-to-atom mapping: A benchmarking study of popular mapping
+  algorithms and consensus strategies.
+\newblock \emph{Molecular Informatics}, 41\penalty0 (4):\penalty0 2100138,
+  2022.
+\newblock \doi{10.1002/minf.202100138}.
+
+\bibitem[McKay and Piperno(2014)]{mckay2014}
+Brendan~D. McKay and Adolfo Piperno.
+\newblock Practical graph isomorphism, {II}.
+\newblock \emph{Journal of Symbolic Computation}, 60:\penalty0 94--112, 2014.
+\newblock \doi{10.1016/j.jsc.2013.09.003}.
+
+\bibitem[Schwaller et~al.(2021)Schwaller, Hoover, Reymond, Strobelt, and
+  Laino]{schwaller2021}
+Philippe Schwaller, Benjamin Hoover, Jean-Louis Reymond, Hendrik Strobelt, and
+  Teodoro Laino.
+\newblock Extraction of organic chemistry grammar from unsupervised learning of
+  chemical reactions.
+\newblock \emph{Science Advances}, 7\penalty0 (15):\penalty0 eabe4166, 2021.
+\newblock \doi{10.1126/sciadv.abe4166}.
+
+\end{thebibliography}

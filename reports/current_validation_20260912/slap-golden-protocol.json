@@ -1,0 +1,18 @@
+{
+  "upstream_commit": "ea248fd9494f52f4865193e87a98cc92c62b5f9e",
+  "audit_sha256": "d7c0f678b2a8112a0d96036e5553f0ea9d28959217d082b05772c1213199bd0e",
+  "source_sha256": {
+    "src/slapmapper/_idxmapstr.py": "b6753b6c864a49a18143d036eb15979fd060024759209b575d013c2a4239db3d",
+    "src/slapmapper/__init__.py": "51e2853ffeaa40e1e4aca7a77fb7e0a907239e9664bf041a09d314113d33a547",
+    "src/slapmapper/core.py": "62964b12866e691698d594bfdc65f84ae714fb049df4267a5f5964b5c7e5fa3c",
+    "src/slapmapper/aam/_smiles.py": "f56413cdb6a8ec1303179f7c87dbcc9241e2c6cabea038cddb63225d2333e7a5",
+    "src/slapmapper/aam/__init__.py": "7c8504d57e6275a0ca7c8e0586b11888846b84170061507be3a6c22c170fde6e",
+    "src/slapmapper/aam/_geom.py": "f2950f95eb91da313f248cf50db4753fa481699380fe01f01c35b78652b85d32",
+    "src/slapmapper/aam/aam.py": "9a68c1d7f37d09b1835aef703adf4e3a56d6d152a297d9a892502f6ddddb8be5"
+  },
+  "adapter_sha256": "fa88cdd2de0b273c11c5f39e81cb22dfea5847c7b9e81fcb0f0f6c4365e18d90",
+  "cases": 1851,
+  "workers_max": 8,
+  "watchdog": 300,
+  "scope": "Uncut plus every source edge; both directions and binary/weighted modes; explicit H; heavy symmetry breaking."
+}

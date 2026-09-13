@@ -1,0 +1,44 @@
+{
+  "case": 90,
+  "candidates": [
+    {
+      "candidate": 0,
+      "changed_H_atoms": [],
+      "refinement_objective": 5,
+      "old_optimal": true,
+      "new_optimal": true
+    },
+    {
+      "candidate": 1,
+      "changed_H_atoms": [
+        1,
+        2,
+        10,
+        12,
+        18,
+        19,
+        20,
+        22,
+        24,
+        45,
+        91,
+        92
+      ],
+      "refinement_objective": 5,
+      "old_optimal": true,
+      "new_optimal": true
+    },
+    {
+      "candidate": 2,
+      "changed_H_atoms": [],
+      "refinement_objective": 8,
+      "old_optimal": true,
+      "new_optimal": true
+    }
+  ],
+  "old_only_event_ids": [
+    "rxn_core.signed_events/v1:abf1476f81c29f61fe5138c906184bf609860509e4308318383ad4f48f5b8f39"
+  ],
+  "old_only_event_ids_retained_by_AAM": true,
+  "conclusion": "The changed witness differs only in H assignments at the same proven refinement objective. Fresh heavy-atom witnesses and refinement scores agree. Observed raw signed-event witness classes decrease from two to one; this is not evidence that the SLAP label family lost the alternative."
+}

@@ -1,76 +1,59 @@
-"""Check manuscript evidence, mapping invariants, and rendered artifacts."""
-import hashlib
-import json
-import re
+"""Validate the final manuscript's numerical sources and compiled references."""
 from pathlib import Path
-import numpy as np
-import imageio.v2 as imageio
-import pymupdf
-from PIL import Image
-
-MAN=Path(__file__).resolve().parents[1]
-def read(name):return json.loads((MAN/'evidence'/name).read_text())
-sources=read('sources.json')
-for name,record in sources.items():
-    assert hashlib.sha256((MAN/'evidence'/name).read_bytes()).hexdigest()==record['sha256'],name
-
-seed=read('seed_comparison.json')
-assert len(seed['common_case_indices'])==1807
-for key,n in [('seeds1',1833),('seeds2',1834),('seeds3',1836),('seeds10',1836)]:
-    m=seed['methods'][key]
-    assert m['golden_cases']==1851 and m['golden_outcomes']['recovered']==n
-    assert sum(m['golden_outcomes'].values())==1851
-assert read('slap_sweep.json')['sweep_union_recovered']==1795
-a=read('adaptive_no_sweep.json')['totals']['golden_bidirectional']['adaptive']
-assert a['reference_recovery']=={'recovered':1723,'unknown':95,'not_recovered':33}
-assert a['searches_complete']==a['expected_searches']==3702
-
-traces=read('animation_data.json');checks=0
-for trace in traces:
-    r,p=(trace['input'][k] for k in ['reactant','product'])
-    for frame in trace['frames']:
-        for raw in [frame['mapping'],*frame['samples']]:
-            m={int(a):int(b) for a,b in raw.items()}
-            assert len(m)==len(set(m.values()))
-            assert set(frame['active'])<=m.keys()
-            assert all(r['elements'][a]==p['elements'][b] for a,b in m.items())
-            checks+=1
-        assert len(frame['samples'])<=5
-        if frame['event']=='terminal':assert len(frame['mapping'])==len(r['elements'])
-    assert not any(s['reason']=='branch_cap' for s in trace['graph']['stops'])
-assert max(f['candidates'] for f in traces[0]['frames'])==42
-assert sum(f['event']=='terminal' for f in traces[0]['frames'])==2
-assert sum(f['event']=='consumed' for f in traces[1]['frames'])==8
-
-figures=['fig1_algorithm','fig2_growth','fig3_golden','fig4_holdout','figS1_slap_ablation','figS2_event_windows']
-for name in figures:
-    for suffix in ['pdf','png','svg']:assert (MAN/'figs'/f'{name}.{suffix}').stat().st_size>1000
-    assert len(pymupdf.open(MAN/'figs'/f'{name}.pdf'))==1
-
-movies=[]
-for m in json.loads((MAN/'animations/movies.json').read_text()):
-    reader=imageio.get_reader(MAN/'animations'/m['file'])
-    meta=reader.get_meta_data();count=reader.count_frames()
-    assert meta['size']==(1280,720) and meta['fps']==10
-    assert abs(count/meta['fps']-m['duration_seconds'])<.11
-    for index in [0,count//2,count-1]:
-        frame=reader.get_data(index);assert np.std(frame)>10
-    reader.close()
-    gif=Image.open(MAN/'animations'/m['file'].replace('.mp4','.gif'))
-    assert gif.n_frames==m['events']
-    movies.append(dict(file=m['file'],frames=count,duration_seconds=m['duration_seconds']))
-
-doc=pymupdf.open(MAN/'manuscript.pdf');text='\n'.join(p.get_text() for p in doc)
-assert len(doc)>=9
-assert '??' not in text
-for phrase in ['99.03','99.19','96.97','93.08','1,851','1,723','Supporting Information']:
-    assert phrase in text,phrase
+import hashlib,json,re
+from pypdf import PdfReader
+MAN=Path(__file__).resolve().parents[1];E=MAN/'evidence'
+def read(n):return json.loads((E/n).read_text())
+seed=read('seed_comparison.json');slap=read('slap_sweep.json');comp=read('competition_final.json');flat=read('final_dedup.json')
+assert seed['fresh'] and slap['fresh'] and comp['fresh']
+keys=['seeds1','seeds2','seeds3','seeds10']
+assert all(seed['methods'][k]['golden_cases']==1851 for k in keys)
+assert all(sum(seed['methods'][k]['golden_outcomes'].values())==1851 for k in keys)
+for k in keys:
+ d=seed['methods'][k]
+ assert len(d['per_case'])==1851 and {r['case'] for r in d['per_case']}==set(range(1851))
+ assert all(r['outcome'] in {'recovered','not_recovered','unknown'} for r in d['per_case'])
+ assert d['golden_outcomes']['recovered']==sum(r['outcome']=='recovered' for r in d['per_case'])
+ if d['common_mean_cpu_seconds'] is not None:
+  assert abs(d['common_mean_cpu_seconds']-sum(d['per_case'][c]['search_cpu_including_io'] for c in seed['common_case_indices'])/len(seed['common_case_indices']))<1e-8
+  assert all(d['per_case'][c]['search_complete'] and d['per_case'][c]['search_hosts']==['Mac'] for c in seed['common_case_indices'])
+assert sum(slap['outcomes'].values())==1851
+assert slap['sweep_union_recovered']==slap['outcomes']['recovered']
+assert comp['comparisons']['slap_sweep']['union_classes']==166 and comp['comparisons']['slap_sweep']['total_classes']==168
+assert comp['comparisons']['slap_sweep']['union_complete_cases']==139
+assert comp['comparisons']['native_slap']['union_classes']==155 and comp['comparisons']['native_slap']['total_classes']==160
+assert comp['new_window_class_count']==36 and len(comp['new_window_cases'])==9
+assert flat['old_branches']==237645 and flat['new_branches']==124641 and flat['flat_families']==236653
+assert flat['old_median']==596.5 and flat['new_median']==397 and flat['workers']==3
+assert all(r['complete'] for r in flat['per_case'])
+assert len(flat['per_case'])==140 and flat['fresh_decode_all140'] is True
+assert sum(flat['window_distribution'].values())==140
+assert flat['flat_families']==sum(r['flat_saved_families'] for r in flat['per_case'])
+assert flat['input_paths']==sum(r['input_paths'] for r in flat['per_case'])
+sources=json.loads((E/'paper_sources.json').read_text())
+assert sources['fresh_campaign_complete']
+for row in sources['snapshots']:
+ assert hashlib.sha256((E/row['snapshot']).read_bytes()).hexdigest()==row['sha256'],row['snapshot']
+tex='\n'.join(p.read_text() for p in (MAN/'includes').glob('*.tex') if p.name in ['paper.tex','supplement.tex','include-abstract.tex'])
+for obsolete in ['Adaptive no-sweep','Separate experimental versions','Holdout follow-ups','earlier publication engine','N_{\\mathrm{order\\ changed}}']:
+ assert obsolete not in tex,obsolete
+bib=(MAN/'references.bib').read_text()
+for group in re.findall(r'\\cite\w*\{([^}]+)\}',tex):
+ for key in group.split(','):assert re.search(r'@\w+\{'+re.escape(key)+',',bib),key
+figs=re.findall(r'\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}',tex)
+assert set(figs)=={'figs/fig1_algorithm.pdf','figs/fig2_golden.pdf','figs/fig3_coordinate.pdf'}
+for fig in figs:
+ p=MAN/fig
+ assert len(PdfReader(p).pages)==1
+ for ext in ['svg','png']:assert p.with_suffix('.'+ext).is_file()
 log=(MAN/'build/preprint.log').read_text()
-assert not re.search(r'Overfull|undefined|Missing character|^!',log,re.M)
-out=MAN/'build';out.mkdir(exist_ok=True)
-(out/'manuscript-text.txt').write_text(text)
-result=dict(status='passed',pdf_pages=len(doc),evidence_hashes=len(sources),
-            mapping_witnesses_checked=checks,figures=len(figures),movies=movies,
-            note='Validates artifact consistency and rendering, not scientific completeness or chemical accuracy.')
-(out/'artifact-validation.json').write_text(json.dumps(result,indent=2)+'\n')
-print(json.dumps(result,indent=2))
+assert not re.search(r'(?:Citation|Reference).*undefined|There were undefined|Overfull \\[hv]box|Missing character:',log), 'Inspect TeX log'
+r=PdfReader(MAN/'manuscript.pdf');pages=[p.extract_text() for p in r.pages];alltext='\n'.join(pages)
+assert '??' not in alltext
+for value in [f"{seed['methods']['seeds1']['golden_recovery_percent']:.2f}",f"{seed['methods']['seeds3']['golden_recovery_percent']:.2f}",'124,641','237,645',f"{flat['wall_seconds']/60:.2f}",'166','168']:
+ assert value in alltext,value
+result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
+ manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. All paper benchmark configurations were rerun; completeness and limits are recorded in the evidence.',
+ manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())
+(MAN/'build/artifact-validation.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result))

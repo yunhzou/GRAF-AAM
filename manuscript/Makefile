@@ -1,10 +1,10 @@
-PYTHON ?= ../../.venv/bin/python
-.PHONY: all figures animations verify
+PYTHON ?= python3
+.PHONY: all figures verify bundle
 all:
-	bash scripts/build.sh
+	MANUSCRIPT_PYTHON="$(PYTHON)" bash scripts/build.sh
 figures:
-	PYTHONPATH=.build-deps $(PYTHON) scripts/build_figures.py
-animations:
-	PYTHONPATH=../src:.build-deps $(PYTHON) scripts/build_animations.py
+	$(PYTHON) scripts/build_figures.py
 verify:
-	PYTHONPATH=.build-deps $(PYTHON) scripts/validate_outputs.py
+	$(PYTHON) scripts/validate_outputs.py
+bundle:
+	$(PYTHON) scripts/package_bundle.py

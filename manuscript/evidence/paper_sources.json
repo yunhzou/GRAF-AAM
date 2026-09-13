@@ -1,0 +1,33 @@
+{
+  "algorithm_commit": "3a9ef9a8aec3e129ea5f4ee67df47ce2c25ade3c",
+  "frozen_search_commit": "eb1a7d150e9c3c80da79639ea59c300d8f834038",
+  "version_proof": "reports/current_validation_20260912/version-proof.json",
+  "fresh_campaign_complete": true,
+  "snapshots": [
+    {
+      "snapshot": "seed_comparison.json",
+      "source": "reports/current_validation_20260912/seed_comparison.json",
+      "scope": "Final Golden reference verification, including positive witnesses in saved cuts; separate same-Mac timing cohort",
+      "sha256": "7111ad4a25c2b58623a7f3019e20a30442153284e305aa38b8d36979b45f025e"
+    },
+    {
+      "snapshot": "slap_sweep.json",
+      "source": "reports/current_validation_20260912/slap_sweep.json",
+      "scope": "Fresh pinned SLAP Golden sweep and reference verification",
+      "sha256": "740cd679895a902c885c1fbbc6c628cfc607fe3fb7b4ed87864827d40f3c2288"
+    },
+    {
+      "snapshot": "competition_final.json",
+      "source": "reports/current_validation_20260912/competition_final.json",
+      "scope": "One-seed coordinate search, competition and complete event-window decoding; fresh comparator witnesses",
+      "sha256": "14f54e5dc2e7c24cc0625385bb1cad6d5205f352b76bd85c921b48921fca9608"
+    },
+    {
+      "snapshot": "final_dedup.json",
+      "source": "reports/current_validation_20260912/final_dedup.json",
+      "scope": "Fresh final representation audit and complete event-window decoding on all 140 cases",
+      "sha256": "760ccf5d50d0aa8fc7c648eca0cd96e38541355fe9f5fc96a3202a03c8e90426"
+    }
+  ],
+  "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."
+}

@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "pages": 11,
+  "figures": [
+    "figs/fig1_algorithm.pdf",
+    "figs/fig2_golden.pdf",
+    "figs/fig3_coordinate.pdf"
+  ],
+  "source_checks": true,
+  "references_resolved": true,
+  "no_overfull_boxes": true,
+  "manual_visual_review_required": true,
+  "scope": "Numerical and build validation; visual review is recorded separately. All paper benchmark configurations were rerun; completeness and limits are recorded in the evidence.",
+  "manuscript_sha256": "98ec16677416e86082707cbaff3707852d4db56f6fc7588c39d3420e9e6b7b79"
+}
