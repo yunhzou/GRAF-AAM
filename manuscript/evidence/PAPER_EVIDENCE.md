@@ -18,3 +18,5 @@ A verified witness establishes recovery. Unresolved computation is not a negativ
 The main text excludes development history. The full validation report retains execution limits, continuation attempts, source hashes and the explanation of tied SLAP hydrogen-refinement witnesses. Earlier research records remain outside this paper bundle.
 
 The main algorithm figure uses a constructed methyl acetate hydrolysis example, independently checked in `molecule_example.json`. It is not a benchmark trajectory. Formal weights and heavy-atom event counts are illustrative; the reported benchmark evaluates explicit hydrogens.
+
+`competitors.json` restores the completed seven-configuration Golden reproduction. All 12,957 saved records were freshly rescored with the current evaluator, with unchanged outcomes. These default explicit-output results have a different scope from the final GRAFT family search and SLAP sweep. Full audit and per-case checks: `reports/golden_competitor_recheck_20260913/`.

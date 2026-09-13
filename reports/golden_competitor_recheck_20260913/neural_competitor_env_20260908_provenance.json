@@ -1,0 +1,296 @@
+{
+  "python": "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/bin/python",
+  "version": "3.10.12 (main, Jul 15 2026, 23:40:17) [GCC 11.4.0]",
+  "packages": {
+    "typing_extensions": {
+      "version": "4.16.0",
+      "direct_url": null
+    },
+    "MarkupSafe": {
+      "version": "3.0.3",
+      "direct_url": null
+    },
+    "filelock": {
+      "version": "3.32.3",
+      "direct_url": null
+    },
+    "Jinja2": {
+      "version": "3.1.6",
+      "direct_url": null
+    },
+    "fsspec": {
+      "version": "2026.7.0",
+      "direct_url": null
+    },
+    "mpmath": {
+      "version": "1.3.0",
+      "direct_url": null
+    },
+    "networkx": {
+      "version": "3.4.2",
+      "direct_url": null
+    },
+    "setuptools": {
+      "version": "78.1.0",
+      "direct_url": null
+    },
+    "sympy": {
+      "version": "1.14.0",
+      "direct_url": null
+    },
+    "torch": {
+      "version": "2.14.0+cpu",
+      "direct_url": null
+    },
+    "six": {
+      "version": "1.17.0",
+      "direct_url": null
+    },
+    "cloudpickle": {
+      "version": "3.1.2",
+      "direct_url": null
+    },
+    "threadpoolctl": {
+      "version": "3.6.0",
+      "direct_url": null
+    },
+    "diskcache": {
+      "version": "5.6.3",
+      "direct_url": null
+    },
+    "certifi": {
+      "version": "2026.7.22",
+      "direct_url": null
+    },
+    "idna": {
+      "version": "3.19",
+      "direct_url": null
+    },
+    "python-dotenv": {
+      "version": "1.2.3",
+      "direct_url": null
+    },
+    "PyYAML": {
+      "version": "6.0.3",
+      "direct_url": null
+    },
+    "python-dateutil": {
+      "version": "2.9.0.post0",
+      "direct_url": null
+    },
+    "contourpy": {
+      "version": "1.3.2",
+      "direct_url": null
+    },
+    "rxn-utils": {
+      "version": "2.0.0",
+      "direct_url": null
+    },
+    "pyparsing": {
+      "version": "3.3.2",
+      "direct_url": null
+    },
+    "attrs": {
+      "version": "26.1.0",
+      "direct_url": null
+    },
+    "joblib": {
+      "version": "1.6.0",
+      "direct_url": null
+    },
+    "pymongo": {
+      "version": "4.18.0",
+      "direct_url": null
+    },
+    "fonttools": {
+      "version": "4.64.0",
+      "direct_url": null
+    },
+    "kiwisolver": {
+      "version": "1.5.1",
+      "direct_url": null
+    },
+    "click": {
+      "version": "8.5.0",
+      "direct_url": null
+    },
+    "charset-normalizer": {
+      "version": "3.5.1",
+      "direct_url": null
+    },
+    "rxn-chem-utils": {
+      "version": "1.6.0",
+      "direct_url": null
+    },
+    "annotated-types": {
+      "version": "0.8.0",
+      "direct_url": null
+    },
+    "cycler": {
+      "version": "0.12.1",
+      "direct_url": null
+    },
+    "requests": {
+      "version": "2.34.2",
+      "direct_url": null
+    },
+    "rxnmapper": {
+      "version": "0.4.3",
+      "direct_url": null
+    },
+    "pydantic-settings": {
+      "version": "2.15.0",
+      "direct_url": null
+    },
+    "tqdm": {
+      "version": "4.70.0",
+      "direct_url": null
+    },
+    "pydantic_core": {
+      "version": "2.46.5",
+      "direct_url": null
+    },
+    "psutil": {
+      "version": "7.2.2",
+      "direct_url": null
+    },
+    "dnspython": {
+      "version": "2.8.0",
+      "direct_url": null
+    },
+    "typing-inspection": {
+      "version": "0.4.4",
+      "direct_url": null
+    },
+    "huggingface_hub": {
+      "version": "0.36.2",
+      "direct_url": null
+    },
+    "hyperopt": {
+      "version": "0.3.0",
+      "direct_url": null
+    },
+    "tokenizers": {
+      "version": "0.22.2",
+      "direct_url": null
+    },
+    "hf-xet": {
+      "version": "1.6.0",
+      "direct_url": null
+    },
+    "safetensors": {
+      "version": "0.8.0",
+      "direct_url": null
+    },
+    "regex": {
+      "version": "2026.9.3",
+      "direct_url": null
+    },
+    "packaging": {
+      "version": "26.3",
+      "direct_url": null
+    },
+    "scipy": {
+      "version": "1.15.3",
+      "direct_url": null
+    },
+    "localmapper": {
+      "version": "0.1.5",
+      "direct_url": null
+    },
+    "urllib3": {
+      "version": "2.7.0",
+      "direct_url": null
+    },
+    "dgllife": {
+      "version": "0.3.2",
+      "direct_url": null
+    },
+    "pydantic": {
+      "version": "2.13.5",
+      "direct_url": null
+    },
+    "pytz": {
+      "version": "2026.3.post1",
+      "direct_url": null
+    },
+    "scikit-learn": {
+      "version": "1.7.2",
+      "direct_url": null
+    },
+    "dgl": {
+      "version": "1.1.3",
+      "direct_url": null
+    },
+    "pillow": {
+      "version": "12.3.0",
+      "direct_url": null
+    },
+    "matplotlib": {
+      "version": "3.10.9",
+      "direct_url": null
+    },
+    "tzdata": {
+      "version": "2026.3",
+      "direct_url": null
+    },
+    "numpy": {
+      "version": "1.26.4",
+      "direct_url": null
+    },
+    "pandas": {
+      "version": "2.3.3",
+      "direct_url": null
+    },
+    "transformers": {
+      "version": "4.57.6",
+      "direct_url": null
+    },
+    "rdkit": {
+      "version": "2026.3.6",
+      "direct_url": null
+    }
+  },
+  "artifacts": {
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/rxnmapper/models/transformers/albert_heads_8_uspto_all_1310k/config.json": {
+      "sha256": "ea0f3144af1d13a5d5928cff01abd8e7c14ab831ff7b6d73a14d4162864a876f",
+      "bytes": 1219
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/rxnmapper/models/transformers/albert_heads_8_uspto_all_1310k/pytorch_model.bin": {
+      "sha256": "8541f3f500dae71abe678d546bd035ca946e2d1c819f6b2cf41a97faedd7e6a2",
+      "bytes": 3212952
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/rxnmapper/models/transformers/albert_heads_8_uspto_all_1310k/special_tokens_map.json": {
+      "sha256": "303df45a03609e4ead04bc3dc1536d0ab19b5358db685b6f3da123d05ec200e3",
+      "bytes": 112
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/rxnmapper/models/transformers/albert_heads_8_uspto_all_1310k/tokenizer_config.json": {
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "bytes": 2
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/rxnmapper/models/transformers/albert_heads_8_uspto_all_1310k/training_args.bin": {
+      "sha256": "440fdf4459c2f51c3f042ccad777342b06bf3f491c251b712ab2aada5ff7a2eb",
+      "bytes": 1562
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/localmapper/data/LocalMapper_202403.pth": {
+      "sha256": "640d90926ac994e9adb4d9a22b8ef3453bd6fc2818a107a2229f05684d196cf5",
+      "bytes": 18759019
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/localmapper/data/LocalMapper_202407.pth": {
+      "sha256": "832c55f74c13dcf84d33cb7db71db298745c78e435508300d3b9be005bbacdca",
+      "bytes": 18759979
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/localmapper/data/default_config.json": {
+      "sha256": "8b0e01e4d5b6e93565f02856845852c51447900f6d50cc8e2defd1f31d983865",
+      "bytes": 142
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/localmapper/data/templates_202403.pkl": {
+      "sha256": "f65f2aeb59f2569172e234974db91d5612c6dcd29f577d326209db99e82bfaef",
+      "bytes": 83082
+    },
+    "/project/yunhengzou/coordinate_alignment/aam_benchmarks/neural_competitor_env_20260908/lib/python3.10/site-packages/localmapper/data/templates_202407.pkl": {
+      "sha256": "392c0805946e8b81e0747decb51d1a58da0f02523e55f14da0540af226934c8f",
+      "bytes": 59735
+    }
+  }
+}

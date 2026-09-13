@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "checked_records": 12957,
+  "workers": 4,
+  "original_dataset_matches_current": true,
+  "signature_function_ast_unchanged": true,
+  "mapper_reruns": 0,
+  "regression_tests": "7 passed in 4.62s",
+  "evaluators": {
+    "bench/golden_competitors.py": "54354c059f981fd6d180a2c8267cc325d60da234b63279cbafc731f41abd25c2",
+    "bench/golden_evaluation.py": "a4e115b567fbdd9c2a412e126e95333041dc174f33cef1cb66eb8cf36509330a"
+  },
+  "driver_sha256": "533d0e22cdf31a8b9c3d3298965380ae80263f33d7f8e5efb9237b9742ca4693",
+  "method_rechecks": {
+    "rxnmapper": {
+      "method": "rxnmapper",
+      "changes": [],
+      "elapsed_seconds": 80.19941245787777,
+      "cpu_seconds": 76.718204
+    },
+    "localmapper": {
+      "method": "localmapper",
+      "changes": [],
+      "elapsed_seconds": 80.22095691715367,
+      "cpu_seconds": 76.741229
+    },
+    "chython": {
+      "method": "chython",
+      "changes": [],
+      "elapsed_seconds": 80.6097147918772,
+      "cpu_seconds": 77.131128
+    },
+    "slap_binary": {
+      "method": "slap_binary",
+      "changes": [],
+      "elapsed_seconds": 99.81614875001833,
+      "cpu_seconds": 96.209783
+    },
+    "slap_weighted": {
+      "method": "slap_weighted",
+      "changes": [],
+      "elapsed_seconds": 36.565078125102445,
+      "cpu_seconds": 36.351573
+    },
+    "indigo": {
+      "method": "indigo",
+      "changes": [],
+      "elapsed_seconds": 23.40573558397591,
+      "cpu_seconds": 23.256767999999994
+    },
+    "rdt": {
+      "method": "rdt",
+      "changes": [],
+      "elapsed_seconds": 31.59863654198125,
+      "cpu_seconds": 31.402638999999994
+    }
+  }
+}

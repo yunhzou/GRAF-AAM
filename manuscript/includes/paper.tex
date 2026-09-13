@@ -144,6 +144,21 @@ On the same-Mac subset of \CommonCases{} reactions with completed one- and two-o
 \label{fig:golden}
 \end{figure}
 
+\subsection{Released mapping implementations on Golden}
+
+We also evaluate default released implementations of RXNMapper~\citep{schwaller2021}, LocalMapper~\citep{chen2024}, Chython~\citep{chython}, Indigo~\citep{indigo}, and the Reaction Decoder Tool (RDT)~\citep{rahman2016}, together with default binary and weighted SLAP. Each receives all 1,851 label-free Golden records. Saved predictions are rescored with the same strict heavy-atom relation criterion, retaining unmatched atoms and checking endpoint chemistry. No reference-guided reranking, balancing, or prediction repair is applied.
+
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{Default released implementations on Golden.} Counts and percentages use all 1,851 reactions, including failures. ``First'' evaluates the first explicit output; ``any'' evaluates every explicitly returned candidate. SLAP output order is not asserted to be a top-one ranking, and its compressed label families are not exhaustively decoded here. Invalid counts refer to returned candidates; failed counts refer to reactions with no mapped output after the recorded execution retries.}
+\label{tab:competitors}
+\input{includes/generated-competitor-table}
+\end{table}
+
+\Cref{tab:competitors} places single-output prediction in context alongside returned-candidate coverage. LocalMapper recovers the strict reference relation in 1,605 reactions, RXNMapper in 1,547, and Chython in 1,561. Default binary SLAP recovers 1,591 among its explicit candidates, compared with \SlapRecovered{} for the broader bidirectional sweep evaluated above. These default calls use different search budgets from GRAFT; GRAFT's family recovery is not a top-one accuracy measurement.
+
+RDT recovers 1,030 references under this relation-based criterion, which differs from its chemical-change scoring. Indigo's 692 recoveries require particular care: 503 outputs contain duplicate heavy-atom map labels, seven alter endpoint chemistry, and 133 calls fail. Chython changes endpoint chemistry in 29 outputs, and three RDT outputs fail validation. These results characterize the pinned implementations and input/output protocol rather than establish universal rankings of the methods. Versions and reproduction details are given in \Cref{sec:default-comparators}.
+
 \subsection{Bond-event alternatives on coordinate inputs}
 
 The configuration with fragment competition returns full explicit-atom mappings for all 140 coordinate pairs. Across the collection, it recovers \SweepRecovered{} of the \SweepClasses{} minimum-event classes among the returned SLAP-sweep witnesses, covering every compared class in 139 reactions (\Cref{fig:coordinate}). In the remaining carbocation reaction, it recovers three of five comparator classes. Both searches reach four events there; the difference concerns two alternative patterns at that minimum. Against native SLAP, coverage is 155/160 minimum-event classes, again with all missing classes confined to the same reaction.

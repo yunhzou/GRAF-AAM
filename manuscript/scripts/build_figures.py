@@ -76,3 +76,13 @@ macros=dict(GoldenOneRecovered=f"{counts[0]:,}",GoldenOnePercent=f"{100*counts[0
  FlatFamilies=f"{dedup['flat_families']:,}",DecodedClasses=str(dedup['event_classes']))
 (MAN/'includes/generated-results.tex').write_text('% Generated from complete fresh benchmark evidence.\n'+''.join('\\newcommand{\\'+k+'}{'+v+'}\n' for k,v in macros.items()))
 print('Built three main figures and complete-campaign tables and numerical macros.')
+
+competitors=read('competitors.json');assert competitors['rescored_with_current_evaluator'] and competitors['unchanged_case_outcomes']
+labels={'rxnmapper':'RXNMapper 0.4.3','localmapper':'LocalMapper 0.1.5','chython':'Chython 2.18 / rxnmap 2.0','slap_binary':'SLAP 1.0.0, binary','slap_weighted':'SLAP 1.0.0, weighted','indigo':'Indigo 1.46.0','rdt':'RDT 4.0.0'}
+rows=[]
+for d in competitors['methods']:
+ assert d['total']==N and len(d['first_correct_cases'])==d['first_correct'] and len(d['any_correct_cases'])==d['any_correct']
+ first=f"{d['first_correct']:,} ({100*d['first_correct']/N:.2f}\\%)"
+ any_=f"{d['any_correct']:,} ({100*d['any_correct']/N:.2f}\\%)"
+ rows.append(f"{labels[d['method']]} & {first} & {any_} & {d['invalid_candidates']} & {len(d['failed_cases'])} " + r"\\")
+(MAN/'includes/generated-competitor-table.tex').write_text(r"\begin{tabular}{lrrrr}\toprule"+'\n'+r"Implementation & First correct & Any correct & Invalid & Failed\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')

@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -12,12 +12,24 @@ Shuan Chen, Sunggi An, Ramil Babazade, and Yousung Jung.
 \newblock \emph{Nature Communications}, 15:\penalty0 2250, 2024.
 \newblock \doi{10.1038/s41467-024-46364-y}.
 
+\bibitem[{Chython contributors}()]{chython}
+{Chython contributors}.
+\newblock {Chython}: molecular and reaction processing toolkit.
+\newblock \url{https://github.com/chython/chython}.
+\newblock Evaluated version 2.18 with chython-rxnmap 2.0; model hash archived.
+
 \bibitem[de~Moura and Bj{\o}rner(2008)]{demoura2008}
 Leonardo de~Moura and Nikolaj Bj{\o}rner.
 \newblock {Z3}: An efficient {SMT} solver.
 \newblock In \emph{Tools and Algorithms for the Construction and Analysis of
   Systems}, pages 337--340. Springer, 2008.
 \newblock \doi{10.1007/978-3-540-78800-3_24}.
+
+\bibitem[{EPAM Systems}()]{indigo}
+{EPAM Systems}.
+\newblock {Indigo} cheminformatics toolkit.
+\newblock \url{https://github.com/epam/Indigo}.
+\newblock Evaluated version 1.46.0.
 
 \bibitem[Koda and Saito(2025)]{koda2025}
 Shin-ichi Koda and Shinji Saito.
@@ -45,6 +57,17 @@ Brendan~D. McKay and Adolfo Piperno.
 \newblock Practical graph isomorphism, {II}.
 \newblock \emph{Journal of Symbolic Computation}, 60:\penalty0 94--112, 2014.
 \newblock \doi{10.1016/j.jsc.2013.09.003}.
+
+\bibitem[Rahman et~al.(2016)Rahman, Torrance, Baldacci, Mart{\'i}nez~Cuesta,
+  Fenninger, Gopal, Choudhary, May, Holliday, Steinbeck, and
+  Thornton]{rahman2016}
+S.~A. Rahman, G.~Torrance, L.~Baldacci, S.~Mart{\'i}nez~Cuesta, F.~Fenninger,
+  N.~Gopal, S.~Choudhary, J.~W. May, G.~L. Holliday, C.~Steinbeck, and J.~M.
+  Thornton.
+\newblock Reaction decoder tool ({RDT}): extracting features from chemical
+  reactions.
+\newblock \emph{Bioinformatics}, 32\penalty0 (13):\penalty0 2065--2066, 2016.
+\newblock \doi{10.1093/bioinformatics/btw096}.
 
 \bibitem[Schwaller et~al.(2021)Schwaller, Hoover, Reymond, Strobelt, and
   Laino]{schwaller2021}

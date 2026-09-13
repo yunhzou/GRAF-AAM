@@ -1,0 +1,20 @@
+{
+  "README.md": "5b404cd1902e8c69cf5dc97ce9ebec9482af990a0e2c1e8f627cffee50e1ffc2",
+  "artifact-validation.json": "2c384489395bca73480323d90bf2dc25d9381afe9a1b5fab83a371b24733e55f",
+  "assemble_comparators.py": "5827ce575c5d2b45dcb713a3239dffbcc0efe4dfeb766581f56d76d4e21f5719",
+  "audit.json": "85b34df754344f51672a0ea6c609f4b4749223b831b9364d302a5c9a30fcbde0",
+  "chython-rescored.json.gz": "c35521d6a723a410607b36e8312b90b29b29bec8c183c4bcde77506bc3a6e672",
+  "competitor_env_20260908_provenance.json": "e699c599db77b60f2600ff90de5b3361ccd3ec643688c7cfbe9094c88868692f",
+  "competitors.json": "0380c810f4ceeaddc1f07557a65a99c3af22d8903890c06b3bcdd9cc13edc774",
+  "final_evaluation_provenance.json": "219c47689c720ef08e90866112357041cd4ede397ce41988e42ec67785aa4245",
+  "indigo-rescored.json.gz": "032006f63464bc0e08694b617f393a96ab884c6328193ddd005dbc36b4be896b",
+  "localmapper-rescored.json.gz": "f56e315af8cba01891bcd1e148d0c35d6a9e44e2841078684aeb149feaab7bb2",
+  "manifest.json": "600f8d3a86a4b86a9ae2eaeb6ff55c5f47a32ec7333aa7c0cdcb197eb1c82b60",
+  "neural_competitor_env_20260908_provenance.json": "1cc179fb4876e5c686798cb7a665cef5252e5330865824fd4cbed5181f72209c",
+  "rdt-rescored.json.gz": "e654d6e0cdfe83e96175cefc8eecb2c4809b0805dc481652fbb435a3a9ea8e1c",
+  "recheck_competitors.py": "533d0e22cdf31a8b9c3d3298965380ae80263f33d7f8e5efb9237b9742ca4693",
+  "rxnmapper-rescored.json.gz": "3e8ad8a01f47e87e45e430d235c5460d11749a2eb3b3f729c71ed9c507eccad4",
+  "slap_binary-rescored.json.gz": "c4e385e68aeeda239437041795c656b9507a678e95621a530ba7170b841a84eb",
+  "slap_weighted-rescored.json.gz": "f3b10654b3461bffb7a9a1b7457c7b63359345cb83a86f32b78637d8b4d1fd6a",
+  "visual-review.json": "3b43203b8d5c97ea9d606b4d7bad51586b1d999f5e3cdb8fbca636e46b00aa54"
+}
