@@ -4,6 +4,8 @@ import hashlib,json,re
 from pypdf import PdfReader
 MAN=Path(__file__).resolve().parents[1];E=MAN/'evidence'
 def read(n):return json.loads((E/n).read_text())
+from build_molecule_figure import check_example
+assert read('molecule_example.json') == json.loads(json.dumps(check_example()))
 seed=read('seed_comparison.json');slap=read('slap_sweep.json');comp=read('competition_final.json');flat=read('final_dedup.json')
 assert seed['fresh'] and slap['fresh'] and comp['fresh']
 keys=['seeds1','seeds2','seeds3','seeds10']

@@ -1,0 +1,118 @@
+{
+  "placement_example": {
+    "source_smiles": "[CH3:11][CH2:12][OH:13]",
+    "target_smiles": "[CH3:21][CH:22]([OH:23])[C:24](=[O:25])[O:26][CH2:27][CH3:28]",
+    "two_admissible_images": [
+      {
+        "11": 21,
+        "12": 22,
+        "13": 23
+      },
+      {
+        "11": 28,
+        "12": 27,
+        "13": 26
+      }
+    ],
+    "scope": "Two selected placements, not an exhaustive placement list."
+  },
+  "status": "passed",
+  "scope": "Constructed molecular illustration; heavy-atom projection with formal bond orders, not a measured trajectory or benchmark case. Hydrogens are hidden and are not counted here. Saved constraints still determine admissible full-family actions.",
+  "reactants_smiles": "[CH3:1][C:2](=[O:3])[O:4][CH3:5].[OH2:6]",
+  "products_smiles": "[CH3:1][C:2](=[O:3])[OH:4].[CH3:5][OH:6]",
+  "iso_tol": 1.0,
+  "edge_floor": 0.2,
+  "event_threshold": 0.5,
+  "mappings": {
+    "retain_A": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6
+    },
+    "oxygen_exchange": {
+      "1": 1,
+      "2": 2,
+      "3": 4,
+      "4": 3,
+      "5": 5,
+      "6": 6
+    },
+    "prioritize_B": {
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 6,
+      "5": 5,
+      "6": 4
+    }
+  },
+  "heavy_atom_events": {
+    "retain_A": [
+      [
+        4,
+        5,
+        -1
+      ],
+      [
+        5,
+        6,
+        1
+      ]
+    ],
+    "oxygen_exchange": [
+      [
+        2,
+        3,
+        -1
+      ],
+      [
+        2,
+        4,
+        1
+      ],
+      [
+        4,
+        5,
+        -1
+      ],
+      [
+        5,
+        6,
+        1
+      ]
+    ],
+    "prioritize_B": [
+      [
+        2,
+        4,
+        -1
+      ],
+      [
+        2,
+        6,
+        1
+      ]
+    ]
+  },
+  "response_labels": {
+    "single": [
+      true,
+      true,
+      true
+    ],
+    "double": [
+      true,
+      true,
+      true
+    ]
+  },
+  "saturated_fragment": [
+    1,
+    2,
+    3,
+    4
+  ]
+}

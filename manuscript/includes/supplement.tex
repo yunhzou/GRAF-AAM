@@ -17,12 +17,7 @@ The SLAP comparator uses SLAPMapper 1.0.0, revision \texttt{ea248fd}, with both 
 
 On the coordinate collection, the exact original XYZ-derived SLAP adjacency matrices are restored from the saved graph records and verified against every source-edge deletion. Atom order and atomic numbers are retained; mapping labels are reset. Fresh native and bidirectional single-edge SLAP runs use binary graphs and the original initialization. The XYZ-to-graph preparation itself is not rerun. GRAFT uses the cached WBO matrices. Each returned SLAP heavy-atom assignment receives a symbolic hydrogen refinement under the comparator's original bond-change objective, and its witness is rescored on the original WBO matrices using \Cref{eq:events}. Tied hydrogen optima can give different signed-event classes; the reported comparator set comprises the returned witnesses, not the entire hydrogen label relation. This compares the stated endpoint workflows rather than isolated solvers on identical graph representations.
 
-\begin{table}[H]
-\centering\small
-\caption{\textbf{Golden recovery and seed diversity.} Recovery uses all 1,851 records. CPU averages use the same \CommonCases{} completed one- and two-order reactions on the Mac, summed over directions and cuts. Dashes mark mixed-host configurations whose times are not compared. ``Absent'' means excluded from saved families; ``unknown'' denotes unresolved verification.}
-\label{tab:seeds}
-\input{includes/generated-seed-table}
-\end{table}
+
 
 \subsection{Bounded fragment competition}
 
@@ -44,7 +39,7 @@ The 140-case comparison uses fixed per-case windows from the evaluation protocol
 \input{includes/generated-decoder-table}
 \end{table}
 
-For the schematic oxygen example, source weights $(W_R(C,O_1),W_R(C,O_2))=(1.0,0.9)$ map to target weights $(0.51,0.49)$. Both oxygen assignments pass matching at $\tau_{\mathrm{iso}}=1$. The direct assignment has changes $(-0.49,-0.41)$ and no event at threshold $0.5$. Exchanging the oxygen images gives $(-0.51,-0.39)$ and one negative event. The weights are illustrative; this example establishes the distinction between matching and event equivalence rather than modeling a particular reaction.
+For the hydrolysis example in \Cref{fig:algorithm}, the direct assignment $(1,2,3,4,5,6)\mapsto(a,b,c,d,e,f)$ loses O4--C5 and gains C5--O6. Exchanging the images of O3 and O4 additionally weakens C2--O3 and strengthens C2--O4: two versus four heavy-atom events. Both assignments preserve the internal matching constraints of fragment $\{1,2,3,4\}$ at $\tau_{\mathrm{iso}}=1$. The challenger instead assigns O4 to f and O6 to d, retaining O4--C5 and replacing C2--O4 by C2--O6. Formal bond orders define this illustration; hydrogen transfers are omitted. The figure builder verifies these mappings and event lists, as well as the two distinct ethanol placements.
 
 \subsection{Lossless flattening}
 

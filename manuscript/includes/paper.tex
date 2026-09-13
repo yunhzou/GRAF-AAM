@@ -29,13 +29,14 @@ This is a greedy search along each trajectory: an accepted extension can remove 
 
 \begin{figure}[p]
 \centering\includegraphics[width=\linewidth]{figs/fig1_algorithm.pdf}
-\caption{\textbf{GRAFT: weighted fragment search and event decoding.}
-(a) The matching tolerance compares source and target bond weights; it controls admissible placements.
-(b) A fragment continues growing while its placement set evolves, then branches at saturation.
-(c) Automorphism generators encode correlated permutations. The illustrated oxygen exchange preserves the fragment's matching tests at $\tau_{\mathrm{iso}}=1$, although the numerical weights differ.
-(d) At a fragment contact, an additional branch gives the challenger priority, rematches the affected region, and regrows displaced assignments; the original branch remains available.
-(e) Reversing the order of the same final fragment pairs gives one branch containing the union of its mapping families.
-(f) For the weighted example in (c), two admissible mappings give zero or one signed bond event at threshold $0.5$. The decoder searches for distinct event classes and returns a mapping witness for each. Graphs are schematic; labels identify atoms, and colors identify fragments or decisions rather than chemical elements.}
+\caption{\textbf{Molecular illustrations of fragment search and event decoding.}
+(a) Methyl acetate hydrolysis; reactant indices 1--6 and product indices a--f are independent.
+(b) A separate ethanol example shows growth and two admissible images in ethyl lactate; different target atom sets define distinct continuations.
+(c) In the hydrolysis fragment, the oxygen exchange $(c\ d)$ preserves matching-response labels at $\tau_{\mathrm{iso}}=1$. Saved constraints govern its admissibility.
+(d) Giving B priority transfers O4 from A to B, preserving O4--C5; the original branch remains available.
+(e) Oxygen exchange within the original partition changes two heavy-atom events to four at threshold $0.5$.
+(f) Those oxygen assignments share an unordered branch but retain different mappings.
+These are constructed molecular examples using formal bond orders. Hydrogen transfers are omitted from the illustration; benchmark search and scoring include explicit H.}
 \label{fig:algorithm}
 \end{figure}
 
@@ -96,7 +97,7 @@ Positive events denote bond formation or strengthening; negative events denote c
 
 The decoder returns one mapping witness per distinct signed event class, identifying patterns related by exact source permutations that preserve the event-response labels. First, symmetry-invariance certificates identify families whose mappings all produce equivalent events, and reachable-image bounds exclude families outside a requested event window. Before constraint encoding, adjacent nested action groups are absorbed: if $H\leq G$, then $HG=GH=G$. Exact generator-membership tests remove these redundant choices without changing the final preservation constraints. Remaining families are encoded symbolically in Z3~\citep{demoura2008}. Each satisfying assignment yields a concrete mapping and its event pattern. A constraint then excludes that entire event-equivalence class, and the process repeats. This projects directly onto event classes rather than explicitly enumerating full mappings or permutation groups.
 
-For a window $E\leq K$, decoding is complete when every retained family is certified exhausted or excluded. A timeout leaves completeness unresolved. This certificate concerns the saved search output within the window; it does not establish exhaustive exploration of all chemically possible mappings. The default deduplication preserves families that contain different event counts, including the example in \Cref{fig:algorithm}f.
+For a window $E\leq K$, decoding is complete when every retained family is certified exhausted or excluded. A timeout leaves completeness unresolved. This certificate concerns the saved search output within the window; it does not establish exhaustive exploration of all chemically possible mappings. The default deduplication preserves families that contain different event counts, as illustrated in the heavy-atom projection in \Cref{fig:algorithm}e.
 
 \FloatBarrier
 \section{Evaluation}
@@ -126,9 +127,15 @@ Evaluation & Reference-family recovery & Signed event-class coverage\\\bottomrul
 
 \subsection{Golden mapping recovery}
 
-With one ordering per cut, bidirectional GRAFT recovers \GoldenOneRecovered/1,851 annotated mappings (\GoldenOnePercent\%). Three orderings recover \GoldenThreeRecovered{} (\GoldenThreePercent\%; \Cref{tab:seeds}), and ten recover \GoldenTenRecovered{} (\GoldenTenPercent\%), with \GoldenTenUnknown{} reactions unresolved. Two orderings match the one-order recovery count. These are family-recovery measurements: they quantify whether a reference correspondence is retained, rather than whether it is ranked first.
+With one ordering per cut, bidirectional GRAFT recovers \GoldenOneRecovered/1,851 annotated mappings (\GoldenOnePercent\%). Three orderings recover \GoldenThreeRecovered{} (\GoldenThreePercent\%; \Cref{tab:seeds}), and ten recover \GoldenTenRecovered{} (\GoldenTenPercent\%), with \GoldenTenUnknown{} reactions unresolved. Two orderings also recover \GoldenOneRecovered{} (\GoldenOnePercent\%), with no unresolved reactions at either setting. These are family-recovery measurements: they quantify whether a reference correspondence is retained, rather than whether it is ranked first.
 
 
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{Golden reference-family recovery and CPU cost.} Recovery uses all 1,851 records. CPU averages use the same \CommonCases{} completed reactions on the Mac, including both directions and the respective sweeps; reference verification is excluded. Dashes mark mixed-host configurations whose times are not compared. ``Absent'' means excluded from saved families; ``unknown'' denotes unresolved verification.}
+\label{tab:seeds}
+\input{includes/generated-seed-table}
+\end{table}
 
 The SLAP single-edge sweep recovers \SlapRecovered/1,851 references (\SlapPercent\%) using both directions and binary and weighted modes. One-order GRAFT has a higher verified recovery rate by \RecoveryDifference{} percentage points. The paired comparison contains \AamOnly{} references verified only by one-order GRAFT and \SlapOnly{} verified only by SLAP. This compares recovery among alternatives under the stated configurations; it is not a comparison of single-answer accuracy or equal-size candidate sets.
 
@@ -136,7 +143,7 @@ On the same-Mac subset of \CommonCases{} reactions with completed one- and two-o
 
 \begin{figure}[tb]
 \centering\includegraphics[width=\linewidth]{figs/fig2_golden.pdf}
-\caption{\textbf{Reference recovery and search cost.} (a) Golden family recovery for GRAFT and the SLAP sweep. Every percentage uses all 1,851 records. (b) Mean recorded workflow CPU on the same \CommonCases{} completed reactions on the Mac. Reference verification is excluded; the procedures have different search objectives, output cardinalities, and I/O timing scopes.}
+\caption{\textbf{Reference recovery and search cost.} (a) Golden family recovery for each GRAFT seed setting and the SLAP sweep. Every percentage uses all 1,851 records. (b) Mean recorded workflow CPU on the same \CommonCases{} completed reactions on the Mac. Reference verification is excluded; the procedures have different search objectives, output cardinalities, and I/O timing scopes.}
 \label{fig:golden}
 \end{figure}
 

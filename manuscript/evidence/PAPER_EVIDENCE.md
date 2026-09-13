@@ -9,10 +9,12 @@
 | `competition_final.json` | Fresh 140-case search/competition, complete AAM event windows and fresh SLAP witness comparison |
 | `final_dedup.json` | Fresh ordered/unordered counts and complete final decoding of all 140 cases, with attempt-inclusive timing |
 
-Figure 1 is a schematic, with its oxygen-shuffle example checked arithmetically. Figures 2 and 3 use the measured snapshots above.
+Figure 1 uses RDKit vector molecule depictions. The builder checks the illustrated partial mappings, matching-response labels, and signed heavy-atom events. Figures 2 and 3 use the measured snapshots above.
 
 Golden measures the fragment-search stage. The coordinate protocol additionally includes competition and final decoding. The coordinate collection has no annotated mappings and was used during development, so comparator event-class coverage is not chemical accuracy. Its SLAP inputs restore and verify the original XYZ-derived graph adjacency; XYZ preparation itself is not rerun. The comparator classes come from returned H-refined witnesses, not exhaustive decoding of its hydrogen label families.
 
 A verified witness establishes recovery. Unresolved computation is not a negative result. Complete decoding certifies only the saved AAM families within the reported event window. Timings describe their recorded stage and resource scope and do not imply an isolated end-to-end speed comparison.
 
 The main text excludes development history. The full validation report retains execution limits, continuation attempts, source hashes and the explanation of tied SLAP hydrogen-refinement witnesses. Earlier research records remain outside this paper bundle.
+
+The main algorithm figure uses a constructed methyl acetate hydrolysis example, independently checked in `molecule_example.json`. It is not a benchmark trajectory. Formal weights and heavy-atom event counts are illustrative; the reported benchmark evaluates explicit hydrogens.
