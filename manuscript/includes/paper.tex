@@ -6,7 +6,7 @@ Existing approaches use learned correspondence signals or graph-based optimizati
 
 Weighted endpoint graphs introduce a further distinction. A permissive matching tolerance can preserve a fragment despite changes in its bond orders, but the corresponding atom shuffles need not preserve the bond events assigned at a finer threshold. Replacing a compressed family by one representative can therefore hide distinct transformations. Likewise, greedily growing one fragment can prevent a neighboring fragment from reaching an alternative assignment.
 
-GRAFT addresses these issues by combining continuous fragment growth, symmetry compression, and branching over fragment placements and priorities (\Cref{fig:algorithm}). Its final representation groups unordered matched fragment pairs and retains the allowed mapping alternatives within each group. A constraint-based decoder projects these families onto distinct bond-event patterns. The method searches for structurally compatible alternatives without requiring the reference transformation to minimize the number of bond changes.
+GRAFT addresses these issues by branching over structural fragment choices while keeping symmetry-related atom bijections compressed (\Cref{fig:algorithm}). Continuous growth, alternative placements, and fragment priorities determine the structural choices. Its final representation groups unordered matched fragment pairs and retains the allowed mapping alternatives within each group. A constraint-based decoder projects these families onto distinct bond-event patterns. The method searches for structurally compatible alternatives without requiring the reference transformation to minimize the number of bond changes.
 
 \section{Method}
 
@@ -33,7 +33,11 @@ This is a greedy search along each trajectory: an accepted extension can remove 
 \label{fig:algorithm}
 \end{figure}
 
+\begin{samepage}
 \subsection{Automorphisms and correlated mapping families}
+
+The distinction between structural branches and explicit bijections is central to the design. Even one fragment family can contain combinatorially many assignments: $k$ independently exchangeable methyl-hydrogen triplets admit $(3!)^k$ bijections. Expanding those automorphisms into separate mappings would multiply the work without adding fragment choices. GRAFT instead stores the permitted permutation actions and their constraints, and decodes event alternatives directly from this representation. Branch caps bound retained alternatives within each growth call; they do not guarantee a small global search. This avoids explicitly listing symmetry-related bijections within each retained family.
+\end{samepage}
 
 Compatible placements are stored using a representative assignment, unresolved assignment blocks, and permutation generators. During growth, graph canonicalization accounts for the current fragment, locked assignments, and boundary information. Each saved transition records its action generators together with conditioning and fragment-preservation constraints; their conjunction defines the allowed mapping relation. Canonical labeling and automorphism computation use nauty~\citep{mckay2014}.
 
