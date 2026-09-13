@@ -27,16 +27,13 @@ An accepted extension enlarges the fragment and filters its compatible placement
 
 This is a greedy search along each trajectory: an accepted extension can remove placements that would support a different fragment boundary. GRAFT broadens coverage through seed orderings, single-edge constraint relaxations, and local changes in fragment priority. A sweep combines the uncut source graph with searches in which one eligible source edge is omitted. Bond-event evaluation always uses the original endpoint matrices.
 
-\begin{figure}[p]
+\begin{figure}[t]
 \centering\includegraphics[width=\linewidth]{figs/fig1_algorithm.pdf}
-\caption{\textbf{Molecular illustrations of fragment search and event decoding.}
-(a) Methyl acetate hydrolysis; reactant indices 1--6 and product indices a--f are independent.
-(b) A separate ethanol example shows growth and two admissible images in ethyl lactate; different target atom sets define distinct continuations.
-(c) In the hydrolysis fragment, the oxygen exchange $(c\ d)$ preserves matching-response labels at $\tau_{\mathrm{iso}}=1$. Saved constraints govern its admissibility.
-(d) Giving B priority transfers O4 from A to B, preserving O4--C5; the original branch remains available.
-(e) Oxygen exchange within the original partition changes two heavy-atom events to four at threshold $0.5$.
-(f) Those oxygen assignments share an unordered branch but retain different mappings.
-These are constructed molecular examples using formal bond orders. Hydrogen transfers are omitted from the illustration; benchmark search and scoring include explicit H.}
+\caption{\textbf{Fragment search branches; symmetry stays compressed.}
+(a) An ethanol fragment grows while its compatible placements are refined. At saturation, different target atom sets in ethyl lactate define separate continuations; two admissible placements are shown. Pale continuation edges indicate subsequent search schematically.
+(b) At a fragment contact in methyl acetate hydrolysis, the original branch retains O4 in fragment A. A new branch gives B priority, rematches the contacting region, and regrows displaced assignments.
+(c) Within one hydrolysis fragment pair, exchanging the oxygen images preserves matching at $\tau_{\mathrm{iso}}=1$ but changes two heavy-atom events to four at threshold $0.5$. Dashed arrows denote event projection, not additional search branches. Saved constraints govern allowed symmetry actions.
+The molecular examples use formal bond orders and omit hydrogen transfers; benchmark search and scoring include explicit H.}
 \label{fig:algorithm}
 \end{figure}
 
@@ -97,7 +94,7 @@ Positive events denote bond formation or strengthening; negative events denote c
 
 The decoder returns one mapping witness per distinct signed event class, identifying patterns related by exact source permutations that preserve the event-response labels. First, symmetry-invariance certificates identify families whose mappings all produce equivalent events, and reachable-image bounds exclude families outside a requested event window. Before constraint encoding, adjacent nested action groups are absorbed: if $H\leq G$, then $HG=GH=G$. Exact generator-membership tests remove these redundant choices without changing the final preservation constraints. Remaining families are encoded symbolically in Z3~\citep{demoura2008}. Each satisfying assignment yields a concrete mapping and its event pattern. A constraint then excludes that entire event-equivalence class, and the process repeats. This projects directly onto event classes rather than explicitly enumerating full mappings or permutation groups.
 
-For a window $E\leq K$, decoding is complete when every retained family is certified exhausted or excluded. A timeout leaves completeness unresolved. This certificate concerns the saved search output within the window; it does not establish exhaustive exploration of all chemically possible mappings. The default deduplication preserves families that contain different event counts, as illustrated in the heavy-atom projection in \Cref{fig:algorithm}e.
+For a window $E\leq K$, decoding is complete when every retained family is certified exhausted or excluded. A timeout leaves completeness unresolved. This certificate concerns the saved search output within the window; it does not establish exhaustive exploration of all chemically possible mappings. The default deduplication preserves families that contain different event counts, as illustrated in the heavy-atom projection in \Cref{fig:algorithm}c.
 
 \FloatBarrier
 \section{Evaluation}

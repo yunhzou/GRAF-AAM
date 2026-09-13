@@ -12,7 +12,7 @@ from rdkit.Chem import rdDepictor
 from rdkit.Chem.Draw import rdMolDraw2D
 from matplotlib import pyplot as plt
 from matplotlib.path import Path as MPath
-from matplotlib.patches import PathPatch,Ellipse,FancyArrowPatch
+from matplotlib.patches import PathPatch,Ellipse,FancyArrowPatch,FancyBboxPatch,Circle
 from matplotlib.transforms import Affine2D
 
 INK='#223340'; MUTED='#586974'; TEAL='#087F8C'; ORANGE='#CB702A'; PURPLE='#77559B'; RED='#B63F52'; BLUE='#3366A5'; LINE='#D5DEE2'
@@ -81,7 +81,10 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24):
  m=Chem.MolFromSmiles(smiles);assert m is not None
  ids={a.GetAtomMapNum():a.GetIdx() for a in m.GetAtoms()}
  for a in m.GetAtoms():
-  k=a.GetAtomMapNum();a.SetProp('atomNote',str((notes or {}).get(k,k)));a.SetAtomMapNum(0)
+  k=a.GetAtomMapNum()
+  if notes is None:a.SetProp('atomNote',str(k))
+  elif notes is not False and k in notes:a.SetProp('atomNote',str(notes[k]))
+  a.SetAtomMapNum(0)
  rdDepictor.Compute2DCoords(m)
  # Shared acetyl coordinates make the ester and acid directly comparable.
  if {1,2,3,4}.issubset(ids):
@@ -104,77 +107,109 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24):
   elif kind=='ellipse':patch=Ellipse((float(e.attrib['cx']),float(e.attrib['cy'])),2*float(e.attrib['rx']),2*float(e.attrib['ry']),**kw)
   else:raise AssertionError('Unexpected background rectangle in molecule')
   ax.add_patch(patch)
+ return {k:(x+d.GetDrawCoords(i).x,y+d.GetDrawCoords(i).y) for k,i in ids.items()}
 
 
 def build(man):
  proof=check_example();(man/'evidence/molecule_example.json').write_text(json.dumps(proof,indent=2)+'\n')
- fig=plt.figure(figsize=(8.8,9.24));ax=fig.add_axes([0,0,1,1]);ax.set(xlim=(0,1200),ylim=(1260,0));ax.axis('off')
- def t(x,y,s,size=9,color=INK,weight='normal',ha='left'):
-  return ax.text(x,y,s,fontsize=size,color=color,weight=weight,ha=ha,va='center',linespacing=1.45)
- def ar(a,b,color=MUTED,rad=0,style='-|>'):
-  ax.add_patch(FancyArrowPatch(a,b,arrowstyle=style,mutation_scale=10,lw=1.1,color=color,connectionstyle=f'arc3,rad={rad}'))
- def head(x,y,letter,title,sub):
-  t(x,y,letter,13,TEAL,'bold');t(x+34,y,title,11,INK,'bold');t(x,y+30,sub,8.6,MUTED)
- def rule(y):ax.plot([22,1178],[y,y],color=LINE,lw=.7)
- def acid(x,y,w,h,mapping=None,owners=None,letters=False):
-  notes={i:chr(96+i) for i in range(1,7)} if letters else mapping
-  molecule(ax,ACID,x,y,w,h,owners,notes)
- def products(x,y,scale=1.,mapping=None):
-  acid(x,y,220*scale,136*scale,mapping)
-  t(x+225*scale,y+65*scale,'+',11)
-  molecule(ax,ALCOHOL,x+240*scale,y+24*scale,155*scale,85*scale,notes=mapping)
+ # A connected branching overview, with chemical drawings as the tree states.
+ fig=plt.figure(figsize=(10.8,7.25));ax=fig.add_axes([0,0,1,1]);ax.set(xlim=(0,1440),ylim=(967,0));ax.axis('off')
+ navy='#22324D';muted='#64748B';faint='#BCC7D5';bg='#F5F7FB';violet='#7957BA';orange='#CC762F';green='#128477'
+ def t(x,y,s,size=11,color=navy,weight='normal',ha='left'):
+  return ax.text(x,y,s,fontsize=size,color=color,weight=weight,ha=ha,va='center',linespacing=1.3,zorder=6)
+ def box(x,y,w,h,fc='white',ec=LINE,lw=.8,r=12):
+  patch=FancyBboxPatch((x,y),w,h,boxstyle=f'round,pad=0,rounding_size={r}',facecolor=fc,edgecolor=ec,lw=lw,zorder=1)
+  ax.add_patch(patch)
+ def ar(a,b,color=navy,lw=1.9,dashed=False,rad=0,style='-|>'):
+  ax.add_patch(FancyArrowPatch(a,b,arrowstyle=style,mutation_scale=11,lw=lw,color=color,linestyle=(0,(3,3)) if dashed else '-',connectionstyle=f'arc3,rad={rad}',zorder=2))
+ def tree(points,color=navy,lw=2.0):
+  xs,ys=zip(*points[:-1]);ax.plot(xs,ys,color=color,lw=lw,solid_joinstyle='round',solid_capstyle='round',zorder=2)
+  ar(points[-2],points[-1],color,lw)
+ def dot(x,y,color=navy,r=4.3):ax.add_patch(Circle((x,y),r,fc=color,ec='none',zorder=3))
+ def label(x,y,letter,title):
+  t(x,y,letter,14,navy,'bold');t(x+36,y,title,14,navy,'bold')
+ def continuation(x,y):
+  tree([(x,y),(x+35,y),(x+35,y-27),(x+96,y-27)],faint,1.3)
+  tree([(x,y),(x+35,y),(x+35,y+27),(x+96,y+27)],faint,1.3)
+  dot(x+35,y,faint,3)
+  for yy in [y-27,y+27]:t(x+114,yy,'···',13,faint)
 
- head(24,24,'a','One reaction, several atom correspondences','Methyl acetate + water → acetic acid + methanol')
- molecule(ax,ESTER,20,68,345,136,font=25);t(377,130,'+',13)
- molecule(ax,WATER,405,90,110,82,font=25);ar((540,130),(650,130))
- acid(675,67,280,136,letters=True);t(970,130,'+',13)
- molecule(ax,ALCOHOL,994,91,185,89,notes={5:'e',6:'f'},font=25)
- t(265,218,'Reactant indices: 1–6',8.5,MUTED,ha='center');t(932,218,'Product indices: a–f',8.5,MUTED,ha='center')
- rule(242)
- head(24,273,'b','Growth and distinct placement branches','Local example: ethanol fragment in ethyl lactate.')
- for x,atoms,label in [(20,[11],'seed'),(203,[11,12],'extend'),(388,[11,12,13],'saturate')]:
-  molecule(ax,ETHANOL,x,345,177,100,{i:PALE_A for i in atoms},{11:'u',12:'v',13:'w'},font=23)
-  t(x+88,327,label,8.8,TEAL,'bold',ha='center')
- ar((181,393),(205,393));ar((368,393),(390,393))
- ar((466,439),(179,479),TEAL);ar((482,439),(443,479),TEAL)
- for x,atoms in [(15,[21,22,23]),(303,[26,27,28])]:
-  molecule(ax,LACTATE,x,481,258,136,{i:PALE_A for i in atoms},{i:chr(97+i-21) for i in range(21,29)},font=23)
- t(148,627,'image {a,b,c}',9,ha='center');t(436,627,'image {f,g,h}',9,ha='center')
- t(24,655,'Different atom sets → different continuations (two shown).',8.4,MUTED)
+ # A: the same growing ethanol fragment has distinct target atom-set images.
+ box(12,12,1416,437,bg,bg,r=16)
+ label(34,47,'a','Grow a fragment, then branch over its surviving placements')
+ t(34,79,'Local matching example: ethanol in ethyl lactate',10.5,muted)
+ for x,atoms,name in [(34,[11],'Seed'),(220,[11,12],'Extend'),(406,[11,12,13],'Saturate')]:
+  t(x+75,140,name,11,green,'bold',ha='center')
+  molecule(ax,ETHANOL,x,175,155,132,{i:PALE_A for i in atoms},notes=False,font=32)
+ ar((185,242),(214,242),green,1.8);ar((371,242),(400,242),green,1.8)
+ t(299,344,'Grow while refining the placement set',10.5,muted,ha='center')
+ t(299,383,r'$|w_R-w_P|\leq\tau_{\mathrm{iso}}$',12,navy,ha='center')
+ ar((565,242),(630,242),navy,2.2)
+ tree([(630,242),(667,242),(667,170),(731,170)],navy,2.2)
+ tree([(630,242),(667,242),(667,357),(731,357)],navy,2.2)
+ dot(667,242)
+ for x,y,atoms,name in [(738,105,[21,22,23],'Placement 1'),(738,292,[26,27,28],'Placement 2')]:
+  box(x,y,345,142,'white','#D6E1E9',.9,10)
+  molecule(ax,LACTATE,x+15,y+4,244,134,{i:PALE_A for i in atoms},notes=False,font=31)
+  t(x+256,y+53,name.replace(' ','\n'),10.5,navy,'bold',ha='center')
+  continuation(x+345,y+71)
+ t(1265,253,'Continue\nremaining atoms',10.5,muted,ha='center')
+ t(1144,79,'Different target atom sets',10.5,navy,'bold',ha='center')
 
- head(624,273,'c','Compress matching-preserving shuffles','Single and double C–O bonds both pass at τiso = 1.')
- acid(662,325,290,210,owners={3:PALE_O,4:PALE_O},letters=True)
- t(986,364,'R bond     P bond',8.6,INK,'bold')
- t(986,401,'2  →  2 or 1',9);t(986,436,'1  →  1 or 2',9)
- t(986,481,'|Δw| ≤ 1',10,TEAL,'bold')
- t(644,558,'g = (c d)',12,PURPLE,'bold');t(819,558,'one coupled O exchange',9,PURPLE)
- t(644,597,'χ(1) = χ(2): an intrinsic fragment symmetry.',9)
- t(644,638,'Saved constraints decide which shuffles are allowed.\nThis is not formal-bond-order chemical symmetry.',8.5,MUTED)
- rule(683)
+ # B: the existing continuation survives; a challenger makes a new branch.
+ box(12,467,702,448,bg,bg,r=16)
+ label(34,503,'b','Add a branch when fragments compete')
+ t(34,536,'Methyl acetate hydrolysis',10.5,muted)
+ molecule(ax,ESTER,22,642,260,162,{**{i:PALE_A for i in [1,2,3,4]},5:PALE_B},notes={4:'4'},font=31)
+ t(149,819,r'$+\ \mathrm{H_2O}$',13,navy,ha='center')
+ t(151,596,'A',12,green,'bold',ha='center');t(192,596,'B',12,orange,'bold',ha='center')
+ t(150,859,'Contact at O4',10.5,muted,ha='center')
+ ar((280,722),(301,722),navy,2.2)
+ tree([(301,722),(326,722),(326,628),(379,628)],green,2.2)
+ tree([(301,722),(326,722),(326,818),(379,818)],orange,2.2)
+ dot(326,722)
+ for y,owners,title,color in [(560,{**{i:PALE_A for i in [1,2,3,4]},5:PALE_B},'Keep A',green),(750,{**{i:PALE_A for i in [1,2,3]},4:PALE_B,5:PALE_B},'Give B priority',orange)]:
+  box(385,y,264,136,'white','#D6E1E9',.9,10)
+  t(518,y-16,title,11,color,'bold',ha='center')
+  molecule(ax,ESTER,391,y+2,250,130,owners,notes={4:'4'},font=30)
+  if title=='Keep A':tree([(650,y+68),(729,y+68),(729,714),(753,714)],color,1.8)
+  else:
+   ar((650,y+68),(685,y+68),color,1.8)
+   t(695,y+68,'···',12,color)
+ # The orange path is an added continuation, not replacement of the green path.
+ t(370,901,'Keep the original path; add the challenger.',10.5,muted,ha='center')
 
- head(24,715,'d','Branch again when fragments compete','Retain A, or let B claim the contacting oxygen 4.')
- molecule(ax,ESTER,25,763,310,153,{**{i:PALE_A for i in [1,2,3,4]},5:PALE_B},font=25)
- t(365,802,'A = {1,2,3,4}',9,TEAL,'bold');t(365,837,'B starts at {5}',9,ORANGE,'bold')
- ar((248,881),(111,927),TEAL);ar((310,881),(411,927),ORANGE)
- t(128,931,'keep A',9.5,TEAL,'bold',ha='center');t(417,931,'prioritize B',9.5,ORANGE,'bold',ha='center')
- molecule(ax,ESTER,16,949,253,133,{**{i:PALE_A for i in [1,2,3,4]},5:PALE_B},font=23)
- molecule(ax,ESTER,306,949,253,133,{**{i:PALE_A for i in [1,2,3]},4:PALE_B,5:PALE_B},font=23)
- t(138,1096,'4 → d;  5 → e',9,ha='center');t(431,1096,'4 → f;  5 → e',9,ha='center')
- t(138,1124,'cleave O4–C5',8.5,TEAL,ha='center');t(431,1124,'cleave C2–O4',8.5,ORANGE,ha='center')
-
- head(624,715,'e','Decode different bond-event patterns','Products labeled by their assigned reactant indices.')
- products(640,754,.99)
- t(1086,807,'2',17,TEAL,'bold',ha='center');t(1086,839,'events',8.5,TEAL,ha='center')
- t(645,908,'−(4,5), +(5,6)',9,TEAL)
- products(640,924,.99,mapping={1:1,2:2,3:4,4:3,5:5,6:6})
- t(1086,977,'4',17,RED,'bold',ha='center');t(1086,1009,'events',8.5,RED,ha='center')
- t(645,1078,'Same changes, plus −(2,3), +(2,4)',9,RED)
- t(645,1120,'O exchange changes events despite admissible matching.',8.3,MUTED)
- rule(1144)
- head(24,1174,'f','One unordered branch; retain its mapping families','The oxygen assignments in (c,e) share {(1,2,3,4) ↔ (a,b,c,d), 5 ↔ e, 6 ↔ f}, regardless of growth order.')
- t(24,1240,'Constructed heavy-atom illustration · formal bond weights · event threshold 0.5 · H transfers omitted',8.4,MUTED)
+ # C: output projection uses dashed arrows; it is not a search branch.
+ box(732,467,696,448,bg,bg,r=16)
+ label(754,503,'c','Decode each compressed family')
+ t(754,536,'The oxygen exchange preserves matching at '+r'$\tau_{\mathrm{iso}}=1$',10.5,muted)
+ box(757,621,216,189,'white','#CEC1E3',1.0,12)
+ coords=molecule(ax,ACID,759,630,210,159,{3:PALE_O,4:PALE_O},notes={3:'c',4:'d'},font=33)
+ t(865,594,'Matching symmetry',10.5,violet,'bold',ha='center')
+ t(865,790,r'$g=(c\ d)$',12,violet,ha='center')
+ t(865,851,'One branch\ncorrelated alternatives',10.5,violet,ha='center')
+ # Witness cards show oxygen identities while leaving unchanged carbons unlabeled.
+ for y,mapping,count,color in [(575,{3:3,4:4,5:5,6:6},2,green),(757,{3:4,4:3,5:5,6:6},4,RED)]:
+  box(1056,y,347,144,'white','#D6E1E9',.9,10)
+  molecule(ax,ACID,1060,y+10,146,118,notes={i:mapping[i] for i in [3,4]},font=29)
+  t(1209,y+60,'+',11)
+  molecule(ax,ALCOHOL,1220,y+39,95,72,notes={6:'6'},font=28)
+  t(1359,y+51,str(count),20,color,'bold',ha='center')
+  t(1359,y+83,'events',10,color,ha='center')
+ ar((975,704),(1053,647),violet,1.8,True)
+ ar((975,730),(1053,829),violet,1.8,True)
+ t(1230,739,'Exchange O3 / O4',10,violet,ha='center')
+ # Shared legend, kept outside the chemical trees.
+ ar((35,949),(84,949),navy,1.7);t(95,949,'Search continuation',10,muted)
+ ar((394,949),(443,949),violet,1.7,True);t(454,949,'Event projection',10,muted)
+ t(1407,949,'Formal bond orders · heavy-atom events at δ = 0.5',10,muted,ha='right')
+ fig.canvas.draw()
+ renderer=fig.canvas.get_renderer()
+ for label in ax.texts:
+  extent=label.get_window_extent(renderer)
+  assert extent.x0>=-1 and extent.x1<=fig.bbox.width+1 and extent.y0>=-1 and extent.y1<=fig.bbox.height+1,label.get_text()
  for ext in ['pdf','svg','png']:fig.savefig(man/'figs'/f'fig1_algorithm.{ext}',facecolor='white',dpi=260)
  plt.close(fig)
- print('Molecular figure: RDKit vector structures; all example assertions passed.')
+ print('Branching overview: RDKit vector molecules and checked illustrative mappings.')
 
 if __name__=='__main__':build(Path(__file__).resolve().parents[1])

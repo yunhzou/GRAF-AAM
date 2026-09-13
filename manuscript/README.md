@@ -6,7 +6,7 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `preprint.tex`: LaTeX entry point, retaining the supplied author list and preprint style.
 - `includes/paper.tex`: methods, evaluation, and discussion.
 - `includes/supplement.tex`: concise reproducibility details and completeness definitions.
-- `figs/fig1_algorithm.{pdf,svg,png}`: the six-panel molecular algorithm figure: RDKit vector depictions of methyl acetate hydrolysis and an ethanol/ethyl-lactate matching example illustrate growth, distinct placements, automorphism compression, competition, and event decoding.
+- `figs/fig1_algorithm.{pdf,svg,png}`: the branching algorithm overview: RDKit vector depictions of methyl acetate hydrolysis and an ethanol/ethyl-lactate matching example illustrate growth, distinct placements, automorphism compression, competition, and event decoding.
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
 - `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and seed cost.
 - `figs/fig3_coordinate.{pdf,svg,png}`: 140-case event-class coverage and final branch counts.
