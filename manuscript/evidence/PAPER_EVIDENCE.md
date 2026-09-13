@@ -20,3 +20,5 @@ The main text excludes development history. The full validation report retains e
 The main algorithm figure uses a constructed methyl acetate hydrolysis example, independently checked in `molecule_example.json`. It is not a benchmark trajectory. Formal weights and heavy-atom event counts are illustrative; the reported benchmark evaluates explicit hydrogens.
 
 `competitors.json` restores the completed seven-configuration Golden reproduction. All 12,957 saved records were freshly rescored with the current evaluator, with unchanged outcomes. These default explicit-output results have a different scope from the final GRAFT family search and SLAP sweep. Full audit and per-case checks: `reports/golden_competitor_recheck_20260913/`.
+
+Paired no-sweep controls are included in the main Golden results table. Evidence: `reports/golden_unswept_20260913/`; GRAFT 1,489/1,851, SLAP 1,661/1,851 (one unresolved). No new mapping searches were run. The molecular figure now checks alcohol-site matches including attached H and shows three conditional assignment levels.

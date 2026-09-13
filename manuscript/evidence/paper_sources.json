@@ -33,6 +33,12 @@
       "source": "reports/golden_competitor_recheck_20260913/competitors.json",
       "scope": "Archived default-implementation outputs, freshly rescored. First and any explicitly returned mapping are separate. This is not exhaustive SLAP label-family decoding. All errors and invalid predictions stay in the denominator. No cross-host timing comparison is made.",
       "sha256": "0380c810f4ceeaddc1f07557a65a99c3af22d8903890c06b3bcdd9cc13edc774"
+    },
+    {
+      "snapshot": "unswept.json",
+      "source": "reports/golden_unswept_20260913/unswept.json",
+      "scope": "Paired final-campaign uncut controls; one-seed GRAFT and binary/weighted SLAP, both directions.",
+      "sha256": "1cdfbb43cda0e695460fc1f380bf20389322f98202588f785ef215a9905e4774"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."

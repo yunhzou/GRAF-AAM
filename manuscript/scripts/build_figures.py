@@ -27,14 +27,18 @@ fig,axs=plt.subplots(1,2,figsize=(8.4,3.8),gridspec_kw={'width_ratios':[1.45,1]}
 a=axs[0];labels=['GRAFT · 1 order','GRAFT · 2 orders','GRAFT · 3 orders','GRAFT · 10 orders','SLAP sweep'];vals=[*counts,slap['sweep_union_recovered']];y=np.arange(5)
 a.barh(y,np.array(vals)/N*100,color=[GREEN,BLUE,'#52789F',PURPLE,ORANGE],height=.58)
 for i,v in enumerate(vals):a.text(v/N*100-1.5,i,f'{v:,} / {N:,}  ({v/N*100:.2f}%)',ha='right',va='center',color='white',fontsize=9,weight='bold')
-a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Verified reference-family recovery (%)');a.invert_yaxis();a.set_title('a  Golden mapping coverage',loc='left',weight='bold',pad=13)
+a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Verified reference-family recovery (%)');a.invert_yaxis();a.set_title('a  Recovery with sweeps',loc='left',weight='bold',pad=13)
 a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 a=axs[1];shown=[costs[0],costs[1],seed['same_host_timing']['metrics']['slap']['mean_seconds']];y=np.arange(3);a.barh(y,shown,color=[GREEN,BLUE,ORANGE],height=.53)
 for i,v in enumerate(shown):a.text(v+.10,i,f'{v:.2f}',va='center',fontsize=9)
-a.set(yticks=y,yticklabels=['GRAFT · 1 order','GRAFT · 2 orders','SLAP sweep'],xlim=(0,max(shown)*1.23),xlabel='Mean CPU seconds / reaction');a.invert_yaxis();a.set_title('b  Same-Mac workflow cost',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+a.set(yticks=y,yticklabels=['GRAFT · 1 order','GRAFT · 2 orders','SLAP sweep'],xlim=(0,max(shown)*1.23),xlabel='Mean CPU seconds / reaction');a.invert_yaxis();a.set_title('b  Sweep workflow cost (Mac)',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 save(fig,'fig2_golden')
-table=[]
-for k,label in zip(keys,['1 seed order','2 seed orders','3 seed orders','10 seed orders']):
+uncut=read('unswept.json');table=[]
+for name,label in [('graft','GRAFT, 1 seed, no sweep'),('slap','SLAP, no sweep')]:
+ o=uncut['methods'][name]['counts']
+ table.append(f"{label} & {o['recovered']:,} & {100*o['recovered']/N:.2f} & {o['not_recovered']} & {o.get('unknown',0)} & -- " + r"\\")
+table.append(r"\midrule")
+for k,label in zip(keys,['GRAFT, 1 seed + sweep','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
  d=methods[k];o=d['golden_outcomes'];cost_text=f"{d['common_mean_cpu_seconds']:.2f}" if d['common_mean_cpu_seconds'] is not None else '--';table.append(f"{label} & {o['recovered']:,} & {d['golden_recovery_percent']:.2f} & {o['not_recovered']} & {o['unknown']} & {cost_text} \\\\")
 table.append(f"SLAP sweep & {slap['outcomes']['recovered']:,} & {100*slap['outcomes']['recovered']/N:.2f} & {slap['outcomes']['not_recovered']} & {slap['outcomes']['unknown']} & {shown[2]:.2f} " + r"\\")
 (MAN/'includes/generated-seed-table.tex').write_text('\\begin{tabular}{lrrrrr}\\toprule\nConfiguration & Recovered & \\% & Absent & Unknown & CPU s/reaction\\\\\\midrule\n'+'\n'.join(table)+'\n\\bottomrule\\end{tabular}\n')

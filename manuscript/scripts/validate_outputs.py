@@ -6,6 +6,13 @@ MAN=Path(__file__).resolve().parents[1];E=MAN/'evidence'
 def read(n):return json.loads((E/n).read_text())
 from build_molecule_figure import check_example
 assert read('molecule_example.json') == json.loads(json.dumps(check_example()))
+uncut=read('unswept.json')
+assert uncut['denominator']==1851 and uncut['seed_count']==1
+for name in ['graft','slap']:
+ d=uncut['methods'][name]
+ assert sum(d['counts'].values())==1851
+ assert d['counts']['recovered']==len(set(d['recovered_cases']))
+ assert d['sweep_recovered']==len(d['recovered_cases'])+len(d['added_by_sweep'])
 competitors=read('competitors.json')
 assert competitors['denominator']==1851 and competitors['rescored_with_current_evaluator'] and competitors['unchanged_case_outcomes']
 assert len(competitors['methods'])==7
@@ -65,6 +72,7 @@ assert '??' not in alltext
 for value in [f"{seed['methods']['seeds1']['golden_recovery_percent']:.2f}",f"{seed['methods']['seeds3']['golden_recovery_percent']:.2f}",'124,641','237,645',f"{flat['wall_seconds']/60:.2f}",'166','168']:
  assert value in alltext,value
 assert 'Default released implementations on Golden' in alltext
+for value in ['1,489','1,661','80.44','89.74']:assert value in alltext
 for d in competitors['methods']:
  assert f"{d['any_correct']:,}" in alltext
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,

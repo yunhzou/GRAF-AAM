@@ -29,11 +29,7 @@ This is a greedy search along each trajectory: an accepted extension can remove 
 
 \begin{figure}[t]
 \centering\includegraphics[width=\linewidth]{figs/fig1_algorithm.pdf}
-\caption{\textbf{Fragment search branches; symmetry stays compressed.}
-(a) An ethanol fragment grows while its compatible placements are refined. At saturation, different target atom sets in ethyl lactate define separate continuations; two admissible placements are shown. Pale continuation edges indicate subsequent search schematically.
-(b) At a fragment contact in methyl acetate hydrolysis, the original branch retains O4 in fragment A. A new branch gives B priority, rematches the contacting region, and regrows displaced assignments.
-(c) Within one hydrolysis fragment pair, exchanging the oxygen images preserves matching at $\tau_{\mathrm{iso}}=1$ but changes two heavy-atom events to four at threshold $0.5$. Dashed arrows denote event projection, not additional search branches. Saved constraints govern allowed symmetry actions.
-The molecular examples use formal bond orders and omit hydrogen transfers; benchmark search and scoring include explicit H.}
+\caption{\textbf{Conditional fragment branching and compressed symmetry.} (a) A local alcohol motif grows while retaining its O--H bond. Three sites in the depicted target have distinct molecular environments. For three source fragments sharing this motif, placing A fixes one site; B then branches over the two unused sites, and C takes the remaining site. The tree illustrates local conditioning and injectivity; R denotes atoms outside the matched subgraph, and this is not a complete reaction-search trajectory. All attached hydrogens in the illustrated local matches are checked. (b) At a fragment contact in methyl acetate saponification, the original path retains O4 in A. An added path gives B priority, rematches the contact, and regrows displaced assignments. (c) Exchanging the two acetate oxygen images preserves the fragment's element and bond-weight matching tests at $\tau_{\mathrm{iso}}=1$, but changes two heavy-atom events into four at threshold $0.5$. Neither acetate oxygen carries H. Dashed arrows are event projections within a family, not additional search branches. Saved constraints govern allowed symmetry actions; event counts here show the heavy-atom projection.}
 \label{fig:algorithm}
 \end{figure}
 
@@ -107,7 +103,7 @@ The coordinate collection contains balanced endpoint pairs with 18--137 explicit
 
 \begin{table}[tb]
 \centering\small
-\caption{\textbf{Evaluation configurations.} Both use $b=0.2$, $\tau_{\mathrm{iso}}=1$, explicit H, and uncut plus single-edge searches. A seed setting counts source-atom orderings per cut.}
+\caption{\textbf{Evaluation configurations.} Both use $b=0.2$, $\tau_{\mathrm{iso}}=1$, explicit H, and uncut plus single-edge searches. The no-sweep controls retain only the uncut graph. A seed setting counts source-atom orderings per cut.}
 \label{tab:protocol}
 \begin{tabular}{lcc}\toprule
 Setting & Golden & Coordinate/WBO\\\midrule
@@ -124,15 +120,17 @@ Evaluation & Reference-family recovery & Signed event-class coverage\\\bottomrul
 
 \subsection{Golden mapping recovery}
 
-With one ordering per cut, bidirectional GRAFT recovers \GoldenOneRecovered/1,851 annotated mappings (\GoldenOnePercent\%). Three orderings recover \GoldenThreeRecovered{} (\GoldenThreePercent\%; \Cref{tab:seeds}), and ten recover \GoldenTenRecovered{} (\GoldenTenPercent\%), with \GoldenTenUnknown{} reactions unresolved. Two orderings also recover \GoldenOneRecovered{} (\GoldenOnePercent\%), with no unresolved reactions at either setting. These are family-recovery measurements: they quantify whether a reference correspondence is retained, rather than whether it is ranked first.
+With one ordering per cut and the single-edge sweep, bidirectional GRAFT recovers \GoldenOneRecovered/1,851 annotated mappings (\GoldenOnePercent\%). Three orderings recover \GoldenThreeRecovered{} (\GoldenThreePercent\%; \Cref{tab:seeds}), and ten recover \GoldenTenRecovered{} (\GoldenTenPercent\%), with \GoldenTenUnknown{} reactions unresolved. Two orderings also recover \GoldenOneRecovered{} (\GoldenOnePercent\%), with no unresolved reactions at either setting. These are family-recovery measurements: they quantify whether a reference correspondence is retained, rather than whether it is ranked first.
 
 
 \begin{table}[tb]
 \centering\small
-\caption{\textbf{Golden reference-family recovery and CPU cost.} Recovery uses all 1,851 records. CPU averages use the same \CommonCases{} completed reactions on the Mac, including both directions and the respective sweeps; reference verification is excluded. Dashes mark mixed-host configurations whose times are not compared. ``Absent'' means excluded from saved families; ``unknown'' denotes unresolved verification.}
+\caption{\textbf{Golden recovery with and without the sweep.} Recovery uses all 1,851 records. CPU averages use the same \CommonCases{} completed reactions on the Mac, including both directions and the respective sweeps; reference verification is excluded. Dashes mark unmeasured unswept search cost or mixed-host configurations whose times are not compared. SLAP unions binary and weighted modes in both directions; GRAFT uses both directions. ``Absent'' means excluded from saved families; ``unknown'' denotes unresolved verification.}
 \label{tab:seeds}
 \input{includes/generated-seed-table}
 \end{table}
+
+Without the sweep, one-seed GRAFT recovers 1,489/1,851 references (80.44\%), with no unresolved cases. Uncut SLAP, unioned over both directions and binary/weighted modes, recovers 1,661 (89.74\%), with one unresolved case. Adding the sweep recovers 345 additional references for GRAFT and 135 for SLAP. Thus, GRAFT's higher recovery in the swept comparison depends on the broader search: its one-seed uncut control has lower coverage than the uncut SLAP union. The controls use saved uncut outputs from the same final campaign; no new searches are needed.
 
 The SLAP single-edge sweep recovers \SlapRecovered/1,851 references (\SlapPercent\%) using both directions and binary and weighted modes. One-order GRAFT has a higher verified recovery rate by \RecoveryDifference{} percentage points. The paired comparison contains \AamOnly{} references verified only by one-order GRAFT and \SlapOnly{} verified only by SLAP. This compares recovery among alternatives under the stated configurations; it is not a comparison of single-answer accuracy or equal-size candidate sets.
 
@@ -140,7 +138,7 @@ On the same-Mac subset of \CommonCases{} reactions with completed one- and two-o
 
 \begin{figure}[tb]
 \centering\includegraphics[width=\linewidth]{figs/fig2_golden.pdf}
-\caption{\textbf{Reference recovery and search cost.} (a) Golden family recovery for each GRAFT seed setting and the SLAP sweep. Every percentage uses all 1,851 records. (b) Mean recorded workflow CPU on the same \CommonCases{} completed reactions on the Mac. Reference verification is excluded; the procedures have different search objectives, output cardinalities, and I/O timing scopes.}
+\caption{\textbf{Reference recovery and search cost.} (a) Golden family recovery with sweeps for each GRAFT seed setting and SLAP. Unswept controls are reported in \Cref{tab:seeds}. Every percentage uses all 1,851 records. (b) Mean recorded workflow CPU on the same \CommonCases{} completed reactions on the Mac. Reference verification is excluded; the procedures have different search objectives, output cardinalities, and I/O timing scopes.}
 \label{fig:golden}
 \end{figure}
 
@@ -150,7 +148,7 @@ We also evaluate default released implementations of RXNMapper~\citep{schwaller2
 
 \begin{table}[tb]
 \centering\small
-\caption{\textbf{Default released implementations on Golden.} Counts and percentages use all 1,851 reactions, including failures. ``First'' evaluates the first explicit output; ``any'' evaluates every explicitly returned candidate. SLAP output order is not asserted to be a top-one ranking, and its compressed label families are not exhaustively decoded here. Invalid counts refer to returned candidates; failed counts refer to reactions with no mapped output after the recorded execution retries.}
+\caption{\textbf{Default released implementations on Golden (no sweep).} Counts and percentages use all 1,851 reactions, including failures. ``First'' evaluates the first explicit output; ``any'' evaluates every explicitly returned candidate. SLAP output order is not asserted to be a top-one ranking, and its compressed label families are not exhaustively decoded here. Invalid counts refer to returned candidates; failed counts refer to reactions with no mapped output after the recorded execution retries.}
 \label{tab:competitors}
 \input{includes/generated-competitor-table}
 \end{table}
