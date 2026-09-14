@@ -8,7 +8,7 @@ The public API has one direction of dependency::
 Serialization, command-line orchestration, and viewers are typed boundary
 adapters outside these computational contracts.
 """
-from .aam import search_aam
+from .aam import search_aam, search_aam_checkpoints, AAMCheckpointResult
 from .search_orientation import AAMSearchPlan, plan_aam_search
 from .family_query import query_path
 from .analytical import compile_mapping_families, compile_mechanism_families
@@ -84,6 +84,7 @@ __all__ = [
     "TransitionStateTarget", "VibrationalModes",
     "AAMBranch", "AAMHierarchy", "AtomBijection", "AtomPermutation",
     "FragmentMatch", "PermutationGroup", "SymmetryDomain",
+    "search_aam_checkpoints", "AAMCheckpointResult",
     "search_aam", "compile_mapping_families", "search_core_assignments",
     "select_rp_mappings", "align_reaction", "analyze_transition_state",
     "reaction_context_from_rp",

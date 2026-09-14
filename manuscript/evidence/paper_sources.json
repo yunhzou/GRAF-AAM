@@ -6,9 +6,9 @@
   "snapshots": [
     {
       "snapshot": "seed_comparison.json",
-      "source": "reports/current_validation_20260912/seed_comparison.json",
-      "scope": "Final Golden reference verification, including positive witnesses in saved cuts; separate same-Mac timing cohort",
-      "sha256": "7111ad4a25c2b58623a7f3019e20a30442153284e305aa38b8d36979b45f025e"
+      "source": "reports/checkpoint_memory_fix_20260913/seed_comparison.json",
+      "scope": "Complete saved-cut negative verdicts replace conservative unknown aggregates. No new searches or changed recovered cases; original execution statuses and timings preserved.",
+      "sha256": "a8c83fc06481f3511fb44e62c452ed0106a4920ca2f2b6e1e69c50b770467b97"
     },
     {
       "snapshot": "slap_sweep.json",
@@ -39,6 +39,12 @@
       "source": "reports/golden_unswept_20260913/unswept.json",
       "scope": "Paired final-campaign uncut controls; one-seed GRAFT and binary/weighted SLAP, both directions.",
       "sha256": "1cdfbb43cda0e695460fc1f380bf20389322f98202588f785ef215a9905e4774"
+    },
+    {
+      "snapshot": "checkpoint_verdict_audit.json",
+      "source": "reports/checkpoint_memory_fix_20260913/audit.json",
+      "scope": "Complete cut-coverage audit for cases 590 and 1358; prior execution failures remain recorded.",
+      "sha256": "72c15bfe47fdda888cfdd980554b2707b8923bf9590be3071c8c003143464ed4"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."

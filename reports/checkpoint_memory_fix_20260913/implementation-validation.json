@@ -1,0 +1,58 @@
+{
+  "source_sha256": {
+    "src/rxn_core/aam.py": "89e31536c5e65c1696168bb7fbe21a1aad27f4ac13987c7a7d60cf88f4216f8a",
+    "src/rxn_core/__init__.py": "d5afefbcfa3908d310153588309f1ee3662b706ce18ec2fe43fa8b77e991fac5",
+    "bench/golden_checkpoint_evaluation.py": "ef1232f94bed85e169b166b51c0220cc027dd6e4ea8ded0348d0a802edc31aa4",
+    "tests/test_golden_checkpoint_evaluation.py": "0536aaf13085164e3b2e5e8c6620998d3f4f757417c18cbfcb83745d7bc01562"
+  },
+  "integration_cases": [
+    590,
+    1358
+  ],
+  "integration_seed_count": 1,
+  "search_reruns": false,
+  "small_molecule_search_parity": true,
+  "focused_tests": {
+    "passed": 24,
+    "seconds": 2.27,
+    "strengthened_finalized_graph_release_check": "passed separately"
+  },
+  "fresh_saved_archive_checks": [
+    {
+      "case": 1358,
+      "direction": "P_to_R",
+      "seed_count": 1,
+      "reference_recovery": "not_recovered",
+      "cpu_seconds": 3.605217,
+      "wall_seconds": 4.226493000052869,
+      "peak_mib": 143.125
+    },
+    {
+      "case": 1358,
+      "direction": "R_to_P",
+      "seed_count": 1,
+      "reference_recovery": "not_recovered",
+      "cpu_seconds": 6.627199,
+      "wall_seconds": 7.2464386250358075,
+      "peak_mib": 150.5
+    },
+    {
+      "case": 590,
+      "direction": "P_to_R",
+      "seed_count": 1,
+      "reference_recovery": "not_recovered",
+      "cpu_seconds": 7.702947999999999,
+      "wall_seconds": 7.900254750158638,
+      "peak_mib": 161.265625
+    },
+    {
+      "case": 590,
+      "direction": "R_to_P",
+      "seed_count": 1,
+      "reference_recovery": "not_recovered",
+      "cpu_seconds": 7.8964,
+      "wall_seconds": 8.317648666910827,
+      "peak_mib": 162.671875
+    }
+  ]
+}

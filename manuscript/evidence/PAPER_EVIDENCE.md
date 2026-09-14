@@ -22,3 +22,6 @@ The main algorithm figure uses a constructed methyl acetate hydrolysis example, 
 `competitors.json` restores the completed seven-configuration Golden reproduction. All 12,957 saved records were freshly rescored with the current evaluator, with unchanged outcomes. These default explicit-output results have a different scope from the final GRAFT family search and SLAP sweep. Full audit and per-case checks: `reports/golden_competitor_recheck_20260913/`.
 
 Paired no-sweep controls are included in the main Golden results table. Evidence: `reports/golden_unswept_20260913/`; GRAFT 1,489/1,851, SLAP 1,661/1,851 (one unresolved). No new mapping searches were run. The molecular figure now checks alcohol-site matches including attached H and shows three conditional assignment levels.
+
+
+2026-09-13 complete-cut audit: ten-seed Golden recovery is 1,840/1,851, with 11 reference mappings absent and zero unresolved. Cases 590 and 1358 have complete negative cut coverage. Original failed monolithic execution records remain in the campaign report. See checkpoint_verdict_audit.json and reports/checkpoint_memory_fix_20260913; no search reruns or change in recovery percentage.

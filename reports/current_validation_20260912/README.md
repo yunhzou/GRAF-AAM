@@ -1,3 +1,5 @@
+> Correction (2026-09-13): the ten-seed Golden verdict is 1,840 recovered, 11 not recovered, and zero unresolved. Complete per-cut verification resolves cases 590 and 1358. See [the audit and corrected summary](../checkpoint_memory_fix_20260913/README.md). Original campaign JSON and execution records below remain historical evidence; the driver scripts now use bounded cut-by-cut verification.
+
 # Final-source validation, September 2026
 
 The algorithm source is commit 3a9ef9a. The search/evaluation source is unchanged from eb1a7d1; the final commit adds exact adjacent nested-subgroup absorption during final-family decoding. The source hashes and version proof record this boundary.

@@ -23,10 +23,9 @@ def prepare_inputs():
 
 def child(dataset,seed,case,direction,phase):
  import numpy as np
- from rxn_core import AAMProblem,MolecularEndpoint,AAMSearchConfig,search_aam
+ from rxn_core import AAMProblem,MolecularEndpoint,AAMSearchConfig,search_aam,search_aam_checkpoints
  from rxn_core.search_orientation import AAMSearchPlan
- from rxn_core.artifacts import read_aam_checkpoint
- from golden_evaluation import evaluate_planned
+ from golden_checkpoint_evaluation import evaluate_checkpoints
  random.seed(42);np.random.seed(42)
  raw=read((ROOT/'golden-inputs'/str(case) if dataset=='golden' else WORK/'full140_inputs'/str(case))/'input.json')
  p=AAMProblem(*(MolecularEndpoint(**raw[s]) for s in ('reactant','product')),raw.get('name',''))
@@ -35,12 +34,20 @@ def child(dataset,seed,case,direction,phase):
  folder=ROOT/'runs'/dataset/f'seed{seed}'/f'case{case}'/direction
  start=time.perf_counter();cpu=time.process_time()
  if phase=='search':
-  a=search_aam(plan.problem,cfg,execution='reused_native',workers=1,intermediate_dir=folder/'cuts',archive_format='checkpoint',resume=(folder/'cuts/manifest.json').exists())
-  save(folder/'search.json',dict(case=case,seed=seed,direction=direction,config=asdict(cfg),metrics=asdict(a.metrics),wall_seconds=time.perf_counter()-start,cpu_seconds=time.process_time()-cpu,archive_sha256=sha(folder/'cuts/aam.pkl.gz'),capped=a.graph.capped))
+  if dataset=='golden':
+   a=search_aam_checkpoints(plan.problem,cfg,execution='reused_native',workers=1,intermediate_dir=folder/'cuts',resume=(folder/'cuts/manifest.json').exists())
+   archive=dict(archive_kind='raw_cut_checkpoints',manifest_sha256=sha(folder/'cuts/manifest.json'))
+   capped=a.capped
+  else:
+   a=search_aam(plan.problem,cfg,execution='reused_native',workers=1,intermediate_dir=folder/'cuts',archive_format='checkpoint',resume=(folder/'cuts/manifest.json').exists())
+   archive=dict(archive_sha256=sha(folder/'cuts/aam.pkl.gz'));capped=a.graph.capped
+  save(folder/'search.json',dict(case=case,seed=seed,direction=direction,config=asdict(cfg),metrics=asdict(a.metrics),wall_seconds=time.perf_counter()-start,cpu_seconds=time.process_time()-cpu,capped=capped,**archive))
  else:
-  assert read(folder/'search.json')['archive_sha256']==sha(folder/'cuts/aam.pkl.gz')
-  a=read_aam_checkpoint(folder/'cuts/aam.pkl.gz');ref=read(ROOT/'golden-inputs'/str(case)/'reference.json')
-  result=evaluate_planned(a,plan,ref['features'],ref['mapping'],seconds=220,query_timeout_ms=5000)
+  ref=read(ROOT/'golden-inputs'/str(case)/'reference.json')
+  record=read(folder/'search.json')
+  if record.get('archive_kind')=='raw_cut_checkpoints':
+   assert record['manifest_sha256']==sha(folder/'cuts/manifest.json')
+  result=evaluate_checkpoints(folder/'cuts',plan,ref['features'],ref['mapping'],seconds=220,query_timeout_ms=5000)
   result.update(cpu_seconds=time.process_time()-cpu,wall_seconds=time.perf_counter()-start)
   save(folder/'evaluation.json',result)
 

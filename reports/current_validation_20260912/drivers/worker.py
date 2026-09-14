@@ -25,16 +25,16 @@ def aam(task):
  def state(phase):
   p=folder/f'{phase}_execution.json'
   return read(p) if p.exists() else {}
- # Verify completed raw cuts first if a prior search was interrupted.
+ # Verify saved cuts first; complete negative coverage can also resolve a verdict.
  previous=state('search')
  if previous.get('status') not in [None,'passed'] and (folder/'cuts/manifest.json').exists():
   row=execute([sys.executable,str(ROOT/'score_checkpoints.py'),str(seed),str(case),direction],folder/'checkpoint-score-hpc.log',memory=6144)
   row.update(phase='checkpoint_score',previous_attempt=backup(folder,'score','before-checkpoint'))
   attempts.append(row)
   p=folder/'checkpoint-verification.json'
-  if row['status']=='passed' and p.exists() and read(p).get('reference_recovery')=='recovered':
+  if row['status']=='passed' and p.exists() and read(p).get('reference_recovery') in ('recovered','not_recovered'):
    save(folder/'evaluation.json',read(p));save(folder/'score_execution.json',row)
-   return dict(task=task,status='passed',scope='Positive cut witness; interrupted search remains incomplete',attempts=attempts)
+   return dict(task=task,status='passed',scope='Cut-union reference verdict; original execution status is preserved',attempts=attempts)
  for phase,target in [('search','search.json'),('score','evaluation.json')]:
   prior=state(phase)
   if prior.get('status')=='passed' and (folder/target).exists():continue

@@ -32,7 +32,8 @@ for k in keys:
  d=seed['methods'][k]
  assert len(d['per_case'])==1851 and {r['case'] for r in d['per_case']}==set(range(1851))
  assert all(r['outcome'] in {'recovered','not_recovered','unknown'} for r in d['per_case'])
- assert d['golden_outcomes']['recovered']==sum(r['outcome']=='recovered' for r in d['per_case'])
+ for status in ('recovered','not_recovered','unknown'):
+  assert d['golden_outcomes'][status]==sum(r['outcome']==status for r in d['per_case'])
  if d['common_mean_cpu_seconds'] is not None:
   assert abs(d['common_mean_cpu_seconds']-sum(d['per_case'][c]['search_cpu_including_io'] for c in seed['common_case_indices'])/len(seed['common_case_indices']))<1e-8
   assert all(d['per_case'][c]['search_complete'] and d['per_case'][c]['search_hosts']==['Mac'] for c in seed['common_case_indices'])

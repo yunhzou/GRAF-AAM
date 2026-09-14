@@ -6,7 +6,7 @@ names=['manuscript.pdf','preprint.tex','preprint.bbl','references.bib','README.m
 names += ['assets/'+n for n in ['matterlab.cls','paper-preamble.tex','plainnat.bst','Optimistic.ttf','logo_matterlab.pdf','logo_ac.pdf','logo_uoft.pdf','logo_vector.png','nvidia-logo-vert.png']]
 names += ['includes/'+n for n in ['include-abstract.tex','include-body.tex','include-appendix.tex','paper.tex','supplement.tex','generated-seed-table.tex','generated-decoder-table.tex','generated-results.tex','generated-competitor-table.tex']]
 names += ['figs/'+stem+'.'+ext for stem in ['fig1_algorithm','fig2_golden','fig3_coordinate'] for ext in ['pdf','svg','png']]
-names += ['evidence/'+n for n in ['paper_sources.json','seed_comparison.json','slap_sweep.json','competition_final.json','final_dedup.json','PAPER_EVIDENCE.md','molecule_example.json','competitors.json','unswept.json']]
+names += ['evidence/'+n for n in ['paper_sources.json','seed_comparison.json','slap_sweep.json','competition_final.json','final_dedup.json','PAPER_EVIDENCE.md','molecule_example.json','competitors.json','unswept.json','checkpoint_verdict_audit.json']]
 names += ['scripts/'+n for n in ['build.sh','build_figures.py','validate_outputs.py','package_bundle.py','build_molecule_figure.py']]
 checks={n:hashlib.sha256((MAN/n).read_bytes()).hexdigest() for n in sorted(names)}
 with zipfile.ZipFile(MAN/'manuscript_bundle.zip','w',compression=zipfile.ZIP_DEFLATED,compresslevel=6) as z:

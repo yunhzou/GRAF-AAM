@@ -1,9 +1,9 @@
-"""Verify reference membership cut by cut, without a full merge.
+"""Verify a positive reference witness in a completed cut, without a full merge.
 
 Cut graphs form a disjoint union. Final symmetry depends on the same fixed
 target and each transition's locked mapping and candidate record, so it can
 be finalized per cut. A positive witness belongs to the complete union. This
-adapter certifies absence only when every scheduled cut has a negative verdict.
+adapter never infers absence from an interrupted or partially checked search.
 """
 import sys,time,json,gc
 from pathlib import Path
@@ -48,12 +48,37 @@ def selftest():
          rows=rows,scope='Exact equality of combined-then-finalized and separately-finalized-then-combined graphs, including states, contexts, transition actions, constraints and stops. No atom-mapping or permutation enumeration.'))
 
 def child(seed,case,direction):
-    from golden_checkpoint_evaluation import evaluate_checkpoints
+    from rxn_core.artifacts import read_raw_cut,raw_cut_paths
+    from rxn_core.aam import checkpoint_manifest
+    from rxn_core.domain import AAMResult,AAMSearchMetrics
+    from golden_evaluation import evaluate_planned
+    proof=read(ROOT/'checkpoint-verification-tests.json')
+    assert proof['status']=='passed' and proof['driver_sha256']==sha(Path(__file__))
+    started=time.perf_counter();cpu=time.process_time();deadline=started+275
     plan,config,folder=inputs(seed,case,direction)
+    assert read(folder/'cuts/manifest.json')==checkpoint_manifest(plan.problem,config)
     reference=read(ROOT/'golden-inputs'/str(case)/'reference.json')
-    result=evaluate_checkpoints(folder/'cuts',plan,reference['features'],reference['mapping'],
-        seconds=275,query_timeout_ms=5000,
-        progress=lambda row:save(folder/'checkpoint-verification.json',row))
+    files=raw_cut_paths(folder/'cuts');rows=[];hit=None
+    for path in files:
+        if time.perf_counter()>deadline:break
+        before=time.perf_counter();graph=finalized(read_raw_cut(path),plan.problem,config)
+        aam=AAMResult(plan.problem,config,graph,AAMSearchMetrics.from_record({},0))
+        result=evaluate_planned(aam,plan,reference['features'],reference['mapping'],
+                                seconds=min(20,max(.01,deadline-time.perf_counter())),query_timeout_ms=5000)
+        row=dict(cut=str(path),sha256=sha(path),reference_recovery=result['reference_recovery'],
+                 wall_seconds=time.perf_counter()-before)
+        rows.append(row)
+        if result['reference_recovery']=='recovered':
+            hit=result;break
+        del aam,graph,result;gc.collect()
+        save(folder/'checkpoint-verification.json',dict(reference_recovery='unknown',checked=rows,
+             available_cuts=len(files),cpu_seconds=time.process_time()-cpu,wall_seconds=time.perf_counter()-started))
+    result=dict(hit or {},reference_recovery='recovered' if hit else 'unknown',
+                evaluation_scope='Positive family membership in completed cuts; ranking and candidate-count fields, if present, are cut-local.',
+                checkpoint_verification=dict(checked=rows,available_cuts=len(files),
+                    driver_sha256=sha(Path(__file__)),proof_sha256=sha(ROOT/'checkpoint-verification-tests.json'),
+                    scope='Positive witness in a completed, independently finalized raw cut; no claim that an interrupted combined search completed.'),
+                cpu_seconds=time.process_time()-cpu,wall_seconds=time.perf_counter()-started)
     save(folder/'checkpoint-verification.json',result)
 
 if __name__=='__main__':
