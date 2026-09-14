@@ -74,7 +74,7 @@ def _parser():
     parser.add_argument("--iso-tolerance", type=float, default=1.0)
     parser.add_argument("--event-threshold", type=float, default=0.5)
     parser.add_argument("--metal-event-threshold", type=float, default=0.3)
-    parser.add_argument("--seed-count", type=int, default=3)
+    parser.add_argument("--seed-count", type=int, default=1)
     parser.add_argument("--branch-limit", type=int, default=100)
     parser.add_argument("--anchor", action="append", default=[], metavar="R:P")
     return parser

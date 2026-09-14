@@ -24,7 +24,7 @@ def test_profiling_does_not_change_graph_or_parallel_seed_results(tmp_path, monk
     assert metrics['phases']['persistence/workers']['summed_wall_seconds']>=.01
     assert 0<=metrics['compute_cpu_excluding_persistence_and_loading_seconds']<=metrics['total_cpu_including_io_seconds']
     assert artifacts.write_raw_cut is slower
-    assert AAMSearchConfig().seed_count==3  # publication settings do not alter defaults
+    assert AAMSearchConfig().seed_count==1  # publication settings do not alter defaults
 
 
 def test_rank_and_mode_merge_keep_reference_out_of_selection():

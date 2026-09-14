@@ -107,13 +107,13 @@ The coordinate collection contains balanced endpoint pairs with 18--137 explicit
 
 \begin{table}[tb]
 \centering\small
-\caption{\textbf{Evaluation configurations.} Both use $b=0.2$, $\tau_{\mathrm{iso}}=1$, explicit H, and uncut plus single-edge searches. The no-sweep controls retain only the uncut graph. A seed setting counts source-atom orderings per cut.}
+\caption{\textbf{Evaluation configurations.} Both use $b=0.2$, $\tau_{\mathrm{iso}}=1$, explicit H, and uncut plus single-edge searches. The default is one seed per cut with the sweep; no-sweep controls are ablations retaining only the uncut graph. A seed setting counts source-atom orderings per cut.}
 \label{tab:protocol}
 \begin{tabular}{lcc}\toprule
 Setting & Golden & Coordinate/WBO\\\midrule
 Reactions & 1,851 & 140\\
 Search directions & Both, unioned & Reactant to product\\
-Seed orderings & 1, 2, 3, 10 & 1\\
+Seed orderings & 1 (default), 2, 3, 10 & 1 (default)\\
 Branch cap & 100 & 2,000\\
 Competition completions per reaction & 0 & Up to 128\\
 Evaluation & Reference-family recovery & Signed event-class coverage\\\bottomrule
@@ -124,7 +124,11 @@ Evaluation & Reference-family recovery & Signed event-class coverage\\\bottomrul
 
 \subsection{Golden mapping recovery}
 
-With one ordering per cut and the single-edge sweep, bidirectional GRAFT recovers \GoldenOneRecovered/1,851 annotated mappings (\GoldenOnePercent\%). Three orderings recover \GoldenThreeRecovered{} (\GoldenThreePercent\%; \Cref{tab:seeds}), and ten recover \GoldenTenRecovered{} (\GoldenTenPercent\%), with all reference-recovery verdicts resolved. Two orderings also recover \GoldenOneRecovered{} (\GoldenOnePercent\%), with all reference-recovery verdicts resolved at these settings as well. These are family-recovery measurements: they quantify whether a reference correspondence is retained, rather than whether it is ranked first. Verification processes saved cuts independently, retaining one cut in memory at a time. A reference is absent from the saved union only when every scheduled cut has been checked and excludes it; missing cuts or inconclusive checks remain unresolved.
+With the default one ordering per cut and single-edge sweep, bidirectional GRAFT recovers \GoldenOneRecovered/1,851 annotated mappings (\GoldenOnePercent\%). Three orderings recover \GoldenThreeRecovered{} (\GoldenThreePercent\%; \Cref{tab:seeds}), and ten recover \GoldenTenRecovered{} (\GoldenTenPercent\%), with all reference-recovery verdicts resolved. Two orderings also recover \GoldenOneRecovered{} (\GoldenOnePercent\%), with all reference-recovery verdicts resolved at these settings as well.
+
+For the default setting, smaller-first search recovers 1,803/1,851 references (97.41\%), larger-first search recovers 1,779 (96.11\%), and their union recovers 1,834 (99.08\%; \Cref{tab:directions}). Size counts all explicit atoms, including H. On equal-size endpoints, smaller-first retains the original input orientation and larger-first reverses it. The union adds 31 recoveries over smaller-first alone. Among the 1,084 strictly unequal-size pairs, the corresponding counts are 1,055, 1,043, and 1,072; among 767 equal-size pairs, they are 748, 736, and 762. Thus the bidirectional gain includes both size regimes.
+
+These are family-recovery measurements: they quantify whether a reference correspondence is retained, rather than whether it is ranked first. Verification processes saved cuts independently, retaining one cut in memory at a time. A reference is absent from the saved union only when every scheduled cut has been checked and excludes it; missing cuts or inconclusive checks remain unresolved.
 
 
 \begin{table}[tb]
@@ -134,7 +138,7 @@ With one ordering per cut and the single-edge sweep, bidirectional GRAFT recover
 \input{includes/generated-seed-table}
 \end{table}
 
-Without the sweep, one-seed GRAFT recovers 1,489/1,851 references (80.44\%), with no unresolved cases. Uncut SLAP, unioned over both directions and binary/weighted modes, recovers 1,661 (89.74\%), with one unresolved case. Adding the sweep recovers 345 additional references for GRAFT and 135 for SLAP. Thus, GRAFT's higher recovery in the swept comparison depends on the broader search: its one-seed uncut control has lower coverage than the uncut SLAP union. The controls use saved uncut outputs from the same final campaign; no new searches are needed.
+In the no-sweep ablation, one-seed GRAFT recovers 1,489/1,851 references (80.44\%), with no unresolved cases. Uncut SLAP, unioned over both directions and binary/weighted modes, recovers 1,661 (89.74\%), with one unresolved case. Adding the sweep recovers 345 additional references for GRAFT and 135 for SLAP. Thus, GRAFT's higher recovery in the swept comparison depends on the broader search: its one-seed uncut control has lower coverage than the uncut SLAP union. The controls use saved uncut outputs from the same final campaign; no new searches are needed.
 
 The gain is consistent with GRAFT's greedy fragment growth. Once an extension is accepted, placements incompatible with that larger fragment are discarded; branching over the surviving placements cannot recover them. For example, growing fragment A across an edge $(u,v)$ can exclude a placement that would permit a different neighboring fragment B. Omitting $(u,v)$ in a sweep run removes that adjacency from both growth and fragment-preservation tests, potentially changing where growth stops and which placements survive. The union of these runs therefore explores alternative fragment boundaries while retaining the uncut result. Each run remains greedy, and a single-edge sweep cannot explore every possible partition. Cut-specific seed orderings also contribute trajectory diversity, so the measured gain reflects the complete sweep schedule. Final bond events are always evaluated on the original, uncut endpoint matrices.
 
@@ -159,6 +163,14 @@ We also evaluate default released implementations of RXNMapper~\citep{schwaller2
 \input{includes/generated-competitor-table}
 \end{table}
 
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{GRAFT recovery by endpoint-size orientation.} Every entry uses all 1,851 Golden records and the single-edge sweep. Size is the explicit-atom count. On equal sizes, the first policy uses the stored input order and the second uses its reverse. All directional verdicts at these seed settings are resolved; bidirectional recovery checks the union of both outputs.}
+\label{tab:directions}
+\input{includes/generated-direction-table}
+\end{table}
+
+
 \Cref{tab:competitors} compares GRAFT with every benchmarked implementation using reference recovery over the evaluated output. GRAFT ranges from 1,489 recoveries without the sweep to \GoldenOneRecovered{} with a one-seed sweep and \GoldenTenRecovered{} with ten seeds. LocalMapper recovers the strict reference relation in 1,605 reactions, RXNMapper in 1,547, and Chython in 1,561. Default binary SLAP recovers 1,591 among its explicit candidates, compared with \SlapRecovered{} for the broader bidirectional sweep evaluated above. These default calls use different search budgets from GRAFT; GRAFT's family recovery is not a top-one accuracy measurement.
 
 RDT recovers 1,030 references under this relation-based criterion, which differs from its chemical-change scoring. Indigo's 692 recoveries require particular care: 503 outputs contain duplicate heavy-atom map labels, seven alter endpoint chemistry, and 133 calls fail. Chython changes endpoint chemistry in 29 outputs, and three RDT outputs fail validation. These results characterize the pinned implementations and input/output protocol rather than establish universal rankings of the methods. Versions and reproduction details are given in \Cref{sec:default-comparators}.
@@ -179,7 +191,7 @@ Every family in all 140 catalogues was freshly decoded or certified within its s
 
 \begin{figure}[tb]
 \centering\includegraphics[width=\linewidth]{figs/fig3_coordinate.pdf}
-\caption{\textbf{GRAFT outputs and decoding cost on 140 coordinate reactions.}
+\caption{\textbf{GRAFT outputs and decoding cost on 140 coordinate reactions.} The default one-seed sweep is used with fragment competition.
 (a) GRAFT returns \DecodedClasses{} distinct reaction-specific event classes within the fixed windows; competition adds \CompetitionClasses{} in \CompetitionCases{} reactions.
 (b) GRAFT recovery of minimum-event classes among returned SLAP witnesses. All compared classes are covered in 139/140 reactions; the remaining reaction lacks two sweep alternatives at the same four-event minimum.
 (c) GRAFT ordered and unordered fragment-pair branch counts; the diagonal denotes equality. The highlighted case falls from 52,669 to 2,856. These are not counts of explicit mappings or event classes.

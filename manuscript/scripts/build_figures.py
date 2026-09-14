@@ -24,23 +24,24 @@ keys=['seeds1','seeds2','seeds3','seeds10'];counts=[methods[k]['golden_outcomes'
 assert seed['fresh'] and all(sum(methods[k]['golden_outcomes'].values()) == N for k in keys)
 assert len(seed['common_case_indices']) > 0
 fig,axs=plt.subplots(1,2,figsize=(8.4,3.8),gridspec_kw={'width_ratios':[1.45,1]},layout='constrained')
-a=axs[0];labels=['GRAFT · 1 order','GRAFT · 2 orders','GRAFT · 3 orders','GRAFT · 10 orders','SLAP sweep'];vals=[*counts,slap['sweep_union_recovered']];y=np.arange(5)
+a=axs[0];labels=['GRAFT · 1 seed\n(default)','GRAFT · 2 seeds','GRAFT · 3 seeds','GRAFT · 10 seeds','SLAP sweep'];vals=[*counts,slap['sweep_union_recovered']];y=np.arange(5)
 a.barh(y,np.array(vals)/N*100,color=[GREEN,BLUE,'#52789F',PURPLE,ORANGE],height=.58)
 for i,v in enumerate(vals):a.text(v/N*100-1.5,i,f'{v:,} / {N:,}  ({v/N*100:.2f}%)',ha='right',va='center',color='white',fontsize=9,weight='bold')
 a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Verified reference-family recovery (%)');a.invert_yaxis();a.set_title('a  Recovery with sweeps',loc='left',weight='bold',pad=13)
 a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 a=axs[1];shown=[costs[0],costs[1],seed['same_host_timing']['metrics']['slap']['mean_seconds']];y=np.arange(3);a.barh(y,shown,color=[GREEN,BLUE,ORANGE],height=.53)
 for i,v in enumerate(shown):a.text(v+.10,i,f'{v:.2f}',va='center',fontsize=9)
-a.set(yticks=y,yticklabels=['GRAFT · 1 order','GRAFT · 2 orders','SLAP sweep'],xlim=(0,max(shown)*1.23),xlabel='Mean CPU seconds / reaction');a.invert_yaxis();a.set_title('b  Sweep workflow cost (Mac)',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+a.set(yticks=y,yticklabels=['GRAFT · 1 seed\n(default)','GRAFT · 2 seeds','SLAP sweep'],xlim=(0,max(shown)*1.23),xlabel='Mean CPU seconds / reaction');a.invert_yaxis();a.set_title('b  Sweep workflow cost (Mac)',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 save(fig,'fig2_golden')
 uncut=read('unswept.json');table=[]
-for name,label in [('graft','GRAFT, 1 seed, no sweep'),('slap','SLAP, no sweep')]:
+for name,label in [('graft','GRAFT, no sweep (ablation)'),('slap','SLAP, no sweep')]:
  o=uncut['methods'][name]['counts']
  table.append(f"{label} & {o['recovered']:,} & {100*o['recovered']/N:.2f} & {o['not_recovered']} & {o.get('unknown',0)} & -- " + r"\\")
-table.append(r"\midrule")
-for k,label in zip(keys,['GRAFT, 1 seed + sweep','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
+ablations=table;table=[]
+for k,label in zip(keys,['GRAFT, 1 seed + sweep (default)','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
  d=methods[k];o=d['golden_outcomes'];cost_text=f"{d['common_mean_cpu_seconds']:.2f}" if d['common_mean_cpu_seconds'] is not None else '--';table.append(f"{label} & {o['recovered']:,} & {d['golden_recovery_percent']:.2f} & {o['not_recovered']} & {o['unknown']} & {cost_text} \\\\")
 table.append(f"SLAP sweep & {slap['outcomes']['recovered']:,} & {100*slap['outcomes']['recovered']/N:.2f} & {slap['outcomes']['not_recovered']} & {slap['outcomes']['unknown']} & {shown[2]:.2f} " + r"\\")
+table += [r'\midrule'] + ablations
 (MAN/'includes/generated-seed-table.tex').write_text('\\begin{tabular}{lrrrrr}\\toprule\nConfiguration & Recovered & \\% & Absent & Unknown & CPU s/reaction\\\\\\midrule\n'+'\n'.join(table)+'\n\\bottomrule\\end{tabular}\n')
 
 comp=read('competition_final.json');dedup=read('final_dedup.json');rows=dedup['per_case']
@@ -109,9 +110,9 @@ labels={'rxnmapper':'RXNMapper','localmapper':'LocalMapper','chython':'Chython',
 rows=[]
 def comparison_row(name,setting,output,n):
  return f"{name} & {setting} & {output} & {n:,} ({100*n/N:.2f}\\%) " + r"\\"
-rows.append(comparison_row('GRAFT','1 seed, no sweep','Families',uncut['methods']['graft']['counts']['recovered']))
 for k,nseed in zip(keys,[1,2,3,10]):
- rows.append(comparison_row('GRAFT',f'{nseed} seed'+('s' if nseed>1 else '')+', sweep','Families',methods[k]['golden_outcomes']['recovered']))
+ rows.append(comparison_row('GRAFT',f'{nseed} seed'+('s' if nseed>1 else '')+', sweep'+(' (default)' if nseed==1 else ''),'Families',methods[k]['golden_outcomes']['recovered']))
+rows.append(comparison_row('GRAFT','1 seed, no sweep (ablation)','Families',uncut['methods']['graft']['counts']['recovered']))
 rows.append(r"\midrule")
 for d in competitors['methods']:
  assert d['total']==N and len(d['any_correct_cases'])==d['any_correct']
@@ -132,3 +133,11 @@ labels={'extra_matched_pair':'One extra matched pair',
  'joint_correspondence_excluded_by_full_verifier':'Joint C/O correspondence excluded'}
 rows=[f"{r['case']} & {r['reference_pairs']} & {r['retained_pair_counts'][0]} & {labels[r['classification']]} " + r"\\" for r in misses['rows']]
 (MAN/'includes/generated-miss-table.tex').write_text(r"\begin{tabular}{lrrl}\toprule"+'\n'+r"Case & Reference pairs & Retained pairs & Observed mismatch\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+
+# Direction policies use explicit-atom counts and a stated tie rule.
+direction=read('direction_recovery.json');rows=[]
+for key,label in [('seeds1','1 seed + sweep (default)'),('seeds2','2 seeds + sweep')]:
+ d=direction['methods'][key]['groups']['all'];assert d['n']==N
+ cells=[f"{d[k]['recovered']:,} ({d[k]['percent']:.2f}\\%)" for k in ['smaller_first','larger_first','bidirectional']]
+ rows.append(label+' & '+' & '.join(cells)+r"\\")
+(MAN/'includes/generated-direction-table.tex').write_text(r"\begin{tabular}{@{}lrrr@{}}\toprule"+'\n'+r"GRAFT setting & Smaller-first & Larger-first & Bidirectional\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')

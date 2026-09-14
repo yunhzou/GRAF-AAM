@@ -110,7 +110,7 @@ class AAMSearchConfig:
     iso_tolerance: float = 1.0
     event_threshold: float = 0.5
     metal_event_threshold: float | None = 0.3
-    seed_count: int = 3
+    seed_count: int = 1
     branch_limit: int = 100
     task_chunksize: int = 1
     symmetry_repair: bool = True

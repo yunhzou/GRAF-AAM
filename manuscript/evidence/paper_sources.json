@@ -51,6 +51,12 @@
       "source": "reports/golden_miss_analysis_20260913/summary.json",
       "scope": "Audit of final saved ten-seed families. Sensitivity and reference-directed feasibility probes are separate, excluded from benchmark scores. Strict absence is not proof of global unreachability or annotation error.",
       "sha256": "e3dc6e8635203c0b39b3544e890e95aa4ada70d84ac8e618b8f083d451372ab1"
+    },
+    {
+      "snapshot": "direction_recovery.json",
+      "source": "reports/golden_direction_size_20260914/direction_recovery.json",
+      "scope": "One- and two-seed size-ordered policies derived from hash-verified saved explicit-atom inputs and complete directional verdicts. Ties preserve original order for smaller-first, reverse it for larger-first. No search reruns.",
+      "sha256": "9eb3313f864649142644f1175b40549ea32258aa46058dbc94ac72e1b22de934"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."

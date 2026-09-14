@@ -90,6 +90,20 @@ for fig in figs:
 for value in ['1,489','1,661','80.44','89.74']:assert value in alltext
 for d in competitors['methods']:
  assert f"{d['any_correct']:,}" in alltext
+
+direction=read('direction_recovery.json')
+assert direction['no_search_reruns'] and direction['denominator']==1851
+for key,d in direction['methods'].items():
+ assert len(d['per_case'])==1851
+ for group,g in d['groups'].items():
+  rs=[r for r in d['per_case'] if group=='all' or r['cohort']==group]
+  assert g['n']==len(rs)
+  for policy in ['smaller_first','larger_first','bidirectional']:
+   assert g[policy]['cases']==[r['case'] for r in rs if r[policy]=='recovered']
+   assert g[policy]['recovered']==len(g[policy]['cases']) and g[policy]['unknown']==0
+ assert d['groups']['all']['bidirectional']['recovered']==seed['methods'][key]['golden_outcomes']['recovered']
+for value in ['1,803','1,779','97.41','96.11','Smaller-first','Larger-first','(default)']:assert value in alltext,value
+
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
  manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. GRAFT and the SLAP sweep use final-source campaigns; archived default-comparator outputs were rescored with the current evaluator. Completeness and limits are recorded in the evidence.',
  manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())

@@ -1,5 +1,7 @@
 # rxn_core
 
+The default GRAFT search uses one seed ordering per cut and the uncut plus single-edge sweep. No-sweep results in the paper are ablation controls. The public API and CLI default to one seed; callers can request additional orderings explicitly.
+
 Symmetry-aware WBO atom mapping, analytical R/P alignment, and
 mechanism-local transition-state analysis.
 
