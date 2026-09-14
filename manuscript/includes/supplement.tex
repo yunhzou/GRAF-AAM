@@ -28,7 +28,7 @@ The default comparator predictions were generated with RXNMapper 0.4.3, LocalMap
 
 The complete archive retains mapping strings, explicit candidate order, version/model hashes, and per-record evaluations. All 12,957 method/reaction records were rescored with the current evaluator and agree with the archived outcomes. Dataset and label-free input hashes match the final GRAFT campaign. Agent-field components returned by a mapper are retained on the input side, preserving their original atom labels. Changed endpoint chemistry and duplicate heavy-atom labels invalidate a prediction. All 1,851 records remain in each denominator.
 
-RDT's final records include execution retries after a worker failure; every final call returns an output. Invalid outputs are not repaired. These default implementations were timed on the original cluster, so their archived call times are not included in the same-Mac comparison in \Cref{fig:golden}. Full timing and failure records accompany the reproducibility archive.
+RDT's final records include execution retries after a worker failure; every final call returns an output. Invalid outputs are not repaired. These default implementations were timed on the original cluster, so their archived call times are not included in the same-Mac comparison in \Cref{fig:golden}. \Cref{tab:default-times} reports their archived per-call timings separately; full timing and failure records accompany the reproducibility archive.
 
 \subsection{Bounded fragment competition}
 
@@ -72,3 +72,16 @@ We inspected every saved cut in both directions for the eleven ten-order misses,
 \end{table}
 
 All eleven cases have cap stops in at least one direction, which does not establish cap truncation as their cause. Separate ten-order sensitivity checks on cases 986 and 1285 at cap 1,000 or matching tolerance 0.5 remain nonrecoveries; several of those directional runs are uncapped. In the causal traces, ordinary Python and native graphs agree and are uncapped at cap 2,000. Reference-constrained matching represents all 16 and 14 annotated pairs, respectively. The successful case-1285 cut set omits two C--O attachments and one O--H bond; it is reference-selected, and neither its success nor the constrained witnesses contributes to the blind benchmark score. The audit, controls, traces, and source identities are archived with the benchmark report.
+
+
+\clearpage
+\subsection{Default-comparator call times}
+
+\begin{table}[ht]
+\centering\small
+\caption{\textbf{Archived default-mapper call times on the original Linux cluster.} The calls column counts completed mapping calls, including outputs subsequently judged invalid; exceptions are excluded from these time averages. All 1,851 reactions remain in the accuracy denominator in \Cref{tab:competitors}. These are the released default settings without a sweep. Times exclude startup/model loading, queueing, reference evaluation, and saving. They are not comparable to the Mac sweep times as a hardware-controlled speed ranking.}
+\label{tab:default-times}
+\input{includes/generated-comparator-timing-table}
+\end{table}
+
+Mean wall time describes the observed duration of a mapping call; mean CPU time sums its recorded processor time. Multithreaded implementations can accumulate more CPU time than wall time. Search scope also differs: the learned mappers return one mapping, default SLAP returns explicit alternatives, and the GRAFT measurements in \Cref{tab:directions} include a complete sweep and compressed output construction. GRAFT's unswept search cost was not separately instrumented, so rescoring its saved uncut outputs is not reported as search time. No mapping runs were repeated to construct these timing tables.

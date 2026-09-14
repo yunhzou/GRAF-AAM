@@ -19,24 +19,31 @@ def save(fig,n):
 from build_molecule_figure import build as build_molecule_figure
 build_molecule_figure(MAN)
 
+timing=read('timing_comparison.json')
 seed=read('seed_comparison.json');methods=seed['methods'];slap=read('slap_sweep.json');N=1851
 keys=['seeds1','seeds2','seeds3','seeds10'];counts=[methods[k]['golden_outcomes']['recovered'] for k in keys];costs=[methods[k]['common_mean_cpu_seconds'] for k in keys]
 assert seed['fresh'] and all(sum(methods[k]['golden_outcomes'].values()) == N for k in keys)
 assert len(seed['common_case_indices']) > 0
-fig,axs=plt.subplots(1,2,figsize=(8.4,3.8),gridspec_kw={'width_ratios':[1.45,1]},layout='constrained')
+fig,axs=plt.subplots(1,2,figsize=(8.8,4.3),gridspec_kw={'width_ratios':[1.4,1.3]},layout='constrained')
 a=axs[0];labels=['GRAFT · 1 seed\n(default)','GRAFT · 2 seeds','GRAFT · 3 seeds','GRAFT · 10 seeds','SLAP sweep'];vals=[*counts,slap['sweep_union_recovered']];y=np.arange(5)
 a.barh(y,np.array(vals)/N*100,color=[GREEN,BLUE,'#52789F',PURPLE,ORANGE],height=.58)
 for i,v in enumerate(vals):a.text(v/N*100-1.5,i,f'{v:,} / {N:,}  ({v/N*100:.2f}%)',ha='right',va='center',color='white',fontsize=9,weight='bold')
 a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Verified reference-family recovery (%)');a.invert_yaxis();a.set_title('a  Recovery with sweeps',loc='left',weight='bold',pad=13)
 a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
-a=axs[1];shown=[costs[0],costs[1],seed['same_host_timing']['metrics']['slap']['mean_seconds']];y=np.arange(3);a.barh(y,shown,color=[GREEN,BLUE,ORANGE],height=.53)
-for i,v in enumerate(shown):a.text(v+.10,i,f'{v:.2f}',va='center',fontsize=9)
-a.set(yticks=y,yticklabels=['GRAFT · 1 seed\n(default)','GRAFT · 2 seeds','SLAP sweep'],xlim=(0,max(shown)*1.23),xlabel='Mean CPU seconds / reaction');a.invert_yaxis();a.set_title('b  Sweep workflow cost (Mac)',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+shown=[costs[0],costs[1],seed['same_host_timing']['metrics']['slap']['mean_seconds']]
+a=axs[1];ys=np.arange(3);policies=['smaller_first','larger_first','bidirectional']
+for j,(prefix,label,color) in enumerate([('graft1','GRAFT · 1 seed (default)',GREEN),('graft2','GRAFT · 2 seeds',BLUE),('slap','SLAP sweep',ORANGE)]):
+ vals=[timing['methods'][prefix+'_'+p]['stats']['mean'] for p in policies];positions=ys+(j-1)*.23
+ a.barh(positions,vals,color=color,height=.21,label=label)
+ for y,v in zip(positions,vals):a.text(v+.06,y,f'{v:.2f}',va='center',fontsize=8)
+a.set(yticks=ys,yticklabels=['Smaller-first','Larger-first','Bidirectional'],xlim=(0,6.2),ylim=(2.65,-1.2),xlabel='Mean CPU seconds / reaction')
+a.set_title('b  Cost by endpoint-size orientation',loc='left',weight='bold',pad=13)
+a.legend(loc='upper left',frameon=False,fontsize=8);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 save(fig,'fig2_golden')
 uncut=read('unswept.json');table=[]
 for name,label in [('graft','GRAFT, no sweep (ablation)'),('slap','SLAP, no sweep')]:
  o=uncut['methods'][name]['counts']
- table.append(f"{label} & {o['recovered']:,} & {100*o['recovered']/N:.2f} & {o['not_recovered']} & {o.get('unknown',0)} & -- " + r"\\")
+ table.append(f"{label} & {o['recovered']:,} & {100*o['recovered']/N:.2f} & {o['not_recovered']} & {o.get('unknown',0)} & {format(timing['slap_unswept_bidirectional']['mean'],'.3f') if name=='slap' else '--'} " + r"\\")
 ablations=table;table=[]
 for k,label in zip(keys,['GRAFT, 1 seed + sweep (default)','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
  d=methods[k];o=d['golden_outcomes'];cost_text=f"{d['common_mean_cpu_seconds']:.2f}" if d['common_mean_cpu_seconds'] is not None else '--';table.append(f"{label} & {o['recovered']:,} & {d['golden_recovery_percent']:.2f} & {o['not_recovered']} & {o['unknown']} & {cost_text} \\\\")
@@ -80,7 +87,9 @@ for i,v in enumerate(times):
  a.text(0,i-.34,['Wall time (shared load)','CPU time (sum over workers)'][i],fontsize=8.5,color=INK)
 a.set(yticks=[],xlim=(0,34),ylim=(1.85,-.6),xticks=[0,10,20,30],xlabel='Complete catalogue and event-window decoding')
 a.set_title('d  GRAFT postprocessing cost',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
-a.text(.02,.03,f'{dedup["workers"]} workers · {dedup["peak_mib"]/1024:.2f} GiB peak combined memory\nSearch and competition excluded.',transform=a.transAxes,fontsize=8.2,color=MUTED,va='bottom')
+a.set_ylim(2.05,-.6)
+ct=timing['coordinate_decoding']['stats']
+a.text(.02,.02,f'Per reaction: mean {ct["mean"]:.2f} s · median {ct["median"]:.2f} s\n95th percentile {ct["p95"]:.2f} s (CPU); {dedup["workers"]} workers, {dedup["peak_mib"]/1024:.2f} GiB\nSearch and competition excluded.',transform=a.transAxes,fontsize=7.7,color=MUTED,va='bottom')
 save(fig,'fig3_coordinate')
 windows=sorted((int(k),v) for k,v in dedup['window_distribution'].items())
 (MAN/'includes/generated-decoder-table.tex').write_text('\\begin{tabular}{l'+ 'r'*len(windows)+'}\\toprule\nMaximum events & '+' & '.join(str(k) for k,v in windows)+r'\\'+'\nReactions (all complete) & '+' & '.join(str(v) for k,v in windows)+r'\\'+'\n'+r'\bottomrule\end{tabular}'+'\n')
@@ -134,10 +143,17 @@ labels={'extra_matched_pair':'One extra matched pair',
 rows=[f"{r['case']} & {r['reference_pairs']} & {r['retained_pair_counts'][0]} & {labels[r['classification']]} " + r"\\" for r in misses['rows']]
 (MAN/'includes/generated-miss-table.tex').write_text(r"\begin{tabular}{lrrl}\toprule"+'\n'+r"Case & Reference pairs & Retained pairs & Observed mismatch\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
 
-# Direction policies use explicit-atom counts and a stated tie rule.
-direction=read('direction_recovery.json');rows=[]
-for key,label in [('seeds1','1 seed + sweep (default)'),('seeds2','2 seeds + sweep')]:
- d=direction['methods'][key]['groups']['all'];assert d['n']==N
- cells=[f"{d[k]['recovered']:,} ({d[k]['percent']:.2f}\\%)" for k in ['smaller_first','larger_first','bidirectional']]
- rows.append(label+' & '+' & '.join(cells)+r"\\")
-(MAN/'includes/generated-direction-table.tex').write_text(r"\begin{tabular}{@{}lrrr@{}}\toprule"+'\n'+r"GRAFT setting & Smaller-first & Larger-first & Bidirectional\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+# Pair orientation-specific coverage with matched-cohort runtime distributions.
+rows=[]
+for prefix,label in [('graft1','GRAFT, 1 seed (default)'),('graft2','GRAFT, 2 seeds'),('slap','SLAP sweep')]:
+ if rows:rows.append(r"\midrule")
+ for i,(policy,dlabel) in enumerate([('smaller_first','Smaller-first'),('larger_first','Larger-first'),('bidirectional','Bidirectional')]):
+  d=timing['methods'][prefix+'_'+policy];n=d['recovered'];st=d['stats']
+  row=[label if i==0 else '',dlabel,f'{n:,} ({100*n/N:.2f}\\%)']+[f'{st[k]:.3f}' for k in ['mean','median','p95']]
+  rows.append(' & '.join(row)+r"\\")
+(MAN/'includes/generated-direction-table.tex').write_text(r"\begin{tabular}{@{}llrrrr@{}}\toprule"+'\n'+r"Method & Orientation & Recovered & Mean & Median & 95th pct.\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+rows=[]
+for d in timing['default_comparators']:
+ row=[d['method'],str(d['calls'])]+[f'{d[k]:.3f}' for k in ['mean_wall_seconds','median_wall_seconds','mean_cpu_seconds']]
+ rows.append(' & '.join(row)+r"\\")
+(MAN/'includes/generated-comparator-timing-table.tex').write_text(r"\begin{tabular}{@{}lrrrr@{}}\toprule"+'\n'+r"Implementation & Calls & Mean wall s & Median wall s & Mean CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')

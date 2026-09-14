@@ -104,6 +104,27 @@ for key,d in direction['methods'].items():
  assert d['groups']['all']['bidirectional']['recovered']==seed['methods'][key]['golden_outcomes']['recovered']
 for value in ['1,803','1,779','97.41','96.11','Smaller-first','Larger-first','(default)']:assert value in alltext,value
 
+timing=read('timing_comparison.json')
+assert timing['searches_rerun']==0 and timing['common_case_indices']==seed['common_case_indices']
+import statistics
+for k,d in timing['methods'].items():
+ rows=d['per_case'];assert [r['case'] for r in rows]==seed['common_case_indices']
+ xs=sorted(r['cpu_seconds'] for r in rows);st=d['stats'];assert st['n']==1821
+ assert abs(st['mean']-statistics.mean(xs))<1e-8 and abs(st['median']-statistics.median(xs))<1e-8
+ # 1821 samples give an integer index under the stated linear percentile rule.
+ assert abs(st['p95']-xs[1729])<1e-8
+for prefix,key in [('graft1','seeds1'),('graft2','seeds2')]:
+ assert abs(timing['methods'][prefix+'_bidirectional']['stats']['mean']-seed['methods'][key]['common_mean_cpu_seconds'])<1e-8
+for v in ['1.141','1.377','2.518','3.329','1.490','4.819','95th pct.','Mean wall s']:assert v in alltext,v
+for d in timing['default_comparators']:
+ source=next(r for r in competitors['methods'] if r['method']==d['key'])
+ assert d['calls']==source['statuses']['mapped']
+ assert abs(d['mean_wall_seconds']*d['calls']-source['original_mapping_timing']['successful_mapping_wall_sum_seconds'])<1e-8
+coord=timing['coordinate_decoding']
+assert len(coord['per_case'])==140
+assert abs(sum(r['cpu_seconds'] for r in coord['per_case'])-flat['cpu_seconds'])<1e-7
+assert abs(coord['stats']['mean']-flat['cpu_seconds']/140)<1e-8
+for value in ['11.01','1.22','52.67']:assert value in alltext,value
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
  manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. GRAFT and the SLAP sweep use final-source campaigns; archived default-comparator outputs were rescored with the current evaluator. Completeness and limits are recorded in the evidence.',
  manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())

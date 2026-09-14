@@ -9,7 +9,7 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `figs/fig1_algorithm.{pdf,svg,png}`: the branching algorithm overview: RDKit vector depictions of alcohol sites and methyl acetate saponification illustrate hydrogen-preserving local matches, three conditional assignment levels, automorphism compression, competition, and event decoding.
 - `evidence/competitors.json`: audited Golden results for RXNMapper, LocalMapper, Chython, Indigo, RDT, and default SLAP configurations; Table 3 compares their returned-output reference recovery with all evaluated GRAFT seed/sweep configurations, without assigning a ranking to SLAP alternatives.
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
-- `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and seed cost.
+- `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and direction-specific mean CPU cost.
 - `figs/fig3_coordinate.{pdf,svg,png}`: GRAFT event-class output, comparator coverage, final branch counts, and complete decoding cost on 140 cases.
 - `manuscript_bundle.zip`: compact paper, source, figure, and evidence bundle.
 
@@ -44,3 +44,5 @@ pdftoppm -scale-to 1400 -png manuscript.pdf build/page
 `EDITORIAL_NOTES.md` records the remaining author-supplied metadata and dataset provenance needed for submission. These are not fabricated in the paper. This is an arXiv-oriented manuscript, not a submitted arXiv record.
 
 Paired no-sweep controls are included in the main Golden results table. Evidence: `reports/golden_unswept_20260913/`; GRAFT 1,489/1,851, SLAP 1,661/1,851 (one unresolved). No new mapping searches were run. The molecular figure now checks alcohol-site matches including attached H and shows three conditional assignment levels.
+
+Runtime detail is in Table 4 (same-Mac mean/median/95th-percentile CPU by endpoint-size orientation, paired with recovery), Figure 2, and the archived default-comparator call-time table. `timing_comparison.json` retains per-case measurements and matched-cohort identities. The cluster default-mapper timings are separately scoped; no cross-host speed ranking is implied.

@@ -57,6 +57,12 @@
       "source": "reports/golden_direction_size_20260914/direction_recovery.json",
       "scope": "One- and two-seed size-ordered policies derived from hash-verified saved explicit-atom inputs and complete directional verdicts. Ties preserve original order for smaller-first, reverse it for larger-first. No search reruns.",
       "sha256": "9eb3313f864649142644f1175b40549ea32258aa46058dbc94ac72e1b22de934"
+    },
+    {
+      "snapshot": "timing_comparison.json",
+      "source": "reports/golden_timing_detail_20260914/timing_comparison.json",
+      "scope": "Same1821Mac cohort: size-ordered GRAFT and SLAP CPU distributions, plus separately scoped original-cluster default-mapper call times. Saved scalar timer audit; no searches rerun.",
+      "sha256": "19aac7ee35e0d72459cce5a2d120d3c8e5fc1715f5149986de374885974ff2a5"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."

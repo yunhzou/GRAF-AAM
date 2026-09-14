@@ -1,5 +1,14 @@
-\begin{tabular}{@{}lrrr@{}}\toprule
-GRAFT setting & Smaller-first & Larger-first & Bidirectional\\\midrule
-1 seed + sweep (default) & 1,803 (97.41\%) & 1,779 (96.11\%) & 1,834 (99.08\%)\\
-2 seeds + sweep & 1,815 (98.06\%) & 1,805 (97.51\%) & 1,834 (99.08\%)\\
+\begin{tabular}{@{}llrrrr@{}}\toprule
+Method & Orientation & Recovered & Mean & Median & 95th pct.\\\midrule
+GRAFT, 1 seed (default) & Smaller-first & 1,803 (97.41\%) & 1.141 & 0.263 & 5.289\\
+ & Larger-first & 1,779 (96.11\%) & 1.377 & 0.348 & 6.401\\
+ & Bidirectional & 1,834 (99.08\%) & 2.518 & 0.719 & 12.913\\
+\midrule
+GRAFT, 2 seeds & Smaller-first & 1,815 (98.06\%) & 2.232 & 0.416 & 10.635\\
+ & Larger-first & 1,805 (97.51\%) & 2.721 & 0.578 & 14.064\\
+ & Bidirectional & 1,834 (99.08\%) & 4.953 & 1.250 & 26.350\\
+\midrule
+SLAP sweep & Smaller-first & 1,775 (95.89\%) & 3.329 & 0.422 & 4.752\\
+ & Larger-first & 1,770 (95.62\%) & 1.490 & 0.455 & 4.568\\
+ & Bidirectional & 1,796 (97.03\%) & 4.819 & 0.881 & 11.048\\
 \bottomrule\end{tabular}
