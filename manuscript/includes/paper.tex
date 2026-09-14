@@ -12,24 +12,24 @@ GRAFT addresses these issues by branching over structural fragment choices while
 
 \subsection{Weighted matching and continuous growth}
 
-Let $V_R,V_P$ be the reactant and product atom sets, $Z_R,Z_P$ their element labels, and $W_R,W_P$ their symmetric bond-weight matrices. A partial mapping $m:D\subseteq V_R\rightarrow V_P$ is injective and element compatible. On balanced endpoints, a completed mapping is a bijection. Explicit hydrogen atoms participate in the search. Molecular coordinates can accompany the graphs but do not determine the growth decisions.
+Let $V_R,V_P$ be the reactant and product atom sets, $Z_R,Z_P$ their element labels, and $W_R,W_P$ their symmetric bond-weight matrices. A partial mapping $m:D\subseteq V_R\rightarrow V_P$ is injective and element compatible. A mapping assigning every source atom is bijective when the endpoint element counts agree. Explicit hydrogen atoms participate in the search. Molecular coordinates can accompany the graphs but do not determine the growth decisions.
 
-The active source graph contains edges with weight at least $b$. Starting from a seed atom, GRAFT grows a connected source fragment $F$ while carrying multiple compatible product placements. A frontier queue prioritizes stronger source edges. To add source atom $u$ with product image $v$, a placement must satisfy
+The active source graph contains edges with weight at least $b$. Starting from a seed atom, GRAFT grows a connected source fragment $F$ while carrying multiple compatible product placements. A frontier queue prioritizes stronger source edges. To add an unassigned source atom $u$ with product image $v$, a placement must satisfy
 \begin{equation}
- Z_R(u)=Z_P(v),\quad v\notin m(F),\quad
+ Z_R(u)=Z_P(v),\quad v\notin m(D),\quad
  W_P(v,m(r))\geq b,\quad
  |W_R(u,r)-W_P(v,m(r))|\leq\tau_{\mathrm{iso}}
  \label{eq:match}
 \end{equation}
-for every active, nonrelaxed source edge $(u,r)$ into $F$. All relevant fragment bonds are checked, rather than only the frontier edge that proposed the extension. Source nonedges do not impose negative matching constraints, so additional product bonds remain possible.
+for every active, nonrelaxed source edge $(u,r)$ into $F$. Injectivity is enforced against all current assignments in $D$, including established fragments. All relevant fragment bonds are checked, rather than only the frontier edge that proposed the extension. Source nonedges do not impose negative matching constraints, so additional product bonds remain possible.
 
 An accepted extension enlarges the fragment and filters its compatible placements. Growth continues even if only one placement remains. An unsupported edge is deferred, and other frontier edges can still be explored. When growth reaches an established fragment, ordinary continuation respects its existing assignments. A fragment saturates when no further admissible extension remains; structurally distinct surviving placements then generate separate continuations for the remaining atoms.
 
-This is a greedy search along each trajectory: an accepted extension can remove placements that would support a different fragment boundary. GRAFT broadens coverage through seed orderings, single-edge constraint relaxations, and local changes in fragment priority. A sweep combines the uncut source graph with searches in which one eligible source edge is omitted. Bond-event evaluation always uses the original endpoint matrices.
+This is a greedy search along each trajectory: an accepted extension can remove placements that would support a different fragment boundary. GRAFT broadens coverage through seed orderings, single-edge constraint relaxations, and local changes in fragment priority. A sweep combines the uncut source graph with searches in which one source edge with weight at least $b$ is omitted, including hydrogen-containing edges in the evaluated configurations. Bond-event evaluation always uses the original endpoint matrices.
 
 \begin{figure}[t]
 \centering\includegraphics[width=\linewidth]{figs/fig1_algorithm.pdf}
-\caption{\textbf{Conditional fragment branching and compressed symmetry.} (a) A local alcohol motif grows while retaining its O--H bond. Three sites in the depicted target have distinct molecular environments. For three source fragments sharing this motif, placing A fixes one site; B then branches over the two unused sites, and C takes the remaining site. The tree illustrates local conditioning and injectivity; R denotes atoms outside the matched subgraph, and this is not a complete reaction-search trajectory. All attached hydrogens in the illustrated local matches are checked. (b) At a fragment contact in methyl acetate saponification, the original path retains O4 in A. An added path gives B priority, rematches the contact, and regrows displaced assignments. (c) Exchanging the two acetate oxygen images preserves the fragment's element and bond-weight matching tests at $\tau_{\mathrm{iso}}=1$, but changes two heavy-atom events into four at threshold $0.5$. Neither acetate oxygen carries H. Dashed arrows are event projections within a family, not additional search branches. Saved constraints govern allowed symmetry actions; event counts here show the heavy-atom projection.}
+\caption{\textbf{GRAFT: conditional fragment branching and compressed symmetry.} (a) A local alcohol motif grows while retaining its O--H bond. Three sites in the depicted target have distinct molecular environments. For three source fragments sharing this motif, placing A fixes one site; B then branches over the two unused sites, and C takes the remaining site. The tree illustrates local conditioning and injectivity; R denotes atoms outside the matched subgraph, and this is not a complete reaction-search trajectory. All attached hydrogens in the illustrated local matches are checked. (b) At a fragment contact in methyl acetate saponification, the original path retains O4 in A. An added path gives B priority, rematches the contact, and regrows displaced assignments. (c) Exchanging the two acetate oxygen images preserves the fragment's element and bond-weight matching tests at $\tau_{\mathrm{iso}}=1$, but changes two heavy-atom events into four at threshold $0.5$. Neither acetate oxygen carries H. Dashed arrows are event projections within a family, not additional search branches. Saved constraints govern allowed symmetry actions. These formal-bond-order event signatures illustrate GRAFT decoding, not distinct mechanisms or resonance-normalized transformations.}
 \label{fig:algorithm}
 \end{figure}
 
@@ -92,7 +92,7 @@ For each complete mapping, define the signed change for an unordered source pair
 \end{equation}
 Positive events denote bond formation or strengthening; negative events denote cleavage or weakening. The event count is $E(m)=\sum_{u<v}\mathbf 1[s_{uv}(m)\ne0]$. The evaluation includes hydrogen atoms and all atom pairs. For the WBO collection, $\delta_{uv}=0.3$ for pairs involving a metal and $0.5$ otherwise. These thresholds are independent of $\tau_{\mathrm{iso}}$.
 
-The decoder returns one mapping witness per distinct signed event class, identifying patterns related by exact source permutations that preserve the event-response labels. First, symmetry-invariance certificates identify families whose mappings all produce equivalent events, and reachable-image bounds exclude families outside a requested event window. Before constraint encoding, adjacent nested action groups are absorbed: if $H\leq G$, then $HG=GH=G$. Exact generator-membership tests remove these redundant choices without changing the final preservation constraints. Remaining families are encoded symbolically in Z3~\citep{demoura2008}. Each satisfying assignment yields a concrete mapping and its event pattern. A constraint then excludes that entire event-equivalence class, and the process repeats. This projects directly onto event classes rather than explicitly enumerating full mappings or permutation groups.
+The decoder returns one mapping witness per distinct signed event class, identifying patterns related by exact source permutations that preserve all thresholded bond-change tests. A permutation preserving fragment matching may therefore produce a distinct event class. First, symmetry-invariance certificates identify families whose mappings all produce equivalent events, and reachable-image bounds exclude families outside a requested event window. Before constraint encoding, adjacent nested action groups are absorbed: if $H\leq G$, then $HG=GH=G$. Exact generator-membership tests remove these redundant choices without changing the final preservation constraints. Remaining families are encoded symbolically in Z3~\citep{demoura2008}. Each satisfying assignment yields a concrete mapping and its event pattern. A constraint then excludes that entire event-equivalence class, and the process repeats. This projects directly onto event classes rather than explicitly enumerating full mappings or permutation groups.
 
 For a window $E\leq K$, decoding is complete when every retained family is certified exhausted or excluded. A timeout leaves completeness unresolved. This certificate concerns the saved search output within the window; it does not establish exhaustive exploration of all chemically possible mappings. The default deduplication preserves families that contain different event counts, as illustrated in the heavy-atom projection in \Cref{fig:algorithm}c.
 
@@ -148,18 +148,18 @@ On the same-Mac subset of \CommonCases{} reactions with completed one- and two-o
 \label{fig:golden}
 \end{figure}
 
-\subsection{Released mapping implementations on Golden}
+\subsection{Comparison with released mapping implementations}
 
 We also evaluate default released implementations of RXNMapper~\citep{schwaller2021}, LocalMapper~\citep{chen2024}, Chython~\citep{chython}, Indigo~\citep{indigo}, and the Reaction Decoder Tool (RDT)~\citep{rahman2016}, together with default binary and weighted SLAP. Each receives all 1,851 label-free Golden records. Saved predictions are rescored with the same strict heavy-atom relation criterion, retaining unmatched atoms and checking endpoint chemistry. No reference-guided reranking, balancing, or prediction repair is applied.
 
 \begin{table}[tb]
 \centering\small
-\caption{\textbf{Default released implementations on Golden (no sweep).} Counts and percentages use all 1,851 reactions, including failures. ``First'' evaluates the first explicit output; ``any'' evaluates every explicitly returned candidate. SLAP output order is not asserted to be a top-one ranking, and its compressed label families are not exhaustively decoded here. Invalid counts refer to returned candidates; failed counts refer to reactions with no mapped output after the recorded execution retries.}
+\caption{\textbf{GRAFT and benchmarked mapping implementations on Golden.} Reference recovery uses all 1,851 reactions, including failed and unresolved cases. GRAFT is evaluated over its compressed families; SLAP over its returned explicit candidates, without a ranking or exhaustive decoding of its label families; the remaining methods return single mappings. GRAFT uses both directions; SLAP ``union'' combines both directions and binary/weighted modes. Search budgets and output sizes differ, so this is coverage of returned alternatives, not top-one accuracy. Versions are specified in \Cref{sec:default-comparators}.}
 \label{tab:competitors}
 \input{includes/generated-competitor-table}
 \end{table}
 
-\Cref{tab:competitors} places single-output prediction in context alongside returned-candidate coverage. LocalMapper recovers the strict reference relation in 1,605 reactions, RXNMapper in 1,547, and Chython in 1,561. Default binary SLAP recovers 1,591 among its explicit candidates, compared with \SlapRecovered{} for the broader bidirectional sweep evaluated above. These default calls use different search budgets from GRAFT; GRAFT's family recovery is not a top-one accuracy measurement.
+\Cref{tab:competitors} compares GRAFT with every benchmarked implementation using reference recovery over the evaluated output. GRAFT ranges from 1,489 recoveries without the sweep to \GoldenOneRecovered{} with a one-seed sweep and \GoldenTenRecovered{} with ten seeds. LocalMapper recovers the strict reference relation in 1,605 reactions, RXNMapper in 1,547, and Chython in 1,561. Default binary SLAP recovers 1,591 among its explicit candidates, compared with \SlapRecovered{} for the broader bidirectional sweep evaluated above. These default calls use different search budgets from GRAFT; GRAFT's family recovery is not a top-one accuracy measurement.
 
 RDT recovers 1,030 references under this relation-based criterion, which differs from its chemical-change scoring. Indigo's 692 recoveries require particular care: 503 outputs contain duplicate heavy-atom map labels, seven alter endpoint chemistry, and 133 calls fail. Chython changes endpoint chemistry in 29 outputs, and three RDT outputs fail validation. These results characterize the pinned implementations and input/output protocol rather than establish universal rankings of the methods. Versions and reproduction details are given in \Cref{sec:default-comparators}.
 
@@ -167,7 +167,7 @@ RDT recovers 1,030 references under this relation-based criterion, which differs
 
 The configuration with fragment competition returns full explicit-atom mappings for all 140 coordinate pairs. Across the collection, it recovers \SweepRecovered{} of the \SweepClasses{} minimum-event classes among the returned SLAP-sweep witnesses, covering every compared class in 139 reactions (\Cref{fig:coordinate}). In the remaining carbocation reaction, it recovers three of five comparator classes. Both searches reach four events there; the difference concerns two alternative patterns at that minimum. Against native SLAP, coverage is 155/160 minimum-event classes, again with all missing classes confined to the same reaction.
 
-Local competition expands the retained event-class set by \CompetitionClasses{} classes across \CompetitionCases{} reactions within the evaluated windows. One added event class in one reaction requires decoding internal family shuffles and is absent from the repair representatives. This demonstrates why final candidate extraction must retain correlated alternatives rather than score only one witness. All accepted competition families were completely decoded within their corresponding event windows; this does not imply that every search trajectory was explored.
+Local competition expands the retained event-class set by \CompetitionClasses{} classes across \CompetitionCases{} reactions within the evaluated windows. One added event class in one reaction requires decoding internal family shuffles and is absent from the repair representatives. This demonstrates why final candidate extraction must retain correlated alternatives rather than score only one witness. Each reaction's event window ends one event above the larger of its native-SLAP and SLAP-sweep minima. GRAFT returns \DecodedClasses{} reaction-specific classes across these windows. All accepted competition families were completely decoded within their corresponding event windows; this does not imply that every search trajectory was explored.
 
 \subsection{Final representation and postprocessing cost}
 
@@ -179,9 +179,11 @@ Every family in all 140 catalogues was freshly decoded or certified within its s
 
 \begin{figure}[tb]
 \centering\includegraphics[width=\linewidth]{figs/fig3_coordinate.pdf}
-\caption{\textbf{Event alternatives and final branch representation on 140 reactions.}
-(a) Recovery of minimum-event classes among fresh comparator witnesses. GRAFT covers every SLAP-sweep class in 139 reactions; the remaining reaction has two missing alternatives at the same four-event minimum.
-(b) Per-reaction ordered and unordered branch counts; the diagonal denotes equality. The highlighted case falls from 52,669 to 2,856. Branches are fragment-pair combinations, not counts of explicit mappings or event classes.}
+\caption{\textbf{GRAFT outputs and decoding cost on 140 coordinate reactions.}
+(a) GRAFT returns \DecodedClasses{} distinct reaction-specific event classes within the fixed windows; competition adds \CompetitionClasses{} in \CompetitionCases{} reactions.
+(b) GRAFT recovery of minimum-event classes among returned SLAP witnesses. All compared classes are covered in 139/140 reactions; the remaining reaction lacks two sweep alternatives at the same four-event minimum.
+(c) GRAFT ordered and unordered fragment-pair branch counts; the diagonal denotes equality. The highlighted case falls from 52,669 to 2,856. These are not counts of explicit mappings or event classes.
+(d) Complete GRAFT catalogue construction and window decoding on three workers: wall time, aggregate CPU time, and peak combined memory. Search and competition are excluded; wall time was measured under shared load.}
 \label{fig:coordinate}
 \end{figure}
 

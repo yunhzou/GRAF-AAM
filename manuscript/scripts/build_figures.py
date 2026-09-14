@@ -46,17 +46,40 @@ table.append(f"SLAP sweep & {slap['outcomes']['recovered']:,} & {100*slap['outco
 comp=read('competition_final.json');dedup=read('final_dedup.json');rows=dedup['per_case']
 assert len(rows)==140 and sum(r['final_branches'] for r in rows)==dedup['new_branches']
 assert dedup['fresh_decode_all140'] and all(r['complete'] for r in rows)
-fig,axs=plt.subplots(1,2,figsize=(8.4,3.8),gridspec_kw={'width_ratios':[1.1,1.2]},layout='constrained')
-a=axs[0];names=['SLAP sweep','Native SLAP'];cs=[comp['comparisons'][k] for k in ['slap_sweep','native_slap']]
+fig,axs=plt.subplots(2,2,figsize=(8.4,6.0),layout='constrained',gridspec_kw={'hspace':.17,'wspace':.10})
+a=axs[0,0];total=dedup['event_classes'];added=comp['new_window_class_count'];base=total-added
+assert added==sum(len(r['new_window_classes']) for r in comp['cases'])
+a.barh(0,base,color=GREEN,height=.48,label='Ordinary search')
+a.barh(0,added,left=base,color=PURPLE,height=.48,label='Added by competition')
+a.text(base/2,0,str(base),ha='center',va='center',color='white',weight='bold')
+a.text(base+added/2,0,str(added),ha='center',va='center',color='white',weight='bold')
+a.text(.02,.94,f'{total} event classes · all 140 windows complete',transform=a.transAxes,va='top',weight='bold',fontsize=9)
+a.text(.02,.12,f'Competition adds {added} classes in {len(comp["new_window_cases"])} reactions.',transform=a.transAxes,fontsize=8.4,color=MUTED)
+a.set(yticks=[],xlim=(0,360),ylim=(-.85,.8),xticks=[0,100,200,300],xlabel='GRAFT classes within the fixed event windows')
+a.set_title('a  GRAFT decoded alternatives',loc='left',weight='bold',pad=13)
+a.legend(loc='center left',bbox_to_anchor=(0,.28),frameon=False,fontsize=8,ncol=1)
+a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+a=axs[0,1];cs=[comp['comparisons'][k] for k in ['slap_sweep','native_slap']]
 for i,d in enumerate(cs):
- n=d['union_classes'];total=d['total_classes'];a.barh(i,n,color=GREEN,height=.5);a.barh(i,total-n,left=n,color=RED,height=.5)
- a.text(n/2,i,f'{n}/{total} classes recovered',ha='center',va='center',color='white',fontsize=9,weight='bold')
-a.set(yticks=[0,1],yticklabels=names,xlim=(0,180),xticks=[0,50,100,150],xlabel='Minimum-event classes in comparator output');a.invert_yaxis();a.set_title('a  Coverage of comparator alternatives',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
-a.text(.02,.05,'All comparator classes covered in 139/140 reactions.\nRed: missing classes, all in one reaction.',transform=a.transAxes,fontsize=8.4,color=MUTED,va='bottom');a.set_ylim(1.85,-.6)
-a=axs[1];old=np.array([r['old_literal_branches'] for r in rows]);new=np.array([r['final_branches'] for r in rows]);a.plot([10,8e4],[10,8e4],color=LIGHT,ls='--',lw=1,label='equal counts');a.scatter(old,new,s=21,c=GREEN,alpha=.65,edgecolors='white',linewidths=.4)
-r=next(r for r in rows if r['case']==25);a.scatter([r['old_literal_branches']],[r['final_branches']],s=42,c=ORANGE,zorder=5);a.annotate('52,669 → 2,856',xy=(52669,2856),xytext=(1000,130),arrowprops=dict(arrowstyle='-',color=ORANGE),color=ORANGE,fontsize=8.5)
-a.set(xscale='log',yscale='log',xlim=(12,8e4),ylim=(12,8e4),xlabel='Ordered branches per reaction',ylabel='Unordered final branches per reaction');a.set_title('b  Final fragment deduplication',loc='left',weight='bold',pad=13);a.grid(alpha=.12)
-a.text(.03,.97,'Total: 237,645 → 124,641\nMedian: 596.5 → 397',transform=a.transAxes,va='top',fontsize=8.5)
+ n=d['union_classes'];total=d['total_classes'];a.barh(i,n,color=GREEN,height=.43);a.barh(i,total-n,left=n,color=RED,height=.43)
+ a.text(n/2,i,f'{n}/{total}',ha='center',va='center',color='white',fontsize=10,weight='bold')
+ a.text(0,i-.34,['Against SLAP sweep','Against native SLAP'][i],fontsize=8.5,color=INK)
+a.set(yticks=[],xlim=(0,180),xticks=[0,50,100,150],xlabel='Comparator minimum-event classes recovered')
+a.set_title('b  GRAFT coverage of SLAP alternatives',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+a.text(.02,.03,'All compared classes covered in 139/140 reactions.\nRed: classes absent from GRAFT.',transform=a.transAxes,fontsize=8.2,color=MUTED,va='bottom');a.set_ylim(1.85,-.6)
+a=axs[1,0];old=np.array([r['old_literal_branches'] for r in rows]);new=np.array([r['final_branches'] for r in rows]);a.plot([10,8e4],[10,8e4],color=LIGHT,ls='--',lw=1)
+a.scatter(old,new,s=20,c=GREEN,alpha=.65,edgecolors='white',linewidths=.4)
+r=next(r for r in rows if r['case']==25);a.scatter([r['old_literal_branches']],[r['final_branches']],s=42,c=ORANGE,zorder=5);a.annotate('52,669 → 2,856',xy=(52669,2856),xytext=(1000,100),arrowprops=dict(arrowstyle='-',color=ORANGE),color=ORANGE,fontsize=8.5)
+a.set(xscale='log',yscale='log',xlim=(12,8e4),ylim=(12,8e4),xlabel='Ordered GRAFT branches / reaction',ylabel='Unordered GRAFT branches / reaction');a.set_title('c  GRAFT fragment deduplication',loc='left',weight='bold',pad=13);a.grid(alpha=.12)
+a.text(.03,.97,f'Total: {dedup["old_branches"]:,} → {dedup["new_branches"]:,}\nMedian: {dedup["old_median"]:g} → {dedup["new_median"]:g}',transform=a.transAxes,va='top',fontsize=8.5)
+a=axs[1,1];times=[dedup['wall_seconds']/60,dedup['cpu_seconds']/60]
+a.barh([0,1],times,color=[GREEN,BLUE],height=.42)
+for i,v in enumerate(times):
+ a.text(v+.4,i,f'{v:.2f} min',va='center',fontsize=9,weight='bold')
+ a.text(0,i-.34,['Wall time (shared load)','CPU time (sum over workers)'][i],fontsize=8.5,color=INK)
+a.set(yticks=[],xlim=(0,34),ylim=(1.85,-.6),xticks=[0,10,20,30],xlabel='Complete catalogue and event-window decoding')
+a.set_title('d  GRAFT postprocessing cost',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+a.text(.02,.03,f'{dedup["workers"]} workers · {dedup["peak_mib"]/1024:.2f} GiB peak combined memory\nSearch and competition excluded.',transform=a.transAxes,fontsize=8.2,color=MUTED,va='bottom')
 save(fig,'fig3_coordinate')
 windows=sorted((int(k),v) for k,v in dedup['window_distribution'].items())
 (MAN/'includes/generated-decoder-table.tex').write_text('\\begin{tabular}{l'+ 'r'*len(windows)+'}\\toprule\nMaximum events & '+' & '.join(str(k) for k,v in windows)+r'\\'+'\nReactions (all complete) & '+' & '.join(str(v) for k,v in windows)+r'\\'+'\n'+r'\bottomrule\end{tabular}'+'\n')
@@ -82,14 +105,25 @@ macros=dict(GoldenOneRecovered=f"{counts[0]:,}",GoldenOnePercent=f"{100*counts[0
 print('Built three main figures and complete-campaign tables and numerical macros.')
 
 competitors=read('competitors.json');assert competitors['rescored_with_current_evaluator'] and competitors['unchanged_case_outcomes']
-labels={'rxnmapper':'RXNMapper 0.4.3','localmapper':'LocalMapper 0.1.5','chython':'Chython 2.18 / rxnmap 2.0','slap_binary':'SLAP 1.0.0, binary','slap_weighted':'SLAP 1.0.0, weighted','indigo':'Indigo 1.46.0','rdt':'RDT 4.0.0'}
+labels={'rxnmapper':'RXNMapper','localmapper':'LocalMapper','chython':'Chython','slap_binary':'SLAP, binary','slap_weighted':'SLAP, weighted','indigo':'Indigo','rdt':'RDT'}
 rows=[]
+def comparison_row(name,setting,output,n):
+ return f"{name} & {setting} & {output} & {n:,} ({100*n/N:.2f}\\%) " + r"\\"
+rows.append(comparison_row('GRAFT','1 seed, no sweep','Families',uncut['methods']['graft']['counts']['recovered']))
+for k,nseed in zip(keys,[1,2,3,10]):
+ rows.append(comparison_row('GRAFT',f'{nseed} seed'+('s' if nseed>1 else '')+', sweep','Families',methods[k]['golden_outcomes']['recovered']))
+rows.append(r"\midrule")
 for d in competitors['methods']:
- assert d['total']==N and len(d['first_correct_cases'])==d['first_correct'] and len(d['any_correct_cases'])==d['any_correct']
- first=f"{d['first_correct']:,} ({100*d['first_correct']/N:.2f}\\%)"
- any_=f"{d['any_correct']:,} ({100*d['any_correct']/N:.2f}\\%)"
- rows.append(f"{labels[d['method']]} & {first} & {any_} & {d['invalid_candidates']} & {len(d['failed_cases'])} " + r"\\")
-(MAN/'includes/generated-competitor-table.tex').write_text(r"\begin{tabular}{lrrrr}\toprule"+'\n'+r"Implementation & First correct & Any correct & Invalid & Failed\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+ assert d['total']==N and len(d['any_correct_cases'])==d['any_correct']
+ if not d['method'].startswith('slap'):continue
+ rows.append(comparison_row(labels[d['method']],'Default, no sweep','Candidates',d['any_correct']))
+rows.append(comparison_row('SLAP, union','No sweep','Candidates',uncut['methods']['slap']['counts']['recovered']))
+rows.append(comparison_row('SLAP, union','Sweep','Candidates',slap['sweep_union_recovered']))
+rows.append(r"\midrule")
+for d in competitors['methods']:
+ if d['method'].startswith('slap'):continue
+ rows.append(comparison_row(labels[d['method']],'Default, no sweep','Mapping',d['any_correct']))
+(MAN/'includes/generated-competitor-table.tex').write_text(r"\begin{tabular}{@{}lllr@{}}\toprule"+'\n'+r"Method & Search setting & Evaluated output & Reference recovered\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
 
 # The case-level failure table is generated from the audited final misses.
 misses=read('golden_miss_analysis.json')

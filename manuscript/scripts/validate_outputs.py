@@ -80,7 +80,13 @@ r=PdfReader(MAN/'manuscript.pdf');pages=[p.extract_text() for p in r.pages];allt
 assert '??' not in alltext
 for value in [f"{seed['methods']['seeds1']['golden_recovery_percent']:.2f}",f"{seed['methods']['seeds3']['golden_recovery_percent']:.2f}",'124,641','237,645',f"{flat['wall_seconds']/60:.2f}",'166','168']:
  assert value in alltext,value
-assert 'Default released implementations on Golden' in alltext
+assert 'GRAFT and benchmarked mapping implementations on Golden' in alltext
+assert 'First correct' not in alltext and 'two ten-order cases remain unresolved' not in alltext
+comparison=(MAN/'includes/generated-competitor-table.tex').read_text()
+assert comparison.count('GRAFT &')==5
+assert comparison.count('SLAP,')==4
+for fig in figs:
+ assert 'GRAFT' in PdfReader(MAN/fig).pages[0].extract_text(), fig
 for value in ['1,489','1,661','80.44','89.74']:assert value in alltext
 for d in competitors['methods']:
  assert f"{d['any_correct']:,}" in alltext

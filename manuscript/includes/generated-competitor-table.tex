@@ -1,10 +1,19 @@
-\begin{tabular}{lrrrr}\toprule
-Implementation & First correct & Any correct & Invalid & Failed\\\midrule
-RXNMapper 0.4.3 & 1,547 (83.58\%) & 1,547 (83.58\%) & 0 & 0 \\
-LocalMapper 0.1.5 & 1,605 (86.71\%) & 1,605 (86.71\%) & 0 & 0 \\
-Chython 2.18 / rxnmap 2.0 & 1,561 (84.33\%) & 1,561 (84.33\%) & 29 & 5 \\
-SLAP 1.0.0, binary & 1,399 (75.58\%) & 1,591 (85.95\%) & 0 & 0 \\
-SLAP 1.0.0, weighted & 1,401 (75.69\%) & 1,564 (84.49\%) & 0 & 0 \\
-Indigo 1.46.0 & 692 (37.39\%) & 692 (37.39\%) & 510 & 133 \\
-RDT 4.0.0 & 1,030 (55.65\%) & 1,030 (55.65\%) & 3 & 0 \\
+\begin{tabular}{@{}lllr@{}}\toprule
+Method & Search setting & Evaluated output & Reference recovered\\\midrule
+GRAFT & 1 seed, no sweep & Families & 1,489 (80.44\%) \\
+GRAFT & 1 seed, sweep & Families & 1,834 (99.08\%) \\
+GRAFT & 2 seeds, sweep & Families & 1,834 (99.08\%) \\
+GRAFT & 3 seeds, sweep & Families & 1,837 (99.24\%) \\
+GRAFT & 10 seeds, sweep & Families & 1,840 (99.41\%) \\
+\midrule
+SLAP, binary & Default, no sweep & Candidates & 1,591 (85.95\%) \\
+SLAP, weighted & Default, no sweep & Candidates & 1,564 (84.49\%) \\
+SLAP, union & No sweep & Candidates & 1,661 (89.74\%) \\
+SLAP, union & Sweep & Candidates & 1,796 (97.03\%) \\
+\midrule
+RXNMapper & Default, no sweep & Mapping & 1,547 (83.58\%) \\
+LocalMapper & Default, no sweep & Mapping & 1,605 (86.71\%) \\
+Chython & Default, no sweep & Mapping & 1,561 (84.33\%) \\
+Indigo & Default, no sweep & Mapping & 692 (37.39\%) \\
+RDT & Default, no sweep & Mapping & 1,030 (55.65\%) \\
 \bottomrule\end{tabular}

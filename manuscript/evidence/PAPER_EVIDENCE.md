@@ -1,6 +1,6 @@
 # Evidence used by the preprint
 
-`paper_sources.json` identifies the final source, the fresh validation report and SHA-256 hashes for each numerical snapshot. All four snapshots come from completed rerun campaigns. Figures and tables read these snapshots; building the paper does not run an experiment.
+`paper_sources.json` identifies the final source, the fresh validation report and SHA-256 hashes for each numerical snapshot. The four core result snapshots come from completed rerun campaigns; additional snapshots document paired controls, comparator rescoring, and verdict audits. Figures and tables read these snapshots; building the paper does not run an experiment.
 
 | Snapshot | Manuscript use |
 |---|---|
@@ -28,3 +28,5 @@ Paired no-sweep controls are included in the main Golden results table. Evidence
 
 
 Golden nonrecovery audit (2026-09-13): all 11 final ten-seed misses inspected from complete saved cuts. Four extra-pair mismatches; six exclusions by relaxed orbit bounds; one joint correspondence exclusion. Original RDF references independently verified. Current-engine uncapped causal traces reproduce exclusions in cases 986/1285 and establish reference-directed feasibility. Diagnostic results do not change 1840/1851 recovery. See golden_miss_analysis.json and reports/golden_miss_analysis_20260913.
+
+Table 3 combines the GRAFT seed/sweep configurations, SLAP default and union/sweep configurations, and all other released comparators using reference recovery over their stated outputs. Archived first-output fields are retained only for audit; no ranking is attributed to SLAP. Figure 3 reports GRAFT's 336 classes (300 from ordinary search plus 36 added by competition), its comparator coverage, deduplication, and complete-window postprocessing cost. No searches were rerun for these presentation changes.
