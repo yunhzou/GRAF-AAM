@@ -20,19 +20,21 @@ from build_molecule_figure import build as build_molecule_figure
 build_molecule_figure(MAN)
 
 timing=read('timing_comparison.json')
+competitors=read('competitors.json')
+local=next(d for d in competitors['methods'] if d['method']=='localmapper')
 seed=read('seed_comparison.json');methods=seed['methods'];slap=read('slap_sweep.json');N=1851
 keys=['seeds1','seeds2','seeds3','seeds10'];counts=[methods[k]['golden_outcomes']['recovered'] for k in keys];costs=[methods[k]['common_mean_cpu_seconds'] for k in keys]
 assert seed['fresh'] and all(sum(methods[k]['golden_outcomes'].values()) == N for k in keys)
 assert len(seed['common_case_indices']) > 0
-fig,axs=plt.subplots(1,2,figsize=(8.8,4.3),gridspec_kw={'width_ratios':[1.4,1.3]},layout='constrained')
-a=axs[0];labels=['GRAFT · 1 seed\n(default)','GRAFT · 2 seeds','GRAFT · 3 seeds','GRAFT · 10 seeds','SLAP sweep'];vals=[*counts,slap['sweep_union_recovered']];y=np.arange(5)
-a.barh(y,np.array(vals)/N*100,color=[GREEN,BLUE,'#52789F',PURPLE,ORANGE],height=.58)
+fig,axs=plt.subplots(1,2,figsize=(9.2,4.7),gridspec_kw={'width_ratios':[1.4,1.3]},layout='constrained')
+a=axs[0];labels=['GRAFT · 1 seed\n(default)','GRAFT · 2 seeds','GRAFT · 3 seeds','GRAFT · 10 seeds','SLAP sweep\n(prior baseline)','LocalMapper\n(prior SOTA, 2024)'];vals=[*counts,slap['sweep_union_recovered'],local['any_correct']];y=np.arange(6)
+a.barh(y,np.array(vals)/N*100,color=[GREEN,BLUE,'#52789F',PURPLE,ORANGE,MUTED],height=.58)
 for i,v in enumerate(vals):a.text(v/N*100-1.5,i,f'{v:,} / {N:,}  ({v/N*100:.2f}%)',ha='right',va='center',color='white',fontsize=9,weight='bold')
-a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Verified reference-family recovery (%)');a.invert_yaxis();a.set_title('a  Recovery with sweeps',loc='left',weight='bold',pad=13)
+a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Reference recovery over returned output (%)');a.invert_yaxis();a.set_title('a  GRAFT and prior-method recovery',loc='left',weight='bold',pad=13)
 a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 shown=[costs[0],costs[1],seed['same_host_timing']['metrics']['slap']['mean_seconds']]
 a=axs[1];ys=np.arange(3);policies=['smaller_first','larger_first','bidirectional']
-for j,(prefix,label,color) in enumerate([('graft1','GRAFT · 1 seed (default)',GREEN),('graft2','GRAFT · 2 seeds',BLUE),('slap','SLAP sweep',ORANGE)]):
+for j,(prefix,label,color) in enumerate([('graft1','GRAFT · 1 seed (default)',GREEN),('graft2','GRAFT · 2 seeds',BLUE),('slap','SLAP sweep (prior baseline)',ORANGE)]):
  vals=[timing['methods'][prefix+'_'+p]['stats']['mean'] for p in policies];positions=ys+(j-1)*.23
  a.barh(positions,vals,color=color,height=.21,label=label)
  for y,v in zip(positions,vals):a.text(v+.06,y,f'{v:.2f}',va='center',fontsize=8)
@@ -47,7 +49,7 @@ for name,label in [('graft','GRAFT, no sweep (ablation)'),('slap','SLAP, no swee
 ablations=table;table=[]
 for k,label in zip(keys,['GRAFT, 1 seed + sweep (default)','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
  d=methods[k];o=d['golden_outcomes'];cost_text=f"{d['common_mean_cpu_seconds']:.2f}" if d['common_mean_cpu_seconds'] is not None else '--';table.append(f"{label} & {o['recovered']:,} & {d['golden_recovery_percent']:.2f} & {o['not_recovered']} & {o['unknown']} & {cost_text} \\\\")
-table.append(f"SLAP sweep & {slap['outcomes']['recovered']:,} & {100*slap['outcomes']['recovered']/N:.2f} & {slap['outcomes']['not_recovered']} & {slap['outcomes']['unknown']} & {shown[2]:.2f} " + r"\\")
+table.append(f"SLAP sweep (prior baseline) & {slap['outcomes']['recovered']:,} & {100*slap['outcomes']['recovered']/N:.2f} & {slap['outcomes']['not_recovered']} & {slap['outcomes']['unknown']} & {shown[2]:.2f} " + r"\\")
 table += [r'\midrule'] + ablations
 (MAN/'includes/generated-seed-table.tex').write_text('\\begin{tabular}{lrrrrr}\\toprule\nConfiguration & Recovered & \\% & Absent & Unknown & CPU s/reaction\\\\\\midrule\n'+'\n'.join(table)+'\n\\bottomrule\\end{tabular}\n')
 
@@ -74,12 +76,17 @@ for i,d in enumerate(cs):
 a.set(yticks=[0,1],yticklabels=['SLAP sweep','Native SLAP'],xlim=(0,175),ylim=(1.85,-.6),xlabel='Comparator patterns retained by GRAFT')
 a.set_title('b  Patterns where minima agree',loc='left',weight='bold',pad=12);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 a.text(.02,.03,'136 equal-minimum cases for the sweep;\n125 for native SLAP. Red: two missing patterns.',transform=a.transAxes,fontsize=7.8,color=MUTED)
-a=axs[1,0];mins=[r['graft_minimum'] for r in coord['per_case']];values=list(range(max(mins)+1));freq=[mins.count(k) for k in values]
-a.bar(values,freq,color=GREEN,width=.7)
-for k,v in zip(values,freq):a.text(k,v+.6,str(v),ha='center',fontsize=8)
-a.set(xticks=values,ylim=(0,max(freq)*1.3),xlabel='GRAFT minimum signed-event count',ylabel='Reactions')
-a.set_title('c  GRAFT minimum-event outputs',loc='left',weight='bold',pad=12);a.grid(axis='y',alpha=.15);a.set_axisbelow(True)
-a.text(.02,.94,f'{coord["graft_minimum_patterns"]} patterns at per-reaction minima',transform=a.transAxes,fontsize=8,va='top',weight='bold')
+a=axs[1,0]
+series=[('GRAFT',GREEN,[r['graft_minimum'] for r in coord['per_case']]),
+        ('SLAP sweep',ORANGE,[r['comparators']['slap_sweep']['minimum'] for r in coord['per_case']]),
+        ('Native SLAP',MUTED,[r['comparators']['native_slap']['minimum'] for r in coord['per_case']])]
+values=list(range(max(max(v) for _,_,v in series)+1));largest=0
+for j,(label,color,mins) in enumerate(series):
+ freq=[mins.count(k) for k in values];largest=max(largest,max(freq))
+ a.bar(np.array(values)+(j-1)*.25,freq,color=color,width=.23,label=label)
+a.set(xticks=values,ylim=(0,largest*1.35),xlabel='Minimum signed-event count',ylabel='Reactions')
+a.set_title('c  Minimum-event distributions',loc='left',weight='bold',pad=12);a.grid(axis='y',alpha=.15);a.set_axisbelow(True)
+a.legend(loc='upper left',ncol=3,fontsize=7,frameon=False)
 a=axs[1,1];keys_stage=['graft_search','graft_competition','graft_decoding','slap_mapping','slap_h_refinement'];means=[coord['timing'][k]['stats']['mean'] for k in keys_stage];ys=np.arange(5)
 a.barh(ys,means,color=[GREEN,BLUE,PURPLE,ORANGE,ORANGE],height=.52)
 for i,v in enumerate(means):a.text(v+.12,i,f'{v:.2f}',va='center',fontsize=8)
@@ -110,7 +117,7 @@ macros=dict(GoldenOneRecovered=f"{counts[0]:,}",GoldenOnePercent=f"{100*counts[0
 print('Built three main figures and complete-campaign tables and numerical macros.')
 
 competitors=read('competitors.json');assert competitors['rescored_with_current_evaluator'] and competitors['unchanged_case_outcomes']
-labels={'rxnmapper':'RXNMapper','localmapper':'LocalMapper','chython':'Chython','slap_binary':'SLAP, binary','slap_weighted':'SLAP, weighted','indigo':'Indigo','rdt':'RDT'}
+labels={'rxnmapper':'RXNMapper','localmapper':r'LocalMapper$^{\dagger}$','chython':'Chython','slap_binary':'SLAP, binary','slap_weighted':'SLAP, weighted','indigo':'Indigo','rdt':'RDT'}
 rows=[]
 def comparison_row(name,setting,output,n):
  return f"{name} & {setting} & {output} & {n:,} ({100*n/N:.2f}\\%) " + r"\\"
@@ -123,7 +130,7 @@ for d in competitors['methods']:
  if not d['method'].startswith('slap'):continue
  rows.append(comparison_row(labels[d['method']],'Default, no sweep','Candidates',d['any_correct']))
 rows.append(comparison_row('SLAP, union','No sweep','Candidates',uncut['methods']['slap']['counts']['recovered']))
-rows.append(comparison_row('SLAP, union','Sweep','Candidates',slap['sweep_union_recovered']))
+rows.append(comparison_row(r'SLAP, union$^{\ddagger}$','Sweep','Candidates',slap['sweep_union_recovered']))
 rows.append(r"\midrule")
 for d in competitors['methods']:
  if d['method'].startswith('slap'):continue
@@ -140,18 +147,21 @@ rows=[f"{r['case']} & {r['reference_pairs']} & {r['retained_pair_counts'][0]} & 
 
 # Pair orientation-specific coverage with matched-cohort runtime distributions.
 rows=[]
-for prefix,label in [('graft1','GRAFT, 1 seed (default)'),('graft2','GRAFT, 2 seeds'),('slap','SLAP sweep')]:
+for prefix,label in [('graft1','GRAFT, 1 seed (default)'),('graft2','GRAFT, 2 seeds'),('slap','SLAP sweep (prior baseline)')]:
  if rows:rows.append(r"\midrule")
  for i,(policy,dlabel) in enumerate([('smaller_first','Smaller-first'),('larger_first','Larger-first'),('bidirectional','Bidirectional')]):
   d=timing['methods'][prefix+'_'+policy];n=d['recovered'];st=d['stats']
   row=[label if i==0 else '',dlabel,f'{n:,} ({100*n/N:.2f}\\%)']+[f'{st[k]:.3f}' for k in ['mean','median','p95']]
+  row.append(f"{st['mean']/timing['methods']['slap_'+policy]['stats']['mean']:.2f}")
   rows.append(' & '.join(row)+r"\\")
-(MAN/'includes/generated-direction-table.tex').write_text(r"\begin{tabular}{@{}llrrrr@{}}\toprule"+'\n'+r"Method & Orientation & Recovered & Mean & Median & 95th pct.\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+(MAN/'includes/generated-direction-table.tex').write_text(r"\begin{tabular}{@{}llrrrrr@{}}\toprule"+'\n'+r"Method & Orientation & Recovered & Mean & Median & 95th pct. & CPU/SLAP\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
 rows=[]
 for d in timing['default_comparators']:
- row=[d['method'],str(d['calls'])]+[f'{d[k]:.3f}' for k in ['mean_wall_seconds','median_wall_seconds','mean_cpu_seconds']]
+ name=d['method'] + (r'$^{\dagger}$' if d['key']=='localmapper' else '')
+ source=next(v for v in competitors['methods'] if v['method']==d['key'])
+ row=[name,f"{100*source['any_correct']/N:.2f}\\%",str(d['calls'])]+[f'{d[k]:.3f}' for k in ['mean_wall_seconds','median_wall_seconds','mean_cpu_seconds']]
  rows.append(' & '.join(row)+r"\\")
-(MAN/'includes/generated-comparator-timing-table.tex').write_text(r"\begin{tabular}{@{}lrrrr@{}}\toprule"+'\n'+r"Implementation & Calls & Mean wall s & Median wall s & Mean CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+(MAN/'includes/generated-comparator-timing-table.tex').write_text(r"\begin{tabular}{@{}lrrrrr@{}}\toprule"+'\n'+r"Implementation & Recovery & Calls & Mean wall s & Median wall s & Mean CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
 
 # Minimum-event comparison is separate from mapping-accuracy evaluation.
 rows=[]

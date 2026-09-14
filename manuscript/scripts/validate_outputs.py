@@ -139,6 +139,16 @@ for d in coord['timing'].values():
  assert abs(d['stats']['mean']-sum(r['cpu_seconds'] for r in d['per_case'])/140)<1e-7
 for v in ['162/164','140/140','171','1.047','1.840','1.337','0.053']:assert v in alltext,v
 assert 'not a mapping-accuracy benchmark' in alltext.replace('\n',' ')
+# Prior-method roles and baseline-normalized timing are derived, not new runs.
+local=next(d for d in competitors['methods'] if d['method']=='localmapper')
+assert local['any_correct']==max(d['any_correct'] for d in competitors['methods'] if not d['method'].startswith('slap'))
+assert 'CPU/SLAP' in alltext and 'LocalMapper' in alltext and 'prior' in alltext
+for prefix in ['graft1','graft2','slap']:
+ for policy in ['smaller_first','larger_first','bidirectional']:
+  ratio=timing['methods'][prefix+'_'+policy]['stats']['mean']/timing['methods']['slap_'+policy]['stats']['mean']
+  assert f'{ratio:.2f}' in (MAN/'includes/generated-direction-table.tex').read_text()
+assert min(timing['default_comparators'],key=lambda d:d['mean_wall_seconds'])['key']=='rxnmapper'
+assert min(timing['default_comparators'],key=lambda d:d['mean_cpu_seconds'])['key']=='rxnmapper'
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
  manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. GRAFT and the SLAP sweep use final-source campaigns; archived default-comparator outputs were rescored with the current evaluator. Completeness and limits are recorded in the evidence.',
  manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())
