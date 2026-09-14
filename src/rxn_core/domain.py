@@ -12,6 +12,7 @@ from types import MappingProxyType
 from typing import Any, Mapping
 
 import numpy as np
+import math
 
 from .alignment.post_aam import AAMBranch, AAMHierarchy, AtomBijection
 from .search_graph import AAMSearchGraph
@@ -118,8 +119,20 @@ class AAMSearchConfig:
     symmetry_repair_max_evaluations: int = 20_000
     anchors: tuple[tuple[int, int], ...] = ()
     seed_selection: str = 'random'
+    random_seed: int = 42
+    sweep_cuts: bool = True
 
     def __post_init__(self):
+        for name in ('cut_floor', 'graph_floor', 'iso_tolerance', 'event_threshold'):
+            if not math.isfinite(getattr(self, name)):
+                raise ValueError(f'{name} must be finite')
+        if self.metal_event_threshold is not None and (
+                not math.isfinite(self.metal_event_threshold) or self.metal_event_threshold <= 0):
+            raise ValueError('metal event threshold must be finite and positive')
+        if not isinstance(self.random_seed, int):
+            raise ValueError('random_seed must be an integer')
+        if not isinstance(self.sweep_cuts, bool):
+            raise ValueError('sweep_cuts must be boolean')
         if self.seed_selection not in ('random', 'distance'):
             raise ValueError('unknown seed selection policy')
         if self.cut_floor <= 0 or self.graph_floor <= 0:

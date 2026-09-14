@@ -25,6 +25,8 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+notebook = ["rdkit>=2022.9", "z3-solver>=4.13", "py3Dmol>=2.0", "nbformat", "nbclient", "ipykernel", "jupyterlab"]
+postprocessing = ["z3-solver>=4.13"]
 dev = ["pytest", "nbclient", "ipykernel"]
 smiles = ["rdkit>=2022.9"]
 catalog = ["rdkit>=2022.9", "msgspec>=0.21"]

@@ -72,7 +72,7 @@ unchanged. Identical growth output is never expanded into bijections.
         self.available_elements = {}
         self.source_orbits = _nauty_orbits(self.source, wbo_tol=config.iso_tolerance)
         self.orders = _generate_seed_orders(self.source, config.seed_count,
-            rng_seed=cut_seed(condition.cuts), seed_selection=config.seed_selection)
+            rng_seed=cut_seed(condition.cuts, config.random_seed), seed_selection=config.seed_selection)
         # Multiple policies use this context; edge.step records policy/pass/position.
         self.builder = _SharedGraphBuilder(SearchContext(tuple(sorted(self.source)),
             tuple(sorted(self.target)), (), cuts=condition.cuts, graph_floor=config.graph_floor,

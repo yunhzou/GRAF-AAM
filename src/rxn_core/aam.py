@@ -49,6 +49,10 @@ def checkpoint_manifest(problem, config):
         return dict(elements=list(value.elements), wbo=value.wbo.tolist(),
                     coordinates=value.coordinates.tolist())
     settings = asdict(config)
+    if config.random_seed == 42:
+        settings.pop('random_seed')
+    if config.sweep_cuts:
+        settings.pop('sweep_cuts')
     if config.seed_selection == 'random':
         settings.pop('seed_selection')  # unchanged policy can resume older cuts
     return json.loads(json.dumps(dict(schema='rxn_core.aam_checkpoints/v2',
@@ -110,7 +114,7 @@ def _search_cut(cut):
     source_orbits = _nauty_orbits(source, wbo_tol=config.iso_tolerance)
     graphs, profile = [], _GrowthCounts()
     for order in _generate_seed_orders(source, n_trials=config.seed_count,
-            rng_seed=cut_seed(cut), seed_selection=config.seed_selection):
+            rng_seed=cut_seed(cut, config.random_seed), seed_selection=config.seed_selection):
         graphs.append(matcher(source, target, order,
             graph_floor=config.graph_floor, iso_tol=config.iso_tolerance,
             max_branches=config.branch_limit, p_orbits=target_orbits,
@@ -207,7 +211,7 @@ def search_aam(problem: AAMProblem, config: AAMSearchConfig | None = None,
     if archive_format not in ('json','checkpoint'):
         raise ValueError('archive_format must be json or checkpoint')
     started = time.perf_counter()
-    cuts = cut_sweep_items(problem.reactant.wbo, config.cut_floor)
+    cuts = cut_sweep_items(problem.reactant.wbo, config.cut_floor) if config.sweep_cuts else [()]
     directory = None if intermediate_dir is None else Path(intermediate_dir)
     if resume and directory is None:
         raise ValueError('Resuming requires an intermediate directory')
@@ -370,7 +374,7 @@ def search_aam_checkpoints(problem: AAMProblem, config: AAMSearchConfig | None =
         if manifest_path.exists() or raw_cut_paths(directory):
             raise ValueError('Existing checkpoints require explicit resume=True')
         manifest_path.write_text(json.dumps(manifest) + '\n')
-    cuts = cut_sweep_items(problem.reactant.wbo, config.cut_floor)
+    cuts = cut_sweep_items(problem.reactant.wbo, config.cut_floor) if config.sweep_cuts else [()]
     saved = {int(p.name.split('_')[1].split('.')[0]): p for p in raw_cut_paths(directory)}
     if set(saved) - set(range(len(cuts))):
         raise ValueError('Unexpected cut checkpoint index')

@@ -63,6 +63,8 @@ does not invoke xTB.
 
 ## Python API
 
+Start with the short [AAM notebook](docs/AAM_SIMPLE.ipynb): matching, unique bond-event candidates, certified symmetry queries, and py3Dmol inspection. The [Python API guide](docs/PYTHON_API.md) lists anchors, directions, conditional matching, all configuration controls, and current chirality limitations. Install its dependencies with `python -m pip install -e ".[notebook]"`.
+
 ```python
 from rxn_core import (
     AAMProblem,
@@ -146,21 +148,23 @@ Python API, CPU controls, AAM inspection, R/P alignment, and TS scoring.
 
 ```text
 AAMResult
-`- AAMMechanism[]
-   `- AAMBranch[]
-      |- AtomBijection representative
-      |- AAMHierarchy / FragmentMatch[]
-      |- exact symmetry domains and generators
-      `- provenance and branch counts
+`- AAMSearchGraph
+   |- contexts, states, transitions, and stop/cap evidence
+   `- compressed placements, conditioned generators, and provenance
 
-AnalyticalAAMResult
-`- maximal exact mapping families per mechanism
+DecodedEvents                              # separate signed-event post-processing
+`- EventCandidate[]                        # one witness per unique event class
+   |- event edges, count, and supporting family IDs
+   `- symmetry evidence and conditional shuffle queries
+
+MechanismResult / AnalyticalAAMResult       # optional geometry/TS pipeline
+`- analytical mapping families per mechanism
 
 RPResult
-`- chirality-valid, minimum fixed-mapping-RMSD mapping per mechanism
+`- selected mapping per mechanism, with index-chirality diagnostics
 
 TSResult
-`- R->TS and P->TS CoreAAMResult plus exact scored core tuples
+`- R->TS and P->TS CoreAAMResult plus scored core tuples
 ```
 
 ## Tests
