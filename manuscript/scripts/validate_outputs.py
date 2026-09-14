@@ -24,6 +24,14 @@ for d in competitors['methods']:
  assert len(d['failed_cases'])==sum(n for k,n in d['statuses'].items() if k!='mapped')
  assert d['invalid_candidates']==sum(d['invalid_reasons'].values())
 seed=read('seed_comparison.json');slap=read('slap_sweep.json');comp=read('competition_final.json');flat=read('final_dedup.json')
+misses=read('golden_miss_analysis.json')
+assert misses['nonrecovered']==11 and len(misses['rows'])==11
+assert {r['case'] for r in misses['rows']}=={r['case'] for r in seed['methods']['seeds10']['per_case'] if r['outcome']=='not_recovered'}
+assert sum(r['classification']=='extra_matched_pair' for r in misses['rows'])==4
+assert all(r['retained_pair_counts']==[r['reference_pairs']+1] for r in misses['rows'] if r['classification']=='extra_matched_pair')
+assert misses['all_reference_conversions_verified'] and misses['cases_recovered_by_any_comparator']==[871]
+assert all(t['native_python_graph_equal'] for t in misses['causal_traces'])
+
 assert seed['fresh'] and slap['fresh'] and comp['fresh']
 keys=['seeds1','seeds2','seeds3','seeds10']
 assert all(seed['methods'][k]['golden_cases']==1851 for k in keys)

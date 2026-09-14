@@ -1,0 +1,644 @@
+{
+  "case": 1475,
+  "direction": "P_to_R",
+  "seed_count": 10,
+  "branch_cap": 100,
+  "expected_cuts": 37,
+  "checked_cuts": 37,
+  "reference_pairs": 18,
+  "heavy_counts": [
+    21,
+    21
+  ],
+  "cuts": [
+    {
+      "index": 0,
+      "sha256": "1b572e9814896a046c4f1e9e546dd396f85e4c48e03f21b1b0b325456e268ec2",
+      "terminals": 242,
+      "cardinality_histogram": {
+        "19": 242
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 417
+      },
+      "states": 2005,
+      "transitions": 1995,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 1,
+      "sha256": "27aef0bad264e8bb9b796d83089a9663395163571a5f890e979640b8bd81e9ee",
+      "terminals": 222,
+      "cardinality_histogram": {
+        "19": 222
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 349
+      },
+      "states": 1459,
+      "transitions": 1449,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 2,
+      "sha256": "bdd24142004b0b69cf49eff0bd78bda7a71d78070fea862468627378762c3485",
+      "terminals": 290,
+      "cardinality_histogram": {
+        "19": 290
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 1500,
+      "transitions": 1490,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 3,
+      "sha256": "2b33f30c7a37060a81bd50320e5c56543d57dd1f527bb899d64d1e8d33178390",
+      "terminals": 140,
+      "cardinality_histogram": {
+        "19": 140
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 661,
+      "transitions": 651,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 4,
+      "sha256": "2c191b75dcffdee7f0bc217929fc2a4d0fe09e1ecd173744052bf1db6d76b94c",
+      "terminals": 166,
+      "cardinality_histogram": {
+        "19": 166
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 44
+      },
+      "states": 639,
+      "transitions": 629,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 5,
+      "sha256": "c2847a1ce62b9c8e79716eb53a6ef0025c9beb852ff463293de04f93f70bb61a",
+      "terminals": 364,
+      "cardinality_histogram": {
+        "19": 364
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 448
+      },
+      "states": 2965,
+      "transitions": 2955,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 6,
+      "sha256": "58a9bff7b76949a09800bfd69b7fe51c6cbe4c39c6f29424bb3dc1a3e04981b1",
+      "terminals": 278,
+      "cardinality_histogram": {
+        "19": 278
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 1786
+      },
+      "states": 4703,
+      "transitions": 4693,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 7,
+      "sha256": "4d7de9f53082250ecb06894536c7bedd8b24a7cc697d299465ab5ffd40064cc6",
+      "terminals": 396,
+      "cardinality_histogram": {
+        "19": 396
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 692
+      },
+      "states": 2632,
+      "transitions": 2622,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 8,
+      "sha256": "c19ce1c2b92f9e36fbfe3362c6f5b5241ab314348fe71ae144a86db693e23bea",
+      "terminals": 200,
+      "cardinality_histogram": {
+        "19": 200
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 432
+      },
+      "states": 1882,
+      "transitions": 1872,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 9,
+      "sha256": "597ebc328bdc9ec972b65a3171cfd846a0391993a560421d450cebbbe299f0dd",
+      "terminals": 356,
+      "cardinality_histogram": {
+        "19": 356
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 290
+      },
+      "states": 2241,
+      "transitions": 2231,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 10,
+      "sha256": "b74d06abf7e68675130738938b77d0b9a8e481a7f66dfbe85f5f1d392e4bb4f7",
+      "terminals": 104,
+      "cardinality_histogram": {
+        "19": 104
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 490,
+      "transitions": 480,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 11,
+      "sha256": "44febb8c5cbc1673df177b7f09840a674235ba10d38920ca91e6946c29bdcd7f",
+      "terminals": 260,
+      "cardinality_histogram": {
+        "19": 260
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 395
+      },
+      "states": 2418,
+      "transitions": 2408,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 12,
+      "sha256": "862614a67da34d1a32ebaf3c5cbaa37040dfd239b4153f2dd68ddc521191d572",
+      "terminals": 242,
+      "cardinality_histogram": {
+        "19": 242
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 203
+      },
+      "states": 1565,
+      "transitions": 1555,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 13,
+      "sha256": "e7b03384f1638fcf59c033f5989552f536bc7647602b35f44104635e8c901c58",
+      "terminals": 108,
+      "cardinality_histogram": {
+        "19": 108
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 660,
+      "transitions": 650,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 14,
+      "sha256": "e7d0d099b7e4068c62104c12c1c69f8e1af2b4ff55c3538e5bb21fbd47892595",
+      "terminals": 96,
+      "cardinality_histogram": {
+        "19": 96
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 571,
+      "transitions": 561,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 15,
+      "sha256": "989916a5786f765510ee9b9c4b40ef81a9b79e152d8613b9f765e94872bfabe0",
+      "terminals": 328,
+      "cardinality_histogram": {
+        "19": 328
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 607
+      },
+      "states": 2973,
+      "transitions": 2963,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 16,
+      "sha256": "2e2e52e7e7dccdc22ebf972815bc5fa242698fbc96ad549656e86daa8e34bec6",
+      "terminals": 364,
+      "cardinality_histogram": {
+        "19": 364
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 101
+      },
+      "states": 1622,
+      "transitions": 1612,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 17,
+      "sha256": "79498695a3d04f4e950304fff291e5e95fbd2e03a089f19a92c39bb46a4469cb",
+      "terminals": 264,
+      "cardinality_histogram": {
+        "19": 264
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 109
+      },
+      "states": 1224,
+      "transitions": 1214,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 18,
+      "sha256": "bde23ad2fea221461d58ade427f2a906ebefcf66a489da5f68ad9fcb7e228b96",
+      "terminals": 284,
+      "cardinality_histogram": {
+        "19": 284
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 355
+      },
+      "states": 1954,
+      "transitions": 1944,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 19,
+      "sha256": "0e3f10d4c8593330dfe40f8ca12a5f8b8b154915d079f98efde580f81fcb57a4",
+      "terminals": 116,
+      "cardinality_histogram": {
+        "19": 116
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 464,
+      "transitions": 454,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 20,
+      "sha256": "cc1e998c57e0431658f7d514358f10378abf7ff802deeb3bab39747e6dd47d0d",
+      "terminals": 184,
+      "cardinality_histogram": {
+        "19": 184
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 439
+      },
+      "states": 1519,
+      "transitions": 1509,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 21,
+      "sha256": "ea7d50cd33396d4df8d9db587b4de4c78600d3571a8a5814e22920f965663f63",
+      "terminals": 340,
+      "cardinality_histogram": {
+        "19": 340
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 120
+      },
+      "states": 1908,
+      "transitions": 1898,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 22,
+      "sha256": "e3b083782be588510bf3dd3afdee4c132a94c0832788c1d035991652a96c4196",
+      "terminals": 364,
+      "cardinality_histogram": {
+        "19": 364
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 416
+      },
+      "states": 2393,
+      "transitions": 2383,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 23,
+      "sha256": "8a89f132185873d4cb3978bba91844a6c30f9c7bf6de618163c43d46e22b567b",
+      "terminals": 498,
+      "cardinality_histogram": {
+        "19": 498
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 400
+      },
+      "states": 3360,
+      "transitions": 3350,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 24,
+      "sha256": "ea7611525c05fa49fa1a29833870e87fb0be997696fea6f084aae5421cc107c7",
+      "terminals": 222,
+      "cardinality_histogram": {
+        "19": 222
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 209
+      },
+      "states": 1593,
+      "transitions": 1583,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 25,
+      "sha256": "ca56e486f6f9f8f5d5f43fab41be2ba8cd6a1163d169d41db56f47c79638fcff",
+      "terminals": 566,
+      "cardinality_histogram": {
+        "19": 566
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 1045
+      },
+      "states": 4851,
+      "transitions": 4841,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 26,
+      "sha256": "7801e289bbb8adca8c3ff768966b4a1245110530c617e6b7ba8ec366bcf8bbed",
+      "terminals": 382,
+      "cardinality_histogram": {
+        "19": 382
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 609
+      },
+      "states": 2757,
+      "transitions": 2747,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 27,
+      "sha256": "c64e7552358184ba13bf659ce68a3d5840f4897e7a8cb063ecee2d1c6bddd7a0",
+      "terminals": 408,
+      "cardinality_histogram": {
+        "19": 408
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 487
+      },
+      "states": 2870,
+      "transitions": 2860,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 28,
+      "sha256": "da36d89a319f53fa0f0804abb1b893b1337a16e08abf53e82eee57497d5c1069",
+      "terminals": 106,
+      "cardinality_histogram": {
+        "19": 106
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 439,
+      "transitions": 429,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 29,
+      "sha256": "1c433be8895660bcdadb344d052480f60d5b2aadc4ed11bdc31060bf98c090d7",
+      "terminals": 174,
+      "cardinality_histogram": {
+        "19": 174
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 742,
+      "transitions": 732,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 30,
+      "sha256": "d900327bc7cba866599ced2b0b33789c538627f4d5761ab811e16115ea9fad40",
+      "terminals": 100,
+      "cardinality_histogram": {
+        "19": 100
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 480,
+      "transitions": 470,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 31,
+      "sha256": "a4ee0e0d066a22a7f7f3acd6bb83bac11163cf6fbab04a8a06ac75e2e62647fe",
+      "terminals": 272,
+      "cardinality_histogram": {
+        "19": 272
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 40
+      },
+      "states": 1885,
+      "transitions": 1875,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 32,
+      "sha256": "48be541753b8f2b22e0c43a184ce5690d6ceb6e6094ac506c4bd4a34297b22c0",
+      "terminals": 108,
+      "cardinality_histogram": {
+        "19": 108
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {},
+      "states": 524,
+      "transitions": 514,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 33,
+      "sha256": "4d378f5d24de84a89ad2de3dc05df46e0a2ee42a2867db5ff79770e5b716465b",
+      "terminals": 556,
+      "cardinality_histogram": {
+        "19": 556
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 981
+      },
+      "states": 4376,
+      "transitions": 4366,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 34,
+      "sha256": "c79ef8686910f21a498b5d9f65c36f503db65e2c272b71c2fedc47d50af8cacd",
+      "terminals": 630,
+      "cardinality_histogram": {
+        "19": 630
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 1378
+      },
+      "states": 5233,
+      "transitions": 5223,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 35,
+      "sha256": "116a8c3bc81c9232687536a0d6201a5c7e655fa4e41fb06032c72cec3d33cb2e",
+      "terminals": 626,
+      "cardinality_histogram": {
+        "19": 626
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 742
+      },
+      "states": 4106,
+      "transitions": 4096,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 36,
+      "sha256": "fc12b829a2d0e775492be51511f59a4fb973811132d228bfcaaf19b0c939369b",
+      "terminals": 412,
+      "cardinality_histogram": {
+        "19": 412
+      },
+      "same_cardinality": 0,
+      "source_orbit_selection_matches": 0,
+      "cap_stops": {
+        "combined_live_leaves": 635
+      },
+      "states": 2909,
+      "transitions": 2899,
+      "representative_exact_orbit_pair_matches": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    }
+  ],
+  "cpu_seconds": 1.021026424,
+  "wall_seconds": 1.126017274102196,
+  "peak_mib": 113.54296875,
+  "input_sha256": "aa5458b65f62c19541ef9665b5695c1320082321c86783690afa07942df1a6d7",
+  "reference_sha256": "a1dfeffc64e81b572c406bbe39b2543309ab42c709c1d23f8c6424bdafe73b3b",
+  "driver_sha256": "6bfbcc45fbb9f8352ca64745e51d73448eaaa5f13be555112719b44280d92a2a",
+  "terminals": 10768,
+  "same_cardinality": 0,
+  "source_orbit_selection_matches": 0,
+  "representative_exact_orbit_pair_matches": 0,
+  "relaxed_target_orbit_pair_matches": 0,
+  "heavy_action_records": 0,
+  "non_endpoint_actions": 0,
+  "free_heavy_blocks": 0,
+  "cardinality_histogram": {
+    "19": 10768
+  },
+  "cap_stops": {
+    "combined_live_leaves": 13729
+  }
+}

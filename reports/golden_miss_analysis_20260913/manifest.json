@@ -1,0 +1,59 @@
+{
+  "repo_commit": "2474a8a150fdf0a2c25d19cf773207408755422f",
+  "matching_algorithm_commit": "3a9ef9a8aec3e129ea5f4ee67df47ce2c25ade3c",
+  "source_hashes": {
+    "src/rxn_core/alignment/branch.py": "53d52eba4d7c9adce3605de56737b2b4d09b224eff80eec59a4f219536f4757d",
+    "src/rxn_core/matcher/policy.py": "1bc4e6bffbb289ecc2d8860e2f8f5c388d5f7efdf36a6387f173934aac736cee",
+    "src/rxn_core/search_symmetry.py": "fa3a78027dbcf9f86e1513dd86a6ddb89587f1769517115369e6e235c84a6461",
+    "native/src/engine.cpp": "4e05427691e3e41998b010c181a019583e8d207c62e8f41b67a2bb0e23561f9b",
+    "native/src/fragment_scheduler.h": "dab1ad79f91db2e730fb2e53e7f3f254a9d513affbc16b618fc2884e40c9adf2"
+  },
+  "unchanged_matching_source": {
+    "src/rxn_core/alignment/branch.py": true,
+    "src/rxn_core/matcher/policy.py": true,
+    "src/rxn_core/search_symmetry.py": true,
+    "native/src/engine.cpp": true,
+    "native/src/fragment_scheduler.h": true
+  },
+  "jobs": {
+    "initial_audit": "6791335",
+    "completed_audit": "6791380",
+    "sensitivity": "6791366",
+    "initial_trace": "6791453"
+  },
+  "local_trace_scope": "Re-executed after output serialization correction with the same frozen matching source, under 60-second subprocess guards.",
+  "artifact_hashes": {
+    "results/case1358-R_to_P.json": "6a6adfc6b7b15f5f04ac9f1e732a82ba78f65c88ed54aa98d521b6a3486fb049",
+    "results/case1553-R_to_P.json": "77dc90db926cade67b832abab4f786b37299c1a2c58d16ee45c4361d01d1d228",
+    "results/case1475-P_to_R.json": "d2e9e3485bc13997726bc0175c0f66dbaa2e7e03cdf562d88622043cae65553e",
+    "results/case1285-R_to_P.json": "5ce42009e9210d15631dc4ce3e998cf688cc1db28c442117a2f87c2423b79cd4",
+    "results/case871-P_to_R.json": "ca982eed599013b4d456e633a8a9d1bfd53af6c0759052f65f640fb7e7b7cc0a",
+    "results/case590-R_to_P.json": "e952b63f445a195ba179514dd547d479988b59cf074c4c0a4e4bfff0f798d5c3",
+    "results/case1475-R_to_P.json": "0a509013e06aec98afd6e5e0441903eca6a613168f1e562f016956e5149d21d9",
+    "results/case1553-P_to_R.json": "bf544af39ec52f55ba15c24658b344cbf49f7ececd9aea4b9aa381fd5faed8d5",
+    "results/case1358-P_to_R.json": "41cfe216f076dc850769ca71bc50f897a53476cac5fe0bd820eb886c00d1f6fd",
+    "results/case1285-P_to_R.json": "158462b8228117cc7ac65e3116b8ef1c908a492ab9e3b15eccfc68a297526f12",
+    "results/case871-R_to_P.json": "89e7c475a0bf1a7466b02ff0be81566b3c61b5e85477be55493bedeb4470d6df",
+    "results/case590-P_to_R.json": "4a37710a41d43dac68a2605e96e39990fff2765851e6ce73384f22882dc14c44",
+    "results/case7-P_to_R.json": "4dbda85eeaa2ccfcb72ebc97442570fe684fa65a0518a4794658ae3047dce30f",
+    "results/case19-R_to_P.json": "dcda1f7c5cb1ebd7c0beea3198aab4595e1dc09ec865bd5e08e73b85a4e9f2b0",
+    "results/case986-P_to_R.json": "1a0954f514cef296607850e9b1132e61671e1370bc6da646b4f391f0f760c47c",
+    "results/case1228-P_to_R.json": "aac0efd173a37ad2de5a0ce9b2590ccce5b82e6b853617b7f680325f3c68879b",
+    "results/case1377-R_to_P.json": "042fdddd9a098ed462c21e0a60b276bf4cc1f5b81381d19b884346e094c0ea4e",
+    "results/case7-R_to_P.json": "28597e0d68c500f4872a8d9eb9699899640a382d79b5570031347e1547edf687",
+    "results/case19-P_to_R.json": "707919db0dc9735752f26754797f9911fdaf526630b67de1ab06da951b3fb431",
+    "results/case986-R_to_P.json": "5461d5fb20b18c1fcf340434c477edbd7ab0f2ff69f2a66b3a34c4f193842dea",
+    "results/case1228-R_to_P.json": "2d1a4309c094dd19d747cd41b7ba4c66fca685898df7fc3750922c7b6a77af87",
+    "results/case1377-P_to_R.json": "d8fcfe6e846d0260780c4613e787d7a67b7397ed7000c3ca20c3766b80df2cd1",
+    "traces/cause1285.json": "cf43cea811e811d5807e693351298c7307b6c8c9673f88bc31f21d42b314e552",
+    "traces/cause986.json": "4fe5bf7cae6c66bb04d68ecaf61027f2d1c714309bf17953cc9672289b902e20",
+    "probes/case986-R_to_P-tol05/result.json": "f1a5846e3f900943d537b574149f9768a4cef1ae6e9fe208c9a1b983cbd00e10",
+    "probes/case986-P_to_R-cap1000/result.json": "78cec41d10ac909a9086c56d2150050fe3b621eefe665bf0cd33925898195c1c",
+    "probes/case986-P_to_R-tol05/result.json": "9b5b7cd863f8eb5a67c8262edf718abe9053ac0c32091aa642ba2409b9e9cc8b",
+    "probes/case1285-P_to_R-cap1000/result.json": "4b76d09162e58438d653b4e405cabc12a469b9ffd744bc63662bd947a4dcfba0",
+    "probes/case1285-R_to_P-tol05/result.json": "99f2968387500353ef47b42a54a8620ab2656203a723bd89acefac651b70e670",
+    "probes/case1285-P_to_R-tol05/result.json": "8148bda0789d6baa3e65e9cb555737182a419c28d3bc69ac00bb4ddae3c44480",
+    "probes/case986-R_to_P-cap1000/result.json": "ff40316b552f1265388f4ae0e8874c06d86c81b8d47b13b360fff18c15353f37",
+    "probes/case1285-R_to_P-cap1000/result.json": "937d94cd01ebd02e8936d55d560a6b7dd5df15ea4985a983292a9d6cd0665002"
+  }
+}

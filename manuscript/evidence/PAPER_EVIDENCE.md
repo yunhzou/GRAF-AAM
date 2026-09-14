@@ -25,3 +25,6 @@ Paired no-sweep controls are included in the main Golden results table. Evidence
 
 
 2026-09-13 complete-cut audit: ten-seed Golden recovery is 1,840/1,851, with 11 reference mappings absent and zero unresolved. Cases 590 and 1358 have complete negative cut coverage. Original failed monolithic execution records remain in the campaign report. See checkpoint_verdict_audit.json and reports/checkpoint_memory_fix_20260913; no search reruns or change in recovery percentage.
+
+
+Golden nonrecovery audit (2026-09-13): all 11 final ten-seed misses inspected from complete saved cuts. Four extra-pair mismatches; six exclusions by relaxed orbit bounds; one joint correspondence exclusion. Original RDF references independently verified. Current-engine uncapped causal traces reproduce exclusions in cases 986/1285 and establish reference-directed feasibility. Diagnostic results do not change 1840/1851 recovery. See golden_miss_analysis.json and reports/golden_miss_analysis_20260913.

@@ -45,6 +45,12 @@
       "source": "reports/checkpoint_memory_fix_20260913/audit.json",
       "scope": "Complete cut-coverage audit for cases 590 and 1358; prior execution failures remain recorded.",
       "sha256": "72c15bfe47fdda888cfdd980554b2707b8923bf9590be3071c8c003143464ed4"
+    },
+    {
+      "snapshot": "golden_miss_analysis.json",
+      "source": "reports/golden_miss_analysis_20260913/summary.json",
+      "scope": "Audit of final saved ten-seed families. Sensitivity and reference-directed feasibility probes are separate, excluded from benchmark scores. Strict absence is not proof of global unreachability or annotation error.",
+      "sha256": "e3dc6e8635203c0b39b3544e890e95aa4ada70d84ac8e618b8f083d451372ab1"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."

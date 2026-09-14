@@ -57,3 +57,18 @@ For the saponification example in \Cref{fig:algorithm}, the direct assignment $(
 For each complete search path, flattening retains its terminal representative, the union of required fragment-bond constraints, and the allowed action sequence with prefix locks already applied. It removes only representation choices that leave the admissible relation unchanged. Reordering disjoint-support factors preserves their product; adjacent nested factors satisfy $HG=GH=G$ when $H\leq G$. Subgroup containment is checked by exact generator membership using a stabilizer chain. Other factors with overlapping support retain their order. Identical resulting records are shared, and final branch grouping stores the union of their family identifiers. Consequently, the union of mappings before and after grouping is the same. The procedure does not infer equality merely from a shared fragment partition or a shared automorphism group.
 
 The event decoder obtains completeness by invariance certificates, valid lower bounds, or an unsatisfiability result after excluding every discovered output class. Budget exhaustion is recorded as incomplete. This distinguishes preservation of a saved mapping union, exhaustive decoding of a specified event window, and exhaustive atom-mapping search.
+
+
+\clearpage
+\subsection{Audit of Golden nonrecoveries}
+
+We inspected every saved cut in both directions for the eleven ten-order misses, preserving the original reference and search outputs. Independent reconstruction from the original RDF agrees with the prepared reference in all eleven cases. Mapping cardinality is invariant within each saved family. For six of the seven remaining cases, necessary source/target orbit-pair counts exclude the reference even after pooling permitted target actions into an overapproximation; case 1285 requires the full joint-correspondence check. These tests concern the retained output, not every possible search trajectory.
+
+\begin{table}[ht]
+\centering\small
+\caption{\textbf{The eleven Golden nonrecoveries.} Case indices are zero-based dataset indices. Retained pair counts cover every terminal in both directions and every saved cut at ten seed orderings and cap 100. The four cardinality mismatches concern exact reference relations, including unmatched atoms.}
+\label{tab:golden-misses}
+\input{includes/generated-miss-table}
+\end{table}
+
+All eleven cases have cap stops in at least one direction, which does not establish cap truncation as their cause. Separate ten-order sensitivity checks on cases 986 and 1285 at cap 1,000 or matching tolerance 0.5 remain nonrecoveries; several of those directional runs are uncapped. In the causal traces, ordinary Python and native graphs agree and are uncapped at cap 2,000. Reference-constrained matching represents all 16 and 14 annotated pairs, respectively. The successful case-1285 cut set omits two C--O attachments and one O--H bond; it is reference-selected, and neither its success nor the constrained witnesses contributes to the blind benchmark score. The audit, controls, traces, and source identities are archived with the benchmark report.

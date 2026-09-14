@@ -90,3 +90,11 @@ for d in competitors['methods']:
  any_=f"{d['any_correct']:,} ({100*d['any_correct']/N:.2f}\\%)"
  rows.append(f"{labels[d['method']]} & {first} & {any_} & {d['invalid_candidates']} & {len(d['failed_cases'])} " + r"\\")
 (MAN/'includes/generated-competitor-table.tex').write_text(r"\begin{tabular}{lrrrr}\toprule"+'\n'+r"Implementation & First correct & Any correct & Invalid & Failed\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+
+# The case-level failure table is generated from the audited final misses.
+misses=read('golden_miss_analysis.json')
+labels={'extra_matched_pair':'One extra matched pair',
+ 'atom_correspondence_excluded_by_relaxed_orbits':'Atom pairing excluded by orbit bounds',
+ 'joint_correspondence_excluded_by_full_verifier':'Joint C/O correspondence excluded'}
+rows=[f"{r['case']} & {r['reference_pairs']} & {r['retained_pair_counts'][0]} & {labels[r['classification']]} " + r"\\" for r in misses['rows']]
+(MAN/'includes/generated-miss-table.tex').write_text(r"\begin{tabular}{lrrl}\toprule"+'\n'+r"Case & Reference pairs & Retained pairs & Observed mismatch\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
