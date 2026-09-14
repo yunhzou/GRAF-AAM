@@ -54,42 +54,37 @@ table += [r'\midrule'] + ablations
 comp=read('competition_final.json');dedup=read('final_dedup.json');rows=dedup['per_case']
 assert len(rows)==140 and sum(r['final_branches'] for r in rows)==dedup['new_branches']
 assert dedup['fresh_decode_all140'] and all(r['complete'] for r in rows)
-fig,axs=plt.subplots(2,2,figsize=(8.4,6.0),layout='constrained',gridspec_kw={'hspace':.17,'wspace':.10})
-a=axs[0,0];total=dedup['event_classes'];added=comp['new_window_class_count'];base=total-added
-assert added==sum(len(r['new_window_classes']) for r in comp['cases'])
-a.barh(0,base,color=GREEN,height=.48,label='Ordinary search')
-a.barh(0,added,left=base,color=PURPLE,height=.48,label='Added by competition')
-a.text(base/2,0,str(base),ha='center',va='center',color='white',weight='bold')
-a.text(base+added/2,0,str(added),ha='center',va='center',color='white',weight='bold')
-a.text(.02,.94,f'{total} event classes · all 140 windows complete',transform=a.transAxes,va='top',weight='bold',fontsize=9)
-a.text(.02,.12,f'Competition adds {added} classes in {len(comp["new_window_cases"])} reactions.',transform=a.transAxes,fontsize=8.4,color=MUTED)
-a.set(yticks=[],xlim=(0,360),ylim=(-.85,.8),xticks=[0,100,200,300],xlabel='GRAFT classes within the fixed event windows')
-a.set_title('a  GRAFT decoded alternatives',loc='left',weight='bold',pad=13)
-a.legend(loc='center left',bbox_to_anchor=(0,.28),frameon=False,fontsize=8,ncol=1)
-a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
-a=axs[0,1];cs=[comp['comparisons'][k] for k in ['slap_sweep','native_slap']]
+coord=read('coordinate_minima.json')
+fig,axs=plt.subplots(2,2,figsize=(8.8,6.1),layout='constrained',gridspec_kw={'hspace':.16,'wspace':.10})
+cs=[coord['comparisons'][k] for k in ['slap_sweep','native_slap']]
+a=axs[0,0]
 for i,d in enumerate(cs):
- n=d['union_classes'];total=d['total_classes'];a.barh(i,n,color=GREEN,height=.43);a.barh(i,total-n,left=n,color=RED,height=.43)
- a.text(n/2,i,f'{n}/{total}',ha='center',va='center',color='white',fontsize=10,weight='bold')
- a.text(0,i-.34,['Against SLAP sweep','Against native SLAP'][i],fontsize=8.5,color=INK)
-a.set(yticks=[],xlim=(0,180),xticks=[0,50,100,150],xlabel='Comparator minimum-event classes recovered')
-a.set_title('b  GRAFT coverage of SLAP alternatives',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
-a.text(.02,.03,'All compared classes covered in 139/140 reactions.\nRed: classes absent from GRAFT.',transform=a.transAxes,fontsize=8.2,color=MUTED,va='bottom');a.set_ylim(1.85,-.6)
-a=axs[1,0];old=np.array([r['old_literal_branches'] for r in rows]);new=np.array([r['final_branches'] for r in rows]);a.plot([10,8e4],[10,8e4],color=LIGHT,ls='--',lw=1)
-a.scatter(old,new,s=20,c=GREEN,alpha=.65,edgecolors='white',linewidths=.4)
-r=next(r for r in rows if r['case']==25);a.scatter([r['old_literal_branches']],[r['final_branches']],s=42,c=ORANGE,zorder=5);a.annotate('52,669 → 2,856',xy=(52669,2856),xytext=(1000,100),arrowprops=dict(arrowstyle='-',color=ORANGE),color=ORANGE,fontsize=8.5)
-a.set(xscale='log',yscale='log',xlim=(12,8e4),ylim=(12,8e4),xlabel='Ordered GRAFT branches / reaction',ylabel='Unordered GRAFT branches / reaction');a.set_title('c  GRAFT fragment deduplication',loc='left',weight='bold',pad=13);a.grid(alpha=.12)
-a.text(.03,.97,f'Total: {dedup["old_branches"]:,} → {dedup["new_branches"]:,}\nMedian: {dedup["old_median"]:g} → {dedup["new_median"]:g}',transform=a.transAxes,va='top',fontsize=8.5)
-a=axs[1,1];times=[dedup['wall_seconds']/60,dedup['cpu_seconds']/60]
-a.barh([0,1],times,color=[GREEN,BLUE],height=.42)
-for i,v in enumerate(times):
- a.text(v+.4,i,f'{v:.2f} min',va='center',fontsize=9,weight='bold')
- a.text(0,i-.34,['Wall time (shared load)','CPU time (sum over workers)'][i],fontsize=8.5,color=INK)
-a.set(yticks=[],xlim=(0,34),ylim=(1.85,-.6),xticks=[0,10,20,30],xlabel='Complete catalogue and event-window decoding')
-a.set_title('d  GRAFT postprocessing cost',loc='left',weight='bold',pad=13);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
-a.set_ylim(2.05,-.6)
-ct=timing['coordinate_decoding']['stats']
-a.text(.02,.02,f'Per reaction: mean {ct["mean"]:.2f} s · median {ct["median"]:.2f} s\n95th percentile {ct["p95"]:.2f} s (CPU); {dedup["workers"]} workers, {dedup["peak_mib"]/1024:.2f} GiB\nSearch and competition excluded.',transform=a.transAxes,fontsize=7.7,color=MUTED,va='bottom')
+ low=d['count_relations'].get('lower',0);eq=d['count_relations'].get('equal',0);assert low+eq==140
+ a.barh(i,low,color=GREEN,height=.45,label='GRAFT fewer' if i==0 else None)
+ a.barh(i,eq,left=low,color=BLUE,height=.45,label='Equal count' if i==0 else None)
+ a.text(low/2,i,str(low),ha='center',va='center',color='white',weight='bold',fontsize=8)
+ a.text(low+eq/2,i,str(eq),ha='center',va='center',color='white',weight='bold')
+a.set(yticks=[0,1],yticklabels=['vs SLAP sweep','vs native SLAP'],xlim=(0,145),ylim=(1.85,-.8),xlabel='Reactions (140 total)')
+a.set_title('a  GRAFT minimum event counts',loc='left',weight='bold',pad=12);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+a.legend(loc='upper left',fontsize=8,frameon=False,ncol=2);a.text(.02,.06,'GRAFT has a higher minimum in 0 reactions.',transform=a.transAxes,fontsize=8,color=MUTED)
+a=axs[0,1]
+for i,d in enumerate(cs):
+ n=d['shared_minimum_patterns'];total=d['equal_minimum_patterns'];a.barh(i,n,color=GREEN,height=.45);a.barh(i,total-n,left=n,color=RED,height=.45)
+ a.text(n/2,i,f'{n}/{total}',ha='center',va='center',color='white',weight='bold')
+a.set(yticks=[0,1],yticklabels=['SLAP sweep','Native SLAP'],xlim=(0,175),ylim=(1.85,-.6),xlabel='Comparator patterns retained by GRAFT')
+a.set_title('b  Patterns where minima agree',loc='left',weight='bold',pad=12);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
+a.text(.02,.03,'136 equal-minimum cases for the sweep;\n125 for native SLAP. Red: two missing patterns.',transform=a.transAxes,fontsize=7.8,color=MUTED)
+a=axs[1,0];mins=[r['graft_minimum'] for r in coord['per_case']];values=list(range(max(mins)+1));freq=[mins.count(k) for k in values]
+a.bar(values,freq,color=GREEN,width=.7)
+for k,v in zip(values,freq):a.text(k,v+.6,str(v),ha='center',fontsize=8)
+a.set(xticks=values,ylim=(0,max(freq)*1.3),xlabel='GRAFT minimum signed-event count',ylabel='Reactions')
+a.set_title('c  GRAFT minimum-event outputs',loc='left',weight='bold',pad=12);a.grid(axis='y',alpha=.15);a.set_axisbelow(True)
+a.text(.02,.94,f'{coord["graft_minimum_patterns"]} patterns at per-reaction minima',transform=a.transAxes,fontsize=8,va='top',weight='bold')
+a=axs[1,1];keys_stage=['graft_search','graft_competition','graft_decoding','slap_mapping','slap_h_refinement'];means=[coord['timing'][k]['stats']['mean'] for k in keys_stage];ys=np.arange(5)
+a.barh(ys,means,color=[GREEN,BLUE,PURPLE,ORANGE,ORANGE],height=.52)
+for i,v in enumerate(means):a.text(v+.12,i,f'{v:.2f}',va='center',fontsize=8)
+a.set(yticks=ys,yticklabels=['GRAFT search','GRAFT competition','GRAFT window decode','SLAP sweep mapping','SLAP H refinement'],xlim=(0,max(means)*1.25),ylim=(4.7,-.7),xlabel='Mean CPU seconds / reaction')
+a.set_title('d  Recorded stage costs',loc='left',weight='bold',pad=12);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 save(fig,'fig3_coordinate')
 windows=sorted((int(k),v) for k,v in dedup['window_distribution'].items())
 (MAN/'includes/generated-decoder-table.tex').write_text('\\begin{tabular}{l'+ 'r'*len(windows)+'}\\toprule\nMaximum events & '+' & '.join(str(k) for k,v in windows)+r'\\'+'\nReactions (all complete) & '+' & '.join(str(v) for k,v in windows)+r'\\'+'\n'+r'\bottomrule\end{tabular}'+'\n')
@@ -157,3 +152,16 @@ for d in timing['default_comparators']:
  row=[d['method'],str(d['calls'])]+[f'{d[k]:.3f}' for k in ['mean_wall_seconds','median_wall_seconds','mean_cpu_seconds']]
  rows.append(' & '.join(row)+r"\\")
 (MAN/'includes/generated-comparator-timing-table.tex').write_text(r"\begin{tabular}{@{}lrrrr@{}}\toprule"+'\n'+r"Implementation & Calls & Mean wall s & Median wall s & Mean CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+
+# Minimum-event comparison is separate from mapping-accuracy evaluation.
+rows=[]
+for name,label in [('slap_sweep','SLAP sweep'),('native_slap','Native SLAP')]:
+ d=coord['comparisons'][name];n=d['shared_minimum_patterns'];total=d['equal_minimum_patterns']
+ cells=[label]+[str(d['count_relations'].get(k,0)) for k in ['lower','equal','higher']]+[f'{n}/{total}']
+ rows.append(' & '.join(cells)+r"\\")
+(MAN/'includes/generated-coordinate-minima-table.tex').write_text(r"\begin{tabular}{@{}lrrrr@{}}\toprule"+'\n'+r"Compared with & GRAFT fewer & Equal & GRAFT more & Patterns at equal minima\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+rows=[]
+for key,label in [('graft_search','GRAFT sweep search'),('graft_competition','GRAFT fragment competition'),('graft_decoding','GRAFT full-window decoding'),('slap_mapping','SLAP sweep mapping'),('slap_h_refinement','SLAP H refinement / initial scoring')]:
+ d=coord['timing'][key]['stats'];cells=[label]+[f'{d[k]:.3f}' for k in ['mean','median','p95']]
+ rows.append(' & '.join(cells)+r"\\")
+(MAN/'includes/generated-coordinate-time-table.tex').write_text(r"\begin{tabular}{@{}lrrr@{}}\toprule"+'\n'+r"Recorded stage & Mean CPU s & Median CPU s & 95th pct. CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')

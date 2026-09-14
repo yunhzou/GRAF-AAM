@@ -125,6 +125,20 @@ assert len(coord['per_case'])==140
 assert abs(sum(r['cpu_seconds'] for r in coord['per_case'])-flat['cpu_seconds'])<1e-7
 assert abs(coord['stats']['mean']-flat['cpu_seconds']/140)<1e-8
 for value in ['11.01','1.22','52.67']:assert value in alltext,value
+coord=read('coordinate_minima.json')
+assert coord['cases']==140 and coord['mapping_runs']==0
+assert coord['graft_minimum_patterns']==171==sum(len(r['graft_minimum_ids']) for r in coord['per_case'])
+assert coord['comparisons']['slap_sweep']['count_relations']=={'equal':136,'lower':4}
+assert coord['comparisons']['native_slap']['count_relations']=={'equal':125,'lower':15}
+for method,d in coord['comparisons'].items():
+ rs=[r['comparators'][method] for r in coord['per_case']]
+ assert d['shared_minimum_patterns']==sum(len(r['shared_minimum_ids']) for r in rs)
+ assert d['equal_minimum_patterns']==sum(len(r['ids']) for r in rs if r['count_relation']=='equal')
+for d in coord['timing'].values():
+ assert len(d['per_case'])==140
+ assert abs(d['stats']['mean']-sum(r['cpu_seconds'] for r in d['per_case'])/140)<1e-7
+for v in ['162/164','140/140','171','1.047','1.840','1.337','0.053']:assert v in alltext,v
+assert 'not a mapping-accuracy benchmark' in alltext.replace('\n',' ')
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
  manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. GRAFT and the SLAP sweep use final-source campaigns; archived default-comparator outputs were rescored with the current evaluator. Completeness and limits are recorded in the evidence.',
  manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())

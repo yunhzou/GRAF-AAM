@@ -63,6 +63,12 @@
       "source": "reports/golden_timing_detail_20260914/timing_comparison.json",
       "scope": "Same1821Mac cohort: size-ordered GRAFT and SLAP CPU distributions, plus separately scoped original-cluster default-mapper call times. Saved scalar timer audit; no searches rerun.",
       "sha256": "19aac7ee35e0d72459cce5a2d120d3c8e5fc1715f5149986de374885974ff2a5"
+    },
+    {
+      "snapshot": "coordinate_minima.json",
+      "source": "reports/coordinate_minima_20260914/coordinate_minima.json",
+      "scope": "Saved all140 event minima and equal-minimum pattern comparisons, with measured stage timings. Unverified mappings; not a mapping accuracy benchmark. No new mapping or decoding runs.",
+      "sha256": "409938d4b183f5483fc6c485731c5e9756ef01caca1bb923395f8b9969a4dd92"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."
