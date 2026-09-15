@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "mp4_sha256": "40371d3900ef19030aa1ce0c01e694432bf5a3b91ab1048372ed6190ebec84d6",
+  "mp4_sha256": "80c1c9a8a000e5f419fa26e67dd86dbe86bc69fa4662c01440ba2fe6508a0361",
   "mp4_metadata": {
     "ffmpeg_version": "7.1 built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)",
     "codec": "h264",
@@ -19,7 +19,7 @@
   },
   "decoded_video_frames": 672,
   "gif": {
-    "sha256": "d76709090d51e5299fd39da141daa56e4052e33dc92429fc65335c5024729b6a",
+    "sha256": "5ade16636065a85fd1ab2aeb781a1d81da4e5b6a834234f69703ae66c82db055",
     "frames": 336,
     "duration_ms": 28000,
     "size": [
@@ -28,5 +28,5 @@
     ],
     "loop": 0
   },
-  "visual_review": "Reviewed growth, competition return arrow, partial assignment release, witness-merging motion, persistent right-hand decoder and two final cards. Final event rows fit above footnotes. Reference label and partial-class scope are visible."
+  "visual_review": "Inspected encoded frames for blue branch 1 at 7.2 seconds and purple branch 2 at 8.2 seconds. Changed correspondences and tree nodes/edges pulse together; camera is held fixed throughout the switch. Competition, merge diagram and final event panels remain legible."
 }

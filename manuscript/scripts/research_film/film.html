@@ -6,10 +6,10 @@
 .mini{width:394px;height:126px}.mini.r{left:20px;top:76px;height:118px}.mini.p{left:20px;top:221px;height:124px}.mini-label.r{left:23px;top:60px}.mini-label.p{left:23px;top:204px}.mini-arrow{left:403px;top:194px}table.events{top:353px}.events td{height:27px}.mapping-note{bottom:14px}.mini-arrow{transform:rotate(90deg)}#links{position:absolute;inset:0;width:844px;height:430px;pointer-events:none;z-index:5}
 .event-overlay{position:absolute;inset:0;pointer-events:none;z-index:20}.events .sym{width:38px}.events .sym svg{vertical-align:middle}#finale .event-overlay{width:100%;height:100%}#finale{justify-content:center;gap:30px}.candidate{width:540px}.mini{width:500px}.mini-arrow{left:507px}.mapping-note{font-size:11px}.mini.r{height:132px}.mini-label.p{top:218px}.mini.p{top:235px;height:142px}table.events{top:389px}.events td{height:24px}.bundle.same{border-color:#ad943e;background:#fbf8e9}
 #finale{right:auto;width:844px;gap:18px;justify-content:flex-start}.candidate{width:413px;padding:17px}.candidate-head b{font-size:17px}.badge{font-size:10px}.mini{width:373px}.mini.r{left:20px;top:78px;height:120px}.mini.p{left:20px;top:216px;height:132px}.mini-label.r{top:61px;left:23px}.mini-label.p{top:198px;left:23px}.mini-arrow{left:386px;top:199px}table.events{top:359px;left:20px;width:calc(100% - 40px)}.events td{height:22px}.events .kind{width:88px}.mapping-note{font-size:10px;left:20px;bottom:14px}.reference-tag{position:absolute;top:43px;left:18px;color:#50785c;font-size:10px}.steps{gap:20px}.edition{font-size:10px;letter-spacing:1.5px}#treeNote{font-size:11px;line-height:1.7}#treePanel{height:516px}#tree{height:449px;top:33px}#caption{font-size:24px}#detail{font-size:13px}
-table.events td{height:21px;line-height:18px;padding:0}.events .sym{font-size:12px}.events .sym svg{width:26px;height:17px}</style></head><body>
+table.events td{height:21px;line-height:18px;padding:0}.events .sym{font-size:12px}.events .sym svg{width:26px;height:17px}#branchCue{position:absolute;left:15px;top:48px;padding:10px 16px;border:1px solid;border-radius:10px;background:#ffffffec;font-size:13px;font-weight:600;letter-spacing:.6px;z-index:25;pointer-events:none;display:none}.branch-overlay{position:absolute;inset:0;pointer-events:none;z-index:19}</style></head><body>
 <div id="film"><header><div class="brand">GRAFT<span style="color:#c3a456">.</span></div><div class="edition">A SPACE OF ATOM CORRESPONDENCES</div><nav class="steps"><span id="s0"><b>01</b> GROW</span><span id="s1"><b>02</b> BRANCH</span><span id="s2"><b>03</b> COMPETE</span><span id="s3"><b>04</b> DECODE</span></nav></header>
 <h1 id="headline"></h1><div id="subtitle"></div><div class="hairline"></div>
-<div id="main"><div id="molecules"><div class="mol-title">REACTANT <span>source identities</span></div><div class="mol-title product">PRODUCT <span>matched identities</span></div><div class="molecule r" id="r"></div><div class="molecule p" id="p"></div><div id="pairlink">↔</div><svg id="links" viewBox="0 0 844 430"></svg><div id="legend"></div></div>
+<div id="main"><div id="molecules"><div id="branchCue"></div><div class="mol-title">REACTANT <span>source identities</span></div><div class="mol-title product">PRODUCT <span>matched identities</span></div><div class="molecule r" id="r"></div><div class="molecule p" id="p"></div><div id="pairlink">↔</div><svg id="links" viewBox="0 0 844 430"></svg><div id="legend"></div></div>
 <div id="treePanel"><h2 id="treeTitle">RETAINED FRAGMENT PLACEMENTS</h2><svg id="tree" viewBox="0 0 460 430"></svg><div id="treeNote"></div></div><div id="status"></div></div>
 <div id="compressed"></div><div id="finale"></div><div id="caption"></div><div id="detail"></div><div id="footer"><span id="sourceTag">COORDINATE CASE 101 / PR7 · ARCHIVED SEARCH CONTEXT</span><span>ILLUSTRATIVE CONFORMERS · SEARCH REPLAY, NOT DYNAMICS</span></div><div class="progress" id="progress"></div><div class="flash" id="flash"></div></div>
 <div id="controls"><button id="play">Play film</button><input type="range" id="seek" min="0" max="28" step=".05" value="0" aria-label="Film time"><span id="time">0:00 / 0:28</span><button id="end">See candidates</button></div><div id="notes"><b>Golden case 15.</b> <span id="scope"></span> Fragment colors carry the correspondence; red crosses and green inward arrows label bond events. The blue return arrow shows a new competition completion, with the original branches retained. B and C merge by their canonical signed-event class. Final cards are actual representatives from complete catalogue decoding, with the Golden reference-equivalent class labeled. <a href="film-data.json">Mappings and provenance</a> · <a href="science-validation.json">Validation</a></div>
@@ -17,6 +17,20 @@ table.events td{height:21px;line-height:18px;padding:0}.events .sym{font-size:12
 const D=__DATA__, $=s=>document.getElementById(s), palette=['#e5bf55','#73b7ac','#aaa4d3','#d9a18a'];
 const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
 const viewers={},views={}, cache={};let prevT=0;
+function branchFocus(t){
+ if(t<7||t>=9)return null;
+ const index=t<8?0:1,local=t-(7+index);
+ return {index,color:index===0?'#2376D2':'#B94EC7',strength:.28+.72*Math.sin(Math.PI*(local*2+.12))**2};
+}
+function branchHalo(id,side,t){
+ let svg=$('branch-'+id);const focus=branchFocus(t);
+ if(!focus){if(svg)svg.innerHTML='';return;}
+ if(!svg){svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.id='branch-'+id;svg.classList.add('branch-overlay');$(id).append(svg);}
+ const box=$(id).getBoundingClientRect(),ep=D.input[side==='r'?'reactant':'product'];svg.setAttribute('viewBox',`0 0 ${box.width} ${box.height}`);
+ const first=findFrame(0,2,'seed_end')[0].mapping,second=findFrame(1,2,'seed_end')[0].mapping,m=focus.index===0?first:second;
+ const atoms=Object.keys(first).filter(a=>first[a]!==second[a]&&els[a]!=='H');
+ svg.innerHTML=atoms.map(a=>{const i=side==='r'?+a:m[a],q=ep.coordinates[i],p=viewers[id].modelToScreen({x:q[0],y:q[1],z:q[2]});return `<circle cx="${p.x-box.left}" cy="${p.y-box.top}" r="${10+3*focus.strength}" fill="${focus.color}" fill-opacity="${.08+.12*focus.strength}" stroke="${focus.color}" stroke-width="${1.3+1.4*focus.strength}" opacity="${.35+.65*focus.strength}"/>`;}).join('');
+}
 $('scope').textContent=D.scope;
 $('legend').innerHTML=palette.map((c,i)=>`<span><i class="dot" style="background:${c}"></i>Fragment ${i+1}</span>`).join('');
 const els=D.input.reactant.elements;
@@ -58,7 +72,9 @@ function drawMol(id,side,pi,f,t,final=false){
    v.addLabel(label(a),{position:{x:ep.coordinates[i][0],y:ep.coordinates[i][1],z:ep.coordinates[i][2]},screenOffset:final?{x:a===0?-12:10,y:a===0?10:-8}:{x:0,y:0},fontSize:final?11:12,fontColor:'#26392b',backgroundColor:'white',backgroundOpacity:.82,borderThickness:0,inFront:true});
   }
  }
- v.setView(views[id]);v.rotate(9*Math.sin(t*.095)+(final?0:6),'y');v.rotate(3*Math.sin(t*.071),'x');v.render();
+ const cameraT=t<7?t:t<9?7:t-2;
+ v.setView(views[id]);v.rotate(9*Math.sin(cameraT*.095)+(final?0:6),'y');v.rotate(3*Math.sin(cameraT*.071),'x');v.render();
+ if(!final)branchHalo(id,side,t);
  if(final){
   let overlay=$('events-'+id);
   if(!overlay){overlay=document.createElementNS('http://www.w3.org/2000/svg','svg');overlay.id='events-'+id;overlay.classList.add('event-overlay');$(id).append(overlay)}
@@ -80,23 +96,27 @@ function drawMol(id,side,pi,f,t,final=false){
 }
 
 const pos={19:[160,18],20:[160,95],21:[80,180],22:[245,180],25:[80,265],26:[245,265],29:[80,353],30:[245,353]};
-const appear={19:0,20:3.7,21:7,22:7.5,25:9.2,26:9.4,29:10.25,30:10.5};
+const appear={19:0,20:3.7,21:7,22:7,25:9.2,26:9.4,29:10.25,30:10.5};
 function bezier(a,b){return `M${a[0]},${a[1]} C${a[0]},${(a[1]+b[1])/2} ${b[0]},${(a[1]+b[1])/2} ${b[0]},${b[1]}`}
 function drawTree(t,pi,f){
  let svg='<defs><marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1L8 5L0 9" fill="none" stroke="#497ba2" stroke-width="1.6"/></marker></defs>';
  const chosen=new Set(D.paths[Math.min(pi,1)].frames.map(x=>x.transition));
- const dissolve=ease((t-16.8)/1.0);
+ const dissolve=ease((t-16.8)/1.0),focus=branchFocus(t);
  svg+=`<g opacity="${1-dissolve}">`;
  for(const e of D.graph.transitions){
   const a=pos[e.source],b=pos[e.target],on=chosen.has(e.id);let q=ease((t-appear[e.target])/.55);
   if(e.id===17&&t<3.7)q=.1+.75*ease((t-1)/2.7);
   if(e.id===18&&t>=4&&t<7)q=.1+.75*ease((t-4)/3);
   if(!q)continue;
-  svg+=`<path d="${bezier([a[0],a[1]+11],[b[0],b[1]-11])}" pathLength="1" fill="none" stroke="${on?'#b29a50':'#b4c6ba'}" stroke-width="${on?2.6:1.5}" stroke-dasharray="${q} 1"/>`;
+  svg+=`<path d="${bezier([a[0],a[1]+11],[b[0],b[1]-11])}" pathLength="1" fill="none" stroke="${focus&&e.id===(focus.index===0?18:19)?focus.color:on?'#b29a50':'#b4c6ba'}" stroke-width="${focus&&e.id===(focus.index===0?18:19)?3+focus.strength*2:on?2.6:1.5}" stroke-dasharray="${q} 1"/>`;
   if(q>.8)svg+=`<text x="${(a[0]+b[0])/2+6}" y="${(a[1]+b[1])/2}" font-size="10" fill="#7b877c">+${e.size}</text>`;
  }
  for(const n of D.graph.states){const p=pos[n.id],q=ease((t-appear[n.id])/.4);if(!q)continue;
   const terminal=n.assigned===30,col=n.assigned===0?'#e2e9dd':n.assigned===15?palette[0]:n.assigned===28?palette[1]:n.assigned===29?palette[2]:palette[3];
+  if(focus&&(n.id===21||n.id===22)){
+   const selected=n.id===(focus.index===0?21:22),color=n.id===21?'#2376D2':'#B94EC7';
+   svg+=`<g opacity="${q*(selected?1:.35)}"><circle cx="${p[0]}" cy="${p[1]}" r="${selected?18+focus.strength*5:18}" fill="${color}" fill-opacity="${selected?.08+.14*focus.strength:0}" stroke="${color}" stroke-width="${selected?2+focus.strength:1}"/><text x="${p[0]}" y="${p[1]+37}" font-size="11" text-anchor="middle" fill="${color}" font-weight="600">BRANCH ${n.id===21?1:2}</text></g>`;
+  }
   svg+=`<g opacity="${q}"><circle cx="${p[0]}" cy="${p[1]}" r="${terminal?15:12}" fill="${col}" stroke="#fafbf8" stroke-width="3"/><text x="${p[0]}" y="${p[1]+4}" text-anchor="middle" font-size="11" fill="#30473d">${terminal?n.id===29?'A':'B':n.assigned}</text></g>`;
  }
  if(t>=11){
@@ -132,7 +152,7 @@ function drawTree(t,pi,f){
  $('tree').innerHTML=svg;
 }
 function drawLinks(f,t){
- if(t<3||t>=11||!f.active.length){$('links').innerHTML='';return}
+ if(t<3||t>=11||branchFocus(t)||!f.active.length){$('links').innerHTML='';return}
  const a=f.active.at(-1),b=f.mapping[a];if(b===undefined){$('links').innerHTML='';return}
  const project=(side,i)=>{const q=D.input[side==='r'?'reactant':'product'].coordinates[i];return viewers[side].modelToScreen({x:q[0],y:q[1],z:q[2]})};
  const r=project('r',a),p=project('p',b);const box=$('links').getBoundingClientRect();r.x-=box.left;p.x-=box.left;r.y-=box.top;p.y-=box.top;
@@ -149,8 +169,8 @@ function seek(t){
  let pi=0,f=growing(0,1,0),title='Grow. Compete. Decode.',sub='Golden case 15 · a recorded search excerpt.',caption='A mapping is a family of choices.',detail='Matched fragment colors follow source identities. The 3D conformers are illustrative.';
  if(t>=1&&t<4){f=growing(0,1,(t-1)/2.65);title='Grow the first fragment.';sub='Keep compatible placements compressed as the fragment extends.';caption='The first fragment matches 15 atoms.';detail='Conditional isomorphism checks compatibility at every extension.'}
  if(t>=4&&t<7){f=growing(0,2,(t-4)/2.7);title='Continue under that condition.';sub='Grow the next fragment while preserving the earlier placement.';caption='A second fragment finds alternative placements.';detail='This recorded context uses one sweep constraint on N0–H19.'}
- if(t>=7&&t<9){pi=t<8?0:1;f=findFrame(pi,2,'seed_end')[0];title='Keep both branches.';sub='Two placements of the 13-atom fragment survive the same condition.';caption='Each placement defines a different continuation.';detail='The tree shows selected real paths; numbers count matched atoms.'}
- if(t>=9&&t<11){pi=t<10?0:1;f=t<9.8?growing(pi,3,1):D.paths[pi].frames.at(-1);title='Complete the retained branches.';sub='Place the remaining oxygen and hydrogen atoms.';caption='A and B are both complete witnesses.';detail='The original alternatives remain available during competition.'}
+ if(t>=7&&t<9){pi=t<8?0:1;f=findFrame(pi,2,'seed_end')[0];title='Two placements. Watch the switch.';sub='The highlighted atoms show which correspondence changes.';caption=pi===0?'Branch 1 · blue pulse':'Branch 2 · purple pulse';detail='Each placement stays on screen for one second. Fragment colors remain underneath the temporary highlight.'}
+ if(t>=9&&t<11){pi=1;f=t<9.8?growing(pi,3,1):D.paths[pi].frames.at(-1);title='Complete the retained branches.';sub='Place the remaining oxygen and hydrogen atoms.';caption='A and B are both complete witnesses.';detail='The original alternatives remain available during competition.'}
  if(t>=11&&t<16.8){
   title=t<12.7?'Let another fragment compete.':'Release conflicts. Grow a new branch.';sub='Give the O18 fragment priority to extend across C16.';caption='Keep A. Start a competing completion C.';detail='O18 changes placement; O17 is displaced and H19 is released. Refill those two assignments.';
   f={mapping:D.paths[0].mapping,active:[18],stage:3,candidates:1,kind:'competition_parent',groups:D.paths[0].groups};
@@ -161,6 +181,7 @@ function seek(t){
  if(t>=16.8){pi=2;f={mapping:D.paths[2].mapping,active:[],stage:0,candidates:1,kind:'decoded',groups:D.competition.groups};title='Different branches can merge.';sub='Decode the bond changes, then group equivalent signed-event patterns.';caption='B and C merge into the same event class.';detail='Search branches retain different histories. Final event classes remove that duplication.'}
  if(t>=19.2){title='Two distinct decoded outcomes.';sub='Selected event classes · one matches the Golden reference.';caption='Retain the alternatives. Reveal the symmetry.';detail='Saved catalogue: 58 deduplicated branches · 118 families · 9 classes through 6 events; 2 shown.'}
  $('sourceTag').textContent='GOLDEN CASE 15 · CAP 100 · ONE-SEED SWEEP + FRAGMENT COMPETITION';
+ const focus=branchFocus(t);$('branchCue').style.display=focus?'block':'none';if(focus){$('branchCue').textContent=`BRANCH ${focus.index+1} OF 2 · ${focus.index===0?'BLUE':'PURPLE'} HIGHLIGHT`;$('branchCue').style.color=focus.color;$('branchCue').style.borderColor=focus.color;$('branchCue').style.opacity=.6+.4*focus.strength;}
  $('headline').textContent=title;$('subtitle').textContent=sub;$('caption').textContent=caption;$('detail').textContent=detail;
  ['s0','s1','s2','s3'].forEach((id,i)=>$(id).className=(t<7?i===0:t<11?i===1:t<16.8?i===2:i===3)?'on':'');
  $('main').style.opacity=1;$('compressed').style.opacity=0;
@@ -177,7 +198,7 @@ function seek(t){
   drawMol('p'+i,'p',i,end,t,true);
  }
  $('progress').style.width=(t/D.duration*1440)+'px';$('seek').value=t;$('time').textContent='0:'+String(Math.floor(t)).padStart(2,'0')+' / 0:'+D.duration;
- return {time:t,path:pi,terminal:D.paths[pi].terminal,frame:f.kind,stage:f.stage,mapping:f.mapping};
+ return {time:t,path:pi,terminal:D.paths[pi].terminal,frame:f.kind,stage:f.stage,mapping:f.mapping,branchFocus:focus,cameraTime:t<7?t:t<9?7:t-2};
 }
 let playing=false,start=0,offset=0;
 function tick(now){if(!playing)return;seek(offset+(now-start)/1000);if(prevT>=D.duration){playing=false;$('play').textContent='Replay film';return}requestAnimationFrame(tick)}

@@ -9,8 +9,9 @@ async function main(){
  await page.goto('file://'+dir+'/index.html');await page.waitForFunction(()=>!!window.film);await page.evaluate(()=>document.fonts.ready);
  await page.evaluate(()=>{const d=window.film.data;if(d.decoded_candidates.length!==2||new Set(d.decoded_candidates.map(x=>x.event_class)).size!==2)throw Error('Final event cards must be canonical-unique');if(d.paths[1].event_class!==d.paths[2].event_class)throw Error('Competition branch must merge with B');});
  const duration=await page.evaluate(()=>window.film.duration);
+ await page.evaluate(()=>{const a=window.film.seek(7.2),b=window.film.seek(8.2),c=window.film.seek(9.2);if(a.branchFocus.index!==0||b.branchFocus.index!==1||a.branchFocus.color===b.branchFocus.color||a.cameraTime!==b.cameraTime||c.path!==1)throw Error('Branch focus must switch color once while camera stays fixed');});
  const shot=async(t,file)=>{await page.evaluate(t=>window.film.seek(t),t);await page.locator('#film').screenshot({path:file,animations:'disabled'});};
- for(const t of [0,3,6,8.5,10.7,12,13.5,15.8,17.3,18.2,20.5,24])await shot(t,path.join(dir,`review-${t}.png`));
+ for(const t of [0,3,6,7.2,7.6,8.2,8.6,9.5,13.5,18.2,24])await shot(t,path.join(dir,`review-${t}.png`));
  // Verify every displayed frame can be selected and every mapped atom remains injective.
  for(let i=0;i<=240;i++){const t=i/240*duration;const state=await page.evaluate(t=>window.film.seek(t),t);if(new Set(Object.values(state.mapping)).size!==Object.keys(state.mapping).length)throw Error('Non-injective displayed mapping at '+t);}
  if(mode==='video'){
@@ -23,7 +24,7 @@ async function main(){
    if(i%(fps*4)===0)console.log(`${i/fps}/${duration} seconds rendered`);
   }encoder.stdin.end();await done;
  }
- fs.writeFileSync(path.join(dir,'browser-validation.json'),JSON.stringify({status:errors.length?'failed':'passed',errors,preview_times:[0,3,6,8.5,10.7,12,13.5,15.8,17.3,18.2,20.5,24],sampled_timeline_injections:241,viewport:[1440,900],mode},null,2));
+ fs.writeFileSync(path.join(dir,'browser-validation.json'),JSON.stringify({status:errors.length?'failed':'passed',errors,preview_times:[0,3,6,7.2,7.6,8.2,8.6,9.5,13.5,18.2,24],branch_focus_check:true,sampled_timeline_injections:241,viewport:[1440,900],mode},null,2));
  await browser.close();if(errors.length)throw Error(errors.join('\n'));
 }
 main().catch(e=>{console.error(e);process.exit(1)});

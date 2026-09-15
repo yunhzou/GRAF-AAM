@@ -9,7 +9,8 @@ Black bonds preserve endpoint connectivity; pastel colors identify matched fragm
 ## Timeline
 
 - 0–7 s: grow two fragments under successive conditions.
-- 7–11 s: retain both placements and complete baseline branches A and B.
+- 7–9 s: pulse branch 1 in blue for one second, then branch 2 in purple for one second. Changed atom correspondences, tree edges and nodes highlight together while the camera stays fixed.
+- 9–11 s: complete the retained baseline branches A and B.
 - 11–16.8 s: animate fragment competition, release conflicting assignments and complete C.
 - 16.8–19.2 s: transition the right-hand tree into the decoder; B and C visibly merge.
 - 19.2–28 s: show decoded molecule pairs and event lists, while retaining the merge diagram.
