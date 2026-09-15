@@ -1,9 +1,18 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{11}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ali et~al.(2025)Ali, Mizuno, Akiyama, Nagata, and
+  Komatsuzaki]{ali2025}
+Mohammad Ali, Yuta Mizuno, Seiji Akiyama, Yuuya Nagata, and Tamiki Komatsuzaki.
+\newblock Enumeration approach to atom-to-atom mapping accelerated by {Ising}
+  computing.
+\newblock \emph{Journal of Chemical Information and Modeling}, 65\penalty0
+  (4):\penalty0 1901--1910, 2025.
+\newblock \doi{10.1021/acs.jcim.4c01871}.
 
 \bibitem[Chen et~al.(2024)Chen, An, Babazade, and Jung]{chen2024}
 Shuan Chen, Sunggi An, Ramil Babazade, and Yousung Jung.
@@ -17,6 +26,12 @@ Shuan Chen, Sunggi An, Ramil Babazade, and Yousung Jung.
 \newblock {Chython}: molecular and reaction processing toolkit.
 \newblock \url{https://github.com/chython/chython}.
 \newblock Evaluated version 2.18 with chython-rxnmap 2.0; model hash archived.
+
+\bibitem[De et~al.(2019)De, Krummenacher, Schaefer, and Goedecker]{de2019}
+Deb~Sankar De, Marco Krummenacher, Bastian Schaefer, and Stefan Goedecker.
+\newblock Finding reaction pathways with optimal atomic index mappings.
+\newblock \emph{Physical Review Letters}, 123:\penalty0 206102, 2019.
+\newblock \doi{10.1103/PhysRevLett.123.206102}.
 
 \bibitem[de~Moura and Bj{\o}rner(2008)]{demoura2008}
 Leonardo de~Moura and Nikolaj Bj{\o}rner.

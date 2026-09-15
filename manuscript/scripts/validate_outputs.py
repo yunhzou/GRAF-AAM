@@ -6,6 +6,8 @@ MAN=Path(__file__).resolve().parents[1];E=MAN/'evidence'
 def read(n):return json.loads((E/n).read_text())
 from build_molecule_figure import check_example
 assert read('molecule_example.json') == json.loads(json.dumps(check_example()))
+from build_alternatives_figure import check_example as check_alternatives
+check_alternatives(MAN)
 uncut=read('unswept.json')
 assert uncut['denominator']==1851 and uncut['seed_count']==1
 for name in ['graft','slap']:
@@ -69,7 +71,7 @@ bib=(MAN/'references.bib').read_text()
 for group in re.findall(r'\\cite\w*\{([^}]+)\}',tex):
  for key in group.split(','):assert re.search(r'@\w+\{'+re.escape(key)+',',bib),key
 figs=re.findall(r'\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}',tex)
-assert set(figs)=={'figs/fig1_algorithm.pdf','figs/fig2_golden.pdf','figs/fig3_coordinate.pdf'}
+assert set(figs)=={'figs/fig1_algorithm.pdf','figs/fig2_golden.pdf','figs/fig3_coordinate.pdf','figs/fig4_alternatives.pdf'}
 for fig in figs:
  p=MAN/fig
  assert len(PdfReader(p).pages)==1

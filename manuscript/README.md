@@ -10,7 +10,9 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `evidence/competitors.json`: audited Golden results for RXNMapper, LocalMapper, Chython, Indigo, RDT, and default SLAP configurations; Table 3 compares their returned-output reference recovery with all evaluated GRAFT seed/sweep configurations, without assigning a ranking to SLAP alternatives.
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
 - `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and direction-specific mean CPU cost.
-- `figs/fig3_coordinate.{pdf,svg,png}`: GRAFT event-class output, comparator coverage, final branch counts, and complete decoding cost on 140 cases.
+- `figs/fig3_coordinate.{pdf,svg,png}`: GRAFT and prior-method minimum-event comparisons, minimum-count distributions, and measured stage costs on 140 cases.
+- `figs/fig4_alternatives.{pdf,svg,png}`: actual GRAFT event classes and certified hydrogen shuffles in a six-atom example, plus an illustrative downstream fragment-motion use. No pathway or transition-state validation is claimed.
+- `evidence/multicandidate_example.json` and `evidence/output_multiplicity.json`: current-API example and archived comparator-output audit for the discussion.
 - `manuscript_bundle.zip`: compact paper, source, figure, and evidence bundle.
 
 The manuscript does not include abandoned variants, debugging history, or superseded scoring comparisons. Older research artifacts remain in Git for provenance but are not included in the paper or its compact bundle.

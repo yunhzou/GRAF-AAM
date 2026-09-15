@@ -18,6 +18,8 @@ def save(fig,n):
  plt.close(fig)
 from build_molecule_figure import build as build_molecule_figure
 build_molecule_figure(MAN)
+from build_alternatives_figure import build as build_alternatives_figure
+build_alternatives_figure(MAN)
 
 timing=read('timing_comparison.json')
 competitors=read('competitors.json')
@@ -114,7 +116,7 @@ macros=dict(GoldenOneRecovered=f"{counts[0]:,}",GoldenOnePercent=f"{100*counts[0
  SlapAbsent=str(slap['outcomes']['not_recovered']),SlapUnknown=str(slap['outcomes']['unknown']),
  FlatFamilies=f"{dedup['flat_families']:,}",DecodedClasses=str(dedup['event_classes']))
 (MAN/'includes/generated-results.tex').write_text('% Generated from complete fresh benchmark evidence.\n'+''.join('\\newcommand{\\'+k+'}{'+v+'}\n' for k,v in macros.items()))
-print('Built three main figures and complete-campaign tables and numerical macros.')
+print('Built four main figures and complete-campaign tables and numerical macros.')
 
 competitors=read('competitors.json');assert competitors['rescored_with_current_evaluator'] and competitors['unchanged_case_outcomes']
 labels={'rxnmapper':'RXNMapper','localmapper':r'LocalMapper$^{\dagger}$','chython':'Chython','slap_binary':'SLAP, binary','slap_weighted':'SLAP, weighted','indigo':'Indigo','rdt':'RDT'}

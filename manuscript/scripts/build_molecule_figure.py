@@ -120,8 +120,9 @@ def svg_path(d):
   if c=='M':start=pts[0]
  return MPath(vertices,codes)
 
-def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24):
- m=Chem.MolFromSmiles(smiles);assert m is not None
+def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens=False,align_acetyl=True,rotation=0):
+ params=Chem.SmilesParserParams();params.removeHs=not explicit_hydrogens
+ m=Chem.MolFromSmiles(smiles,params);assert m is not None
  ids={a.GetAtomMapNum():a.GetIdx() for a in m.GetAtoms()}
  for a in m.GetAtoms():
   k=a.GetAtomMapNum()
@@ -130,11 +131,11 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24):
   a.SetAtomMapNum(0)
  rdDepictor.Compute2DCoords(m)
  # Shared acetyl coordinates make the ester and acid directly comparable.
- if {1,2,3,4}.issubset(ids):
+ if align_acetyl and {1,2,3,4}.issubset(ids):
   points={1:(-1.30,.75),2:(0,0),3:(0,-1.5),4:(1.30,.75),5:(2.60,0)}
   for k,i in ids.items():
    if k in points:m.GetConformer().SetAtomPosition(i,(*points[k],0))
- d=rdMolDraw2D.MolDraw2DSVG(int(w),int(h));o=d.drawOptions();o.clearBackground=False;o.useBWAtomPalette();o.fixedFontSize=font;o.annotationFontScale=.62;o.padding=.11;o.bondLineWidth=1.8
+ d=rdMolDraw2D.MolDraw2DSVG(int(w),int(h));o=d.drawOptions();o.clearBackground=False;o.rotate=rotation;o.useBWAtomPalette();o.fixedFontSize=font;o.annotationFontScale=.62;o.padding=.11;o.bondLineWidth=1.8
  colors={ids[k]:v for k,v in (owners or {}).items() if k in ids}
  bonds={b.GetIdx():colors[b.GetBeginAtomIdx()] for b in m.GetBonds() if b.GetBeginAtomIdx() in colors and colors.get(b.GetBeginAtomIdx())==colors.get(b.GetEndAtomIdx())}
  for atom in m.GetAtoms():
