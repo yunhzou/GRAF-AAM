@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from matplotlib.patches import FancyBboxPatch,FancyArrowPatch,Circle
 from rdkit import Chem
 from rdkit.Chem import rdDepictor
-from build_molecule_figure import molecule,INK,MUTED,TEAL,RED,BLUE
+from build_molecule_figure import molecule,bond_event_marker,INK,MUTED,TEAL,RED,BLUE
 R='[C:1]([O:2][H:6])([H:3])([H:4])[H:5]'
 A='[C:1](=[O:2])([H:3])[H:4]'
 B='[C:1](=[O:2])([H:3])[H:6]'
@@ -103,11 +103,10 @@ def build(man):
  t(32,73,'GRAFT · 1 seed + cut sweep (default) · branch cap 2,000 · iso tolerance 1 · event threshold 0.5',10.5,MUTED)
  for x,c in zip([44,69,94],PALETTE):ax.add_patch(Circle((x,112),10,facecolor=c,edgecolor='none'))
  t(116,112,'Saved fragment groups',10,MUTED)
- for x,col,txt in [(526,RED,'Break / weaken'),(972,BLUE,'Form / strengthen')]:
+ for x,sign,txt in [(526,-1,'Break / weaken'),(972,1,'Form / strengthen')]:
   ax.plot([x,x+64],[112,112],color='black',lw=1.1)
-  ax.plot([x+32,x+32],[112,95],color='#5D6970',lw=.65)
-  ax.add_patch(Circle((x+32,88),8,facecolor='white',edgecolor='#5D6970',lw=.65,zorder=7))
-  t(x+32,88,'×' if col==RED else '+',8,INK,'bold','center');t(x+79,112,txt,10,INK)
+  bond_event_marker(ax,(x,112),(x+64,112),sign,size=9)
+  t(x+79,112,txt,10,INK)
  row_titles=['A   Ground truth (Golden reference) — recovered by GRAFT','B   GRAFT alternative — different oxygen retained','C   GRAFT alternative — oxygen and carbon correspondence change']
  wr=np.array(D['input']['reactant']['wbo']);wp=np.array(D['input']['product']['wbo'])
  for k,p in enumerate(D['patterns']):

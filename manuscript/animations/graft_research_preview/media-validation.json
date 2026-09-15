@@ -16,7 +16,7 @@
     "rotate": 0,
     "duration": 48.0
   },
-  "mp4_sha256": "fd804c97eefab16e784c76b8048b6f26f6ecac4cb5dd5d3c09ac93c5cade7ba8",
+  "mp4_sha256": "56413c4920181a52f3c86bbef301f285f7386f9e51c161e2caa6cfb6a05a44e7",
   "decode": "All video frames decoded successfully",
   "expected_duration_seconds": 48,
   "gif": {
@@ -27,7 +27,7 @@
       600
     ],
     "loop": 0,
-    "sha256": "8ca47ac249fa50ef7a6927d7e6bfe2a7604bf4134f770481112e0455aae129a4"
+    "sha256": "0082381674045a4f561802c5846863509dfbeb84e2d1a2fcd625d57a2c44df6c"
   },
-  "visual_review": "Reviewed rendered stage frames and eight frames decoded from the MP4; revised camera framing, label spacing and correspondence registration."
+  "visual_review": "Reviewed revised paper-size markers, 3D overlay registration, event lists, and the encoded final scene. Red crosses indicate breaking/weakening; bright green inward arrows indicate forming/strengthening. Scientific data are unchanged."
 }

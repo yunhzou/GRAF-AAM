@@ -7,8 +7,10 @@ smaller preview; the MP4 preserves label clarity and smooth camera motion.
 The film uses the repository's bundled 3Dmol renderer, black endpoint bonds,
 matched fragment colors, and a moving cue connecting an actual atom pair.
 The tree progressively reveals both an initial fork and a conditional second
-fork. The closing cards show complete matched endpoint pairs and separate
-bond-event labels, without recoloring the fragment bonds.
+fork. The closing cards show complete matched endpoint pairs. Vivid red crosses mark
+breaking/weakening, and bright green inward arrows mark forming/strengthening,
+both on the affected bonds and in the event list.
+Black connectivity and fragment colors remain visible.
 
 ## Storyboard
 
