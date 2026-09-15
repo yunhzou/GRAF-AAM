@@ -155,6 +155,20 @@ for prefix in ['graft1','graft2','slap']:
   assert f'{ratio:.2f}' in (MAN/'includes/generated-direction-table.tex').read_text()
 assert min(timing['default_comparators'],key=lambda d:d['mean_wall_seconds'])['key']=='rxnmapper'
 assert min(timing['default_comparators'],key=lambda d:d['mean_cpu_seconds'])['key']=='rxnmapper'
+
+# Paired cap study: distinguish certified empty searches from incomplete decoding.
+caps=read('coordinate_cap_comparison.json')
+assert caps['processed']==caps['complete_pairs']==140 and caps['unresolved']==[]
+assert caps['same_minimum']==138 and caps['no_full_mapping']=={'100':[123,125],'2000':[]}
+assert caps['window_patterns_added']==[] and caps['fresh2000_window_differences']==[]
+assert caps['window_patterns_lost']==[{'case':123,'count':1},{'case':125,'count':1}]
+assert caps['counts']=={'100':{'complete_mappings':138,'minimum_patterns':169,'window_patterns':334},'2000':{'complete_mappings':140,'minimum_patterns':171,'window_patterns':336}}
+assert len(caps['per_case'])==140
+for cap in ['100','2000']:
+ assert caps['counts'][cap]['window_patterns']==sum(r['patterns'+cap] for r in caps['per_case'])
+for value in ['138/140','140/140','334','336','123 and 125','Branch-cap comparison']:
+ assert value in alltext.replace('\n',' '),value
+
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
  manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. GRAFT and the SLAP sweep use final-source campaigns; archived default-comparator outputs were rescored with the current evaluator. Completeness and limits are recorded in the evidence.',
  manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())

@@ -1,6 +1,6 @@
 # rxn_core
 
-The default GRAFT pipeline uses one seed ordering per cut, the uncut plus single-edge sweep, and fragment competition. The Python API exposes these as separate stages: `search_aam`, then `compete_fragments`; bond-event decoding follows separately. See the [default pipeline example](docs/PYTHON_API.md). Golden measurements in the paper cover sweep search before competition; the coordinate results include it. No-sweep results are ablation controls.
+The default GRAFT pipeline uses one seed ordering per cut, the uncut plus single-edge sweep, fragment competition, and branch cap 100. The Python API exposes these as separate stages: `search_aam`, then `compete_fragments`; bond-event decoding follows separately. See the [default pipeline example](docs/PYTHON_API.md). Golden measurements in the paper cover sweep search before competition; the coordinate results include it. No-sweep results are ablation controls.
 
 Symmetry-aware WBO atom mapping, analytical R/P alignment, and
 mechanism-local transition-state analysis.

@@ -42,3 +42,7 @@ before publication; raw execution manifests are not submission artifacts.
 ## Reproducibility in the paper
 
 Keep the paper focused on the algorithm, evaluation definitions, essential settings, results, and limitations. Put exact versions, hashes, configuration fields, commands, run bookkeeping, and detailed audit records in the code repository, linked through `manuscript/REPRODUCIBILITY.md`. Do not reproduce an execution manifest in prose. Retain settings that change interpretation (tolerances, seeds, caps, sweep/direction policy), timing scope, denominators, and completeness limits. Apply the CPU-only disclosure policy to the guide and submission bundle as well.
+
+## Branch-cap labeling
+
+Keep cap 100 labeled as the default. Label cap 2,000 as the larger-budget comparison. Do not relabel the earlier coordinate results as cap 100. Count an empty capped search separately from incomplete decoding; a completed empty catalogue does not provide a mapping or a minimum. Report the paired 140-case evidence and link its code report.

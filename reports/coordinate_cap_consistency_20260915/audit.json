@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "processed": 140,
+  "decoded_records_checked": 280,
+  "comparison_sha256": "e6d9be5674cb81482829ba32e99b6b40505295b3b5cd8ab0a7f7f30db941817c",
+  "scope": "Paired configurations differ only in branch limit; competition budgets agree; stored event counts, unique mapping images, minima and completeness flags are internally consistent. Witnesses were independently rescored against original endpoint matrices by run.py."
+}

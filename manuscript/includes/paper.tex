@@ -174,7 +174,7 @@ Setting & Golden & Coordinate/WBO\\\midrule
 Reactions & 1,851 & 140\\
 Search directions & Both, unioned & Reactant to product\\
 Seed orderings & 1 (default), 2, 3, 10 & 1 (default)\\
-Branch cap & 100 & 2,000\\
+Branch cap & 100 (default) & 100 (default), 2,000\\
 Competition completions per reaction & 0 & Up to 128\\
 Evaluation & Reference-family recovery & Signed event-class coverage\\\bottomrule
 \end{tabular}
@@ -239,15 +239,28 @@ RDT recovers 1,030 references under this relation-based criterion, which differs
 
 \subsection{Minimum bond-event comparison on 140 coordinate reactions}
 
-We compare the fewest bond events found for each reaction and the different bond-change patterns that achieve that count. An event count tells us how many atom pairs change; a pattern specifies which pairs gain or lose bond order. We score all mappings on the same original WBO matrices using the thresholds in \Cref{eq:events}. GRAFT uses the default pipeline: one-seed sweep and fragment competition, with a branch cap of 2,000. We compare it with released SLAP (native SLAP) and SLAP augmented with our cut sweep (SLAP sweep). These reactions have no verified atom mappings, so this measures agreement and differences in bond events, not mapping accuracy. Throughout this section, a minimum is the lowest count found by a method, not a proven global optimum.
+We compare the fewest bond events found for each reaction and the different bond-change patterns that achieve that count. An event count tells us how many atom pairs change; a pattern specifies which pairs gain or lose bond order. We score all mappings on the same original WBO matrices using the thresholds in \Cref{eq:events}. GRAFT uses the default pipeline: one-seed sweep and fragment competition, with branch cap 100 by default and 2,000 as a larger-budget comparison. We compare it with released SLAP (native SLAP) and SLAP augmented with our cut sweep (SLAP sweep). These reactions have no verified atom mappings, so this measures agreement and differences in bond events, not mapping accuracy. Throughout this section, a minimum is the lowest count found by a method, not a proven global optimum.
 
-GRAFT reaches the same minimum count as SLAP sweep in 136 reactions and one fewer event in the remaining four. Against native SLAP, it reaches the same count in 125 reactions and fewer events in 15 (\Cref{tab:coordinate-minima,fig:coordinate}). Thus, GRAFT matches or lowers the event count in every reaction under both comparisons. A lower count alone does not establish a more plausible chemical transformation.
+We reran all 140 reactions at both caps with the same current code, one CPU thread, and fixed decoding windows. Cap 100 returns complete mappings for 138 reactions; cap 2,000 returns them for all 140 (\Cref{tab:coordinate-caps}). On the 138 shared reactions, the complete decoded event-pattern sets are identical. At cap 100, cases 123 and 125 return no complete parent mapping, so fragment competition cannot extend their output. Cap 2,000 recovers their three- and four-event solutions, respectively, also found by both SLAP baselines. These are search-budget failures, not unresolved decoding. Thus, at the default cap, GRAFT finds fewer events than SLAP sweep in four reactions, equal counts in 134, and no mapping in two. The detailed comparator tables and Figure 3 below report cap 2,000 explicitly.
+
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{Branch-cap comparison on all 140 coordinate reactions.} Both caps use the same one-seed sweep and fragment competition. Patterns are reaction-specific; minimum patterns are counted at each reaction's own returned minimum. All saved families are completely decoded within the common event windows. Empty searches supply no mapping or event pattern.}
+\label{tab:coordinate-caps}
+\begin{tabular}{lrrr}\toprule
+Branch cap & Complete mappings & Minimum patterns & Window patterns\\\midrule
+100 (default) & 138/140 & 169 & 334\\
+2,000 & 140/140 & 171 & 336\\\bottomrule
+\end{tabular}
+\end{table}
+
+At cap 2,000, GRAFT reaches the same minimum count as SLAP sweep in 136 reactions and one fewer event in the remaining four. Against native SLAP, it reaches the same count in 125 reactions and fewer events in 15 (\Cref{tab:coordinate-minima,fig:coordinate}). Thus, GRAFT matches or lowers the event count in every reaction under both comparisons. A lower count alone does not establish a more plausible chemical transformation.
 
 Equal counts can still describe different bond changes. Among the 136 reactions where GRAFT and SLAP sweep have equal minima, SLAP sweep returns 164 distinct minimum-event patterns. GRAFT recovers 162 of them. Both missing patterns occur in case 64: SLAP sweep returns five four-event patterns, and GRAFT recovers three. For the 125 reactions where GRAFT and native SLAP have equal minima, GRAFT recovers all 140 native-SLAP patterns. Across all 140 reactions, the total number of patterns at each method's own minima is 171 for GRAFT, 168 for SLAP sweep, and 160 for native SLAP. Several patterns can belong to one reaction; these totals count patterns, not reactions.
 
 \begin{table}[tb]
 \centering\small
-\caption{\textbf{Minimum bond-event counts and patterns on 140 reactions.} The first three numerical columns count reactions where GRAFT finds fewer, equal, or more events than the comparator. The final column counts comparator patterns recovered by GRAFT, restricted to reactions with equal minima. For example, 162/164 refers to patterns across the 136 reactions in the preceding column. Settings are given in the text.}
+\caption{\textbf{Minimum bond-event counts and patterns on 140 reactions at cap 2,000.} The first three numerical columns count reactions where GRAFT finds fewer, equal, or more events than the comparator. The final column counts comparator patterns recovered by GRAFT, restricted to reactions with equal minima. For example, 162/164 refers to patterns across the 136 reactions in the preceding column. Settings are given in the text.}
 \label{tab:coordinate-minima}
 \input{includes/generated-coordinate-minima-table}
 \end{table}
@@ -256,7 +269,7 @@ We also check whether GRAFT retains SLAP's minimum-event patterns when GRAFT fin
 
 \begin{table}[tb]
 \centering\small
-\caption{\textbf{CPU time per reaction for the 140-case comparison.} All stages were measured on the Mac. GRAFT decoding covers all saved families within the event-count range defined in the text. SLAP refinement covers its returned witnesses. The stages therefore produce different outputs and are not directly comparable as end-to-end runtimes. GRAFT search includes checkpoint I/O; competition includes loading and saving; decoding includes all continuation passes. SLAP mapping excludes input preparation and export, while its refinement includes I/O. Final shared event rescoring and failed or replaced attempts are excluded.}
+\caption{\textbf{CPU time per reaction for the cap-2,000, 140-case comparison.} All stages were measured on the Mac. GRAFT decoding covers all saved families within the event-count range defined in the text. SLAP refinement covers its returned witnesses. The stages therefore produce different outputs and are not directly comparable as end-to-end runtimes. GRAFT search includes checkpoint I/O; competition includes loading and saving; decoding includes all continuation passes. SLAP mapping excludes input preparation and export, while its refinement includes I/O. Final shared event rescoring and failed or replaced attempts are excluded.}
 \label{tab:coordinate-time}
 \input{includes/generated-coordinate-time-table}
 \end{table}
@@ -273,7 +286,7 @@ Every family in all 140 catalogues was freshly decoded or certified within its s
 
 \begin{figure}[tb]
 \centering\includegraphics[width=\linewidth]{figs/fig3_coordinate.pdf}
-\caption{\textbf{Bond-event counts, alternative patterns, and runtime on 140 coordinate reactions.} GRAFT uses the default one-seed sweep with fragment competition. (a) Reactions where GRAFT finds fewer or equal events than each SLAP baseline; none has a higher GRAFT minimum. (b) Comparator minimum-event patterns recovered by GRAFT, counting only reactions where both methods reach the same minimum. The two missing SLAP-sweep patterns are in case 64. (c) Distribution of the minimum event count across reactions for each method. (d) Mean CPU seconds per reaction for the recorded stages. GRAFT decoding covers the stated event-count range; SLAP refinement covers returned witnesses. See \Cref{tab:coordinate-time} for timing scope. The mappings are unverified, so this figure compares bond events rather than mapping accuracy.}
+\caption{\textbf{Bond-event counts, alternative patterns, and runtime on 140 coordinate reactions.} GRAFT uses one seed, the sweep, and fragment competition at cap 2,000. (a) Reactions where GRAFT finds fewer or equal events than each SLAP baseline; none has a higher GRAFT minimum. (b) Comparator minimum-event patterns recovered by GRAFT, counting only reactions where both methods reach the same minimum. The two missing SLAP-sweep patterns are in case 64. (c) Distribution of the minimum event count across reactions for each method. (d) Mean CPU seconds per reaction for the recorded stages. GRAFT decoding covers the stated event-count range; SLAP refinement covers returned witnesses. See \Cref{tab:coordinate-time} for timing scope. The mappings are unverified, so this figure compares bond events rather than mapping accuracy.}
 \label{fig:coordinate}
 \end{figure}
 

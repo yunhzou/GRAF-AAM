@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "cases": [
+    {
+      "case": 0,
+      "caps": {
+        "100": {
+          "minimum": 0,
+          "full_families": 348,
+          "patterns": 1,
+          "no_full": false,
+          "lower_bound": null
+        },
+        "2000": {
+          "minimum": 0,
+          "full_families": 348,
+          "patterns": 1,
+          "no_full": false,
+          "lower_bound": null
+        }
+      }
+    },
+    {
+      "case": 64,
+      "caps": {
+        "100": {
+          "minimum": 4,
+          "full_families": 208,
+          "patterns": 27,
+          "no_full": false,
+          "lower_bound": null
+        },
+        "2000": {
+          "minimum": 4,
+          "full_families": 208,
+          "patterns": 27,
+          "no_full": false,
+          "lower_bound": null
+        }
+      }
+    },
+    {
+      "case": 123,
+      "caps": {
+        "100": {
+          "minimum": null,
+          "full_families": 0,
+          "patterns": 0,
+          "no_full": true,
+          "lower_bound": null
+        },
+        "2000": {
+          "minimum": 3,
+          "full_families": 269,
+          "patterns": 1,
+          "no_full": false,
+          "lower_bound": null
+        }
+      }
+    }
+  ],
+  "native_binaries_sha256": {
+    "_engine.cpython-312-x86_64-linux-gnu.so": "61465e7907316fc41aaabcc45b642aa317a24da800892b3b411e9b348311c1c2",
+    "_group_ops.cpython-312-x86_64-linux-gnu.so": "95e5100cc51a42ce3521693e1aa08c3fa9af480e3f8866622afd608406b94910",
+    "_native.cpython-312-x86_64-linux-gnu.so": "c249981cdeff95e6ae8b56bde8bac27df284dba2611641d806db32a0fc6f83c6"
+  },
+  "saved_cap2000_minima_reproduced": true
+}
