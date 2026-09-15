@@ -79,7 +79,7 @@ def build(man):
    for atom in mol.GetAtoms():atom.SetAtomMapNum(inv[atom.GetAtomMapNum()])
   mol=Chem.RemoveHs(mol,sanitize=False)
   return Chem.MolToSmiles(mol,kekuleSmiles=True)
- fig=plt.figure(figsize=(10.8,9.23));ax=fig.add_axes([0,0,1,1]);ax.set(xlim=(0,1296),ylim=(1108,0));ax.axis('off')
+ fig=plt.figure(figsize=(10.8,8.48));ax=fig.add_axes([0,0,1,1]);ax.set(xlim=(0,1296),ylim=(1018,0));ax.axis('off')
  def t(x,y,s,size=11,color=INK,weight='normal',ha='left'):
   ax.text(x,y,s,fontsize=size,color=color,weight=weight,ha=ha,va='center',linespacing=1.35,zorder=9)
  def box(x,y,w,h,fc='#F5F7FB',ec=None):
@@ -109,30 +109,22 @@ def build(man):
   mol(smiles(d['product_smiles'],p['mapping']),753,y+9,425,179,owners=owners,bond_changes=changes('formed'),coordinates=target_coords)
   t(96,y+91,'2 negative\n2 positive',9.1,MUTED,ha='center')
  t(647,751,'Atom numbers track reactant identities. Colors are assigned within each row; spectator H atoms are implicit.',9.8,MUTED,ha='center')
- box(12,783,624,311)
- heading(32,811,'b','Symmetry remains inside one candidate')
- t(32,843,'Candidate A: exchange two H atoms of methyl C₉.',10.3,MUTED)
+ box(12,783,1272,221)
+ heading(32,811,'b','Allowed symmetry remains inside a candidate')
+ t(32,847,'Candidate A',11,TEAL,'bold')
+ t(32,879,'Methyl C₉:\nexchange H₁₀ and H₁₁',10.3,MUTED)
  methyl='[*:24][C:9]([H:10])([H:11])[H:12]'
  owners={i:PALETTE[1] for i in [9,10,11,12]}
- left=mol(methyl,37,865,215,145,owners=owners,notes={i:i for i in [9,10,11,12]})
- right=mol(methyl,381,865,215,145,owners=owners,notes={9:9,10:11,11:10,12:12})
- # Trace individual H identities while preserving the fragment background color.
+ left=mol(methyl,252,840,228,143,owners=owners,notes={i:i for i in [9,10,11,12]})
+ right=mol(methyl,737,840,228,143,owners=owners,notes={9:9,10:11,11:10,12:12})
  for source,dest,color,rad in [(10,11,PURPLE,-.12),(11,10,BLUE,.12)]:
   a,b=left[source],right[dest]
   for center in [a,b]:ax.add_patch(Circle(center,17,facecolor='none',edgecolor=color,lw=1.5,zorder=8))
   arrow((a[0]+20,a[1]),(b[0]-20,b[1]),color,rad,lw=1.4)
- t(321,1041,'Certified allowed · same event class',11,TEAL,'bold','center')
- t(321,1070,'R = the rest of the molecule; all other assignments fixed.',9.2,MUTED,ha='center')
- box(650,783,634,311)
- heading(670,811,'c','Retain the fragment for geometric use')
- t(670,843,'Candidate B: the ethyl group stays together.',10.3,MUTED)
- ethyl='[*:24][CH2:13][CH3:20]';owners={13:PALETTE[2],20:PALETTE[2]}
- mol(ethyl,675,882,214,123,owners=owners,notes={13:13,20:20})
- mol(ethyl,1051,873,214,140,owners=owners,notes={13:13,20:20},rotation=-45)
- arrow((907,945),(1033,945),PURPLE,rad=-.35,lw=1.8)
- t(966,889,'rotate + translate',10,PURPLE,'bold','center')
- t(966,1041,'Preserve internal bonds; refine reacting contacts',10.5,TEAL,'bold','center')
- t(966,1070,'Possible TS preparation; no pathway validation is claimed.',9.2,MUTED,ha='center')
+ t(1000,875,'Certified allowed',11,TEAL,'bold')
+ t(1000,906,'Same event class',10.5,TEAL)
+ t(1000,939,'All other assignments fixed',9.2,MUTED)
+ t(648,986,'R = the rest of the molecule. This spectator-H example illustrates the conditional symmetry query.',9.2,MUTED,ha='center')
  for ext in ['pdf','svg','png']:fig.savefig(man/'figs'/f'fig4_alternatives.{ext}',facecolor='white',bbox_inches='tight',pad_inches=.025,dpi=240)
  plt.close(fig)
 
