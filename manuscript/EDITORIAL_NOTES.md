@@ -22,3 +22,5 @@ Describe the default cut sweep as source-edge masking that changes growth routes
 A single search-edge mask can redirect later growth and produce multiple bond events. Never equate the number of sweep cuts with the number of final events, or imply that multi-event alternatives require enumerating event combinations. Search completeness is a separate issue.
 
 Keep Algorithm1 at the level of branches, fragments, conditioned growth, optional competition, and separate decoding. Cross-reference Figure1 panels; keep isomorphism and automorphism internals in their own Methods subsections. Search caps preserve truncation status.
+
+Credit the cut-sweep strategy as introduced in this work and integral to default GRAFT. SLAP sweep is our extension to the prior algorithm. Distinguish the original SLAP literature score (86.9% on 1,758 reactions), our strict default binary score (85.95% on 1,851), the paired uncut binary/weighted bidirectional union (89.74%), and that union with our sweep (97.03%). Attribute the sweep benefit to the paired comparison, not the cross-protocol literature difference.
