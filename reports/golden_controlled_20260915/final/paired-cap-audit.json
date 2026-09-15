@@ -1,0 +1,80 @@
+[
+  {
+    "seed": 1,
+    "resolved_pairs": 1849,
+    "gains": [],
+    "losses": [],
+    "cap100_recovered_now_unknown": [],
+    "counts100": {
+      "recovered": 1834,
+      "not_recovered": 17
+    },
+    "counts2000": {
+      "recovered": 1834,
+      "not_recovered": 15,
+      "unknown": 2
+    },
+    "cpu100": 0.9634951875666429,
+    "cpu2000": 4.316780377019957
+  },
+  {
+    "seed": 2,
+    "resolved_pairs": 1847,
+    "gains": [],
+    "losses": [],
+    "cap100_recovered_now_unknown": [],
+    "counts100": {
+      "recovered": 1834,
+      "not_recovered": 17
+    },
+    "counts2000": {
+      "recovered": 1834,
+      "not_recovered": 13,
+      "unknown": 4
+    },
+    "cpu100": 1.6193741029166073,
+    "cpu2000": 8.282715697379901
+  },
+  {
+    "seed": 3,
+    "resolved_pairs": 1845,
+    "gains": [],
+    "losses": [],
+    "cap100_recovered_now_unknown": [],
+    "counts100": {
+      "recovered": 1837,
+      "not_recovered": 14
+    },
+    "counts2000": {
+      "recovered": 1837,
+      "not_recovered": 8,
+      "unknown": 6
+    },
+    "cpu100": 2.264664547920884,
+    "cpu2000": 12.201323236507484
+  },
+  {
+    "seed": 10,
+    "resolved_pairs": 1839,
+    "gains": [],
+    "losses": [],
+    "cap100_recovered_now_unknown": [
+      833,
+      850,
+      1568,
+      1691,
+      1786
+    ],
+    "counts100": {
+      "recovered": 1840,
+      "not_recovered": 11
+    },
+    "counts2000": {
+      "recovered": 1835,
+      "unknown": 12,
+      "not_recovered": 4
+    },
+    "cpu100": 6.992635829553101,
+    "cpu2000": 43.842858464372775
+  }
+]

@@ -5,9 +5,11 @@
     "All displayed mappings are recorded element-preserving injections",
     "All three terminal mappings are complete bijections",
     "All 12 displayed bond events independently recomputed from WBO matrices",
-    "Three distinct atom-indexed event signatures",
+    "Terminal A and B have the same canonical signed-event ID (O1/O2 exchange)",
+    "Two final cards use witnesses from the complete deduplicated-family decode",
+    "Final card canonical IDs are distinct and cover the saved 0..5-event window",
     "Tree is the saved 12-state, 11-edge context, without invented branches",
     "Only proper rigid endpoint display transformations applied"
   ],
-  "scope": "Selected archived search context, coordinate case 101 (PR7), seed order 15 of 30, cap 1000. Three recorded terminal witnesses, not exhaustive symmetry decoding or a current benchmark. Event tolerance 0.5; fixed endpoint geometries, rigid camera/display motion only."
+  "scope": "Selected archived search context, coordinate case 101 (PR7), seed order 15 of 30, cap 1000. Growth tree: three archived terminal witnesses. Finale: two unique event classes from the separately deduplicated one-seed cap-2000 catalogue (411 branches, 874 families), completely decoded through five events. Final event thresholds: 0.5 ordinary / 0.3 metal. Fixed endpoint geometries, rigid camera/display motion only."
 }

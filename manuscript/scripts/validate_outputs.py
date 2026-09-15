@@ -169,6 +169,20 @@ for cap in ['100','2000']:
 for value in ['138/140','140/140','334','336','123 and 125','Branch-cap comparison']:
  assert value in alltext.replace('\n',' '),value
 
+# Same-CPU Golden cap ablation; unresolved is not a verified exclusion.
+ablation=read('golden_cap_ablation.json')
+assert ablation['cases']==1851 and len(ablation['common_cases'])==1403 and len(ablation['rows'])==12
+for row in ablation['rows']:
+ assert sum(len(v) for v in row['cases'].values())==1851
+ assert len(row['paired_cpu'])==1403 and len(row['selected_attempt_cpu'])==1851
+ assert abs(statistics.mean(row['paired_cpu'])-row['paired_mean'])<1e-9
+ assert abs(statistics.mean(row['selected_attempt_cpu'])-row['selected_mean'])<1e-9
+ assert f"{row['paired_mean']:.3f}" in (MAN/'includes/generated-cap-ablation-table.tex').read_text()
+assert all(not r['gains'] and not r['losses'] for r in ablation['paired_cap_audit'])
+assert ablation['paired_cap_audit'][-1]['cap100_recovered_now_unknown']==[833,850,1568,1691,1786]
+for word in ['1,403','1,835','99.14','43.843','Spent CPU','19 confirmed recoveries']:
+ assert word in alltext.replace('\n',' '),word
+
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
  manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. GRAFT and the SLAP sweep use final-source campaigns; archived default-comparator outputs were rescored with the current evaluator. Completeness and limits are recorded in the evidence.',
  manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())

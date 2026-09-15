@@ -1,0 +1,203 @@
+[
+  {
+    "terminal": 6085,
+    "id": "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf",
+    "mapping": [
+      8,
+      15,
+      18,
+      2,
+      17,
+      16,
+      6,
+      1,
+      7,
+      0,
+      5,
+      4,
+      3,
+      13,
+      14,
+      21,
+      20,
+      19,
+      11,
+      10,
+      9,
+      12,
+      22,
+      27,
+      24,
+      23,
+      25,
+      26
+    ],
+    "events": {
+      "broken": [
+        [
+          0,
+          1
+        ],
+        [
+          20,
+          23
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          20
+        ],
+        [
+          1,
+          23
+        ]
+      ]
+    },
+    "counts": {
+      "broken": 2,
+      "formed": 2
+    },
+    "total": 4,
+    "policy": {
+      "schema": "rxn_core.signed_events/v1",
+      "threshold": 0.5,
+      "metal_threshold": 0.3,
+      "includes_hydrogens": true
+    }
+  },
+  {
+    "terminal": 6086,
+    "id": "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf",
+    "mapping": [
+      8,
+      18,
+      15,
+      2,
+      17,
+      16,
+      6,
+      1,
+      7,
+      0,
+      5,
+      4,
+      3,
+      13,
+      14,
+      21,
+      20,
+      19,
+      11,
+      10,
+      9,
+      12,
+      22,
+      27,
+      24,
+      23,
+      25,
+      26
+    ],
+    "events": {
+      "broken": [
+        [
+          0,
+          2
+        ],
+        [
+          20,
+          23
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          20
+        ],
+        [
+          2,
+          23
+        ]
+      ]
+    },
+    "counts": {
+      "broken": 2,
+      "formed": 2
+    },
+    "total": 4,
+    "policy": {
+      "schema": "rxn_core.signed_events/v1",
+      "threshold": 0.5,
+      "metal_threshold": 0.3,
+      "includes_hydrogens": true
+    }
+  },
+  {
+    "terminal": 6087,
+    "id": "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c",
+    "mapping": [
+      8,
+      18,
+      9,
+      2,
+      17,
+      16,
+      6,
+      1,
+      7,
+      0,
+      5,
+      4,
+      3,
+      13,
+      14,
+      21,
+      20,
+      19,
+      10,
+      11,
+      12,
+      15,
+      27,
+      22,
+      26,
+      25,
+      23,
+      24
+    ],
+    "events": {
+      "broken": [
+        [
+          0,
+          2
+        ],
+        [
+          18,
+          21
+        ]
+      ],
+      "formed": [
+        [
+          0,
+          21
+        ],
+        [
+          2,
+          18
+        ]
+      ]
+    },
+    "counts": {
+      "broken": 2,
+      "formed": 2
+    },
+    "total": 4,
+    "policy": {
+      "schema": "rxn_core.signed_events/v1",
+      "threshold": 0.5,
+      "metal_threshold": 0.3,
+      "includes_hydrogens": true
+    }
+  }
+]

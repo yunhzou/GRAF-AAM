@@ -1,74 +1,31 @@
-# GRAFT — Grow. Branch. Decode.
+# GRAFT: Grow. Branch. Decode.
 
-A 48-second, silent 3D research preview. Open `index.html` for the offline,
-scrubbable film, or play `graft-grow-branch-decode.mp4`. The looping GIF is a
-smaller preview; the MP4 preserves label clarity and smooth camera motion.
+A 48-second offline 3D research preview. Open `index.html`, play `graft-grow-branch-decode.mp4`, or view the looping GIF. Black bonds show endpoint connectivity, pastel colors show matched fragments, red crosses mark bond loss/weakening, and green inward arrows mark formation/strengthening.
 
-The film uses the repository's bundled 3Dmol renderer, black endpoint bonds,
-matched fragment colors, and a moving cue connecting an actual atom pair.
-The tree progressively reveals both an initial fork and a conditional second
-fork. The closing cards show complete matched endpoint pairs. Vivid red crosses mark
-breaking/weakening, and bright green inward arrows mark forming/strengthening,
-both on the affected bonds and in the event list.
-Black connectivity and fragment colors remain visible.
+The recorded search tree has three terminal witnesses. A and B exchange equivalent oxygen atoms O1/O2 and have the same canonical event-pattern ID. The film groups them into one event class. C belongs to a second class. Different tree leaves are not automatically different final event candidates.
+
+The final two cards use actual decoded witnesses from the deduplicated cap-2,000, one-seed sweep plus competition catalogue for coordinate case 101 (PR7): 411 fragment branches and 874 mapping families. A fresh symbolic decode is complete through five events and returns two canonical classes, each with four events. Source thresholds are 0.5 for ordinary pairs and 0.3 for metal-involving pairs. There is no explicit mapping-bijection or automorphism-group enumeration.
 
 ## Storyboard
 
-| Time | Scene |
-| --- | --- |
-| 0–3 s | Introduce the endpoint pair |
-| 3–7 s | Grow the first fragment under conditional isomorphism |
-| 7–10 s | Retain two placements of that fragment |
-| 10–19 s | Grow the next fragment under the first placement |
-| 19–23 s | Reveal a second, conditional fork; preview each branch |
-| 23–28.5 s | Complete the retained fragment paths |
-| 28.5–33 s | Extract recorded witnesses from the retained representation |
-| 33–48 s | Reveal three distinct bond-event patterns and their mappings |
+- 0–7 s: grow a fragment with compatible placements.
+- 7–19 s: retain two placements and grow under each condition.
+- 19–28.5 s: show a second conditional fork and three complete tree leaves.
+- 28.5–33 s: explain why A and B share an event class through O1/O2 exchange.
+- 33–48 s: show two distinct event-class representatives from the complete final-catalogue decode.
 
-## Scientific scope
+## Evidence and scope
 
-The source is `reports/pr7_search_trajectory_20260911/trace.json`, coordinate
-case 101 (PR7). This is an archived visualization example, **not the ongoing
-cap-2,000 Golden experiment**. It uses one saved search context from seed order
-15 of a 30-order run, branch cap 1,000, matching tolerance 1.0, event tolerance
-0.5, graph floor 0.2, and the C18–O21 sweep constraint. Atom indices are the
-original zero-based source identities; the product is labeled with the
-corresponding source identities.
+The growth illustration remains the actual archived context in `reports/pr7_search_trajectory_20260911/trace.json`, seed order 15 of a 30-order run, cap 1,000, isomorphism tolerance 1.0, and the C18–O21 sweep constraint. The finale uses the separate one-seed cap-2,000 catalogue for exactly the same endpoint WBOs, with its own provenance and complete event-window decode. It is not a claim that these three historical paths constitute that entire catalogue. Neither drawing nor mapping alternatives establish a physical reaction pathway. Coordinates undergo only rigid display transforms.
 
-The 12 nodes and 11 edges are copied from the saved graph. Its three terminal
-witnesses each have four events, but their atom-indexed event patterns differ.
-They are selected recorded witnesses, **not an exhaustive symmetry decode**.
-The animation extracts each saved terminal correspondence; it does not run a
-new search or benchmark the decoder. Temporary growth candidates can contain
-symmetry blocks. Those blocks are retained in `film-data.json` and are not
-turned into fictitious structural tree branches.
-
-Colors encode each witness's matched fragment sets. Product coordinates are
-rigidly oriented for visibility; the slow camera movement is purely visual.
-No endpoint interpolation, molecular dynamics, transition state, or confirmed
-reaction pathway is claimed. The cut is a search condition, not a declaration
-that the corresponding bond must break.
-
-`science-validation.json` records independent WBO-event recomputation and
-mapping checks. `browser-validation.json` records timeline/browser checks.
-`film-data.json` contains full mappings, events, retained graph, growth frames,
-source hash, engine commit, and archive provenance.
+`reports/film_decoding_20260915/` provides the final catalogue, decoder results, every family certificate, the original endpoint input, and a replay script. `film-data.json` retains all three historical witnesses and their class membership, plus the two decoded final representatives. `science-validation.json` checks the canonical IDs and distinct final cards; browser validation checks timeline injection and final-card uniqueness.
 
 ## Rebuild
 
-From the repository root, with NumPy, Playwright, Chrome/Chromium and FFmpeg
-installed:
-
 ```sh
-python manuscript/scripts/research_film/build_film.py \
-  --repo . --output manuscript/animations/graft_research_preview
-node manuscript/scripts/research_film/render_film.cjs \
-  manuscript/animations/graft_research_preview video
-python manuscript/scripts/research_film/export_gif.py \
-  manuscript/animations/graft_research_preview
+python manuscript/scripts/research_film/build_film.py --repo . --output manuscript/animations/graft_research_preview
+node manuscript/scripts/research_film/render_film.cjs manuscript/animations/graft_research_preview video
+python manuscript/scripts/research_film/export_gif.py manuscript/animations/graft_research_preview
 ```
 
-`PLAYWRIGHT_MODULE`, `CHROME`, and `FFMPEG` can override tool locations. GIF
-export can also use the `imageio-ffmpeg` package. Rendering uses one browser
-and four video-encoder threads. It makes no network requests and starts no
-mapping searches. Preview mode exports selected review frames without a video.
+The build uses the repository Python package, NumPy, Playwright, Chrome/Chromium and FFmpeg. `PLAYWRIGHT_MODULE`, `CHROME`, and `FFMPEG` can override paths. Rendering is offline and uses four encoder threads. `python reports/film_decoding_20260915/replay_decode.py` repeats the symbolic event-window decode without any new mapping search.

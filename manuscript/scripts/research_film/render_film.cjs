@@ -7,6 +7,7 @@ async function main(){
  const page=await browser.newPage({viewport:{width:1440,height:1024},deviceScaleFactor:1});
  const errors=[];page.on('pageerror',e=>errors.push(String(e)));
  await page.goto('file://'+dir+'/index.html');await page.waitForFunction(()=>!!window.film);await page.evaluate(()=>document.fonts.ready);
+ await page.evaluate(()=>{const d=window.film.data;if(d.decoded_candidates.length!==2||new Set(d.decoded_candidates.map(x=>x.event_class)).size!==2)throw Error('Final event cards must be canonical-unique');if(d.paths[0].event_class!==d.paths[1].event_class)throw Error('Lost O1/O2 degeneracy regression');});
  const shot=async(t,file)=>{await page.evaluate(t=>window.film.seek(t),t);await page.locator('#film').screenshot({path:file,animations:'disabled'});};
  for(const t of [0,5,8.8,16,20.6,22.5,27.8,30.5,37])await shot(t,path.join(dir,`review-${t}.png`));
  // Verify every displayed frame can be selected and every mapped atom remains injective.

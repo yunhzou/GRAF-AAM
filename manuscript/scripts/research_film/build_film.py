@@ -8,9 +8,13 @@ import hashlib
 import json
 from pathlib import Path
 import numpy as np
+import sys
 
 
-def build(repo, out):
+def build(repo, out, decoding_path):
+    sys.path.insert(0, str(repo / "src"))
+    from rxn_core import AAMProblem, MolecularEndpoint
+    from rxn_core.event_patterns import SignedEventIndex
     out.mkdir(parents=True, exist_ok=True)
     source = repo / 'reports/pr7_search_trajectory_20260911/trace.json'
     raw = json.loads(source.read_text())
@@ -56,7 +60,31 @@ def build(repo, out):
         signatures.append(tuple(sorted(saved)))
         paths.append(dict(terminal=p['terminal'], frames=frames, groups=groups,
                           mapping=mapping, events=p['events']))
-    assert len(set(signatures)) == 3
+    problem = AAMProblem(*(MolecularEndpoint(**endpoints[k]) for k in ('reactant', 'product')))
+    index = SignedEventIndex(problem, threshold=.5, metal_threshold=.3)
+    for path in paths:
+        path['event_class'] = index.describe([path['mapping'][str(i)] for i in range(index.n)])['id']
+    assert paths[0]['event_class'] == paths[1]['event_class'] != paths[2]['event_class']
+    decoded = json.loads(decoding_path.read_text())
+    assert decoded['complete'] and decoded['window'] == 5 and len(decoded['certificates']) == decoded['families']
+    assert all(c['complete'] for c in decoded['certificates'])
+    candidates = []
+    for pattern in decoded['patterns'].values():
+        vector = pattern['mapping']
+        check = index.describe(vector)
+        assert check['id'] == pattern['id'] and check['total'] == pattern['total']
+        events = []
+        for sign, pairs in check['events'].items():
+            for a, b in pairs:
+                u = float(problem.reactant.wbo[a,b]); v = float(problem.product.wbo[vector[a],vector[b]])
+                kind = ('broken' if v < .2 else 'weakened') if sign == 'broken' else ('formed' if u < .2 else 'strengthened')
+                events.append(dict(kind=kind,r=[a,b],p=[vector[a],vector[b]],wbo=[u,v]))
+        candidates.append(dict(event_class=pattern['id'], mapping={str(i):v for i,v in enumerate(vector)},
+            events=events, groups=pattern['groups'], family=pattern['family']))
+    assert len({p['event_class'] for p in candidates}) == len(candidates) == 2
+    assert {p['event_class'] for p in paths} == {p['event_class'] for p in candidates}
+    for path in paths:
+        path['class_index'] = next(i for i,p in enumerate(candidates) if p['event_class'] == path['event_class'])
     # Fit product to a reference witness for presentation; this changes no chemistry.
     r = np.asarray(endpoints['reactant']['coordinates'], float)
     p = np.asarray(endpoints['product']['coordinates'], float)
@@ -78,11 +106,11 @@ def build(repo, out):
         p_axes[-1] *= -1
     endpoints['product']['coordinates'] = (p @ p_axes.T).tolist()
     data = dict(input=endpoints, graph=run['graph'], paths=paths, cuts=run['cuts'], config=run['config'],
-                duration=48, source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
+                duration=48, decoded_candidates=candidates, decoding=dict(complete=True,window=decoded['window'],families=decoded['families'],branches=decoded['branches'],source_sha256=hashlib.sha256(decoding_path.read_bytes()).hexdigest(),policy=decoded['event_policy']), source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
                 archive_provenance=run['provenance'], engine_commit=raw['requested_engine_commit'],
                 scope='Selected archived search context, coordinate case 101 (PR7), seed order 15 of 30, cap 1000. '
-                      'Three recorded terminal witnesses, not exhaustive symmetry decoding or a current benchmark. '
-                      'Event tolerance 0.5; fixed endpoint geometries, rigid camera/display motion only.')
+                      'Growth tree: three archived terminal witnesses. Finale: two unique event classes from the separately deduplicated one-seed cap-2000 catalogue (411 branches, 874 families), completely decoded through five events. '
+                      'Final event thresholds: 0.5 ordinary / 0.3 metal. Fixed endpoint geometries, rigid camera/display motion only.')
     (out / 'film-data.json').write_text(json.dumps(data, indent=2) + '\n')
     html = (Path(__file__).parent / 'film.html').read_text()
     html = html.replace('__LIBRARY__', (repo / 'src/rxn_core/static/3Dmol-min.js').read_text())
@@ -93,7 +121,9 @@ def build(repo, out):
         checks=['All displayed mappings are recorded element-preserving injections',
                 'All three terminal mappings are complete bijections',
                 'All 12 displayed bond events independently recomputed from WBO matrices',
-                'Three distinct atom-indexed event signatures',
+                'Terminal A and B have the same canonical signed-event ID (O1/O2 exchange)',
+                'Two final cards use witnesses from the complete deduplicated-family decode',
+                'Final card canonical IDs are distinct and cover the saved 0..5-event window',
                 'Tree is the saved 12-state, 11-edge context, without invented branches',
                 'Only proper rigid endpoint display transformations applied'],
         scope=data['scope']), indent=2) + '\n')
@@ -104,5 +134,6 @@ if __name__ == '__main__':
     ap = argparse.ArgumentParser()
     ap.add_argument('--repo', type=Path, required=True)
     ap.add_argument('--output', type=Path, required=True)
+    ap.add_argument('--decoding', type=Path)
     a = ap.parse_args()
-    build(a.repo, a.output)
+    build(a.repo, a.output, a.decoding or a.repo / 'reports/film_decoding_20260915/final-decoding.json')

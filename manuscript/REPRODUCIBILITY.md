@@ -22,7 +22,7 @@ MANUSCRIPT_PYTHON=python3 bash manuscript/scripts/build.sh
 
 This reads the checked-in evidence and runs no mapping searches. It checks numerical claims, figure chemistry, source hashes, references, and publication disclosure rules. For a fresh benchmark, use a new output directory and the source/input pins and configuration recorded for that campaign; current library defaults are not a substitute for those settings. Keep reference verification separate from blind search and preserve incomplete outcomes.
 
-The default branch cap is 100. The original Golden tables use cap 100; the original coordinate tables and Figure 3 use cap 2,000 and are labeled as the larger-budget comparison. The paired coordinate cap study reports both settings separately. A separately recorded cap-2,000 Golden campaign does not change these tables until its results have been reviewed and incorporated.
+The default branch cap is 100. The original Golden tables use cap 100; the original coordinate tables and Figure 3 use cap 2,000 and are labeled as the larger-budget comparison. The paired coordinate cap study reports both settings separately. The completed same-CPU Golden cap ablation is reported separately in the appendix and in `reports/golden_controlled_20260915/final/`.
 
 ## Search and comparison protocols
 
@@ -81,3 +81,11 @@ The current-code paired study reruns all 140 reactions at caps 100 and 2,000, wi
 Cap 100 returns complete mappings in 138 reactions, compared with 140 at cap 2,000. Cases 123 and 125 have empty capped searches at cap 100 and three-/four-event solutions at cap 2,000. All other event-pattern sets are identical within their complete decoding windows. Fresh cap-2,000 outputs reproduce every saved cap-2,000 window, not only its minima. The totals are 169 versus 171 minimum patterns and 334 versus 336 window patterns. No decoding window is unresolved.
 
 On the same 138 completed-mapping reactions, mean search CPU is 1.209 versus 2.158 seconds, competition is 1.389 versus 2.189, and decoding-worker CPU is 12.216 versus 19.461. Total worker CPU, including process imports and every decoding continuation, is 15.778 versus 24.793 seconds per reaction. Search/competition internal timings exclude imports; these rows therefore do not sum to the worker total. These measurements include validation and persistence and are kept separate from the earlier Mac/SLAP timing table. Complete results, source/input hashes, and the driver are in `reports/coordinate_cap_consistency_20260915/`.
+
+### Final Golden cap ablation
+
+All 1,851 reactions were processed under twelve configurations on one AMD EPYC 9J14 CPU thread per search. Caps 100/2,000 each use 1/2/3/10 seed orders with the sweep and one uncut order; SLAP uncut and swept baselines combine binary/weighted modes and both directions. Exact settings and source pins remain in `reports/golden_controlled_20260915/`. The completed results, per-case records and direction tables are in its `final/` directory.
+
+The same 1,403 completed-search cases are used for every paired CPU mean, median and 95th percentile. Recorded search CPU over all 1,851 selected attempts is reported separately, including interrupted calls. Superseded checkpoint-conflict attempts and the initial pilot are retained operationally but are excluded from these timing estimates; these are not total campaign expenditure. Reference verification and process imports are outside the primary search timer. The new timings are not pooled with the main Mac cohort.
+
+At caps 100/2,000, confirmed swept recovery is 1,834/1,834 for one seed, 1,834/1,834 for two, 1,837/1,837 for three, and 1,840/1,835 for ten. Unknown counts at cap 2,000 are 2/4/6/12, respectively; cap 100 has none. Five ten-seed references become unresolved at the larger cap (cases 833, 850, 1568, 1691 and 1786), with no swept gain or loss among cases resolved at both caps. Uncut GRAFT gains 19 confirmed recoveries at cap 2,000 and leaves five cases unresolved. SLAP sweep has two additional unresolved previously recovered cases (1665 and 1806); the new count of 1,794 is kept separate from the main sweep count of 1,796.

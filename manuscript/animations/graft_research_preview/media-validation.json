@@ -16,9 +16,8 @@
     "rotate": 0,
     "duration": 48.0
   },
-  "mp4_sha256": "56413c4920181a52f3c86bbef301f285f7386f9e51c161e2caa6cfb6a05a44e7",
-  "decode": "All video frames decoded successfully",
-  "expected_duration_seconds": 48,
+  "mp4_sha256": "d8ee484c894d405757ce6c865f2c0e942e467d7ad342f9421abfc17d11226fbd",
+  "decoded_video_frames": 1152,
   "gif": {
     "frames": 576,
     "duration_ms": 48000,
@@ -27,7 +26,7 @@
       600
     ],
     "loop": 0,
-    "sha256": "0082381674045a4f561802c5846863509dfbeb84e2d1a2fcd625d57a2c44df6c"
+    "sha256": "05872a134bd9c326cbe030f54dc740c22ef279dbafa309cd02e60625783b79e6"
   },
-  "visual_review": "Reviewed revised paper-size markers, 3D overlay registration, event lists, and the encoded final scene. Red crosses indicate breaking/weakening; bright green inward arrows indicate forming/strengthening. Scientific data are unchanged."
+  "visual_review": "Reviewed equivalence grouping scene and two canonical final cards with decoded witnesses. Black endpoint bonds, fragment colors, red loss marks and green formation marks retained. Atom labels remain inside their viewer panels."
 }

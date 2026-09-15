@@ -1,0 +1,26 @@
+{
+  "status": "validated_and_integrated",
+  "original_finalization": {
+    "status": "tables_ready_for_review",
+    "processed_cases": 1851,
+    "common_completed_cases": 1403,
+    "source_manifest_sha256": "b93a881cb616721f37380eae0f7f8bc5cfd2c637e7cace3025b48a7500725fbc",
+    "files": {
+      "controlled-results.json.gz": "fae46d4a31c70cb199dc2a584ff0b149d3cd8e4e0e0c13e345c6a3f4d56e25a4",
+      "comparison.csv": "3e8c1db87d2060ef55d9544b69d34f2cb5f7ff25642da6ad1e2a1b02bdc8e924",
+      "directional.csv": "394e8b7b6a5637d0b8934ffea2a360adb2dfce1028f2f8d464bc309c14e29d33",
+      "COMPARISON.md": "76ef5352c7e8f6dfa32791706b3b70919e48df90652fd6f2a4b8f8499f9694fb",
+      "runtime-proof.json": "7d3802f4d4d74f1f88521abf2f1f3fe7cbf0ac620a001aaf59e82dac7914a3fa"
+    },
+    "scope": "These are measured results awaiting manuscript integration and visual review. No paper or Git publication is automatic."
+  },
+  "publication_transform": "Remove host/hosts keys from numerical JSON; clarify selected-attempt wording in prose. Numerical fields and verdicts are unchanged.",
+  "published_sha256": {
+    "COMPARISON.md": "c648fb62a614e7468481cc2a19abdf74f53e12af8e7d03f2295b925ee861c998",
+    "comparison.csv": "3e8c1db87d2060ef55d9544b69d34f2cb5f7ff25642da6ad1e2a1b02bdc8e924",
+    "controlled-results.json.gz": "8a40e70e21eb0dae0dd0f44605851e34dddcd7763d0c80204b9270cab44d4db9",
+    "directional.csv": "394e8b7b6a5637d0b8934ffea2a360adb2dfce1028f2f8d464bc309c14e29d33",
+    "paired-cap-audit.json": "e59be78eaecb606082596850bd2aae73e3c667bf7685c0079569c78c82b83f8b",
+    "runtime-proof.json": "7d3802f4d4d74f1f88521abf2f1f3fe7cbf0ac620a001aaf59e82dac7914a3fa"
+  }
+}

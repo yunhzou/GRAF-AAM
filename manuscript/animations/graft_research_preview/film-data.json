@@ -3885,30 +3885,30 @@
         }
       ],
       "groups": {
-        "22": 0,
         "21": 0,
-        "10": 1,
-        "14": 1,
+        "22": 0,
+        "9": 1,
+        "16": 1,
+        "8": 1,
+        "13": 1,
         "11": 1,
         "17": 1,
-        "0": 1,
-        "9": 1,
-        "7": 1,
-        "12": 1,
         "1": 1,
-        "5": 1,
-        "6": 1,
-        "8": 1,
-        "3": 1,
-        "15": 1,
         "4": 1,
+        "7": 1,
         "2": 1,
-        "13": 1,
-        "16": 1,
-        "24": 2,
+        "3": 1,
+        "6": 1,
+        "0": 1,
+        "10": 1,
+        "12": 1,
+        "15": 1,
+        "14": 1,
+        "5": 1,
         "25": 2,
-        "20": 2,
         "18": 2,
+        "20": 2,
+        "24": 2,
         "27": 2,
         "26": 2,
         "19": 2,
@@ -4005,7 +4005,9 @@
             0.0
           ]
         }
-      ]
+      ],
+      "event_class": "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf",
+      "class_index": 0
     },
     {
       "terminal": 6086,
@@ -5727,30 +5729,30 @@
         }
       ],
       "groups": {
-        "22": 0,
         "21": 0,
-        "10": 1,
-        "14": 1,
+        "22": 0,
+        "9": 1,
+        "16": 1,
+        "8": 1,
+        "13": 1,
         "11": 1,
         "17": 1,
-        "0": 1,
-        "9": 1,
-        "7": 1,
-        "12": 1,
         "1": 1,
-        "5": 1,
-        "6": 1,
-        "8": 1,
-        "3": 1,
-        "15": 1,
         "4": 1,
+        "7": 1,
         "2": 1,
-        "13": 1,
-        "16": 1,
-        "24": 2,
+        "3": 1,
+        "6": 1,
+        "0": 1,
+        "10": 1,
+        "12": 1,
+        "15": 1,
+        "14": 1,
+        "5": 1,
         "25": 2,
-        "20": 2,
         "18": 2,
+        "20": 2,
+        "24": 2,
         "27": 2,
         "26": 2,
         "19": 2,
@@ -5847,7 +5849,9 @@
             0.0
           ]
         }
-      ]
+      ],
+      "event_class": "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf",
+      "class_index": 0
     },
     {
       "terminal": 6087,
@@ -7559,30 +7563,30 @@
         }
       ],
       "groups": {
-        "22": 0,
         "21": 0,
-        "10": 1,
-        "14": 1,
+        "22": 0,
+        "9": 1,
+        "16": 1,
+        "8": 1,
+        "13": 1,
         "11": 1,
         "17": 1,
-        "0": 1,
-        "9": 1,
-        "7": 1,
-        "12": 1,
         "1": 1,
-        "5": 1,
-        "6": 1,
-        "8": 1,
-        "3": 1,
-        "15": 1,
         "4": 1,
-        "13": 1,
-        "16": 1,
-        "24": 2,
+        "7": 1,
+        "3": 1,
+        "6": 1,
+        "0": 1,
+        "10": 1,
+        "12": 1,
+        "15": 1,
+        "14": 1,
+        "5": 1,
         "25": 2,
-        "20": 2,
         "18": 2,
         "23": 2,
+        "20": 2,
+        "24": 2,
         "27": 2,
         "26": 2,
         "19": 2,
@@ -7679,7 +7683,9 @@
             0.0
           ]
         }
-      ]
+      ],
+      "event_class": "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c",
+      "class_index": 1
     }
   ],
   "cuts": [
@@ -7695,11 +7701,278 @@
     "event_tolerance": 0.5
   },
   "duration": 48,
+  "decoded_candidates": [
+    {
+      "event_class": "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf",
+      "mapping": {
+        "0": 8,
+        "1": 15,
+        "2": 18,
+        "3": 2,
+        "4": 16,
+        "5": 17,
+        "6": 13,
+        "7": 3,
+        "8": 14,
+        "9": 4,
+        "10": 5,
+        "11": 0,
+        "12": 1,
+        "13": 6,
+        "14": 7,
+        "15": 19,
+        "16": 20,
+        "17": 21,
+        "18": 10,
+        "19": 11,
+        "20": 12,
+        "21": 9,
+        "22": 27,
+        "23": 22,
+        "24": 26,
+        "25": 25,
+        "26": 23,
+        "27": 24
+      },
+      "events": [
+        {
+          "kind": "weakened",
+          "r": [
+            0,
+            1
+          ],
+          "p": [
+            8,
+            15
+          ],
+          "wbo": [
+            2.19194166835212,
+            1.21628566785612
+          ]
+        },
+        {
+          "kind": "broken",
+          "r": [
+            21,
+            22
+          ],
+          "p": [
+            9,
+            27
+          ],
+          "wbo": [
+            0.90100815026435,
+            0.0
+          ]
+        },
+        {
+          "kind": "formed",
+          "r": [
+            0,
+            21
+          ],
+          "p": [
+            8,
+            9
+          ],
+          "wbo": [
+            0.0,
+            0.695110279470386
+          ]
+        },
+        {
+          "kind": "formed",
+          "r": [
+            1,
+            22
+          ],
+          "p": [
+            15,
+            27
+          ],
+          "wbo": [
+            0.0,
+            0.845278708363153
+          ]
+        }
+      ],
+      "groups": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 1,
+        "19": 1,
+        "20": 1,
+        "21": 1,
+        "23": 1,
+        "24": 1,
+        "25": 1,
+        "26": 1,
+        "27": 1,
+        "22": 2
+      },
+      "family": 0
+    },
+    {
+      "event_class": "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c",
+      "mapping": {
+        "0": 8,
+        "1": 9,
+        "2": 18,
+        "3": 2,
+        "4": 16,
+        "5": 17,
+        "6": 13,
+        "7": 3,
+        "8": 14,
+        "9": 4,
+        "10": 5,
+        "11": 0,
+        "12": 1,
+        "13": 6,
+        "14": 7,
+        "15": 19,
+        "16": 20,
+        "17": 21,
+        "18": 11,
+        "19": 10,
+        "20": 15,
+        "21": 12,
+        "22": 22,
+        "23": 27,
+        "24": 24,
+        "25": 23,
+        "26": 25,
+        "27": 26
+      },
+      "events": [
+        {
+          "kind": "weakened",
+          "r": [
+            0,
+            1
+          ],
+          "p": [
+            8,
+            9
+          ],
+          "wbo": [
+            2.19194166835212,
+            0.695110279470386
+          ]
+        },
+        {
+          "kind": "broken",
+          "r": [
+            19,
+            20
+          ],
+          "p": [
+            10,
+            15
+          ],
+          "wbo": [
+            0.993625343407626,
+            0.0
+          ]
+        },
+        {
+          "kind": "formed",
+          "r": [
+            0,
+            20
+          ],
+          "p": [
+            8,
+            15
+          ],
+          "wbo": [
+            0.0,
+            1.21628566785612
+          ]
+        },
+        {
+          "kind": "formed",
+          "r": [
+            1,
+            19
+          ],
+          "p": [
+            9,
+            10
+          ],
+          "wbo": [
+            0.0,
+            1.05360638268386
+          ]
+        }
+      ],
+      "groups": {
+        "0": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "1": 1,
+        "18": 2,
+        "19": 2,
+        "21": 2,
+        "22": 2,
+        "24": 2,
+        "25": 2,
+        "26": 2,
+        "27": 2,
+        "20": 3,
+        "23": 3
+      },
+      "family": 87
+    }
+  ],
+  "decoding": {
+    "complete": true,
+    "window": 5,
+    "families": 874,
+    "branches": 411,
+    "source_sha256": "dec7fb830cdb64b9ce497e504aca87c6c42a19809ffaae5e261b4dde21cfa574",
+    "policy": {
+      "schema": "rxn_core.signed_events/v1",
+      "threshold": 0.5,
+      "metal_threshold": 0.3,
+      "includes_hydrogens": true
+    }
+  },
   "source_sha256": "3f444a61ddeaaba96c489eb5b1c42971ca8ee36018774a7b6efe051afd6b07b5",
   "archive_provenance": {
     "archive": "/project/yunhengzou/coordinate_alignment/aam_benchmarks/holdout_missing_pattern_seeds_20260910/runs/seed_30/results/holdout/101/R_to_P/original/cuts/aam.pkl.gz",
     "sha256": "7640def53d05f8ae7f79d3e542f87b32a289a5f385b9f794738f0c3dc8c5492c"
   },
   "engine_commit": "98b01b175eeed31f70d13e7cbf178b80bf07c9e0",
-  "scope": "Selected archived search context, coordinate case 101 (PR7), seed order 15 of 30, cap 1000. Three recorded terminal witnesses, not exhaustive symmetry decoding or a current benchmark. Event tolerance 0.5; fixed endpoint geometries, rigid camera/display motion only."
+  "scope": "Selected archived search context, coordinate case 101 (PR7), seed order 15 of 30, cap 1000. Growth tree: three archived terminal witnesses. Finale: two unique event classes from the separately deduplicated one-seed cap-2000 catalogue (411 branches, 874 families), completely decoded through five events. Final event thresholds: 0.5 ordinary / 0.3 metal. Fixed endpoint geometries, rigid camera/display motion only."
 }

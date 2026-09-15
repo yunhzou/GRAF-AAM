@@ -54,4 +54,19 @@ Independent reconstruction agrees with the supplied references in all eleven cas
 \input{includes/generated-comparator-timing-table}
 \end{table}
 
-These default call times cover different outputs from GRAFT's sweep and compressed families. GRAFT's unswept search cost was not separately recorded.
+These default call times cover different outputs from GRAFT's sweep and compressed families. GRAFT's unswept search cost was not separately recorded in that earlier study; the controlled ablation in \Cref{tab:golden-caps} supplies the paired no-sweep timing.
+
+
+\subsection{Branch-cap and CPU-time ablation on Golden}
+\label{sec:cap-ablation}
+
+We reran the twelve configurations in \Cref{tab:golden-caps} on all 1,851 Golden reactions using one CPU thread on an AMD EPYC 9J14 processor. Both search directions are unioned. GRAFT is measured before fragment competition; SLAP unions its binary and weighted modes. Search and reference verification have separate fixed resource budgets. The recorded cap-100 recovery counts reproduce the main evaluation. At cap 2,000, unresolved counts increase with seed count. Among reactions resolved at both caps, no swept configuration gains or loses a reference recovery.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{\textbf{Golden branch-cap ablation with paired SLAP baselines.} Recovery counts confirmed reference inclusion over all 1,851 records; unknown cases remain in the denominator. CPU values are seconds per reaction. Paired CPU uses the same 1,403 reactions whose searches finish under every configuration. Spent CPU averages recorded search cost over all 1,851 selected attempts, including interrupted calls; it is not completed-search latency. Both timings exclude reference verification and initial imports. Superseded attempts are excluded. Cap 100 with a one-seed sweep is the default.}
+\label{tab:golden-caps}
+\input{includes/generated-cap-ablation-table}
+\end{table}
+
+The ten-seed cap-2,000 run leaves five references recovered at cap 100 unresolved, accounting for its lower confirmed count. The bounded SLAP sweep confirms 1,794 references here, compared with 1,796 in the main evaluation: two previously recovered cases are unresolved under this study's limits. These outcomes are reported separately from verified exclusions. The paired timing cohort excludes 448 reactions because at least one configuration does not finish; the all-attempt cost column exposes the additional computational cost on those difficult reactions. Source pins, individual outcomes, directional costs, and reproduction scripts are provided with the code.
