@@ -11,6 +11,14 @@ Paper benchmarks: [results and artifact index](reports/README.md) ·
 Interactive views use [two shared styles](docs/VIEWERS.md): the original white
 R/P/TS presentation and the catalog/results presentation.
 
+## Grow, branch, decode
+
+![GRAFT: 3D fragment growth, conditional branching, and final bond-event candidates](manuscript/animations/graft_research_preview/graft-grow-branch-decode.gif)
+
+A recorded fragment-growth tree and three resulting mapping witnesses. Red × marks show breaking or weakening; green inward arrows show forming or strengthening.
+
+[Full-resolution MP4](manuscript/animations/graft_research_preview/graft-grow-branch-decode.mp4) · [Offline interactive viewer](manuscript/animations/graft_research_preview/index.html) · [Example and provenance](manuscript/animations/graft_research_preview/README.md)
+
 ## Current work and stable versions
 
 See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,

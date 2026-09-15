@@ -21,7 +21,7 @@ Describe the default cut sweep as source-edge masking that changes growth routes
 
 A single search-edge mask can redirect later growth and produce multiple bond events. Never equate the number of sweep cuts with the number of final events, or imply that multi-event alternatives require enumerating event combinations. Search completeness is a separate issue.
 
-Default GRAFT includes one seed ordering, cut sweep, and fragment competition. Describe competition as an ordinary search stage, not an optional augmentation. Historical Golden measurements stop before competition and must remain explicitly labeled as stage measurements; do not imply that their timings cover the full default pipeline. The coordinate evaluation includes competition.
+Default GRAFT includes one seed ordering, cut sweep, and fragment competition. Competition is configurable and enabled by default; show this switch explicitly in Algorithm 1. Historical Golden measurements stop before competition and must remain explicitly labeled as stage measurements; do not imply that their timings cover the full default pipeline. The coordinate evaluation includes competition.
 
 Keep Algorithm1 at the level of branches, fragments, conditioned growth, fragment competition, and separate decoding. Cross-reference Figure1 panels; keep isomorphism and automorphism internals in their own Methods subsections. Search caps preserve truncation status.
 

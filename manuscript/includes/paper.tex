@@ -41,9 +41,11 @@ Algorithm~\ref{alg:graft-overview} connects the fragment-level operations in \Cr
     \STATE Add terminal branches and their search-stop status to $\mathcal S$
   \ENDFOR
 \ENDFOR
-\STATE Propose bounded changes in which contacting fragment has priority \COMMENT{Fig.~\ref{fig:algorithm}b}
-\STATE Release displaced assignments and regrow from the retained assignments
-\STATE Add accepted competition branches to $\mathcal S$, keeping the original branches
+\IF{fragment competition is enabled (default)}
+  \STATE Propose bounded changes in which contacting fragment has priority \COMMENT{Fig.~\ref{fig:algorithm}b}
+  \STATE Release displaced assignments and regrow from the retained assignments
+  \STATE Add accepted competition branches to $\mathcal S$, keeping the original branches
+\ENDIF
 \STATE Group final branches by unordered fragment pairs; retain their family union
 \STATE Expose compressed branches with constraints and provenance
 \IF{bond-event candidates are requested as separate post-processing}
