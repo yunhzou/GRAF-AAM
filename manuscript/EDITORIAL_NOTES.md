@@ -13,7 +13,7 @@ The paper's direct signed WBO-change score uses 0.5 for ordinary pairs and 0.3 f
 
 ## Molecular figure conventions
 
-Reserve molecule colors for fragment membership. Keep original black single/double bond strokes. Mark bond cleavage/weakening with a separate × badge and formation/strengthening with a separate + badge, with short pointers to the affected bonds; do not overlay event colors on fragment colors. Match fragment colors across mapped endpoints; different candidate partitions may assign colors differently and must say so. The selected discussion example is Golden case 9, with the verified heavy-atom reference labeled. Ground truth refers to the dataset annotation, not a validated mechanism. Count events from the evaluation matrices, including H, while distinguishing heavy-only depictions and unannotated H identities.
+Reserve molecule colors for fragment membership. Keep original black single/double bond strokes. Mark bond cleavage/weakening with a vivid red × directly on the affected bond, and formation/strengthening with paired bright green inward arrows. Keep the marks compact so fragment colors and black bond lines remain visible. Match fragment colors across mapped endpoints; different candidate partitions may assign colors differently and must say so. The selected discussion example is Golden case 9, with the verified heavy-atom reference labeled. Ground truth refers to the dataset annotation, not a validated mechanism. Count events from the evaluation matrices, including H, while distinguishing heavy-only depictions and unannotated H identities.
 
 TS motivation concerns querying jointly allowed reaction-core atom assignments and building mapping-dependent endpoint interpolations. Do not illustrate this as arbitrary rigid translation/rotation of a fragment. Keep these as downstream justifications, not validated TS results, and distinguish illustrative symmetry queries from a demonstrated core shuffle.
 
@@ -24,3 +24,15 @@ A single search-edge mask can redirect later growth and produce multiple bond ev
 Keep Algorithm1 at the level of branches, fragments, conditioned growth, optional competition, and separate decoding. Cross-reference Figure1 panels; keep isomorphism and automorphism internals in their own Methods subsections. Search caps preserve truncation status.
 
 Credit the cut-sweep strategy as introduced in this work and integral to default GRAFT. SLAP sweep is our extension to the prior algorithm. Distinguish the original SLAP literature score (86.9% on 1,758 reactions), our strict default binary score (85.95% on 1,851), the paired uncut binary/weighted bidirectional union (89.74%), and that union with our sweep (97.03%). Attribute the sweep benefit to the paired comparison, not the cross-protocol literature difference.
+
+
+## Hardware disclosure for publication
+
+Report only the CPU model when describing compute hardware, including future
+benchmark updates. Do not publish site names, machine identifiers, login or
+network addresses, account names, absolute storage paths, scheduler commands,
+queue or allocation details, system memory, or job-concurrency settings.
+Keep algorithm parameters, measured timings, completion status, and the
+distinction between timing cohorts. Author affiliations are separate from
+compute-hardware disclosure. Check the PDF and every submission-bundle member
+before publication; raw execution manifests are not submission artifacts.

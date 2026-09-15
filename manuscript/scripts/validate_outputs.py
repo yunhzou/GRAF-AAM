@@ -1,8 +1,10 @@
 """Validate the final manuscript's numerical sources and compiled references."""
 from pathlib import Path
 import hashlib,json,re
+from publication_privacy import check_publication
 from pypdf import PdfReader
 MAN=Path(__file__).resolve().parents[1];E=MAN/'evidence'
+check_publication('manuscript.pdf',(MAN/'manuscript.pdf').read_bytes())
 def read(n):return json.loads((E/n).read_text())
 from build_molecule_figure import check_example
 assert read('molecule_example.json') == json.loads(json.dumps(check_example()))
