@@ -94,8 +94,8 @@ def build(man):
  t(32,70,'140-reaction coordinate set  ·  GRAFT: 3 classes  ·  SLAP sweep: 3  ·  Native SLAP: 1',10.5,MUTED)
  for x,color in zip([45,70,95],PALETTE):ax.add_patch(Circle((x,107),10,facecolor=color,edgecolor='none'))
  t(118,107,'Matched fragments keep their colors',10,MUTED)
- ax.plot([603,666],[107,107],color=RED,lw=2.5,linestyle=(0,(2.6,1.6)));t(680,107,'Break / weaken',10,RED)
- ax.plot([949,1012],[107,107],color=BLUE,lw=2.5);t(1026,107,'Form / strengthen',10,BLUE)
+ ax.plot([603,666],[107,107],color=RED,lw=7,alpha=.30,solid_capstyle='round');ax.plot([603,666],[107,107],color='black',lw=1.1);t(680,107,'Break / weaken',10,RED)
+ ax.plot([949,1012],[107,107],color=BLUE,lw=7,alpha=.30,solid_capstyle='round');ax.plot([949,1012],[107,107],color='black',lw=1.1);t(1026,107,'Form / strengthen',10,BLUE)
  for index,p in enumerate(d['patterns']):
   y=140+202*index;box(28,y,1238,194,'white','#DCE3E9')
   letter='ABC'[index];t(48,y+27,letter,15,TEAL,'bold');t(93,y+27,'4 events',11,TEAL,'bold')

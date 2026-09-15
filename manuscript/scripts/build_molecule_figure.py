@@ -161,8 +161,13 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens
   bond_match=re.search(r'\bbond-(\d+)\b',e.get('class',''))
   if bond_match and fill=='none' and int(bond_match.group(1)) in changes:
    sign=changes[int(bond_match.group(1))]
-   kw.update(edgecolor=RED if sign<0 else BLUE,linewidth=2.3,zorder=5)
-   if sign<0:kw['linestyle']=(0,(2.6,1.6))
+   # Color annotates the event; the original solid black bond remains visible.
+   ax.add_patch(PathPatch(svg_path(e.attrib['d']),facecolor='none',
+       edgecolor=RED if sign<0 else BLUE,linewidth=7.0,alpha=.30,
+       capstyle='round',joinstyle='round',transform=transform,zorder=3.5))
+   kw.update(edgecolor='#000000',zorder=5)
+  elif fill=='none' or fill in {'#000000','black'}:
+   kw['zorder']=5
   if kind=='path':patch=PathPatch(svg_path(e.attrib['d']),**kw)
   elif kind=='ellipse':patch=Ellipse((float(e.attrib['cx']),float(e.attrib['cy'])),2*float(e.attrib['rx']),2*float(e.attrib['ry']),**kw)
   else:raise AssertionError('Unexpected background rectangle in molecule')

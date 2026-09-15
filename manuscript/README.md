@@ -11,7 +11,7 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
 - `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and direction-specific mean CPU cost.
 - `figs/fig3_coordinate.{pdf,svg,png}`: GRAFT and prior-method minimum-event comparisons, minimum-count distributions, and measured stage costs on 140 cases.
-- `figs/fig4_alternatives.{pdf,svg,png}`: three real GRAFT minimum-event alternatives from coordinate case 127; colored bonds show signed WBO changes and pastel highlights show actual saved fragments. Includes a certified H shuffle and illustrative fragment motion.
+- `figs/fig4_alternatives.{pdf,svg,png}`: three real GRAFT minimum-event alternatives from coordinate case 127; translucent red/blue highlights show signed WBO changes behind unchanged black bond strokes and pastel highlights show actual saved fragments. Includes a certified H shuffle and illustrative fragment motion.
 - `evidence/coordinate_case127.json`: full saved-case witnesses, checked events, source fragment groups, and hashes for Figure 4.
 - `evidence/multicandidate_example.json` and `evidence/output_multiplicity.json`: current-API example and archived comparator-output audit for the discussion.
 - `manuscript_bundle.zip`: compact paper, source, figure, and evidence bundle.
