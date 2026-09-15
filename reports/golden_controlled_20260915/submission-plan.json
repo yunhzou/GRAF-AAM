@@ -33,5 +33,7 @@
     9,
     1001
   ],
-  "remote_root": "/lustre/fsw/portfolios/nvr/users/yunhengz/Projects/coordinate_alignment/golden_controlled_20260915"
+  "remote_root": "/lustre/fsw/portfolios/nvr/users/yunhengz/Projects/coordinate_alignment/golden_controlled_20260915",
+  "finalization_job": "6818580",
+  "finalization_dependency": "afterany:6818088:6818089"
 }
