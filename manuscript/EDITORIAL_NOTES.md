@@ -36,3 +36,7 @@ Keep algorithm parameters, measured timings, completion status, and the
 distinction between timing cohorts. Author affiliations are separate from
 compute-hardware disclosure. Check the PDF and every submission-bundle member
 before publication; raw execution manifests are not submission artifacts.
+
+## Reproducibility in the paper
+
+Keep the paper focused on the algorithm, evaluation definitions, essential settings, results, and limitations. Put exact versions, hashes, configuration fields, commands, run bookkeeping, and detailed audit records in the code repository, linked through `manuscript/REPRODUCIBILITY.md`. Do not reproduce an execution manifest in prose. Retain settings that change interpretation (tolerances, seeds, caps, sweep/direction policy), timing scope, denominators, and completeness limits. Apply the CPU-only disclosure policy to the guide and submission bundle as well.

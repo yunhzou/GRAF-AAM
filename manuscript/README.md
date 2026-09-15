@@ -5,7 +5,8 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `manuscript.pdf`: compiled paper.
 - `preprint.tex`: LaTeX entry point, retaining the supplied author list and preprint style.
 - `includes/paper.tex`: methods, evaluation, and discussion.
-- `includes/supplement.tex`: concise reproducibility details and completeness definitions.
+- `includes/supplement.tex`: evaluation scope, completeness argument, and supplementary results.
+- [REPRODUCIBILITY.md](REPRODUCIBILITY.md): full technical settings and links to code, input/source pins, and per-case evidence.
 - `figs/fig1_algorithm.{pdf,svg,png}`: the branching algorithm overview: RDKit vector depictions of alcohol sites and methyl acetate saponification illustrate hydrogen-preserving local matches, three conditional assignment levels, automorphism compression, competition, and event decoding.
 - `evidence/competitors.json`: audited Golden results for RXNMapper, LocalMapper, Chython, Indigo, RDT, and default SLAP configurations; Table 3 compares their returned-output reference recovery with all evaluated GRAFT seed/sweep configurations, without assigning a ranking to SLAP alternatives.
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
