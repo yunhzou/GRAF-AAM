@@ -1,0 +1,12 @@
+{
+  "aggregate.py": "c4b4c0a851e897f6c0b48febfd08b4f3bdb89258c63b76836d3e3df6d0945df0",
+  "run.py": "78bc68e079dacf41b6430aa91952958ecf7fc721e755df8996f65c0c1232901e",
+  "README.md": "1752381be28851b0df88076f5445bc5647f9fb5c996d69de0221750686ad5e56",
+  "local-validation.json": "0df005dbc574c0b201dc30e3d104661074fcfcaed05581cb60d1b85a3a4b09b4",
+  "payload.tar.gz": "0001d20943d55fdefeeaadd3a79026fe33a3ab87b51473bb6bc027a8ed6bb6f9",
+  "manifest.json": "b93a881cb616721f37380eae0f7f8bc5cfd2c637e7cace3025b48a7500725fbc",
+  "array_shard.sbatch": "a81f8633d5e2948a786ac1a2cde2a031b50142bd2ad7165599b2cfe65fa8621c",
+  "submission-plan.json": "2d9b779d14468ea8ad632a187b7a8729efcb5a9e29616c6228fe486e20725f5d",
+  "small_pilot.sbatch": "fa3ccabec7346a7ade5e29478b39e217e43862734beca61664c2ca204ef8e284",
+  "small_pilot.py": "b4ec2d57708208ce9b3afc9b92496380dc12adce42350955b1eb1b7629b0b85f"
+}

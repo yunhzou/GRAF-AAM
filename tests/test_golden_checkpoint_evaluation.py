@@ -1,4 +1,5 @@
 import gc
+from dataclasses import replace
 import json
 from pathlib import Path
 import sys
@@ -79,8 +80,10 @@ def test_serial_producer_does_not_retain_previous_cut(tmp_path, reaction, monkey
     assert all(ref() is None for ref in previous)
 
 
-def test_verifier_releases_cut_and_rejects_missing_or_wrong_manifest(tmp_path, reaction, monkeypatch):
+@pytest.mark.parametrize('sweep', [False, True])
+def test_verifier_releases_cut_and_rejects_missing_or_wrong_manifest(tmp_path, reaction, monkeypatch, sweep):
     plan, features, reference = reaction
+    plan = replace(plan, config=replace(plan.config, sweep_cuts=sweep))
     result = search_aam_checkpoints(plan.problem, plan.config, intermediate_dir=tmp_path)
     live = []
     reader = streaming.read_raw_cut

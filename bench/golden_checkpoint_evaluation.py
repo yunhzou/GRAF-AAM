@@ -56,7 +56,7 @@ def evaluate_checkpoints(directory, plan, features, reference, *, seconds=275,
         expected_manifest['execution'] = 'shared_policies'
     if manifest != expected_manifest:
         raise ValueError('Checkpoint input or configuration differs from verification')
-    cuts = cut_sweep_items(problem.reactant.wbo, config.cut_floor)
+    cuts = cut_sweep_items(problem.reactant.wbo, config.cut_floor) if config.sweep_cuts else [()]
     files = raw_cut_paths(directory)
     indices = [int(path.name.split('_')[1].split('.')[0]) for path in files]
     if any(i not in range(len(cuts)) for i in indices):
