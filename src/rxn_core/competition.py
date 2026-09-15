@@ -1,4 +1,6 @@
-"""Importable bounded fragment competition, separate from ordinary AAM.
+"""Bounded fragment competition for the default GRAFT pipeline.
+
+Call this stage after sweep search and before separate event decoding.
 
 The local-collision policy is extracted from the validated 140-case campaign.
 No dataset, reference, filesystem, environment-variable, or CLI dependencies.

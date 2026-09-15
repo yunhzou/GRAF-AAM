@@ -100,7 +100,7 @@ def build(man):
  def arrow(a,b):ax.add_patch(FancyArrowPatch(a,b,arrowstyle='-|>',mutation_scale=13,color=INK,lw=1.8,zorder=6))
  box(12,12,1392,1056)
  t(32,41,'Golden case 9: the reference is one of several recovered mappings',15,weight='bold')
- t(32,73,'GRAFT · 1 seed + cut sweep (default) · branch cap 2,000 · iso tolerance 1 · event threshold 0.5',10.5,MUTED)
+ t(32,73,'GRAFT search · 1 seed (default) + cut sweep · cap 2,000 · iso tolerance 1 · event threshold 0.5',10.5,MUTED)
  for x,c in zip([44,69,94],PALETTE):ax.add_patch(Circle((x,112),10,facecolor=c,edgecolor='none'))
  t(116,112,'Saved fragment groups',10,MUTED)
  for x,sign,txt in [(526,-1,'Break / weaken'),(972,1,'Form / strengthen')]:

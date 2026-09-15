@@ -32,7 +32,7 @@ fig,axs=plt.subplots(1,2,figsize=(9.2,4.7),gridspec_kw={'width_ratios':[1.4,1.3]
 a=axs[0];labels=['GRAFT · 1 seed\n(default)','GRAFT · 2 seeds','GRAFT · 3 seeds','GRAFT · 10 seeds','SLAP sweep\n(prior baseline)','LocalMapper\n(prior SOTA, 2024)'];vals=[*counts,slap['sweep_union_recovered'],local['any_correct']];y=np.arange(6)
 a.barh(y,np.array(vals)/N*100,color=[GREEN,BLUE,'#52789F',PURPLE,ORANGE,MUTED],height=.58)
 for i,v in enumerate(vals):a.text(v/N*100-1.5,i,f'{v:,} / {N:,}  ({v/N*100:.2f}%)',ha='right',va='center',color='white',fontsize=9,weight='bold')
-a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Reference recovery over returned output (%)');a.invert_yaxis();a.set_title('a  GRAFT and prior-method recovery',loc='left',weight='bold',pad=13)
+a.set(yticks=y,yticklabels=labels,xlim=(0,102),xticks=[0,25,50,75,100],xlabel='Reference recovery over returned output (%)');a.invert_yaxis();a.set_title('a  GRAFT search-stage recovery',loc='left',weight='bold',pad=13)
 a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 shown=[costs[0],costs[1],seed['same_host_timing']['metrics']['slap']['mean_seconds']]
 a=axs[1];ys=np.arange(3);policies=['smaller_first','larger_first','bidirectional']
@@ -41,7 +41,7 @@ for j,(prefix,label,color) in enumerate([('graft1','GRAFT · 1 seed (default)',G
  a.barh(positions,vals,color=color,height=.21,label=label)
  for y,v in zip(positions,vals):a.text(v+.06,y,f'{v:.2f}',va='center',fontsize=8)
 a.set(yticks=ys,yticklabels=['Smaller-first','Larger-first','Bidirectional'],xlim=(0,6.2),ylim=(2.65,-1.2),xlabel='Mean CPU seconds / reaction')
-a.set_title('b  Cost by endpoint-size orientation',loc='left',weight='bold',pad=13)
+a.set_title('b  Search cost by size orientation',loc='left',weight='bold',pad=13)
 a.legend(loc='upper left',frameon=False,fontsize=8);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 save(fig,'fig2_golden')
 uncut=read('unswept.json');table=[]
@@ -49,7 +49,7 @@ for name,label in [('graft','GRAFT, no sweep (ablation)'),('slap','SLAP, no swee
  o=uncut['methods'][name]['counts']
  table.append(f"{label} & {o['recovered']:,} & {100*o['recovered']/N:.2f} & {o['not_recovered']} & {o.get('unknown',0)} & {format(timing['slap_unswept_bidirectional']['mean'],'.3f') if name=='slap' else '--'} " + r"\\")
 ablations=table;table=[]
-for k,label in zip(keys,['GRAFT, 1 seed + sweep (default)','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
+for k,label in zip(keys,['GRAFT, 1 seed (default) + sweep','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
  d=methods[k];o=d['golden_outcomes'];cost_text=f"{d['common_mean_cpu_seconds']:.2f}" if d['common_mean_cpu_seconds'] is not None else '--';table.append(f"{label} & {o['recovered']:,} & {d['golden_recovery_percent']:.2f} & {o['not_recovered']} & {o['unknown']} & {cost_text} \\\\")
 table.append(f"SLAP sweep (prior baseline) & {slap['outcomes']['recovered']:,} & {100*slap['outcomes']['recovered']/N:.2f} & {slap['outcomes']['not_recovered']} & {slap['outcomes']['unknown']} & {shown[2]:.2f} " + r"\\")
 table += [r'\midrule'] + ablations

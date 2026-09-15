@@ -4,20 +4,25 @@ Start with [AAM_SIMPLE.ipynb](AAM_SIMPLE.ipynb): a six-atom reaction, unique eve
 
 Install `python -m pip install -e ".[notebook]"` for the notebook, or `.[postprocessing]` for symbolic event decoding without notebook packages. A C++17 compiler builds the bookkeeping extensions. The optional fast growth engine requires `python native/build_engine.py`; see [native installation](../native/README.md). Ordinary `search_aam` can use the Python reference growth implementation. `compete_fragments` and `execution="reused_native"` / `"shared_policies"` require that optional engine and fail explicitly if unavailable. No xTB is needed when coordinates and bond-order matrices are supplied.
 
-## Search first; post-process afterward
+## Default pipeline; separate post-processing
 
 ```python
 from rxn_core import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
+from rxn_core.competition import compete_fragments
 from rxn_core.postprocessing import EventDecodeConfig, decode_events
 
 problem = AAMProblem(
     MolecularEndpoint(elements_R, xyz_R, wbo_R),
     MolecularEndpoint(elements_P, xyz_P, wbo_P))
 aam = search_aam(problem, AAMSearchConfig(iso_tolerance=1.0), workers=1)
-decoded = decode_events(aam, EventDecodeConfig(threshold=0.5, metal_threshold=0.3))
+search = compete_fragments(aam)
+decoded = decode_events(search.final_catalogue(),
+                        EventDecodeConfig(threshold=0.5, metal_threshold=0.3))
 candidates = decoded.candidates
 witness = candidates[0].mapping if candidates else None
 ```
+
+Default GRAFT includes one-seed cut sweep and fragment competition. The functions remain separate so callers can inspect and persist each stage; `search_aam` alone returns the sweep-search stage. The example above requires the native engine and balanced endpoints for competition.
 
 Matrices must be symmetric and coordinates finite. The event decoder additionally requires balanced elements, complete bijections, nonnegative and exactly symmetric raw matrices. Search supports unbalanced/partial mappings; inspect `aam.graph.paths()` and stop reasons for those cases. Do not silently treat a partial mapping as a complete event candidate.
 
@@ -47,12 +52,13 @@ from rxn_core import search_aam_directions
 config = AAMSearchConfig(anchors=((r0, p0),), seed_count=1)
 runs = search_aam_directions(problem, config, direction="both", workers=1)
 for run in runs:
-    directed_decoding = decode_events(run.aam)
+    directed_search = compete_fragments(run.aam)
+    directed_decoding = decode_events(directed_search.final_catalogue())
     for candidate in directed_decoding.candidates:
         input_mapping = run.to_input_mapping(candidate.mapping)
 ```
 
-`direction` accepts `forward`, `reverse`, `both`, `smaller_first`, and `larger_first`. Size counts explicit atoms, including H. On ties smaller-first uses input R→P; larger-first uses the reverse. Both directions run sequentially under the same worker ceiling. Each direction has its own checkpoint directory when `intermediate_dir` is supplied. Anchors are always supplied in input R→P indexing and reversed automatically. Anchors constrain search, not just the displayed witness. The `reference` and `reused_native` backends accept anchors; the optional `shared_policies` backend currently rejects anchored searches.
+`direction` accepts `forward`, `reverse`, `both`, `smaller_first`, and `larger_first`. Size counts explicit atoms, including H. On ties smaller-first uses input R→P; larger-first uses the reverse. The example runs the default competition stage separately in each direction and requires balanced endpoints. Both directions run sequentially under the same worker ceiling. Each direction has its own checkpoint directory when `intermediate_dir` is supplied. Anchors are always supplied in input R→P indexing and reversed automatically. Anchors constrain search, not just the displayed witness. The `reference` and `reused_native` backends accept anchors; the optional `shared_policies` backend currently rejects anchored searches.
 
 Keep compressed results in their search direction. Invert only concrete witnesses. Event IDs are direction-local: merging already reduced forward/reverse event classes is **not** an exact common-frame bidirectional decoder. That joint event quotient is not implemented; use the two directed results for audit. `plan_aam_search` remains the lightweight smaller-first planning API.
 
@@ -74,11 +80,11 @@ Keep compressed results in their search direction. Invert only concrete witnesse
 | `FragmentMatchContext` | `locked_mapping`; `islands`; `deferred_edges`; optional reusable `source_orbits`, `target_orbits`, `growth_replay` |
 | `CompetitionConfig` | `operation_budget=128`; `seconds=270`; `parent_limit=8`; `depth_limit=2`; `queue_limit=512`; `dependent_component_limit=8` |
 
-The library branch-limit default remains 100; the coordinate notebook explicitly uses 2,000. A cap bounds a growth call's live alternatives, not the number of saved histories or all permutations. One seed with cut sweep is the default; no-sweep is an explicit ablation (`sweep_cuts=False`). The random seed controls reproducible, independent per-cut streams and is separate from the number of seed orderings.
+The library branch-limit default remains 100; the coordinate notebook explicitly uses 2,000. A cap bounds a growth call's live alternatives, not the number of saved histories or all permutations. The default pipeline uses one seed, cut sweep, and competition; no-sweep is an explicit ablation (`sweep_cuts=False`). The random seed controls reproducible, independent per-cut streams and is separate from the number of seed orderings.
 
 For compatibility, `AAMSearchConfig` also retains `event_threshold`, `metal_event_threshold`, `symmetry_repair`, `symmetry_repair_min_changes`, and `symmetry_repair_max_evaluations`. The raw search does not classify or repair events. These fields configure the older mechanism/geometry pipeline; competition also uses its event thresholds for parent ordering. The separate signed-event decoder uses **only its own `EventDecodeConfig`**, not these legacy event fields. `group_mechanisms`, `compile_mapping_families`, `compile_mechanism_families`, `select_rp_mappings`, and TS routines remain available and unchanged.
 
-## Optional fragment competition
+## Fragment competition
 
 ```python
 from rxn_core.competition import CompetitionConfig, compete_fragments
@@ -86,7 +92,7 @@ augmented = compete_fragments(aam, CompetitionConfig(operation_budget=128))
 decoded = decode_events(augmented.final_catalogue())
 ```
 
-This exposes the bounded local B-priority takeover policy used in the coordinate campaign. It returns the untouched baseline plus independently validated repair families, counters, and proposal provenance. It performs no decoding or reference comparison. Growth/completion use the supplied AAM branch limit and tolerances; hard user anchors remain fixed. Parent selection uses the AAM configuration's observed event counts. Original scripts remain as historical campaign artifacts. Competition is opt-in and requires the native growth engine. It is not part of Golden's reported ordinary-search configuration.
+This exposes the bounded local B-priority takeover policy used in the coordinate campaign. It returns the untouched baseline plus independently validated repair families, counters, and proposal provenance. It performs no decoding or reference comparison. Growth/completion use the supplied AAM branch limit and tolerances; hard user anchors remain fixed. Parent selection uses the AAM configuration's observed event counts. Original scripts remain as historical campaign artifacts. Competition is part of the default pipeline and requires the native growth engine. The saved Golden measurements cover the preceding sweep-search stage.
 
 ## Chirality and audit scope
 
