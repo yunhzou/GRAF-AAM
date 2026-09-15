@@ -344,7 +344,7 @@ def extract_path_events(path, search_problem, index, *, max_events=None, seconds
     """
     import z3
     from .family_query import compile_path
-    from .family_scoring import validate_representative
+    from .search_validation import RepresentativeValidationWorkspace
     if (not math.isfinite(seconds) or seconds < 0 or
             (max_patterns is not None and
              (not isinstance(max_patterns, int) or max_patterns < 1))):
@@ -357,7 +357,11 @@ def extract_path_events(path, search_problem, index, *, max_events=None, seconds
         raise ValueError('index and complete search path must use the same atom indexing')
     started = time.perf_counter()
     deadline = started + seconds
-    validate_representative(path, search_problem)
+    validator = getattr(index, '_representative_validator', None)
+    if validator is None or validator.problem is not search_problem:
+        validator = RepresentativeValidationWorkspace(search_problem)
+        index._representative_validator = validator
+    validator.validate_path(path)
     patterns = {}
     queries = 0
     metrics = {}

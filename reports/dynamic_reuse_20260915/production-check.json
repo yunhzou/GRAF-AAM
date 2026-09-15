@@ -1,0 +1,9 @@
+{
+  "case": 64,
+  "mode": "production_default",
+  "graphs_identical": true,
+  "offers_identical": true,
+  "existing_counts_identical": true,
+  "all_counters_numeric": true,
+  "repairs": 128
+}

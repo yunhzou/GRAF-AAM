@@ -92,3 +92,12 @@ python run_budget.py
 ```
 
 `prepare.py` builds both the regular extensions and the native growth engine in the copied source. It never edits production code. Choose a fresh work directory. Raw search offers, prefix audits, decoded patterns and per-family completion certificates are in `results.json.gz`; per-case counts and timings are in `summary.csv` and `summary.json`. Candidate proof records cover both budgets, so the same event class can have more than one saved witness record.
+
+## Subsequent timing control
+
+The total-time advantage above compared budget-limited searches visiting different
+proposals. It is not an intrinsic speed advantage of prefixes. A matched-trajectory
+control, completing every prefix of the same five trajectories, found prefixes
+slower in every case after warmup. See the [six-arm sweep ablation and paired
+control](../sweep_prefix_ablation_20260915/README.md). These experiments use the
+pre-optimization source pinned in their manifests.

@@ -163,6 +163,11 @@ def compete_fragments(a, config=None):
         problem.product.elements, problem.product.wbo, bond_cut=cfg.graph_floor
     )
     po = _nauty_orbits(target, wbo_tol=cfg.iso_tolerance)
+    from .conditioned_symmetry import ConditionedSymmetryWorkspace
+    from .search_validation import RepresentativeValidationWorkspace
+
+    symmetry_workspace = ConditionedSymmetryWorkspace(target, cfg.iso_tolerance)
+    validation_workspace = RepresentativeValidationWorkspace(problem)
     sources = {}
     offers_cache = {}
     completion_cache = {}
@@ -366,20 +371,15 @@ def compete_fragments(a, config=None):
                     anchor_map=anchors,
                 )
                 graph, _ = finalize_graph_symmetry(
-                    graph, target, iso_tolerance=cfg.iso_tolerance
+                    graph,
+                    target,
+                    iso_tolerance=cfg.iso_tolerance,
+                    workspace=symmetry_workspace,
                 )
-                from rxn_core.family_scoring import validate_representative
-
-                # Reject the whole repair if a full witness fails the original constraints.
-                invalid = []
-                for path in graph.paths():
-                    if len(path.mapping) != idx.n:
-                        continue
-                    try:
-                        validate_representative(path, problem)
-                        counts["validated_paths"] += 1
-                    except AssertionError:
-                        invalid.append(path.terminal)
+                # A shared terminal witness can satisfy all ancestor constraints
+                # at once; invalid unions fall back to checking each history.
+                validated, invalid = validation_workspace.validate_graph(graph)
+                counts["validated_paths"] += validated
                 if invalid:
                     counts["rejected_repair_graphs"] += 1
                     counts["invalid_paths"] += len(invalid)
@@ -450,6 +450,10 @@ def compete_fragments(a, config=None):
                             )
                         )
                 offers.append(dict(proof, full_witnesses=full))
+    for name, value in symmetry_workspace.stats().items():
+        counts[f"symmetry_{name}"] = value
+    for name, value in validation_workspace.stats.items():
+        counts[f"validation_{name}"] = value
     return CompetitionResult(
         a,
         tuple(repairs),
