@@ -1,5 +1,6 @@
 {
   "status": "passed",
+  "mp4_sha256": "40371d3900ef19030aa1ce0c01e694432bf5a3b91ab1048372ed6190ebec84d6",
   "mp4_metadata": {
     "ffmpeg_version": "7.1 built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)",
     "codec": "h264",
@@ -14,19 +15,18 @@
       900
     ],
     "rotate": 0,
-    "duration": 48.0
+    "duration": 28.0
   },
-  "mp4_sha256": "d8ee484c894d405757ce6c865f2c0e942e467d7ad342f9421abfc17d11226fbd",
-  "decoded_video_frames": 1152,
+  "decoded_video_frames": 672,
   "gif": {
-    "frames": 576,
-    "duration_ms": 48000,
+    "sha256": "d76709090d51e5299fd39da141daa56e4052e33dc92429fc65335c5024729b6a",
+    "frames": 336,
+    "duration_ms": 28000,
     "size": [
       960,
       600
     ],
-    "loop": 0,
-    "sha256": "05872a134bd9c326cbe030f54dc740c22ef279dbafa309cd02e60625783b79e6"
+    "loop": 0
   },
-  "visual_review": "Reviewed equivalence grouping scene and two canonical final cards with decoded witnesses. Black endpoint bonds, fragment colors, red loss marks and green formation marks retained. Atom labels remain inside their viewer panels."
+  "visual_review": "Reviewed growth, competition return arrow, partial assignment release, witness-merging motion, persistent right-hand decoder and two final cards. Final event rows fit above footnotes. Reference label and partial-class scope are visible."
 }
