@@ -8,6 +8,8 @@ from build_molecule_figure import check_example
 assert read('molecule_example.json') == json.loads(json.dumps(check_example()))
 from build_alternatives_figure import check_example as check_alternatives
 check_alternatives(MAN)
+from build_alternatives_figure import check_case
+check_case(MAN)
 uncut=read('unswept.json')
 assert uncut['denominator']==1851 and uncut['seed_count']==1
 for name in ['graft','slap']:

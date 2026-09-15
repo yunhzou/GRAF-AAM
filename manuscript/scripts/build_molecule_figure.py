@@ -120,9 +120,10 @@ def svg_path(d):
   if c=='M':start=pts[0]
  return MPath(vertices,codes)
 
-def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens=False,align_acetyl=True,rotation=0):
- params=Chem.SmilesParserParams();params.removeHs=not explicit_hydrogens
+def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens=False,align_acetyl=True,rotation=0,bond_changes=None,preserve_bond_orders=False,coordinates=None):
+ params=Chem.SmilesParserParams();params.removeHs=not explicit_hydrogens;params.sanitize=not preserve_bond_orders
  m=Chem.MolFromSmiles(smiles,params);assert m is not None
+ if preserve_bond_orders:Chem.SanitizeMol(m,sanitizeOps=Chem.SanitizeFlags.SANITIZE_ALL ^ Chem.SanitizeFlags.SANITIZE_SETAROMATICITY)
  ids={a.GetAtomMapNum():a.GetIdx() for a in m.GetAtoms()}
  for a in m.GetAtoms():
   k=a.GetAtomMapNum()
@@ -130,6 +131,9 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens
   elif notes is not False and k in notes:a.SetProp('atomNote',str(notes[k]))
   a.SetAtomMapNum(0)
  rdDepictor.Compute2DCoords(m)
+ if coordinates:
+  for k,xy in coordinates.items():
+   if k in ids:m.GetConformer().SetAtomPosition(ids[k],(*xy,0))
  # Shared acetyl coordinates make the ester and acid directly comparable.
  if align_acetyl and {1,2,3,4}.issubset(ids):
   points={1:(-1.30,.75),2:(0,0),3:(0,-1.5),4:(1.30,.75),5:(2.60,0)}
@@ -140,6 +144,11 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens
  bonds={b.GetIdx():colors[b.GetBeginAtomIdx()] for b in m.GetBonds() if b.GetBeginAtomIdx() in colors and colors.get(b.GetBeginAtomIdx())==colors.get(b.GetEndAtomIdx())}
  for atom in m.GetAtoms():
   if atom.GetAtomicNum()==0:o.atomLabels[atom.GetIdx()]='R'
+ changes={}
+ for pair,sign in (bond_changes or {}).items():
+  bond=m.GetBondBetweenAtoms(ids[pair[0]],ids[pair[1]])
+  assert bond is not None, ('Changed bond is absent from depiction',pair)
+  changes[bond.GetIdx()]=sign
  d.DrawMolecule(m,highlightAtoms=list(colors),highlightBonds=list(bonds),highlightAtomColors=colors,highlightBondColors=bonds)
  d.FinishDrawing();root=ET.fromstring(d.GetDrawingText())
  transform=Affine2D().translate(x,y)+ax.transData
@@ -149,6 +158,11 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens
   style=dict(item.split(':',1) for item in e.get('style','').split(';') if ':' in item)
   fill=style.get('fill',e.get('fill','none'));stroke=style.get('stroke',e.get('stroke','none'))
   kw=dict(facecolor=fill,edgecolor=stroke,linewidth=float(style.get('stroke-width','0').removesuffix('px'))*.60,transform=transform,zorder=3)
+  bond_match=re.search(r'\bbond-(\d+)\b',e.get('class',''))
+  if bond_match and fill=='none' and int(bond_match.group(1)) in changes:
+   sign=changes[int(bond_match.group(1))]
+   kw.update(edgecolor=RED if sign<0 else BLUE,linewidth=2.3,zorder=5)
+   if sign<0:kw['linestyle']=(0,(2.6,1.6))
   if kind=='path':patch=PathPatch(svg_path(e.attrib['d']),**kw)
   elif kind=='ellipse':patch=Ellipse((float(e.attrib['cx']),float(e.attrib['cy'])),2*float(e.attrib['rx']),2*float(e.attrib['ry']),**kw)
   else:raise AssertionError('Unexpected background rectangle in molecule')
@@ -240,7 +254,7 @@ def build(man):
  for y,owners,title,color in [(560,{**{i:PALE_A for i in [1,2,3,4]},5:PALE_B},'Keep A',green),(750,{**{i:PALE_A for i in [1,2,3]},4:PALE_B,5:PALE_B},'Give B priority',orange)]:
   box(385,y,264,136,'white','#D6E1E9',.9,10)
   t(518,y-16,title,11,color,'bold',ha='center')
-  mol(ESTER,391,y+2,250,130,owners,notes={4:'4'},font=30)
+  mol(ESTER,391,y+2,250,130,owners,notes={4:'4'},font=30,bond_changes={(4,5) if title=='Keep A' else (2,4):-1})
   if title=='Keep A':tree([(650,y+68),(729,y+68),(729,714),(753,714)],color,1.8)
   else:
    ar((650,y+68),(685,y+68),color,1.8)
@@ -260,9 +274,9 @@ def build(man):
  # Witness cards show oxygen identities while leaving unchanged carbons unlabeled.
  for y,mapping,count,color in [(575,{3:3,4:4,5:5,6:6},2,green),(757,{3:4,4:3,5:5,6:6},4,RED)]:
   box(1056,y,347,144,'white','#D6E1E9',.9,10)
-  mol(ACETATE,1060,y+10,146,118,notes={i:mapping[i] for i in [3,4]},font=29)
+  mol(ACETATE,1060,y+10,146,118,{1:PALE_A,2:PALE_A,3:PALE_O,4:PALE_O},notes={i:mapping[i] for i in [3,4]},font=29,bond_changes={} if count==2 else {(2,3):1,(2,4):-1})
   t(1209,y+60,'+',11)
-  mol(ALCOHOL,1220,y+39,95,72,notes={6:'6'},font=28)
+  mol(ALCOHOL,1220,y+39,95,72,{5:PALE_B},notes={6:'6'},font=28,bond_changes={(5,6):1})
   t(1359,y+51,str(count),20,color,'bold',ha='center')
   t(1359,y+83,'events',10,color,ha='center')
  ar((975,704),(1053,647),violet,1.8,True)
@@ -271,7 +285,7 @@ def build(man):
  # Shared legend, kept outside the chemical trees.
  ar((35,949),(84,949),navy,1.7);t(95,949,'Search continuation',10,muted)
  ar((394,949),(443,949),violet,1.7,True);t(454,949,'Event projection',10,muted)
- t(1407,949,'Formal bond orders · heavy-atom events at δ = 0.5',10,muted,ha='right')
+ t(1407,949,'Red: lose/weaken · blue: form/strengthen',10,muted,ha='right')
  fig.canvas.draw()
  renderer=fig.canvas.get_renderer()
  for label in ax.texts:

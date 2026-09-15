@@ -81,6 +81,12 @@
       "source": "reports/multicandidate_discussion_20260914/output_multiplicity.json",
       "scope": "Read-only explicit candidate record counts from all archived comparator predictions. Not symmetry-expanded candidate counts.",
       "sha256": "470fc3adb10527f600ae55912fbbd1e91049fa4e7e9f5df6254b423ae9db799f"
+    },
+    {
+      "snapshot": "coordinate_case127.json",
+      "source": "reports/colored_alternatives_20260914/coordinate_case127.json",
+      "scope": "Three saved four-event GRAFT candidates and source fragment partitions for coordinate case127; read-only family and WBO verification. No search or decoder rerun.",
+      "sha256": "8991c096bc9c7a440f3862de0615f95740ad4911a5d1b59196791c5f7deb3b18"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has two unresolved reactions. Timing across Mac and Linux is not pooled."
