@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "pages": 20,
+  "manuscript_sha256": "2070362073eb0a091edcb4bcee37e617abf6e571fc924a173bdc8dad1c966ae8",
+  "review": "All 20 pages rendered and compared with the previous reviewed paper. Changed pages 3 and 11\u201315 inspected individually. Figures 1 and 4 also inspected at full resolution. Off-bond \u00d7/+ badges identify changes while black bonds and fragment colors remain distinct. Golden reference label and counts match checked evidence. No clipping or overfull boxes."
+}

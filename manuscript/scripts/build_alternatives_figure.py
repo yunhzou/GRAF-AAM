@@ -1,12 +1,12 @@
-"""Vector figure of current GRAFT candidates, checked from a six-atom API run."""
-import json,os
+"""Golden reference and selected current GRAFT alternatives; no search at build time."""
 from pathlib import Path
-os.environ.setdefault("MPLCONFIGDIR",str(Path(__file__).resolve().parents[1]/"build/mpl-cache"))
+import json,os
 import numpy as np
 from matplotlib import pyplot as plt
-from matplotlib.patches import FancyBboxPatch,FancyArrowPatch
-from build_molecule_figure import molecule,INK,MUTED,TEAL,ORANGE,PURPLE,RED,BLUE,LINE
-
+from matplotlib.patches import FancyBboxPatch,FancyArrowPatch,Circle
+from rdkit import Chem
+from rdkit.Chem import rdDepictor
+from build_molecule_figure import molecule,INK,MUTED,TEAL,RED,BLUE
 R='[C:1]([O:2][H:6])([H:3])([H:4])[H:5]'
 A='[C:1](=[O:2])([H:3])[H:4]'
 B='[C:1](=[O:2])([H:3])[H:6]'
@@ -39,93 +39,109 @@ def check_example(man):
 
 
 def check_case(man):
+ d=json.loads((man/'evidence/golden_case9.json').read_text())
+ proof=json.loads((man/'evidence/golden_case9_verification.json').read_text())
+ assert d['case']==9 and proof['original_rdf_annotation_verified']
+ assert d['config']['seed_count']==1 and d['config']['branch_limit']==2000 and d['config']['sweep_cuts']
+ assert d['patterns'][0]['exact_reference_heavy']
+ ref={int(k):v for k,v in d['reference_mapping'].items()}
+ first={int(k):v for k,v in d['patterns'][0]['mapping'].items()}
+ assert all(first[k]==v for k,v in ref.items())
+ assert [p['total'] for p in d['patterns']]==[9,8,9]
+ assert [p['heavy_changes'] for p in proof['rows']]==[5,6,7]
+ assert all(p['attains_H_lower_bound'] for p in proof['rows'])
  from rdkit import Chem
- d=json.loads((man/'evidence/coordinate_case127.json').read_text())
  wr=np.array(d['input']['reactant']['wbo']);wp=np.array(d['input']['product']['wbo'])
- assert len(d['comparator_minimum_ids']['native_slap'])==1
- assert d['case']==127 and d['minimum']==4 and d['saved_window_complete']
- assert len(d['patterns'])==3 and len({p['id'] for p in d['patterns']})==3
- assert {p['id'] for p in d['patterns']}==set(d['comparator_minimum_ids']['slap_sweep'])
  for p in d['patterns']:
-  v=p['mapping'];delta=wp[np.ix_(v,v)]-wr
-  events={kind:[[i,j] for i in range(23) for j in range(i+1,23) if sign*delta[i,j]>=.5] for kind,sign in [('broken',-1),('formed',1)]}
-  assert events==p['events'] and sum(map(len,events.values()))==p['total']==4
-  assert sorted(a for f in p['source_fragments'] for a in f)==list(range(23))
-  assert p['query_status']=='recovered'
-  floor,iso=p['supporting_family']['policy']
-  assert all(wp[v[i],v[j]]>=floor and abs(wp[v[i],v[j]]-wr[i,j])<=iso+1e-9 for i,j in p['supporting_family']['required_edges'])
+  m={int(k):v for k,v in p['mapping'].items()};v=[m[i] for i in range(33)]
+  assert sorted(v)==list(range(33))
+  assert all(d['input']['reactant']['elements'][i]==d['input']['product']['elements'][j] for i,j in m.items())
+  assert sorted(a for f in p['source_fragments'] for a in f)==list(range(33))
+  delta=wp[np.ix_(v,v)]-wr
+  hydrogens_r=[i for i,e in enumerate(d['input']['reactant']['elements']) if e=='H']
+  hydrogens_p=[i for i,e in enumerate(d['input']['product']['elements']) if e=='H']
+  heavy=[i for i in range(33) if i not in hydrogens_r]
+  for matrix,hs in [(wr,hydrogens_r),(wp,hydrogens_p)]:
+   assert all(sum(matrix[i,j]>.5 for j in range(33))==1 for i in hs)
+   assert all(matrix[i,j]==0 for i in hs for j in hs)
+  lower=sum(abs(sum(wr[i,h]>.5 for h in hydrogens_r)-sum(wp[m[i],h]>.5 for h in hydrogens_p)) for i in heavy)
+  assert lower==p['total']-sum(map(len,p['heavy_events'].values()))
+  assert p['events']=={key:[[i,j] for i in range(33) for j in range(i+1,33) if sign*delta[i,j]>=.5] for key,sign in [('broken',-1),('formed',1)]}
  for side,w in [('reactant',wr),('product',wp)]:
-  params=Chem.SmilesParserParams();params.removeHs=False;params.sanitize=False
-  molecule=Chem.MolFromSmiles(d[side+'_smiles'],params);assert molecule.GetNumAtoms()==23
-  edges={tuple(sorted((b.GetBeginAtom().GetAtomMapNum()-1,b.GetEndAtom().GetAtomMapNum()-1))):b.GetBondTypeAsDouble() for b in molecule.GetBonds()}
-  assert edges=={(i,j):(2 if w[i,j]>=1.4 else 1) for i in range(23) for j in range(i+1,23) if w[i,j]>=.5}
- assert d['shuffle']['status']=='allowed' and d['shuffle']['same_event_id']==d['patterns'][0]['id']
+  params=Chem.SmilesParserParams();params.removeHs=False;mol=Chem.MolFromSmiles(d[side+'_smiles'],params)
+  matrix=np.zeros((33,33))
+  for b in mol.GetBonds():
+   i=b.GetBeginAtom().GetAtomMapNum()-1;j=b.GetEndAtom().GetAtomMapNum()-1
+   matrix[i,j]=matrix[j,i]=b.GetBondTypeAsDouble()
+  assert np.array_equal(matrix,w)
  return d
 
-# Same endpoint geometry for all rows; product identities change with the map.
-COORDS={1:(0,1.5),6:(0,3),7:(-1.3,.75),4:(-1.3,-.75),3:(0,-1.5),2:(1.3,-.75),8:(1.3,.75),13:(-2.6,1.5),20:(-3.9,.75),9:(-2.6,-1.5),16:(2.6,-1.5)}
-PALETTE=[(.70,.87,.81),(.98,.81,.49),(.81,.68,.92)]
-
 def build(man):
- from rdkit import Chem
- from matplotlib.patches import Circle
- d=check_case(man);check_example(man)
- def smiles(s,mapping=None):
-  params=Chem.SmilesParserParams();params.removeHs=False;params.sanitize=False
-  mol=Chem.MolFromSmiles(s,params)
-  Chem.SanitizeMol(mol,sanitizeOps=Chem.SanitizeFlags.SANITIZE_ALL ^ Chem.SanitizeFlags.SANITIZE_SETAROMATICITY)
-  if mapping:
-   inv={v+1:k+1 for k,v in enumerate(mapping)}
-   for atom in mol.GetAtoms():atom.SetAtomMapNum(inv[atom.GetAtomMapNum()])
-  mol=Chem.RemoveHs(mol,sanitize=False)
-  return Chem.MolToSmiles(mol,kekuleSmiles=True)
- fig=plt.figure(figsize=(10.8,8.48));ax=fig.add_axes([0,0,1,1]);ax.set(xlim=(0,1296),ylim=(1018,0));ax.axis('off')
+ D=check_case(man);labels=D['original_labels'][0]
+ PALETTE=[(.70,.87,.81),(.98,.81,.49),(.81,.68,.92),(.66,.81,.95),(.96,.73,.78),(.81,.83,.66)]
+ params=Chem.SmilesParserParams();params.removeHs=False
+ base=[Chem.RemoveHs(Chem.MolFromSmiles(D[side+'_smiles'],params)) for side in ['reactant','product']]
+ coords=[]
+ for mol in base:
+  rdDepictor.Compute2DCoords(mol)
+  c={a.GetAtomMapNum():tuple(mol.GetConformer().GetAtomPosition(a.GetIdx()))[:2] for a in mol.GetAtoms()}
+  for frag in Chem.GetMolFrags(mol):
+   keys=[mol.GetAtomWithIdx(i).GetAtomMapNum() for i in frag]
+   cx=(min(c[k][0] for k in keys)+max(c[k][0] for k in keys))/2
+   cy=(min(c[k][1] for k in keys)+max(c[k][1] for k in keys))/2
+   target_x=(8 if len(frag)==6 else 0) if len(coords)==0 else (6.5 if len(frag)==1 else 0)
+   for key in keys:c[key]=(c[key][0]-cx+target_x,c[key][1]-cy)
+  coords.append(c)
+ fig=plt.figure(figsize=(11.8,9.0));ax=fig.add_axes([0,0,1,1]);ax.set(xlim=(0,1416),ylim=(1080,0));ax.axis('off')
  def t(x,y,s,size=11,color=INK,weight='normal',ha='left'):
-  ax.text(x,y,s,fontsize=size,color=color,weight=weight,ha=ha,va='center',linespacing=1.35,zorder=9)
- def box(x,y,w,h,fc='#F5F7FB',ec=None):
-  ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle='round,pad=0,rounding_size=12',facecolor=fc,edgecolor=ec or fc,lw=.8,zorder=0))
- def arrow(a,b,color=INK,rad=0,lw=1.5):
-  ax.add_patch(FancyArrowPatch(a,b,arrowstyle='-|>',mutation_scale=12,color=color,lw=lw,connectionstyle=f'arc3,rad={rad}',zorder=6))
- def mol(s,x,y,w,h,**kw):
-  return molecule(ax,s,x,y,w,h,font=29,explicit_hydrogens=True,align_acetyl=False,preserve_bond_orders=True,**kw)
- def heading(x,y,letter,title):t(x,y,letter,15,weight='bold');t(x+31,y,title,13,weight='bold')
- box(12,12,1272,754)
- heading(32,40,'a','Case 127: three different mappings, the same minimum event count')
- t(32,70,'140-reaction coordinate set  ·  GRAFT: 3 classes  ·  SLAP sweep: 3  ·  Native SLAP: 1',10.5,MUTED)
- for x,color in zip([45,70,95],PALETTE):ax.add_patch(Circle((x,107),10,facecolor=color,edgecolor='none'))
- t(118,107,'Matched fragments keep their colors',10,MUTED)
- ax.plot([603,666],[107,107],color=RED,lw=7,alpha=.30,solid_capstyle='round');ax.plot([603,666],[107,107],color='black',lw=1.1);t(680,107,'Break / weaken',10,RED)
- ax.plot([949,1012],[107,107],color=BLUE,lw=7,alpha=.30,solid_capstyle='round');ax.plot([949,1012],[107,107],color='black',lw=1.1);t(1026,107,'Form / strengthen',10,BLUE)
- for index,p in enumerate(d['patterns']):
-  y=140+202*index;box(28,y,1238,194,'white','#DCE3E9')
-  letter='ABC'[index];t(48,y+27,letter,15,TEAL,'bold');t(93,y+27,'4 events',11,TEAL,'bold')
-  owners={a+1:PALETTE[k] for k,f in enumerate(p['source_fragments']) for a in f}
-  changes=lambda key:{tuple(a+1 for a in pair):(-1 if key=='broken' else 1) for pair in p['events'][key]}
-  # Fixed six-member perimeter reveals the extra reactant bridge clearly.
-  mol(smiles(d['reactant_smiles']),183,y+9,425,179,owners=owners,bond_changes=changes('broken'),coordinates=COORDS)
-  arrow((643,y+101),(718,y+101),INK,lw=1.8)
-  inv={v+1:k+1 for k,v in enumerate(p['mapping'])}
-  target_coords={inv[k]:xy for k,xy in COORDS.items()}
-  mol(smiles(d['product_smiles'],p['mapping']),753,y+9,425,179,owners=owners,bond_changes=changes('formed'),coordinates=target_coords)
-  t(96,y+91,'2 negative\n2 positive',9.1,MUTED,ha='center')
- t(647,751,'Atom numbers track reactant identities. Colors are assigned within each row; spectator H atoms are implicit.',9.8,MUTED,ha='center')
- box(12,783,1272,221)
- heading(32,811,'b','Allowed symmetry remains inside a candidate')
- t(32,847,'Candidate A',11,TEAL,'bold')
- t(32,879,'Methyl C₉:\nexchange H₁₀ and H₁₁',10.3,MUTED)
- methyl='[*:24][C:9]([H:10])([H:11])[H:12]'
- owners={i:PALETTE[1] for i in [9,10,11,12]}
- left=mol(methyl,252,840,228,143,owners=owners,notes={i:i for i in [9,10,11,12]})
- right=mol(methyl,737,840,228,143,owners=owners,notes={9:9,10:11,11:10,12:12})
- for source,dest,color,rad in [(10,11,PURPLE,-.12),(11,10,BLUE,.12)]:
-  a,b=left[source],right[dest]
-  for center in [a,b]:ax.add_patch(Circle(center,17,facecolor='none',edgecolor=color,lw=1.5,zorder=8))
-  arrow((a[0]+20,a[1]),(b[0]-20,b[1]),color,rad,lw=1.4)
- t(1000,875,'Certified allowed',11,TEAL,'bold')
- t(1000,906,'Same event class',10.5,TEAL)
- t(1000,939,'All other assignments fixed',9.2,MUTED)
- t(648,986,'R = the rest of the molecule. This spectator-H example illustrates the conditional symmetry query.',9.2,MUTED,ha='center')
- for ext in ['pdf','svg','png']:fig.savefig(man/'figs'/f'fig4_alternatives.{ext}',facecolor='white',bbox_inches='tight',pad_inches=.025,dpi=240)
+  ax.text(x,y,s,fontsize=size,color=color,weight=weight,ha=ha,va='center',linespacing=1.3,zorder=9)
+ def box(x,y,w,h,color='#F5F7FB',edge=None):
+  ax.add_patch(FancyBboxPatch((x,y),w,h,boxstyle='round,pad=0,rounding_size=12',facecolor=color,edgecolor=edge or color,lw=.8,zorder=0))
+ def arrow(a,b):ax.add_patch(FancyArrowPatch(a,b,arrowstyle='-|>',mutation_scale=13,color=INK,lw=1.8,zorder=6))
+ box(12,12,1392,1056)
+ t(32,41,'Golden case 9: the reference is one of several recovered mappings',15,weight='bold')
+ t(32,73,'GRAFT · 1 seed + cut sweep (default) · branch cap 2,000 · iso tolerance 1 · event threshold 0.5',10.5,MUTED)
+ for x,c in zip([44,69,94],PALETTE):ax.add_patch(Circle((x,112),10,facecolor=c,edgecolor='none'))
+ t(116,112,'Saved fragment groups',10,MUTED)
+ for x,col,txt in [(526,RED,'Break / weaken'),(972,BLUE,'Form / strengthen')]:
+  ax.plot([x,x+64],[112,112],color='black',lw=1.1)
+  ax.plot([x+32,x+32],[112,95],color='#5D6970',lw=.65)
+  ax.add_patch(Circle((x+32,88),8,facecolor='white',edgecolor='#5D6970',lw=.65,zorder=7))
+  t(x+32,88,'×' if col==RED else '+',8,INK,'bold','center');t(x+79,112,txt,10,INK)
+ row_titles=['A   Ground truth (Golden reference) — recovered by GRAFT','B   GRAFT alternative — different oxygen retained','C   GRAFT alternative — oxygen and carbon correspondence change']
+ wr=np.array(D['input']['reactant']['wbo']);wp=np.array(D['input']['product']['wbo'])
+ for k,p in enumerate(D['patterns']):
+  y=142+k*275;box(28,y,1359,263,'white','#C7DFD5' if k==0 else '#DCE3E9')
+  t(47,y+24,row_titles[k],12,TEAL if k==0 else INK,'bold')
+  heavy=sum(map(len,p['heavy_events'].values()));hyd=p['total']-heavy
+  t(1358,y+24,f"{heavy} heavy-atom changes",10.5,TEAL,'bold','right')
+  m={int(i):j for i,j in p['mapping'].items()};inverse={j:i for i,j in m.items()}
+  assert sorted(m)==list(range(33)) and sorted(m.values())==list(range(33))
+  v=[m[i] for i in range(33)];delta=wp[np.ix_(v,v)]-wr
+  assert p['events']=={key:[[i,j] for i in range(33) for j in range(i+1,33) if sign*delta[i,j]>=.5] for key,sign in [('broken',-1),('formed',1)]}
+  owners={labels[i]:PALETTE[q%len(PALETTE)] for q,f in enumerate(p['source_fragments']) for i in f if i<15}
+  for side,(x,w) in enumerate([(48,570),(765,590)]):
+   mol=Chem.Mol(base[side]);co={}
+   for at in mol.GetAtoms():
+    original=at.GetAtomMapNum();src=original-1 if side==0 else inverse[original-1]
+    label=labels[src];at.SetAtomMapNum(label);co[label]=coords[side][original]
+   ev=p['heavy_events']['broken' if side==0 else 'formed'];changes={tuple(labels[i] for i in pair):(-1 if side==0 else 1) for pair in ev}
+   positions=molecule(ax,Chem.MolToSmiles(mol),x,y+48,w,183,owners=owners,font=26,align_acetyl=False,bond_changes=changes,coordinates=co)
+   if side==0:
+    px=(max(positions[i][0] for i in range(1,10))+min(positions[i][0] for i in range(10,16)))/2
+   else:
+    water_label=labels[inverse[14]]
+    px=(max(xy[0] for label,xy in positions.items() if label!=water_label)+positions[water_label][0])/2
+   t(px-(14 if side else 0),y+139,'+',15,MUTED,ha='center')
+  arrow((660,y+139),(727,y+139))
+  t(47,y+242, ['Reference: alcohol O₁₅ enters the ring; ketone O₃ leaves in water.','Alternative: ketone O₃ enters the ring; alcohol O₁₅ leaves in water.','Alternative: O₃ enters the ring, with a different assignment of C₁₃ and C₁₄.'][k],10,MUTED)
+  t(1358,y+242,f"{p['total']} total events = {heavy} heavy + {hyd} involving H",9.5,MUTED,ha='right')
+ t(40,1000,'Retaining alternatives matters: a lower total event count (B: 8) need not select the annotated mapping (A: 9).',11,TEAL,'bold')
+ t(40,1031,'Ground truth refers to Golden’s heavy-atom annotation. H identities are unannotated; totals use each GRAFT witness.',9.7,MUTED)
+ t(40,1052,'Numbers are original Golden labels. H atoms are implicit. Selected witnesses do not imply exhaustive or minimum-event decoding.',9.7,MUTED)
+ for ext in ['pdf','svg','png']:fig.savefig(man/'figs'/f'fig4_alternatives.{ext}',facecolor='white',bbox_inches='tight',pad_inches=.025,dpi=220)
  plt.close(fig)
+ print('Figure generated')
 
-if __name__=='__main__':build(Path(__file__).resolve().parents[1])
+
+if __name__=="__main__":build(Path(__file__).resolve().parents[1])

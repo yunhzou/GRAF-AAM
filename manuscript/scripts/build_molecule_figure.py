@@ -144,11 +144,9 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens
  bonds={b.GetIdx():colors[b.GetBeginAtomIdx()] for b in m.GetBonds() if b.GetBeginAtomIdx() in colors and colors.get(b.GetBeginAtomIdx())==colors.get(b.GetEndAtomIdx())}
  for atom in m.GetAtoms():
   if atom.GetAtomicNum()==0:o.atomLabels[atom.GetIdx()]='R'
- changes={}
  for pair,sign in (bond_changes or {}).items():
   bond=m.GetBondBetweenAtoms(ids[pair[0]],ids[pair[1]])
   assert bond is not None, ('Changed bond is absent from depiction',pair)
-  changes[bond.GetIdx()]=sign
  d.DrawMolecule(m,highlightAtoms=list(colors),highlightBonds=list(bonds),highlightAtomColors=colors,highlightBondColors=bonds)
  d.FinishDrawing();root=ET.fromstring(d.GetDrawingText())
  transform=Affine2D().translate(x,y)+ax.transData
@@ -158,21 +156,40 @@ def molecule(ax,smiles,x,y,w,h,owners=None,notes=None,font=24,explicit_hydrogens
   style=dict(item.split(':',1) for item in e.get('style','').split(';') if ':' in item)
   fill=style.get('fill',e.get('fill','none'));stroke=style.get('stroke',e.get('stroke','none'))
   kw=dict(facecolor=fill,edgecolor=stroke,linewidth=float(style.get('stroke-width','0').removesuffix('px'))*.60,transform=transform,zorder=3)
-  bond_match=re.search(r'\bbond-(\d+)\b',e.get('class',''))
-  if bond_match and fill=='none' and int(bond_match.group(1)) in changes:
-   sign=changes[int(bond_match.group(1))]
-   # Color annotates the event; the original solid black bond remains visible.
-   ax.add_patch(PathPatch(svg_path(e.attrib['d']),facecolor='none',
-       edgecolor=RED if sign<0 else BLUE,linewidth=7.0,alpha=.30,
-       capstyle='round',joinstyle='round',transform=transform,zorder=3.5))
-   kw.update(edgecolor='#000000',zorder=5)
-  elif fill=='none' or fill in {'#000000','black'}:
+  if fill=='none' or fill in {'#000000','black'}:
    kw['zorder']=5
   if kind=='path':patch=PathPatch(svg_path(e.attrib['d']),**kw)
   elif kind=='ellipse':patch=Ellipse((float(e.attrib['cx']),float(e.attrib['cy'])),2*float(e.attrib['rx']),2*float(e.attrib['ry']),**kw)
   else:raise AssertionError('Unexpected background rectangle in molecule')
   ax.add_patch(patch)
- return {k:(x+d.GetDrawCoords(i).x,y+d.GetDrawCoords(i).y) for k,i in ids.items()}
+ positions={k:(x+d.GetDrawCoords(i).x,y+d.GetDrawCoords(i).y) for k,i in ids.items()}
+ # Neutral off-bond badges preserve both black connectivity and fragment color.
+ import math
+ atom_points=list(positions.values()); placed=[]
+ index_to_key={i:k for k,i in ids.items()}
+ segments=[(positions[index_to_key[b.GetBeginAtomIdx()]],positions[index_to_key[b.GetEndAtomIdx()]]) for b in m.GetBonds()]
+ def distance_to_segment(p,a,b):
+  dx,dy=b[0]-a[0],b[1]-a[1];den=dx*dx+dy*dy
+  u=max(0,min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dy)/den)) if den else 0
+  return math.hypot(p[0]-a[0]-u*dx,p[1]-a[1]-u*dy)
+ for pair,sign in (bond_changes or {}).items():
+  a,b=(positions[k] for k in pair);mid=((a[0]+b[0])/2,(a[1]+b[1])/2)
+  length=math.dist(a,b);ux,uy=(b[0]-a[0])/length,(b[1]-a[1])/length
+  radius=min(8,max(5,length*.15)); candidates=[]
+  for offset in [radius+11,radius+18,radius+25]:
+   for direction in [1,-1]:
+    for along in [0,8,-8]:
+     q=(mid[0]-uy*offset*direction+ux*along,mid[1]+ux*offset*direction+uy*along)
+     penalty=sum(max(0,radius+14-math.dist(q,z))**2 for z in atom_points)*8
+     penalty+=sum(max(0,radius+4-distance_to_segment(q,*edge))**2 for edge in segments)*8
+     penalty+=sum(max(0,2*radius+5-math.dist(q,z))**2 for z in placed)*12
+     penalty+=max(0,x+radius-q[0],q[0]-(x+w-radius),y+radius-q[1],q[1]-(y+h-radius))**2*20
+     candidates.append((penalty+offset*.1+abs(along)*.1,q))
+  _,q=min(candidates);placed.append(q)
+  ax.plot([mid[0],q[0]],[mid[1],q[1]],color='#5D6970',lw=.65,zorder=6)
+  ax.add_patch(Circle(q,radius,facecolor='white',edgecolor='#5D6970',lw=.65,zorder=7))
+  ax.text(*q,'×' if sign<0 else '+',ha='center',va='center',fontsize=radius*.96,fontweight='bold',color='#111111',zorder=8)
+ return positions
 
 
 def build(man):
@@ -290,7 +307,7 @@ def build(man):
  # Shared legend, kept outside the chemical trees.
  ar((35,949),(84,949),navy,1.7);t(95,949,'Search continuation',10,muted)
  ar((394,949),(443,949),violet,1.7,True);t(454,949,'Event projection',10,muted)
- t(1407,949,'Red: lose/weaken · blue: form/strengthen',10,muted,ha='right')
+ t(1407,949,'×: lose/weaken · +: form/strengthen',10,muted,ha='right')
  fig.canvas.draw()
  renderer=fig.canvas.get_renderer()
  for label in ax.texts:

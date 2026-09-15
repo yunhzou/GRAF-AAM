@@ -11,8 +11,8 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
 - `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and direction-specific mean CPU cost.
 - `figs/fig3_coordinate.{pdf,svg,png}`: GRAFT and prior-method minimum-event comparisons, minimum-count distributions, and measured stage costs on 140 cases.
-- `figs/fig4_alternatives.{pdf,svg,png}`: three real GRAFT minimum-event alternatives from coordinate case 127; translucent red/blue highlights show signed WBO changes behind unchanged black bond strokes and pastel highlights show actual saved fragments. Includes a certified spectator-H shuffle. The discussion motivates allowed reaction-core assignments and mapping-dependent interpolation in a downstream TS pipeline; no geometric TS panel is shown.
-- `evidence/coordinate_case127.json`: full saved-case witnesses, checked events, source fragment groups, and hashes for Figure 4.
+- `figs/fig4_alternatives.{pdf,svg,png}`: Golden case 9, with the recovered reference and two alternatives. Separate ×/+ badges identify bond changes; pastel colors identify actual saved fragments. The discussion motivates allowed reaction-core assignments and mapping-dependent endpoint interpolation as downstream uses.
+- `evidence/golden_case9.json` and `golden_case9_verification.json`: full witnesses, source fragment groups, source hashes, original-RDF reference verification, and H-event lower bounds for the selected heavy mappings.
 - `evidence/multicandidate_example.json` and `evidence/output_multiplicity.json`: current-API example and archived comparator-output audit for the discussion.
 - `manuscript_bundle.zip`: compact paper, source, figure, and evidence bundle.
 
@@ -51,3 +51,5 @@ Paired no-sweep controls are included in the main Golden results table. Evidence
 Runtime detail is in Table 4 (same-Mac mean/median/95th-percentile CPU by endpoint-size orientation, paired with recovery), Figure 2, and the archived default-comparator call-time table. `timing_comparison.json` retains per-case measurements and matched-cohort identities. The cluster default-mapper timings are separately scoped; no cross-host speed ranking is implied.
 
 The140coordinate collection is a bond-event comparison with unverified mappings, not a mapping-accuracy benchmark. Tables5/6andFigure3 focus on minimum counts, patterns where minima agree, and measured stageCPU. GRAFT reaches lower/equal/higher counts in4/136/0cases versusSLAPsweep and15/125/0versusnativeSLAP. At equal minima it retains162/164sweep patterns and140/140native patterns. Its171own-minimum patterns are distinct from336classes in the larger decoded windows. No new searches or decoding were performed.
+
+Figure 4 uses Golden case 9: the recovered reference and two alternative mappings. Separate ×/+ bond-event badges preserve fragment colors and original black bonds in Figures 1 and 4. Golden labels concern heavy atoms; totals explicitly include unannotated H assignments. The three selected witnesses are not an exhaustive decoded set. Evidence: `golden_case9.json` and `golden_case9_verification.json`.
