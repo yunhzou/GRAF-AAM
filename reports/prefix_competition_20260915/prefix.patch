@@ -1,0 +1,174 @@
+--- a/src/rxn_core/competition.py
++++ b/src/rxn_core/competition.py
+@@ -17,0 +18 @@
++    proposal_mode: str = "local"
+@@ -25,0 +27,2 @@
++        if self.proposal_mode not in {"local", "anchored", "free", "extended", "prefix"}:
++            raise ValueError("proposal_mode must be local, anchored, free, or extended")
+@@ -173,0 +177,3 @@
++    expansion_cache = {}
++    prefix_metadata = {}
++    prefix_audit = []
+@@ -244,0 +251,6 @@
++        if config.proposal_mode not in {"local", "extended", "prefix"}:
++            # One whole-graph proposal per B/seed, not one duplicate per contact.
++            distinct = {}
++            for owner, atoms, seed, contact in tasks:
++                distinct.setdefault((owner, seed), (owner, atoms, seed, contact))
++            tasks = list(distinct.values())
+@@ -253,0 +266,4 @@
++            if config.proposal_mode == "free":
++                key = ("free", seed)
++            elif config.proposal_mode == "anchored":
++                key = ("anchored", tuple(sorted(base.items())), seed)
+@@ -259 +275,6 @@
+-                proposal_source = offer_source.subgraph(set(atoms) | {contact}).copy()
++                proposal_source = (offer_source.subgraph(set(atoms) | {contact}).copy()
++                                   if config.proposal_mode in {"local", "extended", "prefix"} else offer_source)
++                proposal_context = FragmentMatchContext({}, {}, (), target_orbits=po)
++                if config.proposal_mode == "anchored":
++                    # Only B is protected. All other fragments can be consumed.
++                    proposal_context = FragmentMatchContext(base, {r: 0 for r in atoms}, (), target_orbits=po)
+@@ -264 +285 @@
+-                    context=FragmentMatchContext({}, {}, (), target_orbits=po),
++                    context=proposal_context,
+@@ -269 +290 @@
+-                        allow_mapped_seed=False,
++                        allow_mapped_seed=config.proposal_mode == "anchored",
+@@ -276 +297,98 @@
+-            for placement in result.matches:
++            def expanded_proposals(matches):
++                for local in matches:
++                    if contact not in local:
++                        counts["no_contact_reached"] += 1
++                        continue
++                    initial = dict(local)
++                    key2 = (tuple(sorted(initial.items())), seed)
++                    if key2 not in expansion_cache:
++                        if counts["expansion_calls"] >= BUDGET or time.perf_counter() >= deadline:
++                            break
++                        counts["expansion_calls"] += 1
++                        expansion_cache[key2] = match_fragment(
++                            offer_source, target, seed=seed,
++                            context=FragmentMatchContext(initial, {r: 0 for r in initial}, (), target_orbits=po),
++                            config=FragmentMatchConfig(graph_floor=cfg.graph_floor, iso_tolerance=cfg.iso_tolerance,
++                                branch_limit=cfg.branch_limit, allow_mapped_seed=True))
++                    else:
++                        counts["expansion_cache_hits"] += 1
++                    expanded = expansion_cache[key2]
++                    if expanded.capped:
++                        counts["expansion_capped"] += 1
++                        continue
++                    for match in expanded.matches:
++                        if any(r in match and match[r] != p for r, p in initial.items()):
++                            counts["expansion_changed_anchor_rejected"] += 1
++                            continue
++                        # A saturated connected fragment may not revisit every
++                        # initial anchor; those anchors remain part of the offer.
++                        counts["expansion_partial_initial"] += int(any(r not in match for r in initial))
++                        merged = dict(initial)
++                        merged.update(dict(match))
++                        if len(set(merged.values())) != len(merged):
++                            counts["expansion_anchor_collision_rejected"] += 1
++                            continue
++                        yield merged
++            def prefix_proposals(matches):
++                from .fragment_choices import FragmentChoices
++                for local in matches:
++                    if contact not in local: continue
++                    initial = dict(local)
++                    key2 = (tuple(sorted(initial.items())), seed)
++                    prefix_metadata[tuple(sorted(initial.items()))] = dict(stage="initial", eaten_sequence=[contact], initial=sorted(initial.items()))
++                    yield initial
++                    if key2 not in expansion_cache:
++                        if counts["expansion_calls"] >= BUDGET or time.perf_counter() >= deadline: break
++                        counts["expansion_calls"] += 1
++                        expansion_cache[key2] = FragmentChoices(
++                            offer_source, target, seed=seed,
++                            context=FragmentMatchContext(initial, {r: 0 for r in initial}, (), target_orbits=po),
++                            config=FragmentMatchConfig(graph_floor=cfg.graph_floor, iso_tolerance=cfg.iso_tolerance,
++                                branch_limit=cfg.branch_limit, allow_mapped_seed=True))
++                    else: counts["expansion_cache_hits"] += 1
++                    session = expansion_cache[key2]
++                    audit = dict(initial=sorted(initial.items()), seed=seed, greedy_capped=session.normal.capped,
++                                 offered_prefix_sizes=[], available_prefix_sizes=[])
++                    prefix_audit.append(audit)
++                    previous=set(initial); sequence=[contact]; steps=[]
++                    for closure in session.closures:
++                        atoms1=set(initial)|set(closure.atoms)
++                        if atoms1==previous: continue
++                        added=atoms1-previous
++                        assert previous <= atoms1 and len(added)==1, (previous,atoms1)
++                        previous=atoms1
++                        eaten_added=added-set(atoms0)
++                        if eaten_added:
++                            sequence.extend(sorted(eaten_added));steps.append((closure,tuple(sequence)))
++                    if session.normal.matches:
++                        atoms1=set(initial)|set(session.normal.matches[0])
++                        if atoms1!=previous:
++                            added=atoms1-previous
++                            assert previous <= atoms1 and len(added)==1, (previous,atoms1)
++                            eaten_added=added-set(atoms0)
++                            if eaten_added:
++                                sequence.extend(sorted(eaten_added));steps.append((None,tuple(sequence)))
++                            elif steps: steps[-1]=(None,steps[-1][1])
++                        elif steps: steps[-1]=(None,steps[-1][1])
++                    audit['available_prefix_sizes']=[len(seq) for _,seq in steps]
++                    for closure,seq in steps:
++                        if counts["completion_calls"] >= BUDGET or time.perf_counter() >= deadline: break
++                        result0=session.normal if closure is None else session.close(closure)
++                        counts["prefix_closures"] += 1
++                        if result0.capped:
++                            counts["prefix_capped"] += 1; continue
++                        audit['offered_prefix_sizes'].append(len(seq))
++                        for match in result0.matches:
++                            if any(r in match and match[r]!=p for r,p in initial.items()):
++                                counts["prefix_anchor_rejected"] += 1; continue
++                            merged=dict(initial);merged.update(dict(match))
++                            if len(set(merged.values()))!=len(merged):
++                                counts["prefix_collision_rejected"] += 1; continue
++                            assert set(merged)-set(atoms0) == set(seq)
++                            pk=tuple(sorted(merged.items()))
++                            prefix_metadata[pk]=dict(stage="prefix",eaten_sequence=list(seq),initial=sorted(initial.items()),saturated=closure is None)
++                            yield merged
++            atoms0 = tuple(atoms)
++            proposals = (prefix_proposals(result.matches) if config.proposal_mode == "prefix" else
++                         expanded_proposals(result.matches) if config.proposal_mode == "extended" else result.matches)
++            for placement in proposals:
+@@ -281 +399 @@
+-                if contact not in placement:
++                if config.proposal_mode == "local" and contact not in placement:
+@@ -397,0 +516,2 @@
++                    proposal_mode=config.proposal_mode,
++                    prefix=prefix_metadata.get(tuple(sorted(dict(placement).items()))),
+@@ -452,0 +573,2 @@
++    if config.proposal_mode == "prefix":
++        counts["prefix_audit"] = prefix_audit
+--- a/src/rxn_core/fragment_choices.py
++++ b/src/rxn_core/fragment_choices.py
+@@ -32,2 +32,2 @@
+-        if self.config.allow_mapped_seed or self.config.node_policy is not None or not self.config.orbit_dedup:
+-            raise ValueError('Experimental choices require an unmapped seed and native element/orbit policy')
++        if self.config.node_policy is not None or not self.config.orbit_dedup:
++            raise ValueError('Experimental choices require native element/orbit policy')
+@@ -46 +46 @@
+-        if mapping[self.r.index[seed]] >= 0:
++        if mapping[self.r.index[seed]] >= 0 and not self.config.allow_mapped_seed:
+@@ -52 +52,2 @@
+-            [(self.r.index[a], self.r.index[b]) for a, b in context.deferred_edges])
++            [(self.r.index[a], self.r.index[b]) for a, b in context.deferred_edges],
++            self.config.allow_mapped_seed)
+--- a/native/src/fragment_choices.h
++++ b/native/src/fragment_choices.h
+@@ -13 +13 @@
+-                    const std::vector<Pair>& deferred)
++                    const std::vector<Pair>& deferred,bool allow_mapped_seed=false)
+@@ -16 +16 @@
+-        greedy=grow_island(source,target,seed,mapping,floor,tol,1,cap,&islands,deferred,false,
++        greedy=grow_island(source,target,seed,mapping,floor,tol,1,cap,&islands,deferred,allow_mapped_seed,
+@@ -55 +55,4 @@
+-                      const std::vector<Pair>&,const std::vector<Pair>&>(),
++                      const std::vector<Pair>&,const std::vector<Pair>&,bool>(),
++             py::arg("source"),py::arg("target"),py::arg("seed"),py::arg("mapping"),
++             py::arg("floor"),py::arg("tolerance"),py::arg("cap"),py::arg("islands"),
++             py::arg("deferred"),py::arg("allow_mapped_seed")=false,
