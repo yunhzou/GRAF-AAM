@@ -20,3 +20,5 @@ TS motivation concerns querying jointly allowed reaction-core atom assignments a
 Describe the default cut sweep as source-edge masking that changes growth routes and relaxes preservation constraints. It counteracts greedy fragment commitment without forcing a final broken bond or a permanent boundary. One seed still means one ordering for every uncut/single-edge subrun; final events always use original matrices.
 
 A single search-edge mask can redirect later growth and produce multiple bond events. Never equate the number of sweep cuts with the number of final events, or imply that multi-event alternatives require enumerating event combinations. Search completeness is a separate issue.
+
+Keep Algorithm1 at the level of branches, fragments, conditioned growth, optional competition, and separate decoding. Cross-reference Figure1 panels; keep isomorphism and automorphism internals in their own Methods subsections. Search caps preserve truncation status.

@@ -10,6 +10,53 @@ GRAFT addresses these issues by branching over structural fragment choices while
 
 \section{Method}
 
+
+Algorithm~\ref{alg:graft-overview} connects the fragment-level operations in \Cref{fig:algorithm}. A live branch stores the fragments already placed, their atom assignments, and the compressed choices still allowed by those decisions. Growing and placing the next fragment conditions every later continuation. The matching routine is treated as an operation here; its compatibility tests and symmetry representation are defined below. For bidirectional search, the search phase is applied in each orientation, retaining the orientation of each returned family.
+
+\begin{algorithm}[t]
+\caption{GRAFT: from fragment growth to alternative bond-event candidates}
+\label{alg:graft-overview}
+\small
+\begin{algorithmic}[1]
+\REQUIRE Oriented endpoint graphs, seed orders, optional anchors, search budgets
+\ENSURE Compressed final branches; optionally, distinct bond-event candidates
+\STATE $\mathcal S\gets\varnothing$ \COMMENT{collected terminal branches}
+\FORALL{conditions: uncut source graph and each single-edge source mask}
+  \FORALL{requested seed orders under this condition}
+    \STATE Initialize live branches with the supplied anchors
+    \REPEAT
+      \FORALL{seeds in the current order}
+        \FORALL{live branches eligible to grow from this seed}
+          \STATE Grow a fragment to saturation, conditioned on this branch \COMMENT{Fig.~\ref{fig:algorithm}a}
+          \IF{no admissible fragment placement is found}
+            \STATE Retain this branch for later seeds
+          \ELSE
+            \STATE Fork one continuation per distinct structural fragment placement
+            \STATE Commit each placement; retain its compressed symmetry and constraints
+            \STATE Admit the continuations within the branch budget
+          \ENDIF
+        \ENDFOR
+      \ENDFOR
+    \UNTIL{all branches are finished or a full pass makes no progress}
+    \STATE Add terminal branches and their search-stop status to $\mathcal S$
+  \ENDFOR
+\ENDFOR
+\IF{fragment competition is enabled}
+  \STATE Propose bounded changes in which contacting fragment has priority \COMMENT{Fig.~\ref{fig:algorithm}b}
+  \STATE Release displaced assignments and regrow from the retained assignments
+  \STATE Add accepted repair branches to $\mathcal S$, keeping the original branches
+\ENDIF
+\STATE Group final branches by unordered fragment pairs; retain their family union
+\STATE Expose compressed branches with constraints and provenance
+\IF{bond-event candidates are requested as separate post-processing}
+  \STATE Decode distinct event classes from complete families using the original matrices
+  \STATE Report witnesses, supporting families, and completeness status \COMMENT{Fig.~\ref{fig:algorithm}c}
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+The forks in the search phase represent different fragment placements, not one branch for each symmetry-related bijection. The cut sweep changes the conditions of this search; a single mask can expose a mapping with several bond events. Competition adds alternative fragment priorities, while event decoding remains a separate operation on the retained output. Search caps are recorded as truncation, not treated as proof that no alternatives exist.
+
 \subsection{Weighted matching and continuous growth}
 
 Let $V_R,V_P$ be the reactant and product atom sets, $Z_R,Z_P$ their element labels, and $W_R,W_P$ their symmetric bond-weight matrices. A partial mapping $m:D\subseteq V_R\rightarrow V_P$ is injective and element compatible. A mapping assigning every source atom is bijective when the endpoint element counts agree. Explicit hydrogen atoms participate in the search. Molecular coordinates can accompany the graphs but do not determine the growth decisions.

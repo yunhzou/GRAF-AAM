@@ -2,7 +2,7 @@
 from pathlib import Path
 import hashlib,json,zipfile
 MAN=Path(__file__).resolve().parents[1]
-names=['manuscript.pdf','preprint.tex','preprint.bbl','references.bib','README.md','EDITORIAL_NOTES.md','requirements-build.txt','Makefile','natbib.sty']
+names=['manuscript.pdf','preprint.tex','preprint.bbl','references.bib','README.md','EDITORIAL_NOTES.md','requirements-build.txt','Makefile','natbib.sty','algorithmic.sty']
 names += ['assets/'+n for n in ['matterlab.cls','paper-preamble.tex','plainnat.bst','Optimistic.ttf','logo_matterlab.pdf','logo_ac.pdf','logo_uoft.pdf','logo_vector.png','nvidia-logo-vert.png']]
 names += ['includes/'+n for n in ['include-abstract.tex','include-body.tex','include-appendix.tex','paper.tex','supplement.tex','generated-seed-table.tex','generated-decoder-table.tex','generated-results.tex','generated-competitor-table.tex','generated-miss-table.tex','generated-direction-table.tex','generated-comparator-timing-table.tex','generated-coordinate-minima-table.tex','generated-coordinate-time-table.tex']]
 names += ['figs/'+stem+'.'+ext for stem in ['fig1_algorithm','fig2_golden','fig3_coordinate','fig4_alternatives'] for ext in ['pdf','svg','png']]

@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "pages": 21,
+  "manuscript_sha256": "512dc62108153525e0f50d3d7d06337ae3c6f3523f684a17937961d59f7d9be5",
+  "review": "All21 pages rendered; changed pages2\u201316 reviewed in contact sheets, and Methods/pseudocode pages2\u20134 individually inspected. Algorithm1 is readable on page3 with matching Figure1a/b/c references; no clipping. Numerical, molecular, references and overflow checks passed."
+}
