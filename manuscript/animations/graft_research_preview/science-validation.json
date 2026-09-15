@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "source_sha256": "3f444a61ddeaaba96c489eb5b1c42971ca8ee36018774a7b6efe051afd6b07b5",
+  "checks": [
+    "All displayed mappings are recorded element-preserving injections",
+    "All three terminal mappings are complete bijections",
+    "All 12 displayed bond events independently recomputed from WBO matrices",
+    "Three distinct atom-indexed event signatures",
+    "Tree is the saved 12-state, 11-edge context, without invented branches",
+    "Only proper rigid endpoint display transformations applied"
+  ],
+  "scope": "Selected archived search context, coordinate case 101 (PR7), seed order 15 of 30, cap 1000. Three recorded terminal witnesses, not exhaustive symmetry decoding or a current benchmark. Event tolerance 0.5; fixed endpoint geometries, rigid camera/display motion only."
+}

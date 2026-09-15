@@ -1,0 +1,27 @@
+/* Deterministic offline capture. PLAYWRIGHT_MODULE / CHROME / FFMPEG are overridable. */
+const fs=require('fs'),path=require('path'),{spawn}=require('child_process');
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+async function main(){
+ const dir=path.resolve(process.argv[2]||'output'),mode=process.argv[3]||'preview';
+ const browser=await chromium.launch({executablePath:process.env.CHROME||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true,args:['--enable-unsafe-swiftshader','--disable-web-security']});
+ const page=await browser.newPage({viewport:{width:1440,height:1024},deviceScaleFactor:1});
+ const errors=[];page.on('pageerror',e=>errors.push(String(e)));
+ await page.goto('file://'+dir+'/index.html');await page.waitForFunction(()=>!!window.film);await page.evaluate(()=>document.fonts.ready);
+ const shot=async(t,file)=>{await page.evaluate(t=>window.film.seek(t),t);await page.locator('#film').screenshot({path:file,animations:'disabled'});};
+ for(const t of [0,5,8.8,16,20.6,22.5,27.8,30.5,37])await shot(t,path.join(dir,`review-${t}.png`));
+ // Verify every displayed frame can be selected and every mapped atom remains injective.
+ for(let i=0;i<=240;i++){const t=i/5;const state=await page.evaluate(t=>window.film.seek(t),t);if(new Set(Object.values(state.mapping)).size!==Object.keys(state.mapping).length)throw Error('Non-injective displayed mapping at '+t);}
+ if(mode==='video'){
+  const fps=24,encoder=spawn(process.env.FFMPEG||'ffmpeg',['-y','-f','image2pipe','-vcodec','png','-framerate',String(fps),'-i','-','-an','-c:v','libx264','-threads','4','-preset','fast','-crf','18','-pix_fmt','yuv420p','-movflags','+faststart',path.join(dir,'graft-grow-branch-decode.mp4')],{stdio:['pipe','ignore','pipe']});
+  let log='';encoder.stderr.on('data',b=>log+=b);const done=new Promise((resolve,reject)=>{encoder.on('close',code=>code?reject(Error(log)):resolve());encoder.on('error',reject)});
+  for(let i=0;i<48*fps;i++){
+   await page.evaluate(t=>window.film.seek(t),i/fps);
+   const buf=await page.locator('#film').screenshot({animations:'disabled'});
+   if(!encoder.stdin.write(buf))await new Promise(resolve=>encoder.stdin.once('drain',resolve));
+   if(i%(fps*4)===0)console.log(`${i/fps}/48 seconds rendered`);
+  }encoder.stdin.end();await done;
+ }
+ fs.writeFileSync(path.join(dir,'browser-validation.json'),JSON.stringify({status:errors.length?'failed':'passed',errors,preview_times:[0,5,8.8,16,20.6,22.5,27.8,30.5,37],sampled_timeline_injections:241,viewport:[1440,900],mode},null,2));
+ await browser.close();if(errors.length)throw Error(errors.join('\n'));
+}
+main().catch(e=>{console.error(e);process.exit(1)});

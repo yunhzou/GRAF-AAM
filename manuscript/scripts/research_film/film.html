@@ -1,0 +1,120 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GRAFT — Grow. Branch. Decode.</title>
+<script>__LIBRARY__</script>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#dedfdc;font-family:'Avenir Next',Avenir,Helvetica,Arial,sans-serif;color:#172b30}button,input{font:inherit}#film{width:1440px;height:900px;position:relative;overflow:hidden;background:#fafbf8;transform-origin:top left}#film:before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 28% 52%,#e5eee685,transparent 52%);pointer-events:none}header{position:absolute;top:32px;left:44px;right:44px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:23px;letter-spacing:5px;font-weight:750}.edition{font-size:11px;letter-spacing:2.2px;color:#74817d}.steps{display:flex;gap:28px;font-size:12px;letter-spacing:2px}.steps span{opacity:.28}.steps span.on{opacity:1}.steps b{color:#ad8617;margin-right:9px}#headline{position:absolute;left:44px;top:85px;font-size:49px;letter-spacing:-2px;font-weight:600;margin:0}#subtitle{position:absolute;left:47px;top:153px;font-size:17px;color:#65736f}.hairline{position:absolute;left:44px;right:44px;top:199px;height:1px;background:#d9e0d9}#main{position:absolute;left:44px;top:222px;width:1352px;height:516px}#molecules{position:absolute;left:0;top:0;width:844px;height:470px}.molecule{position:absolute;top:32px;width:418px;height:390px;background:#fafbf8;border-radius:20px;overflow:hidden}.molecule.r{left:0}.molecule.p{left:426px}.mol-title{position:absolute;top:0;font-size:12px;letter-spacing:2px;color:#62716c}.mol-title.product{left:438px}.mol-title span{color:#a88b36;margin-left:12px;letter-spacing:0}#pairlink{position:absolute;top:212px;left:406px;z-index:2;color:#64766c;font-size:28px}#legend{position:absolute;top:444px;left:6px;display:flex;gap:22px;font-size:12px;color:#62716c}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}#treePanel{position:absolute;left:880px;width:472px;top:0;height:500px;border-left:1px solid #dbe2da;padding-left:24px}#treePanel h2{font-size:12px;letter-spacing:2px;font-weight:500;margin:0}#tree{position:absolute;left:12px;top:36px;width:460px;height:430px;overflow:visible}#treeNote{position:absolute;bottom:0;font-size:12px;color:#6b7771}#status{position:absolute;left:0;top:485px;font-size:14px;color:#667870}#status strong{color:#203a36;font-size:21px;font-weight:550;margin-right:9px}#caption{position:absolute;top:770px;left:46px;font-size:23px;letter-spacing:-.45px}#detail{position:absolute;top:809px;left:47px;font-size:13px;color:#77847c}#footer{position:absolute;bottom:22px;left:46px;right:46px;display:flex;justify-content:space-between;color:#8b9690;font-size:10px;letter-spacing:.6px}.progress{position:absolute;bottom:0;left:0;height:3px;background:#cfaf56}#compressed{position:absolute;left:46px;top:645px;width:820px;height:100px;display:flex;gap:12px;opacity:0}.bundle{position:relative;flex:1;border:1px solid #d3ddd4;background:#f5f8f1;border-radius:14px;padding:16px 19px;box-shadow:4px 5px 0 #e9eee6,8px 10px 0 #f1f3ed}.bundle b{display:block;font-size:16px;margin-bottom:8px}.bundle span{font-size:12px;color:#6d7e73}.bundle .spark{float:right;font-size:24px;color:#b49a4a}#finale{position:absolute;left:44px;right:44px;top:220px;height:525px;opacity:0;pointer-events:none;display:flex;gap:18px}.candidate{width:calc((100% - 36px)/3);background:#fff;border:1px solid #dce3db;border-radius:18px;padding:20px;position:relative;box-shadow:0 12px 32px #21352a07}.candidate-head{display:flex;justify-content:space-between;align-items:center}.candidate-head b{font-size:19px}.badge{font-size:11px;color:#738275;border:1px solid #d9e0d6;border-radius:20px;padding:5px 9px}.mini{position:absolute;top:77px;width:196px;height:240px;overflow:hidden}.mini.r{left:10px}.mini.p{left:224px}.mini-label{position:absolute;top:61px;font-size:9px;letter-spacing:1.8px;color:#879185}.mini-label.r{left:25px}.mini-label.p{left:236px}.mini-arrow{position:absolute;left:207px;top:181px;color:#8b9c8d}table.events{position:absolute;top:329px;left:22px;width:calc(100% - 44px);border-collapse:collapse;font-size:12px}.events td{height:29px;border-bottom:1px solid #eff1ec}.events .sym{font-size:17px;width:26px;color:#30473d}.events .kind{width:92px;color:#6e7e72}.events .atoms{font-weight:550;color:#23392c}.mapping-note{position:absolute;bottom:17px;left:22px;color:#829080;font-size:10px}.flash{position:absolute;inset:0;background:white;pointer-events:none;opacity:0}#controls{width:1440px;display:flex;gap:15px;padding:14px 35px;background:#f5f6f2;align-items:center;font-size:13px}#controls button{border:1px solid #cbd4c8;background:white;border-radius:8px;padding:7px 18px;cursor:pointer}#seek{flex:1;accent-color:#9b832f}#notes{width:1440px;padding:18px 36px;color:#546758;font-size:13px;line-height:1.6}a{color:inherit}
+
+.mini{width:394px;height:126px}.mini.r{left:20px;top:76px;height:118px}.mini.p{left:20px;top:221px;height:124px}.mini-label.r{left:23px;top:60px}.mini-label.p{left:23px;top:204px}.mini-arrow{left:403px;top:194px}table.events{top:353px}.events td{height:27px}.mapping-note{bottom:14px}.mini-arrow{transform:rotate(90deg)}#links{position:absolute;inset:0;width:844px;height:430px;pointer-events:none;z-index:5}
+</style></head><body>
+<div id="film"><header><div class="brand">GRAFT<span style="color:#c3a456">.</span></div><div class="edition">A SPACE OF ATOM CORRESPONDENCES</div><nav class="steps"><span id="s0"><b>01</b> GROW</span><span id="s1"><b>02</b> BRANCH</span><span id="s2"><b>03</b> DECODE</span></nav></header>
+<h1 id="headline"></h1><div id="subtitle"></div><div class="hairline"></div>
+<div id="main"><div id="molecules"><div class="mol-title">REACTANT <span>source identities</span></div><div class="mol-title product">PRODUCT <span>matched identities</span></div><div class="molecule r" id="r"></div><div class="molecule p" id="p"></div><div id="pairlink">↔</div><svg id="links" viewBox="0 0 844 430"></svg><div id="legend"></div></div>
+<div id="treePanel"><h2>RETAINED FRAGMENT PLACEMENTS</h2><svg id="tree" viewBox="0 0 460 430"></svg><div id="treeNote"></div></div><div id="status"></div></div>
+<div id="compressed"></div><div id="finale"></div><div id="caption"></div><div id="detail"></div><div id="footer"><span>COORDINATE CASE 101 / PR7 · ARCHIVED SEARCH CONTEXT</span><span>FIXED ENDPOINT GEOMETRIES · SEARCH REPLAY, NOT DYNAMICS</span></div><div class="progress" id="progress"></div><div class="flash" id="flash"></div></div>
+<div id="controls"><button id="play">Play film</button><input type="range" id="seek" min="0" max="48" step=".05" value="0" aria-label="Film time"><span id="time">0:00 / 0:48</span><button id="end">See candidates</button></div><div id="notes"><b>Recorded evidence.</b> <span id="scope"></span> Colors identify matched fragment sets; black sticks retain endpoint connectivity. Atom labels use reactant identities on both sides. A change in correspondence is not an atom trajectory. The closing cards show three saved witnesses extracted from compressed families, not an exhaustive enumeration. <a href="film-data.json">Full mappings and provenance</a> · <a href="science-validation.json">Validation</a></div>
+<script>
+const D=__DATA__, $=s=>document.getElementById(s), palette=['#e5bf55','#73b7ac','#aaa4d3','#d9a18a'];
+const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
+const viewers={},views={}, cache={};let prevT=0;
+$('scope').textContent=D.scope;
+$('legend').innerHTML=palette.map((c,i)=>`<span><i class="dot" style="background:${c}"></i>Fragment ${i+1}</span>`).join('');
+const els=D.input.reactant.elements;
+function label(a){return els[a]+a}
+D.paths.forEach((p,i)=>{
+ $('compressed').innerHTML+=`<div class="bundle"><i class="spark">≋</i><b>Terminal ${'ABC'[i]}</b><span>Retained fragment path → witness</span></div>`;
+ $('finale').innerHTML+=`<article class="candidate" id="card${i}"><div class="candidate-head"><b>Candidate ${'ABC'[i]}</b><span class="badge">${p.events.length} bond events</span></div><div class="mini-label r">REACTANT</div><div class="mini-label p">PRODUCT</div><div class="mini r" id="r${i}"></div><div class="mini p" id="p${i}"></div><div class="mini-arrow">→</div><table class="events">${p.events.map(e=>`<tr><td class="sym">${e.kind==='formed'?'+':e.kind==='broken'?'×':'↓'}</td><td class="kind">${e.kind}</td><td class="atoms">${e.r.map(label).join(' — ')}</td></tr>`).join('')}</table><div class="mapping-note">Same source labels on both endpoints · terminal ${p.terminal}</div></article>`;
+});
+function init(id,side){
+ const v=$3Dmol.createViewer(id,{backgroundColor:id.length>1?'white':'#fafbf8',antialias:true});
+ const ep=D.input[side==='r'?'reactant':'product'];
+ v.addModel().addAtoms(ep.elements.map((elem,i)=>({elem,index:i,serial:i,x:ep.coordinates[i][0],y:ep.coordinates[i][1],z:ep.coordinates[i][2],
+ bonds:ep.wbo[i].flatMap((w,j)=>i!==j&&w>D.config.graph_floor?[j]:[]),bondOrder:ep.wbo[i].flatMap((w,j)=>i!==j&&w>D.config.graph_floor?[1]:[])})));
+ v.setStyle({},{stick:{radius:.07,color:'#343d37'},sphere:{scale:.22,color:'#cbd3cb'}});
+ v.zoomTo();v.rotate(15,'x');v.rotate(-12,'y');v.zoom(id.length>1?1.40:.86);views[id]=v.getView();viewers[id]=v;v.render();
+}
+init('r','r');init('p','p');for(let i=0;i<3;i++){init('r'+i,'r');init('p'+i,'p')}
+function drawMol(id,side,pi,f,t,final=false){
+ const v=viewers[id],p=D.paths[pi],ep=D.input[side==='r'?'reactant':'product'],m=f.mapping;
+ const key=JSON.stringify([pi,f.mapping,f.active,f.stage,final]);
+ if(cache[id]!==key){
+  cache[id]=key;v.removeAllLabels();v.removeAllShapes();
+  v.setStyle({},{stick:{radius:.065,color:'#c4ccc3'},sphere:{scale:.15,color:'#d9dfd6'}});
+  const active=new Set(f.active);
+  for(const [a,b] of Object.entries(m)){
+   const i=side==='r'?+a:b,g=active.has(+a)?f.stage-1:p.groups[a];
+   v.setStyle({index:i},{stick:{radius:.074,color:'#343c35'},sphere:{scale:ep.elements[i]==='H'?.22:.29,color:palette[g%4]}});
+  }
+  // Labels mark only the small reaction core, keeping the fragment colors legible.
+  const keys=final?[0,1,2,18,21,23]:[0,21];
+  for(const a of keys){let i=side==='r'?a:m[a];if(i===undefined)continue;
+   v.addLabel(label(a),{position:{x:ep.coordinates[i][0],y:ep.coordinates[i][1],z:ep.coordinates[i][2]},fontSize:final?10:12,fontColor:'#26392b',backgroundColor:'white',backgroundOpacity:.82,borderThickness:0,inFront:true});
+  }
+ }
+ v.setView(views[id]);v.rotate(9*Math.sin(t*.095)+(final?0:6),'y');v.rotate(3*Math.sin(t*.071),'x');v.render();
+}
+const pos={6076:[230,22],6077:[145,116],6078:[366,116],6079:[54,221],6080:[209,221],6081:[366,221],6082:[54,308],6083:[209,308],6084:[366,308],6085:[54,391],6086:[209,391],6087:[366,391]};
+const appear={6076:0,6077:7,6078:7.65,6079:19.1,6080:19.7,6081:20.3,6082:25,6083:25.25,6084:25.5,6085:27,6086:27.2,6087:27.4};
+function drawTree(t,pi,f){
+ const chosen=new Set(D.paths[pi].frames.map(x=>x.transition));
+ let svg=`<defs><filter id="glow"><feGaussianBlur stdDeviation="4"/></filter></defs>`;
+ for(const e of D.graph.transitions){
+  const a=pos[e.source],b=pos[e.target],birth=appear[e.target],q=ease((t-birth)/.7),on=chosen.has(e.id),color=on?'#b2994d':'#b7c8bc';
+  // A partial edge previews the fragment being grown before its placement is committed.
+  let grow=q;if(t>=10&&t<19&&e.id===5344)grow=.10+.65*ease((t-10)/9);
+  if(grow===0)continue;
+  const path=`M${a[0]},${a[1]+12} C${a[0]},${(a[1]+b[1])/2} ${b[0]},${(a[1]+b[1])/2} ${b[0]},${b[1]-12}`;
+  svg+=`<path d="${path}" pathLength="1" fill="none" stroke="${color}" stroke-width="${on?2.8:1.7}" stroke-dasharray="${grow} 1"/>`;
+  if(q>.8){const mid=(a[1]+b[1])/2;svg+=`<text x="${(a[0]+b[0])/2}" y="${mid-5}" font-size="10" text-anchor="middle" fill="#7e8c80">+${e.size} atoms</text>`}
+ }
+ for(const n of D.graph.states){const p=pos[n.id],q=ease((t-appear[n.id])/.6);if(q<=0)continue;
+  const terminal=n.assigned===28,col=n.assigned===0?'#e7ece2':n.assigned===2?palette[0]:n.assigned<27?palette[1]:n.assigned<28?palette[2]:palette[3];
+  const pulse=(1-clamp((t-appear[n.id])/1.3));
+  svg+=`<g opacity="${q}"><circle cx="${p[0]}" cy="${p[1]}" r="${14+pulse*14}" fill="${col}" opacity="${pulse*.22}"/><circle cx="${p[0]}" cy="${p[1]}" r="${terminal?14:11}" fill="${col}" stroke="#fafbf8" stroke-width="3"/><text x="${p[0]}" y="${p[1]+4}" text-anchor="middle" font-size="${terminal?11:9}" fill="#314537">${terminal?'ABC'[n.id-6085]:n.assigned}</text>`;
+  if(n.id===6077||n.id===6078)svg+=`<text x="${p[0]}" y="${p[1]-22}" text-anchor="middle" font-size="11" fill="#5c705f">O21 → P${n.id===6077?12:15}</text>`;
+  if(n.id===6079||n.id===6080)svg+=`<text x="${p[0]}" y="${p[1]-22}" text-anchor="middle" font-size="10" fill="#5c705f">O${n.id===6079?1:2} → P15</text>`;
+  svg+='</g>';
+ }$('tree').innerHTML=svg;
+}
+function drawLinks(f,t){
+ if(t<3||t>=28.5||!f.active.length){$('links').innerHTML='';return}
+ const a=f.active.at(-1),b=f.mapping[a];if(b===undefined){$('links').innerHTML='';return}
+ const project=(side,i)=>{const q=D.input[side==='r'?'reactant':'product'].coordinates[i];return viewers[side].modelToScreen({x:q[0],y:q[1],z:q[2]})};
+ const r=project('r',a),p=project('p',b);const box=$('links').getBoundingClientRect();r.x-=box.left;p.x-=box.left;r.y-=box.top;p.y-=box.top;
+ const y=Math.min(r.y,p.y)-55,c=palette[(f.stage-1)%4],u=(t*1.35)%1;
+ const x=(1-u)**3*r.x+3*(1-u)**2*u*390+3*(1-u)*u*u*455+u**3*p.x;
+ const py=(1-u)**3*r.y+3*(1-u)**2*u*y+3*(1-u)*u*u*y+u**3*p.y;
+ $('links').innerHTML=`<path d="M${r.x},${r.y} C390,${y} 455,${y} ${p.x},${p.y}" fill="none" stroke="${c}" stroke-width="1.2" opacity=".42" stroke-dasharray="3 6"/><circle cx="${x}" cy="${py}" r="3.5" fill="${c}"/><circle cx="${p.x}" cy="${p.y}" r="7" fill="none" stroke="${c}" opacity=".55"/>`;
+}
+const findFrame=(pi,stage,kind)=>D.paths[pi].frames.filter(f=>f.stage===stage&&f.kind===kind);
+function growing(pi,stage,q){const fs=D.paths[pi].frames.filter(f=>f.stage===stage&&['seed_start','commit'].includes(f.kind));return fs[Math.min(fs.length-1,Math.floor(clamp(q)*fs.length))]}
+function seek(t){
+ t=Math.max(0,Math.min(D.duration,t));prevT=t;
+ let pi=0,f=growing(0,1,0),title='Grow. Branch. Decode.',sub='One reaction. A structured space of atom correspondences.',caption='Follow the fragments. Keep the alternatives.',detail='A recorded 28-atom example, shown in the trajectory viewer’s 3D molecular style.';
+ if(t>=3&&t<7){f=growing(0,1,(t-3)/2.3);title='Start small. Grow a match.';sub='Extend a connected fragment while compatible product placements survive.';caption='The same color marks the same matched fragment.';detail='Conditional isomorphism filters placements · matching tolerance 1.0 · compatible shuffles remain compressed.';}
+ if(t>=7&&t<10){f=findFrame(0,1,'seed_end')[0];title='One fragment. Two placements.';sub='Retain both choices; each defines a different condition for the next fragment.';caption='The first fork is a placement decision.';detail='Recorded alternatives: O21 → P12 and O21 → P15. Numbers inside tree nodes count assigned atoms.';}
+ if(t>=10&&t<19){f=growing(0,2,(t-10)/8.4);title='Grow under a condition.';sub='Commit the first fragment, then grow through the remaining compatible atoms.';caption='Earlier placements shape what can grow next.';detail='The trace includes a C18–O21 sweep cut: a search constraint, not a declared bond-breaking event.';}
+ if(t>=19&&t<23){pi=t<20.3?0:t<21.6?1:2;f=findFrame(pi,2,'seed_end')[0];title='A branch can branch again.';sub='The next fragment has alternatives conditioned on the earlier choice.';caption='Each branch retains a different set of fragment placements.';detail='Left subtree: two placements of an 18-atom fragment. Right subtree: a different 17-atom fragment.';}
+ if(t>=23&&t<28.5){pi=0;f=t<26.5?growing(0,3,(t-23)/3):growing(0,4,1);title='Complete each retained branch.';sub='Continue fragment growth until every source atom has a product identity.';caption='Shared choices become a compact hierarchy.';detail='The displayed saved context has 12 states, 11 transitions and 3 terminals.';}
+ if(t>=28.5&&t<33){f=D.paths[0].frames.at(-1);title='From retained paths to witnesses.';sub='Read complete atom correspondences from the compressed search representation.';caption='Extract a witness. Evaluate its bond events.';detail='This closing example extracts one recorded witness per terminal, then compares their event signatures.';}
+ if(t>=33){f=D.paths[0].frames.at(-1);title='Different mappings. Different bond events.';sub='Extract witnesses, evaluate bond changes, then group distinct event patterns.';caption='Three recorded witnesses. Three distinct event patterns.';detail='× broken   ·   + formed   ·   ↓ weakened     |     Fragment colors stay visible; connectivity stays black.';}
+ $('headline').textContent=title;$('subtitle').textContent=sub;$('caption').textContent=caption;$('detail').textContent=detail;
+ ['s0','s1','s2'].forEach((id,i)=>$(id).className=(t<7?i===0:t<28.5?i===1:i===2)?'on':'');
+ $('main').style.opacity=1-ease((t-32.7)/.55);$('compressed').style.opacity=ease((t-28.5)/.6)*(1-ease((t-32.65)/.4));
+ $('molecules').style.opacity=1-.62*ease((t-28.5)/.8);
+ $('status').style.opacity=1-ease((t-28.5)/.5);
+ $('status').innerHTML=`<strong>${Object.keys(f.mapping).length} / 28</strong> atoms currently assigned <span style="margin:0 15px;color:#bdc8bb">│</span> <strong>${f.candidates}</strong> live compressed candidates in this growth step`;
+ $('treeNote').textContent=t>=27.7?'A · B · C   /   three saved terminal witnesses':'Node count = assigned atoms · edges = committed fragments';
+ $('finale').style.opacity=ease((t-33)/.6);$('flash').style.opacity=.6*Math.max(0,1-Math.abs(t-33)/.2);
+ if(t<33){drawMol('r','r',pi,f,t);drawMol('p','p',pi,f,t);drawTree(t,pi,f);drawLinks(f,t)}
+ if(t>=32.8)for(let i=0;i<3;i++){
+  const q=ease((t-33-i*.13)/.75);$('card'+i).style.transform=`translateY(${(1-q)*44}px)`;
+  const end=D.paths[i].frames.at(-1);drawMol('r'+i,'r',i,end,t,true);drawMol('p'+i,'p',i,end,t,true);
+ }
+ $('progress').style.width=(t/D.duration*1440)+'px';$('seek').value=t;$('time').textContent='0:'+String(Math.floor(t)).padStart(2,'0')+' / 0:48';
+ return {time:t,path:pi,terminal:D.paths[pi].terminal,frame:f.kind,stage:f.stage,mapping:f.mapping};
+}
+let playing=false,start=0,offset=0;
+function tick(now){if(!playing)return;seek(offset+(now-start)/1000);if(prevT>=48){playing=false;$('play').textContent='Replay film';return}requestAnimationFrame(tick)}
+$('play').onclick=()=>{playing=!playing;$('play').textContent=playing?'Pause':'Play film';if(playing){offset=prevT>=48?0:prevT;start=performance.now();requestAnimationFrame(tick)}};
+$('seek').oninput=e=>{playing=false;$('play').textContent='Play film';seek(+e.target.value)};$('end').onclick=()=>{playing=false;seek(37)};
+window.film={seek,duration:48,data:D};seek(0);
+</script></body></html>

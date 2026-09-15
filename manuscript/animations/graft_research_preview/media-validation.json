@@ -1,0 +1,33 @@
+{
+  "status": "passed",
+  "mp4_metadata": {
+    "ffmpeg_version": "7.1 built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)",
+    "codec": "h264",
+    "pix_fmt": "yuv420p(progressive)",
+    "fps": 24.0,
+    "source_size": [
+      1440,
+      900
+    ],
+    "size": [
+      1440,
+      900
+    ],
+    "rotate": 0,
+    "duration": 48.0
+  },
+  "mp4_sha256": "fd804c97eefab16e784c76b8048b6f26f6ecac4cb5dd5d3c09ac93c5cade7ba8",
+  "decode": "All video frames decoded successfully",
+  "expected_duration_seconds": 48,
+  "gif": {
+    "frames": 576,
+    "duration_ms": 48000,
+    "size": [
+      960,
+      600
+    ],
+    "loop": 0,
+    "sha256": "8ca47ac249fa50ef7a6927d7e6bfe2a7604bf4134f770481112e0455aae129a4"
+  },
+  "visual_review": "Reviewed rendered stage frames and eight frames decoded from the MP4; revised camera framing, label spacing and correspondence registration."
+}
