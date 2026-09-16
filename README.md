@@ -1,6 +1,6 @@
 # rxn_core
 
-The default GRAFT pipeline uses one seed ordering per cut, the uncut plus single-edge sweep, fragment competition, and branch cap 100. The Python API exposes these as separate stages: `search_aam`, then `compete_fragments`; bond-event decoding follows separately. See the [default pipeline example](docs/PYTHON_API.md). Golden measurements in the paper cover sweep search before competition; the coordinate results include it. No-sweep results are ablation controls.
+The default GRAFT pipeline uses one seed ordering per cut, the uncut plus single-edge sweep, and branch cap 100. Match with `search_aam`, then decode bond-event alternatives separately. See the [Python API example](docs/PYTHON_API.md). Fragment competition is an experimental, explicit opt-in extension and is off by default; it is not part of the published method.
 
 Symmetry-aware WBO atom mapping, analytical R/P alignment, and
 mechanism-local transition-state analysis.
@@ -11,11 +11,11 @@ Paper benchmarks: [results and artifact index](reports/README.md) ·
 Interactive views use [two shared styles](docs/VIEWERS.md): the original white
 R/P/TS presentation and the catalog/results presentation.
 
-## Grow, branch, compete, decode
+## Grow, branch, decode
 
-![GRAFT: Golden fragment growth, branching, competition, and decoded event-class merging](manuscript/animations/graft_research_preview/graft-grow-branch-decode.gif)
+![GRAFT: Golden fragment growth, branching and decoded event-class merging](manuscript/animations/graft_research_preview/graft-grow-branch-decode.gif)
 
-A 28-second Golden example: fragments grow and branch, a competing fragment opens a new completion, and equivalent outcomes visibly merge in the decoder on the right. Two decoded event classes are illustrated, including the reference-equivalent class; the saved catalogue contains nine. Red × marks show breaking or weakening; green inward arrows show forming or strengthening.
+A 22-second Golden example: fragments grow into conditional branches, and equivalent baseline outcomes visibly merge in the decoder on the right. Two decoded event classes are illustrated, including the reference-equivalent class; the saved catalogue contains nine. Red × marks show breaking or weakening; green inward arrows show forming or strengthening.
 
 [Full-resolution MP4](manuscript/animations/graft_research_preview/graft-grow-branch-decode.mp4) · [Offline interactive viewer](manuscript/animations/graft_research_preview/index.html) · [Example and provenance](manuscript/animations/graft_research_preview/README.md)
 

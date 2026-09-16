@@ -1,6 +1,10 @@
-"""Bounded fragment competition for the default GRAFT pipeline.
+"""Experimental, opt-in fragment competition; disabled in the default pipeline.
 
-Call this stage after sweep search and before separate event decoding.
+An explicit call may add this stage after sweep search and before decoding.
+It is not part of the published GRAFT algorithm.
+
+TODO: establish a controlled coverage/cost benefit and improve proposal
+scheduling and deduplication before considering default integration.
 
 The local-collision policy is extracted from the validated 140-case campaign.
 No dataset, reference, filesystem, environment-variable, or CLI dependencies.

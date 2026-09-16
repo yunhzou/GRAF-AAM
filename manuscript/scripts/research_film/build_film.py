@@ -1,4 +1,4 @@
-"""Build the offline Golden growth/competition film from verified saved evidence.
+"""Build the offline Golden growth/branching film from verified saved evidence.
 
 No mapping search is performed. Display conformers are separate from search input.
 """
@@ -35,10 +35,6 @@ def build(repo, out, source):
             r, s = event['r']; p, q = event['p']
             assert [vector[r], vector[s]] == [p, q]
             assert event['wbo'] == [problem.reactant.wbo[r, s], problem.product.wbo[p, q]]
-    comp = data['competition']
-    assert all(comp['states'][0]['mapping'][str(k)] == v for k, v in comp['anchors'].items())
-    assert set(comp['proof']['holes']) == set(range(index.n)) - set(map(int, comp['anchors']))
-    assert comp['states'][-1]['mapping'] == data['paths'][2]['mapping']
     for key in ('reactant', 'product'):
         assert data['input'][key]['elements'] == data['source_input'][key]['elements']
         assert data['input'][key]['wbo'] == data['source_input'][key]['wbo']
@@ -49,7 +45,7 @@ def build(repo, out, source):
     html = html.replace('__DATA__', json.dumps(data, separators=(',', ':')).replace('</', '<\\/'))
     (out / 'index.html').write_text(html)
     (out / 'science-validation.json').write_text(json.dumps(dict(status='passed', source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
-        checks=['Recorded baseline fragment calls replay exactly', 'Competition anchors, released atoms and completion agree with saved offer and graph',
+        checks=['Recorded baseline fragment calls replay exactly', 'All displayed witnesses come from the saved baseline sweep',
                 'All displayed correspondences are element-preserving injections', 'Final cards have distinct canonical signed-event IDs',
                 'B and C merge into the same signed-event class', 'Final cards are decoded catalogue representatives',
                 'Complete catalogue has nine classes through six events; two explicitly selected for display',
@@ -63,4 +59,4 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--source', type=Path)
     args = parser.parse_args()
-    build(args.repo, args.output, args.source or args.repo / 'reports/golden_film_20260915/film-source.json')
+    build(args.repo, args.output, args.source or args.repo / 'reports/published_baseline_20260915/film/film-source.json')

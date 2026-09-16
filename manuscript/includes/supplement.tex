@@ -16,9 +16,7 @@ The paired search timings use the Apple M4 Pro CPU and one numerical-library thr
 
 Released comparators receive the same label-free Golden inputs, without prediction repair or reference-guided ranking. Invalid outputs and failures remain in the denominator. SLAP is evaluated over all returned candidates, with binary and weighted modes reported separately. The repository records the released models, versions, and adapter settings.
 
-\subsection{Competition and decoding scope}
-
-Competition retains the ordinary search output and adds only completions that pass the fragment-preservation checks. Its bounded proposal policy is specified in the code. Omitted proposals and unfinished continuations are outside the decoded search output.
+\subsection{Decoding scope}
 
 For each coordinate reaction, the decoding limit is one event above the larger of the native-SLAP and SLAP-sweep minima. All \FlatFamilies{} retained families are exhausted within these limits, without a class-count cap. Higher-event patterns are outside this completeness claim. An event class records the signed atom-pair changes, modulo source permutations preserving every thresholded bond-change test against the opposite endpoint. Each class has a concrete mapping witness.
 
@@ -60,7 +58,7 @@ These default call times cover different outputs from GRAFT's sweep and compress
 \subsection{Branch-cap and CPU-time ablation on Golden}
 \label{sec:cap-ablation}
 
-We reran the twelve configurations in \Cref{tab:golden-caps} on all 1,851 Golden reactions using one CPU thread on an AMD EPYC 9J14 processor. Both search directions are unioned. GRAFT is measured before fragment competition; SLAP unions its binary and weighted modes. Search and reference verification have separate fixed resource budgets. The recorded cap-100 recovery counts reproduce the main evaluation. At cap 2,000, unresolved counts increase with seed count. Among reactions resolved at both caps, no swept configuration gains or loses a reference recovery.
+We reran the twelve configurations in \Cref{tab:golden-caps} on all 1,851 Golden reactions using one CPU thread on an AMD EPYC 9J14 processor. Both search directions are unioned. SLAP unions its binary and weighted modes. Search and reference verification have separate fixed resource budgets. The recorded cap-100 recovery counts reproduce the main evaluation. At cap 2,000, unresolved counts increase with seed count. Among reactions resolved at both caps, no swept configuration gains or loses a reference recovery.
 
 \begin{table}[htbp]
 \centering\footnotesize

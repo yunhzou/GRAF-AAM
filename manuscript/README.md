@@ -7,7 +7,7 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `includes/paper.tex`: methods, evaluation, and discussion.
 - `includes/supplement.tex`: evaluation scope, completeness argument, and supplementary results.
 - [REPRODUCIBILITY.md](REPRODUCIBILITY.md): full technical settings and links to code, input/source pins, and per-case evidence.
-- `figs/fig1_algorithm.{pdf,svg,png}`: the branching algorithm overview: RDKit vector depictions of alcohol sites and methyl acetate saponification illustrate hydrogen-preserving local matches, three conditional assignment levels, automorphism compression, competition, and event decoding.
+- `figs/fig1_algorithm.{pdf,svg,png}`: the branching algorithm overview: RDKit vector depictions of alcohol sites and methyl acetate saponification illustrate hydrogen-preserving local matches, three conditional assignment levels, automorphism compression, cut sweep, and event decoding.
 - `evidence/competitors.json`: audited Golden results for RXNMapper, LocalMapper, Chython, Indigo, RDT, and default SLAP configurations; Table 3 compares their returned-output reference recovery with all evaluated GRAFT seed/sweep configurations, without assigning a ranking to SLAP alternatives.
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
 - `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and direction-specific mean CPU cost.
@@ -21,11 +21,11 @@ The manuscript does not include abandoned variants, debugging history, or supers
 
 ## Results and scope
 
-The default GRAFT pipeline uses one seed ordering per cut, the single-edge sweep, fragment competition, and branch cap 100. The recorded Golden evaluation measures sweep search before competition; the coordinate evaluation includes competition. No-sweep configurations are ablations. Size-ordered directional recovery is derived from saved, hash-verified explicit-atom inputs and verdicts in `evidence/direction_recovery.json`; no search was rerun.
 
-Every reported GRAFT benchmark configuration has been rerun with the final source. The completed default-comparator predictions were additionally rescored with the current strict evaluator; no competitor models were rerun for that check. Golden evaluates fragment search on all 1,851 records with 1/2/3/10 seed orderings; its reference-family recovery and paired SLAP comparison are in `evidence/seed_comparison.json` and `evidence/slap_sweep.json`. Final Golden recovery is 1,834/1,851 for one and two orderings, 1,837 for three, and 1,840 for ten (11 nonrecoveries, none unresolved); SLAP recovers 1,796 (three unresolved). The coordinate protocol additionally evaluates local competition and full final-family decoding, with one seed ordering only. The final two-seed coordinate pipeline was not measured. Timing compares only the 1,821 same-Mac completed reactions for one/two orderings and SLAP; three/ten-order timing from different CPUs is not pooled.
 
-The cap-2,000 coordinate configuration covers 166/168 minimum-event classes among returned SLAP-sweep witnesses, with every compared class recovered in 139/140 reactions. The SLAP hydrogen label families are not exhaustively decoded. Final branch grouping reduces 237,645 ordered records to 124,641 unordered fragment combinations. All 236,653 retained AAM families are completely decoded or certified within the fixed event windows. The complete final-decoding pass takes 11.60 wall minutes and 25.70 recorded CPU-minutes across three workers, including bounded continuation and certificate journaling. Search and competition are separate stages.
+
+
+
 
 `evidence/paper_sources.json` records the source commit, snapshot hashes and full report location. The figure and table builder requires complete fresh-campaign evidence; pending outcomes cannot silently enter a final table.
 
@@ -57,6 +57,10 @@ Figure 4 uses Golden case 9: the recovered reference and two alternative mapping
 
 ## 3D research preview
 
-[Grow. Compete. Decode.](animations/graft_research_preview/index.html) is a 28-second offline 3D film of Golden case 15, with conditional branching, a recorded fragment-competition completion, and animated event-class merging on the right. [MP4](animations/graft_research_preview/graft-grow-branch-decode.mp4) · [GIF](animations/graft_research_preview/graft-grow-branch-decode.gif). Two decoded classes are illustrated, including a reference-equivalent class; the saved catalogue has nine classes through six events. Coordinates are illustrative conformers. The [film README](animations/graft_research_preview/README.md) records the storyboard, provenance, limitations and rebuild commands.
+[Grow. Branch. Decode.](animations/graft_research_preview/index.html) is a 22-second baseline-only 3D film of Golden case 15. Conditional fragment placements grow into a tree and final witnesses merge by event class. The complete baseline catalogue has 44 unordered branches, 96 families and nine classes through six events; two classes are shown. [MP4](animations/graft_research_preview/graft-grow-branch-decode.mp4) · [GIF](animations/graft_research_preview/graft-grow-branch-decode.gif).
 
-The completed same-CPU Golden cap ablation is in the appendix (`evidence/golden_cap_ablation.json`). It includes cap 100 and cap 2,000 accuracy, unknown outcomes, and search CPU for all four swept seed settings, both uncut controls, and SLAP baselines. All paired timings use the same 1,403 reactions; all-attempt recorded cost is shown separately. Full results are in `reports/golden_controlled_20260915/final/`. The 3D film uses the verified Golden example in `reports/golden_film_20260915/`, including competition provenance and complete catalogue decoding.
+The completed same-CPU Golden cap ablation is in the appendix (`evidence/golden_cap_ablation.json`). It includes cap 100 and cap 2,000 accuracy, unknown outcomes, and search CPU for all four swept seed settings, both uncut controls, and SLAP baselines. All paired timings use the same 1,403 reactions; all-attempt recorded cost is shown separately. Full results are in `reports/golden_controlled_20260915/final/`. The 3D film uses the verified baseline Golden example in `reports/published_baseline_20260915/film/`.
+
+## Published pipeline
+
+The published method uses one-seed cut sweep followed by separate decoding. Competition is excluded. Golden results are unchanged. Baseline-only coordinate evidence and decoding checks are in [the publication report](../reports/published_baseline_20260915/). At cap 2,000, GRAFT recovers 162/168 SLAP-sweep patterns and 151/160 native-SLAP patterns within the fixed windows. At equal minima, the corresponding counts are 158/164 and 138/140. The output has 300 event patterns, including 166 at GRAFT's own minima.

@@ -33,7 +33,7 @@ def weighted(smiles):
 
 def check_example():
  zr,wr=weighted(R);zp,wp=weighted(P)
- identity={i:i for i in zr};exchange={**identity,3:4,4:3};challenger={**identity,4:6,6:4}
+ identity={i:i for i in zr};exchange={**identity,3:4,4:3}
  def events(m):
   assert sorted(m.values())==sorted(zp) and all(zr[i]==zp[j] for i,j in m.items())
   return [[i,j,1 if d>0 else -1] for i in zr for j in zr if i<j and abs(d:=wp.get(tuple(sorted((m[i],m[j]))),0)-wr.get((i,j),0))>=.5]
@@ -41,7 +41,6 @@ def check_example():
   return all(wp.get(tuple(sorted((m[i],m[j]))),0)>=.2 and abs(wp.get(tuple(sorted((m[i],m[j]))),0)-v)<=1 for f in fragments for (i,j),v in wr.items() if i in f and j in f)
  assert preserves(identity,[[1,2,3,4],[5],[6]])
  assert preserves(exchange,[[1,2,3,4],[5],[6]])
- assert preserves(challenger,[[1,2,3],[4,5],[6]])
  # The accepted acetoxy placement cannot grow through O4-C5 in either case.
  assert all(wp.get(tuple(sorted((m[4],m[5]))),0)<.2 for m in [identity,exchange])
  # The O3/O4 exchange is an exact symmetry of the matching-response graph,
@@ -50,7 +49,6 @@ def check_example():
  assert response(1)==response(2)==[True,True,True]
  assert events(identity)==[[4,5,-1],[5,6,1]]
  assert events(exchange)==[[2,3,-1],[2,4,1],[4,5,-1],[5,6,1]]
- assert events(challenger)==[[2,4,-1],[2,6,1]]
  # Validate complete local alcohol fragments, including every attached H.
  source=Chem.AddHs(Chem.MolFromSmiles(ALCOHOL_FRAGMENT))
  target=Chem.AddHs(Chem.MolFromSmiles(ALCOHOL_SITES))
@@ -102,8 +100,8 @@ def check_example():
  assert all(a.GetTotalNumHs()==0 for a in acetate.GetAtoms() if a.GetAtomicNum()==8)
  return {'placement_example':{'source_fragment_smiles':ALCOHOL_FRAGMENT,'target_smiles':ALCOHOL_SITES,'admissible_local_images':placements,'conditional_tree':tree,'scope':'Three distinct local alcohol sites; all attached H checked. R is outside the matched fragment. Constructed conditional placement illustration, not a complete reaction-search trajectory.'},'status':'passed','scope':'Constructed molecular illustration with formal bond orders. Panel a verifies attached H explicitly; panels b/c display heavy-atom events of ester saponification. Saved constraints govern full-family actions.',
  'reactants_smiles':R,'products_smiles':P,'iso_tol':1.,'edge_floor':.2,'event_threshold':.5,
- 'mappings':{'retain_A':identity,'oxygen_exchange':exchange,'prioritize_B':challenger},
- 'heavy_atom_events':{'retain_A':events(identity),'oxygen_exchange':events(exchange),'prioritize_B':events(challenger)},
+ 'mappings':{'retain_A':identity,'oxygen_exchange':exchange},
+ 'heavy_atom_events':{'retain_A':events(identity),'oxygen_exchange':events(exchange)},
  'response_labels':{'single':response(1),'double':response(2)},'saturated_fragment':[1,2,3,4]}
 
 def svg_path(d):
@@ -270,28 +268,21 @@ def build(man):
   ar(points[-2],points[-1],color,lw)
  def dot(x,y,*args,**kw):return original_dot(x,y+120,*args,**kw)
  def mol(smiles,x,y,*args,**kw):return original_molecule(ax,smiles,x,y+120,*args,**kw)
- # B: the existing continuation survives; a challenger makes a new branch.
+ # B: show source-edge conditions, not takeover or a fabricated trajectory.
  box(12,467,702,448,bg,bg,r=16)
- label(34,503,'b','Add a branch when fragments compete')
- t(34,536,'Methyl acetate saponification',10.5,muted)
- mol(ESTER,22,642,260,162,{**{i:PALE_A for i in [1,2,3,4]},5:PALE_B},notes={4:'4'},font=31)
- t(149,819,r'$+\ \mathrm{OH}^{-}$',13,navy,ha='center')
- t(151,596,'A',12,green,'bold',ha='center');t(192,596,'B',12,orange,'bold',ha='center')
- t(150,859,'Contact at O4',10.5,muted,ha='center')
- ar((280,722),(301,722),navy,2.2)
- tree([(301,722),(326,722),(326,628),(379,628)],green,2.2)
- tree([(301,722),(326,722),(326,818),(379,818)],orange,2.2)
- dot(326,722)
- for y,owners,title,color in [(560,{**{i:PALE_A for i in [1,2,3,4]},5:PALE_B},'Keep A',green),(750,{**{i:PALE_A for i in [1,2,3]},4:PALE_B,5:PALE_B},'Give B priority',orange)]:
-  box(385,y,264,136,'white','#D6E1E9',.9,10)
-  t(518,y-16,title,11,color,'bold',ha='center')
-  mol(ESTER,391,y+2,250,130,owners,notes={4:'4'},font=30,bond_changes={(4,5) if title=='Keep A' else (2,4):-1})
-  if title=='Keep A':tree([(650,y+68),(729,y+68),(729,714),(753,714)],color,1.8)
-  else:
-   ar((650,y+68),(685,y+68),color,1.8)
-   t(695,y+68,'···',12,color)
- # The orange path is an added continuation, not replacement of the green path.
- t(370,901,'Keep the original path; add the challenger.',10.5,muted,ha='center')
+ label(34,503,'b','Vary the constraints with a cut sweep')
+ t(34,536,'Methyl acetate: three illustrated source conditions',10.5,muted)
+ for y,title,cut in [(565,'Uncut source',None),(668,'Mask O4-C5',(4,5)),(771,'Mask C2-O4',(2,4))]:
+  t(46,y+39,title,10.5,green,'bold')
+  coords=mol(ESTER,214,y-7,306,96,{i:PALE_A for i in [1,2,3,4,5]},notes={2:'2',4:'4',5:'5'},font=24)
+  if cut:
+   a0,b0=coords[cut[0]],coords[cut[1]]
+   a0,b0=tuple(a0[k]+.23*(b0[k]-a0[k]) for k in range(2)),tuple(a0[k]+.77*(b0[k]-a0[k]) for k in range(2))
+   ax.plot([a0[0],b0[0]],[a0[1],b0[1]],color='white',lw=4.5,zorder=7)
+   ax.plot([a0[0],b0[0]],[a0[1],b0[1]],color=violet,lw=1.5,ls=(0,(2,3)),zorder=8)
+  ar((535,y+39),(578,y+39),navy,1.5)
+  t(590,y+39,'Grow',10.5,navy)
+ t(370,887,'Pool the retained branches; decode on original bond weights.',9.8,muted,ha='center')
 
  # C: output projection uses dashed arrows; it is not a search branch.
  box(732,467,696,448,bg,bg,r=16)

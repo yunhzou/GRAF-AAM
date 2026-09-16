@@ -19,16 +19,10 @@
       "sha256": "740cd679895a902c885c1fbbc6c628cfc607fe3fb7b4ed87864827d40f3c2288"
     },
     {
-      "snapshot": "competition_final.json",
-      "source": "reports/current_validation_20260912/competition_final.json",
-      "scope": "One-seed coordinate search, competition and complete event-window decoding; fresh comparator witnesses",
-      "sha256": "14f54e5dc2e7c24cc0625385bb1cad6d5205f352b76bd85c921b48921fca9608"
-    },
-    {
       "snapshot": "final_dedup.json",
-      "source": "reports/current_validation_20260912/final_dedup.json",
-      "scope": "Fresh final representation audit and complete event-window decoding on all 140 cases",
-      "sha256": "760ccf5d50d0aa8fc7c648eca0cd96e38541355fe9f5fc96a3202a03c8e90426"
+      "source": "reports/published_baseline_20260915/final_dedup.json",
+      "scope": "Baseline-only saved output, competition excluded",
+      "sha256": "947fbcd0711e44983d755d7b2550dc7d6bfe76362d5b453cf74a43bf1e101205"
     },
     {
       "snapshot": "competitors.json",
@@ -64,17 +58,15 @@
       "snapshot": "timing_comparison.json",
       "source": "reports/golden_timing_detail_20260914/timing_comparison.json",
       "scope": "Same1821Mac cohort: size-ordered GRAFT and SLAP CPU distributions, plus separately scoped separately recorded default-mapper CPU call times. Saved scalar timer audit; no searches rerun.",
-      "sha256": "0fbd20144048f34673d7f9d10de130254742760a239cca3fbecd72ed8bbe3f30",
+      "sha256": "62785210df89b07ba9472d077bef02fafffaee2d502a7960f486dbee3141a61e",
       "source_sha256": "19aac7ee35e0d72459cce5a2d120d3c8e5fc1715f5149986de374885974ff2a5",
-      "publication_projection": "Execution identifiers omitted; numerical results and timing-cohort membership unchanged."
+      "publication_projection": "Execution identifiers and obsolete combined coordinate decoder timings omitted; Golden numerical results and cohort membership unchanged."
     },
     {
       "snapshot": "coordinate_minima.json",
-      "source": "reports/coordinate_minima_20260914/coordinate_minima.json",
-      "scope": "Saved all140 event minima and equal-minimum pattern comparisons, with measured stage timings. Unverified mappings; not a mapping accuracy benchmark. No new mapping or decoding runs.",
-      "sha256": "3d744b02ec99ea2abcab0f279f93247a2b54422c3135300ca11c341f48208730",
-      "source_sha256": "409938d4b183f5483fc6c485731c5e9756ef01caca1bb923395f8b9969a4dd92",
-      "publication_projection": "Updated checksum for the public timing snapshot; numerical results unchanged."
+      "source": "reports/published_baseline_20260915/coordinate_minima.json",
+      "scope": "Baseline-only saved output, competition excluded",
+      "sha256": "758634ed55bf93625d810c3f661c6395f747e344c33731ae2955933ab7825e8b"
     },
     {
       "snapshot": "multicandidate_example.json",
@@ -95,5 +87,7 @@
       "sha256": "8991c096bc9c7a440f3862de0615f95740ad4911a5d1b59196791c5f7deb3b18"
     }
   ],
-  "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has eleven completed nonrecoveries and no unresolved reactions. Timing from different CPU cohorts is not pooled."
+  "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has eleven completed nonrecoveries and no unresolved reactions. Timing from different CPU cohorts is not pooled.",
+  "publication_pipeline": "one-seed cut sweep; competition disabled",
+  "coordinate_refresh": "Baseline-only projection of complete saved certificates; fresh partial checks reported separately."
 }

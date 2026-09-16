@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "mp4_sha256": "80c1c9a8a000e5f419fa26e67dd86dbe86bc69fa4662c01440ba2fe6508a0361",
+  "mp4_sha256": "0b13e7d5e110dfcbe5e1060ec8c64425e9cf74d1c61b452706515af28c0f4688",
   "mp4_metadata": {
     "ffmpeg_version": "7.1 built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)",
     "codec": "h264",
@@ -15,18 +15,18 @@
       900
     ],
     "rotate": 0,
-    "duration": 28.0
+    "duration": 22.0
   },
-  "decoded_video_frames": 672,
+  "decoded_video_frames": 528,
   "gif": {
-    "sha256": "5ade16636065a85fd1ab2aeb781a1d81da4e5b6a834234f69703ae66c82db055",
-    "frames": 336,
-    "duration_ms": 28000,
+    "sha256": "1b49643fc4f5d9830143f216ddeceda7741467350b2c9e25820d2e3a8303b5e7",
+    "frames": 264,
+    "duration_ms": 22000,
     "size": [
       960,
       600
     ],
     "loop": 0
   },
-  "visual_review": "Inspected encoded frames for blue branch 1 at 7.2 seconds and purple branch 2 at 8.2 seconds. Changed correspondences and tree nodes/edges pulse together; camera is held fixed throughout the switch. Competition, merge diagram and final event panels remain legible."
+  "visual_review": "Baseline-only branch highlights and final event-class merge inspected; no takeover segment. Fragment colors and red/green bond markers retained."
 }

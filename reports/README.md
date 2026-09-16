@@ -3,7 +3,11 @@
 Start here when querying results or preparing the paper. Existing reports and
 raw runs are preserved in place; this index does not merge experimental protocols.
 
-## Primary evidence
+## Current published method
+
+[Baseline GRAFT, competition disabled](published_baseline_20260915/README.md) is the current coordinate evidence and film provenance. Golden scores are unchanged. Older reports below retain their original protocols and may include experimental extensions; do not use them as the current published pipeline.
+
+## Archived evidence
 
 [Additional seeds on the three missing forward alternatives](holdout_missing_pattern_seeds_20260910/README.md)
 — targeted cases 11, 64 and 101 only; cap 1000, forward sweep, 1/3/10/30 seeds.

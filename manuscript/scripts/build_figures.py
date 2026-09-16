@@ -55,9 +55,9 @@ table.append(f"SLAP sweep (prior baseline) & {slap['outcomes']['recovered']:,} &
 table += [r'\midrule'] + ablations
 (MAN/'includes/generated-seed-table.tex').write_text('\\begin{tabular}{lrrrrr}\\toprule\nConfiguration & Recovered & \\% & Absent & Unknown & CPU s/reaction\\\\\\midrule\n'+'\n'.join(table)+'\n\\bottomrule\\end{tabular}\n')
 
-comp=read('competition_final.json');dedup=read('final_dedup.json');rows=dedup['per_case']
-assert len(rows)==140 and sum(r['final_branches'] for r in rows)==dedup['new_branches']
-assert dedup['fresh_decode_all140'] and all(r['complete'] for r in rows)
+dedup=read('final_dedup.json');rows=dedup['per_case']
+assert len(rows)==140 and sum(r['flat_saved_families'] for r in rows)==dedup['flat_families']
+assert dedup['competition'] is False and all(r['complete'] for r in rows)
 coord=read('coordinate_minima.json')
 fig,axs=plt.subplots(2,2,figsize=(8.8,6.1),layout='constrained',gridspec_kw={'hspace':.16,'wspace':.10})
 cs=[coord['comparisons'][k] for k in ['slap_sweep','native_slap']]
@@ -77,7 +77,7 @@ for i,d in enumerate(cs):
  a.text(n/2,i,f'{n}/{total}',ha='center',va='center',color='white',weight='bold')
 a.set(yticks=[0,1],yticklabels=['SLAP sweep','Native SLAP'],xlim=(0,175),ylim=(1.85,-.6),xlabel='Comparator patterns retained by GRAFT')
 a.set_title('b  Patterns where minima agree',loc='left',weight='bold',pad=12);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
-a.text(.02,.03,'136 equal-minimum cases for the sweep;\n125 for native SLAP. Red: two missing patterns.',transform=a.transAxes,fontsize=7.8,color=MUTED)
+a.text(.02,.03,'136 equal-minimum cases for the sweep;\n125 for native SLAP. Red: missing alternatives.',transform=a.transAxes,fontsize=7.8,color=MUTED)
 a=axs[1,0]
 series=[('GRAFT',GREEN,[r['graft_minimum'] for r in coord['per_case']]),
         ('SLAP sweep',ORANGE,[r['comparators']['slap_sweep']['minimum'] for r in coord['per_case']]),
@@ -89,18 +89,15 @@ for j,(label,color,mins) in enumerate(series):
 a.set(xticks=values,ylim=(0,largest*1.35),xlabel='Minimum signed-event count',ylabel='Reactions')
 a.set_title('c  Minimum-event distributions',loc='left',weight='bold',pad=12);a.grid(axis='y',alpha=.15);a.set_axisbelow(True)
 a.legend(loc='upper left',ncol=3,fontsize=7,frameon=False)
-a=axs[1,1];keys_stage=['graft_search','graft_competition','graft_decoding','slap_mapping','slap_h_refinement'];means=[coord['timing'][k]['stats']['mean'] for k in keys_stage];ys=np.arange(5)
-a.barh(ys,means,color=[GREEN,BLUE,PURPLE,ORANGE,ORANGE],height=.52)
+a=axs[1,1];keys_stage=[k for k in ['graft_search','graft_decoding','slap_mapping','slap_h_refinement'] if k in coord['timing']];means=[coord['timing'][k]['stats']['mean'] for k in keys_stage];ys=np.arange(len(keys_stage))
+a.barh(ys,means,color=[GREEN if k=='graft_search' else PURPLE if k=='graft_decoding' else ORANGE for k in keys_stage],height=.52)
 for i,v in enumerate(means):a.text(v+.12,i,f'{v:.2f}',va='center',fontsize=8)
-a.set(yticks=ys,yticklabels=['GRAFT search','GRAFT competition','GRAFT window decode','SLAP sweep mapping','SLAP H refinement'],xlim=(0,max(means)*1.25),ylim=(4.7,-.7),xlabel='Mean CPU seconds / reaction')
+a.set(yticks=ys,yticklabels=[dict(graft_search='GRAFT search',graft_decoding='GRAFT window decode',slap_mapping='SLAP sweep mapping',slap_h_refinement='SLAP H refinement')[k] for k in keys_stage],xlim=(0,max(means)*1.25),ylim=(len(keys_stage)-.3,-.7),xlabel='Mean CPU seconds / reaction')
 a.set_title('d  Recorded stage costs',loc='left',weight='bold',pad=12);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 save(fig,'fig3_coordinate')
 windows=sorted((int(k),v) for k,v in dedup['window_distribution'].items())
 (MAN/'includes/generated-decoder-table.tex').write_text('\\begin{tabular}{l'+ 'r'*len(windows)+'}\\toprule\nMaximum events & '+' & '.join(str(k) for k,v in windows)+r'\\'+'\nReactions (all complete) & '+' & '.join(str(v) for k,v in windows)+r'\\'+'\n'+r'\bottomrule\end{tabular}'+'\n')
 paired=slap['paired_recovery']['seeds1']
-shuffle=[len(r['new_classes_absent_from_repair_representatives']) for r in comp['cases']]
-assert sum(v>0 for v in shuffle)==1
-assert sum(shuffle)==1
 macros=dict(GoldenOneRecovered=f"{counts[0]:,}",GoldenOnePercent=f"{100*counts[0]/N:.2f}",
  GoldenThreeRecovered=f"{counts[2]:,}",GoldenThreePercent=f"{100*counts[2]/N:.2f}",
  GoldenTenRecovered=f"{counts[3]:,}",GoldenTenPercent=f"{100*counts[3]/N:.2f}",GoldenTenUnknown=str(methods["seeds10"]["golden_outcomes"]["unknown"]),SlapRecovered=f"{slap['sweep_union_recovered']:,}",
@@ -108,11 +105,8 @@ macros=dict(GoldenOneRecovered=f"{counts[0]:,}",GoldenOnePercent=f"{100*counts[0
  RecoveryDifference=f"{100*(counts[0]-slap['sweep_union_recovered'])/N:.2f}",
  CommonCases=f"{len(seed['common_case_indices']):,}",OneCPU=f"{costs[0]:.2f}",TwoCPU=f"{costs[1]:.2f}",SlapCPU=f"{shown[2]:.2f}",
  AamOnly=str(len(paired['aam_only'])),SlapOnly=str(len(paired['slap_only'])),
- SweepRecovered=str(comp['comparisons']['slap_sweep']['union_classes']),
- SweepClasses=str(comp['comparisons']['slap_sweep']['total_classes']),
- CompetitionClasses=str(comp['new_window_class_count']),CompetitionCases=str(len(comp['new_window_cases'])),
- ShuffleClasses=str(sum(shuffle)),DecodeWallMinutes=f"{dedup['wall_seconds']/60:.2f}",
- DecodeCPUMinutes=f"{dedup['cpu_seconds']/60:.2f}",DecodeGiB=f"{dedup['peak_mib']/1024:.2f}",
+ SweepRecovered=str(coord['comparisons']['slap_sweep']['covered_in_graft_window']),
+ SweepClasses=str(coord['comparisons']['slap_sweep']['minimum_patterns']),
  SlapAbsent=str(slap['outcomes']['not_recovered']),SlapUnknown=str(slap['outcomes']['unknown']),
  FlatFamilies=f"{dedup['flat_families']:,}",DecodedClasses=str(dedup['event_classes']))
 (MAN/'includes/generated-results.tex').write_text('% Generated from complete fresh benchmark evidence.\n'+''.join('\\newcommand{\\'+k+'}{'+v+'}\n' for k,v in macros.items()))
@@ -173,7 +167,8 @@ for name,label in [('slap_sweep','SLAP sweep'),('native_slap','Native SLAP')]:
  rows.append(' & '.join(cells)+r"\\")
 (MAN/'includes/generated-coordinate-minima-table.tex').write_text(r"\begin{tabular}{@{}lrrrr@{}}\toprule"+'\n'+r"Compared with & GRAFT fewer & Equal & GRAFT more & Patterns at equal minima\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
 rows=[]
-for key,label in [('graft_search','GRAFT sweep search'),('graft_competition','GRAFT fragment competition'),('graft_decoding','GRAFT full-window decoding'),('slap_mapping','SLAP sweep mapping'),('slap_h_refinement','SLAP H refinement / initial scoring')]:
+for key,label in [('graft_search','GRAFT sweep search'),('graft_decoding','GRAFT full-window decoding'),('slap_mapping','SLAP sweep mapping'),('slap_h_refinement','SLAP H refinement / initial scoring')]:
+ if key not in coord['timing']:continue
  d=coord['timing'][key]['stats'];cells=[label]+[f'{d[k]:.3f}' for k in ['mean','median','p95']]
  rows.append(' & '.join(cells)+r"\\")
 (MAN/'includes/generated-coordinate-time-table.tex').write_text(r"\begin{tabular}{@{}lrrr@{}}\toprule"+'\n'+r"Recorded stage & Mean CPU s & Median CPU s & 95th pct. CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')

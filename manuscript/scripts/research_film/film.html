@@ -7,12 +7,12 @@
 .event-overlay{position:absolute;inset:0;pointer-events:none;z-index:20}.events .sym{width:38px}.events .sym svg{vertical-align:middle}#finale .event-overlay{width:100%;height:100%}#finale{justify-content:center;gap:30px}.candidate{width:540px}.mini{width:500px}.mini-arrow{left:507px}.mapping-note{font-size:11px}.mini.r{height:132px}.mini-label.p{top:218px}.mini.p{top:235px;height:142px}table.events{top:389px}.events td{height:24px}.bundle.same{border-color:#ad943e;background:#fbf8e9}
 #finale{right:auto;width:844px;gap:18px;justify-content:flex-start}.candidate{width:413px;padding:17px}.candidate-head b{font-size:17px}.badge{font-size:10px}.mini{width:373px}.mini.r{left:20px;top:78px;height:120px}.mini.p{left:20px;top:216px;height:132px}.mini-label.r{top:61px;left:23px}.mini-label.p{top:198px;left:23px}.mini-arrow{left:386px;top:199px}table.events{top:359px;left:20px;width:calc(100% - 40px)}.events td{height:22px}.events .kind{width:88px}.mapping-note{font-size:10px;left:20px;bottom:14px}.reference-tag{position:absolute;top:43px;left:18px;color:#50785c;font-size:10px}.steps{gap:20px}.edition{font-size:10px;letter-spacing:1.5px}#treeNote{font-size:11px;line-height:1.7}#treePanel{height:516px}#tree{height:449px;top:33px}#caption{font-size:24px}#detail{font-size:13px}
 table.events td{height:21px;line-height:18px;padding:0}.events .sym{font-size:12px}.events .sym svg{width:26px;height:17px}#branchCue{position:absolute;left:15px;top:48px;padding:10px 16px;border:1px solid;border-radius:10px;background:#ffffffec;font-size:13px;font-weight:600;letter-spacing:.6px;z-index:25;pointer-events:none;display:none}.branch-overlay{position:absolute;inset:0;pointer-events:none;z-index:19}</style></head><body>
-<div id="film"><header><div class="brand">GRAFT<span style="color:#c3a456">.</span></div><div class="edition">A SPACE OF ATOM CORRESPONDENCES</div><nav class="steps"><span id="s0"><b>01</b> GROW</span><span id="s1"><b>02</b> BRANCH</span><span id="s2"><b>03</b> COMPETE</span><span id="s3"><b>04</b> DECODE</span></nav></header>
+<div id="film"><header><div class="brand">GRAFT<span style="color:#c3a456">.</span></div><div class="edition">A SPACE OF ATOM CORRESPONDENCES</div><nav class="steps"><span id="s0"><b>01</b> GROW</span><span id="s1"><b>02</b> BRANCH</span><span id="s2"><b>03</b> DECODE</span></nav></header>
 <h1 id="headline"></h1><div id="subtitle"></div><div class="hairline"></div>
 <div id="main"><div id="molecules"><div id="branchCue"></div><div class="mol-title">REACTANT <span>source identities</span></div><div class="mol-title product">PRODUCT <span>matched identities</span></div><div class="molecule r" id="r"></div><div class="molecule p" id="p"></div><div id="pairlink">↔</div><svg id="links" viewBox="0 0 844 430"></svg><div id="legend"></div></div>
 <div id="treePanel"><h2 id="treeTitle">RETAINED FRAGMENT PLACEMENTS</h2><svg id="tree" viewBox="0 0 460 430"></svg><div id="treeNote"></div></div><div id="status"></div></div>
 <div id="compressed"></div><div id="finale"></div><div id="caption"></div><div id="detail"></div><div id="footer"><span id="sourceTag">COORDINATE CASE 101 / PR7 · ARCHIVED SEARCH CONTEXT</span><span>ILLUSTRATIVE CONFORMERS · SEARCH REPLAY, NOT DYNAMICS</span></div><div class="progress" id="progress"></div><div class="flash" id="flash"></div></div>
-<div id="controls"><button id="play">Play film</button><input type="range" id="seek" min="0" max="28" step=".05" value="0" aria-label="Film time"><span id="time">0:00 / 0:28</span><button id="end">See candidates</button></div><div id="notes"><b>Golden case 15.</b> <span id="scope"></span> Fragment colors carry the correspondence; red crosses and green inward arrows label bond events. The blue return arrow shows a new competition completion, with the original branches retained. B and C merge by their canonical signed-event class. Final cards are actual representatives from complete catalogue decoding, with the Golden reference-equivalent class labeled. <a href="film-data.json">Mappings and provenance</a> · <a href="science-validation.json">Validation</a></div>
+<div id="controls"><button id="play">Play film</button><input type="range" id="seek" min="0" max="22" step=".05" value="0" aria-label="Film time"><span id="time">0:00 / 0:22</span><button id="end">See candidates</button></div><div id="notes"><b>Golden case 15.</b> <span id="scope"></span> Fragment colors carry the correspondence; red crosses and green inward arrows label bond events. All displayed witnesses come from the saved baseline cut sweep. B and C merge by their canonical signed-event class. Final cards are actual representatives from complete catalogue decoding, with the Golden reference-equivalent class labeled. <a href="film-data.json">Mappings and provenance</a> · <a href="science-validation.json">Validation</a></div>
 <script>
 const D=__DATA__, $=s=>document.getElementById(s), palette=['#e5bf55','#73b7ac','#aaa4d3','#d9a18a'];
 const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
@@ -101,7 +101,7 @@ function bezier(a,b){return `M${a[0]},${a[1]} C${a[0]},${(a[1]+b[1])/2} ${b[0]},
 function drawTree(t,pi,f){
  let svg='<defs><marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 1L8 5L0 9" fill="none" stroke="#497ba2" stroke-width="1.6"/></marker></defs>';
  const chosen=new Set(D.paths[Math.min(pi,1)].frames.map(x=>x.transition));
- const dissolve=ease((t-16.8)/1.0),focus=branchFocus(t);
+ const dissolve=ease((t-11.8)/1.0),focus=branchFocus(t);
  svg+=`<g opacity="${1-dissolve}">`;
  for(const e of D.graph.transitions){
   const a=pos[e.source],b=pos[e.target],on=chosen.has(e.id);let q=ease((t-appear[e.target])/.55);
@@ -119,19 +119,13 @@ function drawTree(t,pi,f){
   }
   svg+=`<g opacity="${q}"><circle cx="${p[0]}" cy="${p[1]}" r="${terminal?15:12}" fill="${col}" stroke="#fafbf8" stroke-width="3"/><text x="${p[0]}" y="${p[1]+4}" text-anchor="middle" font-size="11" fill="#30473d">${terminal?n.id===29?'A':'B':n.assigned}</text></g>`;
  }
- if(t>=11){
-  const q=ease((t-11.3)/1.3);svg+=`<path d="M80 368 C80 431 411 442 400 190" fill="none" stroke="#497ba2" stroke-width="2.3" pathLength="1" stroke-dasharray="${q} 1" marker-end="url(#tip)"/>`;
-  svg+=`<text x="229" y="438" font-size="12" fill="#497ba2" text-anchor="middle" opacity="${q}">COMPETITION · reopen 2 assignments</text>`;
-  const nodes=[{p:[400,180],n:28,b:12.7},{p:[400,265],n:29,b:14.5},{p:[400,353],n:'C',b:15.4}];
-  for(let i=0;i<nodes.length;i++){const n=nodes[i],v=ease((t-n.b)/.5);if(!v)continue;
-   if(i){const a=nodes[i-1].p;svg+=`<path d="${bezier([a[0],a[1]+12],[n.p[0],n.p[1]-12])}" fill="none" stroke="#497ba2" stroke-width="2" pathLength="1" stroke-dasharray="${v} 1"/>`}
-   svg+=`<g opacity="${v}"><circle cx="${n.p[0]}" cy="${n.p[1]}" r="${i===2?15:12}" fill="${i===2?'#b6cde0':'#e7eef5'}" stroke="#497ba2" stroke-width="1.3"/><text x="${n.p[0]}" y="${n.p[1]+4}" font-size="11" text-anchor="middle" fill="#345b79">${n.n}</text></g>`;
-  }
-  if(t>12.8)svg+=`<text x="400" y="157" font-size="10" text-anchor="middle" fill="#497ba2">new completion</text>`;
+ if(t>=10.7){
+  const q=ease((t-10.7)/.55);
+  svg+=`<g opacity="${q}"><circle cx="400" cy="353" r="15" fill="#b6cde0"/><text x="400" y="357" font-size="11" text-anchor="middle" fill="#345b79">C</text><text x="400" y="315" font-size="10" text-anchor="middle" fill="#607565">Other saved path</text></g>`;
  }
  svg+='</g>';
- if(t>=16.8){
-  const q=ease((t-16.8)/1.0),u=ease((t-17.4)/1.4),merge=ease((t-18.4)/.6);
+ if(t>=11.8){
+  const q=ease((t-11.8)/1.0),u=ease((t-12.4)/1.4),merge=ease((t-13.4)/.6);
   svg+=`<g opacity="${q}"><text x="30" y="21" font-size="11" fill="#78887d" letter-spacing="1">WITNESSES</text><text x="279" y="21" font-size="11" fill="#78887d" letter-spacing="1">EVENT CLASSES</text>`;
   const ys=[90,207,316],outY=[109,256];
   for(let i=0;i<3;i++){
@@ -166,34 +160,27 @@ function growing(pi,stage,q){const fs=D.paths[pi].frames.filter(f=>f.stage===sta
 
 function seek(t){
  t=Math.max(0,Math.min(D.duration,t));prevT=t;
- let pi=0,f=growing(0,1,0),title='Grow. Compete. Decode.',sub='Golden case 15 · a recorded search excerpt.',caption='A mapping is a family of choices.',detail='Matched fragment colors follow source identities. The 3D conformers are illustrative.';
+ let pi=0,f=growing(0,1,0),title='Grow. Branch. Decode.',sub='Golden case 15 · a recorded search excerpt.',caption='A mapping is a family of choices.',detail='Matched fragment colors follow source identities. The 3D conformers are illustrative.';
  if(t>=1&&t<4){f=growing(0,1,(t-1)/2.65);title='Grow the first fragment.';sub='Keep compatible placements compressed as the fragment extends.';caption='The first fragment matches 15 atoms.';detail='Conditional isomorphism checks compatibility at every extension.'}
  if(t>=4&&t<7){f=growing(0,2,(t-4)/2.7);title='Continue under that condition.';sub='Grow the next fragment while preserving the earlier placement.';caption='A second fragment finds alternative placements.';detail='This recorded context uses one sweep constraint on N0–H19.'}
  if(t>=7&&t<9){pi=t<8?0:1;f=findFrame(pi,2,'seed_end')[0];title='Two placements. Watch the switch.';sub='The highlighted atoms show which correspondence changes.';caption=pi===0?'Branch 1 · blue pulse':'Branch 2 · purple pulse';detail='Each placement stays on screen for one second. Fragment colors remain underneath the temporary highlight.'}
- if(t>=9&&t<11){pi=1;f=t<9.8?growing(pi,3,1):D.paths[pi].frames.at(-1);title='Complete the retained branches.';sub='Place the remaining oxygen and hydrogen atoms.';caption='A and B are both complete witnesses.';detail='The original alternatives remain available during competition.'}
- if(t>=11&&t<16.8){
-  title=t<12.7?'Let another fragment compete.':'Release conflicts. Grow a new branch.';sub='Give the O18 fragment priority to extend across C16.';caption='Keep A. Start a competing completion C.';detail='O18 changes placement; O17 is displaced and H19 is released. Refill those two assignments.';
-  f={mapping:D.paths[0].mapping,active:[18],stage:3,candidates:1,kind:'competition_parent',groups:D.paths[0].groups};
-  if(t>=12.7){f={mapping:D.competition.anchors,active:[16,18],stage:3,candidates:1,kind:'competition_anchors',groups:D.competition.groups};}
-  if(t>=14.5){f={mapping:D.competition.states[2].mapping,active:[17],stage:2,candidates:1,kind:'competition_completion',groups:D.competition.groups};}
-  if(t>=15.4){pi=2;f={mapping:D.paths[2].mapping,active:[],stage:0,candidates:1,kind:'competition_terminal',groups:D.competition.groups};}
- }
- if(t>=16.8){pi=2;f={mapping:D.paths[2].mapping,active:[],stage:0,candidates:1,kind:'decoded',groups:D.competition.groups};title='Different branches can merge.';sub='Decode the bond changes, then group equivalent signed-event patterns.';caption='B and C merge into the same event class.';detail='Search branches retain different histories. Final event classes remove that duplication.'}
- if(t>=19.2){title='Two distinct decoded outcomes.';sub='Selected event classes · one matches the Golden reference.';caption='Retain the alternatives. Reveal the symmetry.';detail='Saved catalogue: 58 deduplicated branches · 118 families · 9 classes through 6 events; 2 shown.'}
- $('sourceTag').textContent='GOLDEN CASE 15 · CAP 100 · ONE-SEED SWEEP + FRAGMENT COMPETITION';
+ if(t>=9&&t<11){pi=1;f=t<9.8?growing(pi,3,1):D.paths[pi].frames.at(-1);title='Complete the retained branches.';sub='Place the remaining oxygen and hydrogen atoms.';caption='A and B are both complete witnesses.';detail='The retained placements remain separate search branches.'}
+ if(t>=11){pi=1;f=D.paths[1].frames.at(-1);title='Different branches can merge.';sub='Decode the bond changes, then group equivalent signed-event patterns.';caption='B and C merge into the same event class.';detail='All three witnesses come from the baseline sweep. Equivalent events share one final candidate.'}
+ if(t>=14.2){title='Two distinct decoded outcomes.';sub='Selected event classes · one matches the Golden reference.';caption='Retain the alternatives. Reveal the symmetry.';detail='Saved catalogue: 44 deduplicated branches · 96 families · 9 classes through 6 events; 2 shown.'}
+ $('sourceTag').textContent='GOLDEN CASE 15 · CAP 100 · ONE-SEED CUT SWEEP';
  const focus=branchFocus(t);$('branchCue').style.display=focus?'block':'none';if(focus){$('branchCue').textContent=`BRANCH ${focus.index+1} OF 2 · ${focus.index===0?'BLUE':'PURPLE'} HIGHLIGHT`;$('branchCue').style.color=focus.color;$('branchCue').style.borderColor=focus.color;$('branchCue').style.opacity=.6+.4*focus.strength;}
  $('headline').textContent=title;$('subtitle').textContent=sub;$('caption').textContent=caption;$('detail').textContent=detail;
- ['s0','s1','s2','s3'].forEach((id,i)=>$(id).className=(t<7?i===0:t<11?i===1:t<16.8?i===2:i===3)?'on':'');
+ ['s0','s1','s2'].forEach((id,i)=>$(id).className=(t<7?i===0:t<11?i===1:i===2)?'on':'');
  $('main').style.opacity=1;$('compressed').style.opacity=0;
- const ending=ease((t-19.1)/.65);$('molecules').style.opacity=1-ending;$('status').style.opacity=1-ending;
- $('status').innerHTML=`<strong>${Object.keys(f.mapping).length} / 30</strong> atoms assigned <span style="margin:0 15px;color:#bdc8bb">│</span> ${t>=11&&t<16.8?'Competing completion · original branches retained':t>=16.8?'Three displayed witnesses → two event classes':'Selected recorded search paths'}`;
- $('treeTitle').textContent=t>=16.8?'DECODE · MERGE EQUIVALENT EVENTS':'GROWTH + COMPETITION';
- $('treeNote').textContent=t>=16.8?'Two classes illustrated above; seven others retained in the catalogue.':t>=11?'Blue return arrow = a new B-priority completion, not deletion.':'Numbers = assigned atoms · edges = retained fragment placements';
+ const ending=ease((t-14.1)/.65);$('molecules').style.opacity=1-ending;$('status').style.opacity=1-ending;
+ $('status').innerHTML=`<strong>${Object.keys(f.mapping).length} / 30</strong> atoms assigned <span style="margin:0 15px;color:#bdc8bb">│</span> ${t>=11?'Three displayed witnesses → two event classes':'Selected recorded search paths'}`;
+ $('treeTitle').textContent=t>=11.8?'DECODE · MERGE EQUIVALENT EVENTS':'CONDITIONAL FRAGMENT GROWTH';
+ $('treeNote').textContent=t>=11.8?'Two classes illustrated above; seven others retained in the catalogue.':t>=10.7?'C is another saved baseline path; the shown tree is an excerpt.':'Numbers = assigned atoms · edges = retained fragment placements';
  $('finale').style.opacity=ending;$('flash').style.opacity=0;
- if(t<19.8){drawMol('r','r',pi,f,t);drawMol('p','p',pi,f,t);drawLinks(f,t)}
+ if(t<14.8){drawMol('r','r',pi,f,t);drawMol('p','p',pi,f,t);drawLinks(f,t)}
  drawTree(t,pi,f);
- if(t>=19.1)for(let i=0;i<D.decoded_candidates.length;i++){
-  const q=ease((t-19.15-i*.12)/.6);$('card'+i).style.transform=`translateY(${(1-q)*20}px)`;
+ if(t>=14.1)for(let i=0;i<D.decoded_candidates.length;i++){
+  const q=ease((t-14.15-i*.12)/.6);$('card'+i).style.transform=`translateY(${(1-q)*20}px)`;
   const end={mapping:D.decoded_candidates[i].mapping,active:[],stage:0};drawMol('r'+i,'r',i,end,t,true);
   drawMol('p'+i,'p',i,end,t,true);
  }
@@ -203,6 +190,6 @@ function seek(t){
 let playing=false,start=0,offset=0;
 function tick(now){if(!playing)return;seek(offset+(now-start)/1000);if(prevT>=D.duration){playing=false;$('play').textContent='Replay film';return}requestAnimationFrame(tick)}
 $('play').onclick=()=>{playing=!playing;$('play').textContent=playing?'Pause':'Play film';if(playing){offset=prevT>=D.duration?0:prevT;start=performance.now();requestAnimationFrame(tick)}};
-$('seek').oninput=e=>{playing=false;$('play').textContent='Play film';seek(+e.target.value)};$('end').onclick=()=>{playing=false;seek(23)};
+$('seek').oninput=e=>{playing=false;$('play').textContent='Play film';seek(+e.target.value)};$('end').onclick=()=>{playing=false;seek(19)};
 window.film={seek,duration:D.duration,data:D};seek(0);
 </script></body></html>

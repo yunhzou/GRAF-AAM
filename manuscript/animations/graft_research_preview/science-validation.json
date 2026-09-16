@@ -1,9 +1,9 @@
 {
   "status": "passed",
-  "source_sha256": "dd0ee8cbee5f572e23e7ea0ae9eb927a5ee10593f2ddd8322dc5d44d2a8562a1",
+  "source_sha256": "1b6456feaa260937f7fb64fc306fd4c28b51827e54fefa1ebfddf185c8f26426",
   "checks": [
     "Recorded baseline fragment calls replay exactly",
-    "Competition anchors, released atoms and completion agree with saved offer and graph",
+    "All displayed witnesses come from the saved baseline sweep",
     "All displayed correspondences are element-preserving injections",
     "Final cards have distinct canonical signed-event IDs",
     "B and C merge into the same signed-event class",
@@ -11,5 +11,5 @@
     "Complete catalogue has nine classes through six events; two explicitly selected for display",
     "Display conformers preserve endpoint elements, bond orders and atom indexing"
   ],
-  "scope": "Golden case 15, one-seed cap-100 sweep. Selected baseline context and one verified offer from a bounded competition pass (three parents, one depth). Three displayed terminal witnesses group into two event classes; the complete deduplicated catalogue contains nine classes through six events. Coordinates are illustrative RDKit conformers generated for display, not Golden geometry or a reaction trajectory."
+  "scope": "Golden case 15; baseline one-seed cut sweep at cap 100. Two recorded growth paths and one additional baseline sweep witness illustrate branching and canonical event-class merging. Two classes are displayed from the completely decoded baseline catalogue through six events. Coordinates are illustrative conformers, not dynamics."
 }

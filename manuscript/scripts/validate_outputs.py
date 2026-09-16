@@ -29,7 +29,7 @@ for d in competitors['methods']:
  assert set(d['first_correct_cases'])<=set(d['any_correct_cases'])<=set(range(1851))
  assert len(d['failed_cases'])==sum(n for k,n in d['statuses'].items() if k!='mapped')
  assert d['invalid_candidates']==sum(d['invalid_reasons'].values())
-seed=read('seed_comparison.json');slap=read('slap_sweep.json');comp=read('competition_final.json');flat=read('final_dedup.json')
+seed=read('seed_comparison.json');slap=read('slap_sweep.json');flat=read('final_dedup.json')
 misses=read('golden_miss_analysis.json')
 assert misses['nonrecovered']==11 and len(misses['rows'])==11
 assert {r['case'] for r in misses['rows']}=={r['case'] for r in seed['methods']['seeds10']['per_case'] if r['outcome']=='not_recovered'}
@@ -38,7 +38,7 @@ assert all(r['retained_pair_counts']==[r['reference_pairs']+1] for r in misses['
 assert misses['all_reference_conversions_verified'] and misses['cases_recovered_by_any_comparator']==[871]
 assert all(t['native_python_graph_equal'] for t in misses['causal_traces'])
 
-assert seed['fresh'] and slap['fresh'] and comp['fresh']
+assert seed['fresh'] and slap['fresh']
 keys=['seeds1','seeds2','seeds3','seeds10']
 assert all(seed['methods'][k]['golden_cases']==1851 for k in keys)
 assert all(sum(seed['methods'][k]['golden_outcomes'].values())==1851 for k in keys)
@@ -53,17 +53,11 @@ for k in keys:
   assert all(d['per_case'][c]['search_complete'] and d['per_case'][c]['search_hosts']==['Mac'] for c in seed['common_case_indices'])
 assert sum(slap['outcomes'].values())==1851
 assert slap['sweep_union_recovered']==slap['outcomes']['recovered']
-assert comp['comparisons']['slap_sweep']['union_classes']==166 and comp['comparisons']['slap_sweep']['total_classes']==168
-assert comp['comparisons']['slap_sweep']['union_complete_cases']==139
-assert comp['comparisons']['native_slap']['union_classes']==155 and comp['comparisons']['native_slap']['total_classes']==160
-assert comp['new_window_class_count']==36 and len(comp['new_window_cases'])==9
-assert flat['old_branches']==237645 and flat['new_branches']==124641 and flat['flat_families']==236653
-assert flat['old_median']==596.5 and flat['new_median']==397 and flat['workers']==3
-assert all(r['complete'] for r in flat['per_case'])
-assert len(flat['per_case'])==140 and flat['fresh_decode_all140'] is True
+assert flat['competition'] is False
+assert len(flat['per_case'])==140 and all(r['complete'] for r in flat['per_case'])
+assert flat['flat_families']==120052==sum(r['flat_saved_families'] for r in flat['per_case'])
+assert flat['event_classes']==300==sum(len(r['class_ids']) for r in flat['per_case'])
 assert sum(flat['window_distribution'].values())==140
-assert flat['flat_families']==sum(r['flat_saved_families'] for r in flat['per_case'])
-assert flat['input_paths']==sum(r['input_paths'] for r in flat['per_case'])
 sources=json.loads((E/'paper_sources.json').read_text())
 assert sources['fresh_campaign_complete']
 for row in sources['snapshots']:
@@ -84,7 +78,7 @@ log=(MAN/'build/preprint.log').read_text()
 assert not re.search(r'(?:Citation|Reference).*undefined|There were undefined|Overfull \\[hv]box|Missing character:',log), 'Inspect TeX log'
 r=PdfReader(MAN/'manuscript.pdf');pages=[p.extract_text() for p in r.pages];alltext='\n'.join(pages)
 assert '??' not in alltext
-for value in [f"{seed['methods']['seeds1']['golden_recovery_percent']:.2f}",f"{seed['methods']['seeds3']['golden_recovery_percent']:.2f}",'124,641','237,645',f"{flat['wall_seconds']/60:.2f}",'166','168']:
+for value in [f"{seed['methods']['seeds1']['golden_recovery_percent']:.2f}",f"{seed['methods']['seeds3']['golden_recovery_percent']:.2f}",'120,052','300','162','168']:
  assert value in alltext,value
 assert 'GRAFT and benchmarked mapping implementations on Golden' in alltext
 assert 'First correct' not in alltext and 'two ten-order cases remain unresolved' not in alltext
@@ -126,14 +120,9 @@ for d in timing['default_comparators']:
  source=next(r for r in competitors['methods'] if r['method']==d['key'])
  assert d['calls']==source['statuses']['mapped']
  assert abs(d['mean_wall_seconds']*d['calls']-source['original_mapping_timing']['successful_mapping_wall_sum_seconds'])<1e-8
-coord=timing['coordinate_decoding']
-assert len(coord['per_case'])==140
-assert abs(sum(r['cpu_seconds'] for r in coord['per_case'])-flat['cpu_seconds'])<1e-7
-assert abs(coord['stats']['mean']-flat['cpu_seconds']/140)<1e-8
-for value in ['11.01','1.22','52.67']:assert value in alltext,value
 coord=read('coordinate_minima.json')
 assert coord['cases']==140 and coord['mapping_runs']==0
-assert coord['graft_minimum_patterns']==171==sum(len(r['graft_minimum_ids']) for r in coord['per_case'])
+assert coord['graft_minimum_patterns']==166==sum(len(r['graft_minimum_ids']) for r in coord['per_case'])
 assert coord['comparisons']['slap_sweep']['count_relations']=={'equal':136,'lower':4}
 assert coord['comparisons']['native_slap']['count_relations']=={'equal':125,'lower':15}
 for method,d in coord['comparisons'].items():
@@ -143,7 +132,7 @@ for method,d in coord['comparisons'].items():
 for d in coord['timing'].values():
  assert len(d['per_case'])==140
  assert abs(d['stats']['mean']-sum(r['cpu_seconds'] for r in d['per_case'])/140)<1e-7
-for v in ['162/164','140/140','171','1.047','1.840','1.337','0.053']:assert v in alltext,v
+for v in ['158/164','138/140','166','1.047','1.337','0.053']:assert v in alltext,v
 assert 'not a mapping-accuracy benchmark' in alltext.replace('\n',' ')
 # Prior-method roles and baseline-normalized timing are derived, not new runs.
 local=next(d for d in competitors['methods'] if d['method']=='localmapper')
@@ -156,18 +145,16 @@ for prefix in ['graft1','graft2','slap']:
 assert min(timing['default_comparators'],key=lambda d:d['mean_wall_seconds'])['key']=='rxnmapper'
 assert min(timing['default_comparators'],key=lambda d:d['mean_cpu_seconds'])['key']=='rxnmapper'
 
-# Paired cap study: distinguish certified empty searches from incomplete decoding.
-caps=read('coordinate_cap_comparison.json')
-assert caps['processed']==caps['complete_pairs']==140 and caps['unresolved']==[]
-assert caps['same_minimum']==138 and caps['no_full_mapping']=={'100':[123,125],'2000':[]}
-assert caps['window_patterns_added']==[] and caps['fresh2000_window_differences']==[]
-assert caps['window_patterns_lost']==[{'case':123,'count':1},{'case':125,'count':1}]
-assert caps['counts']=={'100':{'complete_mappings':138,'minimum_patterns':169,'window_patterns':334},'2000':{'complete_mappings':140,'minimum_patterns':171,'window_patterns':336}}
-assert len(caps['per_case'])==140
-for cap in ['100','2000']:
- assert caps['counts'][cap]['window_patterns']==sum(r['patterns'+cap] for r in caps['per_case'])
-for value in ['138/140','140/140','334','336','123 and 125','Branch-cap comparison']:
- assert value in alltext.replace('\n',' '),value
+# The coordinate cap paragraph carries forward search completion only.
+assert '123 and 125' in alltext.replace('\n',' ')
+assert not re.search(r'\b(?:competition|takeover|competing)\b',tex,re.I)
+assert 'graft_competition' not in coord['timing']
+assert 'graft_decoding' not in coord['timing']  # no complete baseline timing pass
+assert coord['competition'] is False
+for row,cert in zip(coord['per_case'],flat['per_case']):
+ assert row['case']==cert['case']
+ for other in row['comparators'].values():
+  assert set(other['covered_in_graft_window'])==set(other['ids'])&set(cert['class_ids'])
 
 # Same-CPU Golden cap ablation; unresolved is not a verified exclusion.
 ablation=read('golden_cap_ablation.json')
