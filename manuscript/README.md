@@ -1,6 +1,6 @@
 # GRAFT preprint
 
-The manuscript presents the final algorithm: weighted continuous fragment growth, correlated automorphism actions, saturated-placement and fragment-priority branching, unordered final fragment pairs, and symbolic signed-event decoding.
+The manuscript presents the final algorithm: weighted continuous fragment growth, correlated automorphism actions, conditional saturated-placement branching and cut sweep, unordered final fragment pairs, and symbolic signed-event decoding.
 
 - `manuscript.pdf`: compiled paper.
 - `preprint.tex`: LaTeX entry point, retaining the supplied author list and preprint style.
@@ -60,3 +60,11 @@ The completed same-CPU Golden cap ablation is in the appendix (`evidence/golden_
 The published method uses one-seed cut sweep followed by separate decoding. Competition is excluded. Golden results are unchanged. Baseline-only coordinate evidence and decoding checks are in [the publication report](../reports/published_baseline_20260915/). At cap 2,000, GRAFT recovers 162/168 SLAP-sweep patterns and 151/160 native-SLAP patterns within the fixed windows. At equal minima, the corresponding counts are 158/164 and 138/140. The output has 300 event patterns, including 166 at GRAFT's own minima.
 
 Final end-to-end timing is recorded in `evidence/end_to_end_timing.json` and Table A5: all 140 reactions complete within the five-minute watchdog, preserving all 300 archived event classes and all 120,052 saved families. Mean/median CPU seconds are 1.257/0.300 for search, 4.647/0.288 for decoding, and 6.073/0.812 end to end. These are per-reaction CPU times, not divided by the four workers. Golden timings retain their explicitly labeled search-only scope. The final paper results, evidence, and bundle are ready; no further run is pending for these reported claims.
+
+## Authors
+
+Yunheng Zou; Olalla Nieto Faza; Shifa Hussain; **Varinia Bernales (PI)**;
+**Alán Aspuru-Guzik (PI)**. PI means principal investigator. Shifa Hussain is
+assigned to the Department of Biology, University of Toronto Mississauga.
+[Affiliation provenance](evidence/author-affiliations.md) records the supplied
+assignments and official institutional sources. `main` is the publication branch.

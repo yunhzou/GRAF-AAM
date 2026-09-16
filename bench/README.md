@@ -1,7 +1,9 @@
-# Golden benchmark script guide
+# Benchmark code and reproduction guide
 
-Results and exact cluster locations: [paper index](../reports/README.md).
-Scripts remain at their original paths so saved commands/imports keep working.
+Results and provenance: [paper index](../reports/README.md). Current entry
+points live here; saved data live in `reports/`. Frozen campaign drivers
+previously mixed with the results are now in [archive/](archive/README.md),
+unchanged byte-for-byte. Their original staging requirements still apply.
 No benchmark needs rerunning merely to inspect saved mappings or metrics.
 
 Use the [two shared viewer styles](../docs/VIEWERS.md). R/P and TS comparisons
@@ -9,7 +11,30 @@ use the restored original white-panel renderer; benchmark-specific skins are
 retired. `missing_pattern_display_data.py` prepares the three-case witnesses and
 `tools/render_mapping_comparison.py` renders them through the shared module.
 
-## Maintained experiment entry points
+## Publication entry points
+
+| Script/location | Responsibility |
+|---|---|
+| `prepare_golden_benchmark.py` | Prepare pinned Golden inputs |
+| `golden_publication.py` | Golden campaign orchestration and scoring |
+| `golden_evaluation.py`, `golden_checkpoint_evaluation.py` | Reference-family evaluation of saved outputs |
+| `golden_competitors.py`, `golden_slap_budget.py` | Prior-method adapters and SLAP budget/sweep comparison |
+| `final_end_to_end.py` | Fresh coordinate search and public decoding, with stage timing and watchdogs |
+| `summarize_final_timing.py`, `plot_final_timing.py` | Final pipeline timing summary and plot |
+| `benchmark_saved_decoding.py`, `decode_saved_events.py` | Separate decoder measurement and saved-result inspection |
+| `contracts/` | Versioned regression expectations |
+| `experiments/` | Optional research variants outside the published default |
+| `archive/campaigns/` | Original historical campaign drivers, with unchanged hashes |
+
+The four profiling scripts `benchmark_fragment_detection.py`,
+`benchmark_fragment_seed.py`, `benchmark_initial_fragment_stage.py`, and
+`benchmark_orbit_preparation.py` moved here from `tools/`.
+`hpc/` retains batch launch examples. Use `--help` before launching a new run;
+original inputs are required and are not silently regenerated or downloaded.
+The saved protocol/source pins govern historical reproduction; current defaults
+must not be substituted for an older campaign's configuration.
+
+## Additional experiment and analysis entry points
 
 | Script | Responsibility |
 |---|---|
@@ -50,8 +75,9 @@ retired. `missing_pattern_display_data.py` prepares the three-case witnesses and
 
 The other Golden scripts record diagnostic experiments (seeds, caps, direction,
 anchors, ranking, memory, viewers). They are retained for provenance, not silently
-included in the fixed-policy paper protocol. No scripts or evidence were moved
-or deleted during organization.
+included in the fixed-policy paper protocol. Source relocations and removal of superseded visual artifacts are recorded in
+[the cleanup manifest](../docs/publication_cleanup_20260916.json). Numerical
+evidence, witness archives, and recorded source hashes are preserved.
 
 ## Reproduce safely
 
@@ -69,10 +95,10 @@ or deleted during organization.
 Inspect current CLI options without starting a run:
 
 ```bash
-.venv/bin/python bench/golden_publication.py --help
-.venv/bin/python bench/collect_golden_patterns.py --help
-.venv/bin/python bench/golden_competitors.py --help
-.venv/bin/python bench/golden_slap_budget.py --help
+python bench/golden_publication.py --help
+python bench/collect_golden_patterns.py --help
+python bench/golden_competitors.py --help
+python bench/golden_slap_budget.py --help
 ```
 
 The competitor execution environment is separately pinned at:
@@ -84,5 +110,5 @@ The competitor execution environment is separately pinned at:
 Evaluation/adapter regression checks (not a fresh chemistry benchmark):
 
 ```bash
-.venv/bin/python -m pytest -q tests/test_golden_evaluation.py tests/test_golden_competitors.py tests/test_golden_slap_budget.py
+python -m pytest -q tests/test_golden_evaluation.py tests/test_golden_competitors.py tests/test_golden_slap_budget.py
 ```

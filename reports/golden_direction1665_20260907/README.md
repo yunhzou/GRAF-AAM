@@ -13,8 +13,8 @@ Returned P→R pairs are inverted into original R→P indices before scoring. Th
 
 ## Viewers
 
-- [Verified P→R witness, displayed in the usual R-left/P-right layout](P_to_R/viewer.html).
-- [Fresh R→P result](R_to_P/viewer.html).
+- [Verified P→R witness, displayed in the usual R-left/P-right layout](https://github.com/yunhzou/coordinate_alignment/blob/59f55e4954cb7fb106ec66fe0912f1903550883c/reports/golden_direction1665_20260907/P_to_R/viewer.html).
+- [Fresh R→P result](https://github.com/yunhzou/coordinate_alignment/blob/59f55e4954cb7fb106ec66fe0912f1903550883c/reports/golden_direction1665_20260907/R_to_P/viewer.html).
 
 Both are standalone downloadable HTML. The same `r` label on each drawing identifies one mapped source atom. Clicking highlights the actual pair. Reverse fragment details explicitly label **P seeds and P cuts**, with mapped R atoms listed separately. Reference-derived regions remain distinct from actual AAM fragments.
 

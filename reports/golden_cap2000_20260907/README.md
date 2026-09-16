@@ -25,8 +25,8 @@ Case 1740 still misses at 100 seeds with **zero cap stops** (67.12 s search/arch
 
 ## Inspect actual mappings
 
-- [Case 1665, new cap 2,000 / three seeds](case1665_seeds3/viewer.html)
-- [Case 1665, previous cap 100 / 100 seeds](../golden_mapping_diagnosis_20260907/case1665/viewer.html)
+- [Case 1665, new cap 2,000 / three seeds](https://github.com/yunhzou/coordinate_alignment/blob/59f55e4954cb7fb106ec66fe0912f1903550883c/reports/golden_cap2000_20260907/case1665_seeds3/viewer.html)
+- [Case 1665, previous cap 100 / 100 seeds](https://github.com/yunhzou/coordinate_alignment/blob/59f55e4954cb7fb106ec66fe0912f1903550883c/reports/golden_mapping_diagnosis_20260907/case1665/viewer.html)
 
 The viewers are standalone offline HTML. Display indices are checked against the archive elements and bond matrix. **Both drawings now show the mapped source-atom identifier (`r57`), not unrelated R and P indices.** Hover/click highlights the actual pair and reports, for example, `R6:r76 → P:p0`. The exact table compares each P atom's selected source against its reference source without relabelling symmetry-equivalent copies.
 
@@ -51,7 +51,7 @@ A separate retry used 128 GiB, the same eight workers and identical search setti
 
 **Case 1665 recovered at 100 seeds, cap 2,000, tolerance 1.0.** Every one of the first eight completed cut archives contains a representative with the exact reference chemical certificate. The no-cut archive alone contains a witness (terminal 243), using the correct 18 + 10 + 10 source-carbon origins. This is mapping recovery modulo endpoint chemical symmetry, not just atom coverage or independent atom-orbit agreement.
 
-- [View the actual recovered witness](case1665_recovered/viewer.html); select “Verified recovered witness”.
+- [View the actual recovered witness](https://github.com/yunhzou/coordinate_alignment/blob/59f55e4954cb7fb106ec66fe0912f1903550883c/reports/golden_cap2000_20260907/case1665_recovered/viewer.html); select “Verified recovered witness”.
 - `partial_reference_check.json` preserves the eight witness mappings and their source cut archives.
 - `high_memory_retry/results.json` explicitly marks **partial completed cuts**, not a completed sweep.
 

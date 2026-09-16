@@ -128,7 +128,7 @@
 }
 
 \newcommand\authorlist{}
-\newcommand\authorformat[2][]{{\sffamily \bfseries #2$^{#1}$}}
+\newcommand\authorformat[2][]{{\sffamily \bfseries \mbox{#2$^{#1}$}}}
 \renewcommand\author[2][]{\addtolist[#1]{#2}{\authorlist}{\authorformat}{, }}
 
 \newcommand\affiliationlist{}

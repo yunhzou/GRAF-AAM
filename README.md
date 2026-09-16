@@ -1,4 +1,4 @@
-# rxn_core
+# GRAFT (`rxn_core`)
 
 The default GRAFT pipeline uses one seed ordering per cut, the uncut plus single-edge sweep, and branch cap 100. Match with `search_aam`, then decode bond-event alternatives separately. See the [Python API example](docs/PYTHON_API.md). Fragment competition is an experimental, explicit opt-in extension and is off by default; it is not part of the published method.
 
@@ -29,15 +29,18 @@ contains the manuscript PDF, figures, animations, and reproducible figure data.
 
 ## Design
 
-The computational API consists of immutable typed stages:
+The main Python workflow keeps search and event decoding separate:
 
 ```text
-search_aam
-    -> group_mechanisms                 # optional
-        -> compile_mechanism_families
-        -> select_rp_mappings
-            -> analyze_transition_state
+search_aam -> AAMResult -> decode_events -> DecodedEvents
+                                          |- unique event candidates
+                                          |- witness mappings
+                                          `- symmetry and shuffle queries
 ```
+
+The optional geometry/TS workflow consumes the same AAM result:
+`group_mechanisms` → `compile_mechanism_families` → `select_rp_mappings`
+→ `analyze_transition_state`.
 
 AAM is the authoritative source of mapping information. Its result retains
 a fragment-decision graph with shared prefixes/reconvergence, compressed
@@ -58,7 +61,7 @@ until a reactant is selected; it does not replace the full workflow.
 ## Install
 
 ```bash
-python -m pip install -e .
+python -m pip install -e ".[postprocessing]"
 ```
 
 Installation builds the native bookkeeping extensions and requires a C++17
@@ -75,43 +78,67 @@ does not invoke xTB.
 Start with the executed, self-contained [AAM notebook](docs/AAM_SIMPLE.ipynb): embedded molecules, matching, raw branch inspection, unique bond-event candidates, certified symmetry queries, py3Dmol inspection, and a growth animation for each sweep. All inputs and display helpers are in the notebook; no benchmark files are needed. The [Python API guide](docs/PYTHON_API.md) lists anchors, directions, conditional matching, all configuration controls, and current chirality limitations. Install its dependencies with `python -m pip install -e ".[notebook]"`.
 
 ```python
-from rxn_core import (
-    AAMProblem,
-    AAMSearchConfig,
-    MolecularEndpoint,
-    TransitionStateTarget,
-    VibrationalModes,
-    analyze_transition_state,
-    group_mechanisms,
-    compile_mechanism_families,
-    search_aam,
-    select_rp_mappings,
+from rxn_core import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
+from rxn_core.postprocessing import EventDecodeConfig, decode_events
+
+# Arrays for both endpoints are embedded in docs/AAM_SIMPLE.ipynb.
+problem = AAMProblem(
+    MolecularEndpoint(elements_R, xyz_R, wbo_R, label="R"),
+    MolecularEndpoint(elements_P, xyz_P, wbo_P, label="P"),
+    name="reaction",
 )
-
-reactant = MolecularEndpoint(elements_R, xyz_R, wbo_R, label="R")
-product = MolecularEndpoint(elements_P, xyz_P, wbo_P, label="P")
-problem = AAMProblem(reactant, product, name="reaction")
-
-aam = search_aam(problem, AAMSearchConfig(), workers=8,
-                 intermediate_dir="alignment/aam_search")
-grouped = group_mechanisms(aam)
-families = compile_mechanism_families(
-    grouped, workers=8, minimum_events_only=True)
-rp = select_rp_mappings(families)
-
-target = TransitionStateTarget(
-    MolecularEndpoint(elements_TS, xyz_TS, wbo_TS, label="TS"),
-    VibrationalModes(frequencies, normal_modes),
+aam = search_aam(
+    problem,
+    AAMSearchConfig(iso_tolerance=1.0, seed_count=1,
+                    sweep_cuts=True, branch_limit=100),
+    workers=1,
 )
-ts = analyze_transition_state(rp, target)
+decoded = decode_events(
+    aam, EventDecodeConfig(threshold=0.5, metal_threshold=0.3),
+)
+print("Search capped:", aam.graph.capped)
+print("Saved-family decoding complete:", decoded.complete)
+for candidate in decoded.candidates:
+    print(candidate.total, candidate.events, candidate.mapping)
+
+if decoded.candidates:
+    candidate = decoded.candidates[0]
+    symmetry = decoded.symmetry(candidate)
+    # Edit this condition to ask whether a proposed assignment is allowed.
+    answer = decoded.query(candidate, {0: candidate.mapping[0]}, same_events=True)
+    print(answer.status)  # allowed, forbidden, or unknown within saved families
 ```
 
-For R/P only, `align_reaction(problem, workers=8)` is the convenience
-composition of the search, grouping, family, and selection stages. They remain available
-when callers need to inspect, cache, audit, or transform AAM information.
+A candidate is one signed bond-event class with a witness mapping and supporting
+family IDs. `decoded.complete` certifies decoding of retained complete families
+in the requested window; it does not certify exhaustive AAM search. The decoder
+retains all represented event counts by default, including nonminimum
+alternatives. Search and final event tolerances are configured independently.
 
-Serialization, CLI workflows, and self-contained HTML views are typed
-artifact adapters, not computational data models.
+Anchors use `AAMSearchConfig(anchors=((r_atom, p_atom),))`.
+`from rxn_core import search_aam_directions` exposes forward, reverse,
+smaller-first, larger-first, and both-direction searches. The
+[API guide](docs/PYTHON_API.md) documents conditional fragment matching,
+fixed-query isomorphism, serialization, and the current chirality TODO.
+
+For one animation per sweep, use the in-memory result directly:
+
+```python
+from pathlib import Path
+from rxn_core.viewers import aam_growth_html
+
+Path("aam_growth.html").write_text(aam_growth_html(aam), encoding="utf-8")
+```
+
+The offline viewer replays recorded fragment calls and verifies their outputs;
+it does not enumerate every symmetry permutation. The notebook embeds it in an
+iframe alongside py3Dmol views. GitHub shows saved text and molecule PNGs;
+interactive views require a trusted Jupyter notebook.
+
+`align_reaction`, `group_mechanisms`, `compile_mechanism_families`,
+`select_rp_mappings`, and `analyze_transition_state` remain importable from
+`rxn_core` for the optional geometry/TS workflow, illustrated in
+[TUTORIAL.ipynb](docs/TUTORIAL.ipynb).
 
 ## CLI
 
@@ -179,9 +206,31 @@ TSResult
 ## Tests
 
 ```bash
-.venv/bin/pytest -q
+python -m pytest -q
 ```
 
 The suite includes a non-empty TS integration case that performs endpoint
 AAM, analytical-family compilation, R/P selection, two partial core searches,
 endpoint-consensus merging, and imaginary-mode scoring.
+
+## Repository layout
+
+| Location | Contents |
+|---|---|
+| `src/rxn_core/` | Importable matching, search, separate decoding, geometry, and viewers |
+| `docs/` | Executed notebooks and public API documentation |
+| `bench/` | Benchmark entry points and shared evaluators; see the [guide](bench/README.md) |
+| `bench/experiments/` | Optional research experiments, excluded from the published default |
+| `bench/archive/`, `bench/contracts/` | Frozen campaign source and regression contracts |
+| `reports/` | Saved measurements, witnesses, provenance, and benchmark summaries |
+| `manuscript/` | Current paper, figures, research preview, and reproducibility bundle |
+| `tests/`, `native/`, `tools/`, `hpc/` | Tests, native implementation, user utilities, batch launch examples |
+
+See the [cleanup record](docs/PUBLICATION_CLEANUP.md) for source relocations,
+removed superseded artifacts, and recovery paths.
+
+## Authors
+
+Yunheng Zou; Olalla Nieto Faza; Shifa Hussain; **Varinia Bernales (PI)**;
+**Alán Aspuru-Guzik (PI)**. PI means principal investigator. Full affiliations
+are listed in the [manuscript](manuscript/manuscript.pdf).

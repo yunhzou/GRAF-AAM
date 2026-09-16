@@ -23,7 +23,7 @@ These findings concern the tested representations and scores. They are not a pro
 
 ### Case 9: oxygen origin, not generic bond strength
 
-In the saved [case 9 viewer](../golden_alternatives_20260907/case9/viewer.html):
+In the saved [case 9 viewer](https://github.com/yunhzou/coordinate_alignment/blob/59f55e4954cb7fb106ec66fe0912f1903550883c/reports/golden_alternatives_20260907/case9/viewer.html):
 
 - Product ring oxygen **p4** comes from ketone oxygen **r8** in top class 1, but from alcohol oxygen **r5** in reference-equivalent class 2.
 - Product water oxygen **p14** correspondingly comes from r5 in class 1 and r8 in class 2.
@@ -33,7 +33,7 @@ Thus both generic objectives favor the non-reference assignment. A transformatio
 
 ### Case 21: water incorporation
 
-In the saved [case 21 viewer](../golden_alternatives_20260907/case21/viewer.html), reference product carbonyl oxygen **p5** comes from water oxygen **r13**. Top class 1 instead uses an oxygen already in the organic precursor, **r2**. It has seven events versus eight for reference-equivalent class 4. Favoring structural retention alone does not encode the role of water in the transformation.
+In the saved [case 21 viewer](https://github.com/yunhzou/coordinate_alignment/blob/59f55e4954cb7fb106ec66fe0912f1903550883c/reports/golden_alternatives_20260907/case21/viewer.html), reference product carbonyl oxygen **p5** comes from water oxygen **r13**. Top class 1 instead uses an oxygen already in the organic precursor, **r2**. It has seven events versus eight for reference-equivalent class 4. Favoring structural retention alone does not encode the role of water in the transformation.
 
 ## What other methods use
 

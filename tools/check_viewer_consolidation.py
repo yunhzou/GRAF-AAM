@@ -91,29 +91,20 @@ def main():
         page.set_viewport_size({'width':1440, 'height':950})
         for relative, layout in [
             ('reports/holdout_forward_cap1000_seed1_20260910/viewer.html', 'minimum'),
-            ('reports/golden_remaining_21/viewer.html', 'golden_remaining'),
-            ('reports/golden_alternatives_20260907/case9/viewer.html', 'golden_mapping'),
             ('reports/eight_case_studies/t02_chloro_quinoline_alcohol/viewer.html', 'catalog'),
-            ('manuscript/animations/index.html', 'growth_animation'),
+            ('reports/pr7_search_trajectory_20260911/algorithm_trajectory.html', 'growth_trace'),
         ]:
             page.goto((ROOT / relative).as_uri())
             assert page.locator('body').get_attribute('data-viewer-layout') == layout
             if layout == 'minimum':
                 page.locator('#case').select_option('64')
                 assert page.locator('#cards .card').count() >= 3
-            elif layout == 'golden_remaining':
-                page.locator('#candidate').select_option(index=1)
-                assert page.locator('.atom-hit').count() > 0
-                page.screenshot(path=str(ROOT / 'reports/golden_remaining_21/browser_check.png'), full_page=True)
-            elif layout == 'golden_mapping':
-                page.locator('#mode').select_option(index=1)
-                assert page.locator('.atom-hit').count() > 0
             elif layout == 'catalog':
                 assert page.locator('canvas').count() >= 2
                 page.screenshot(path=str(OUT / 'catalog.png'))
             else:
-                page.locator('#next').click()
-                assert page.evaluate('animationAPI.getState().step') == 1
+                page.evaluate('searchTrajectory.setFrame(1)')
+                assert page.evaluate('searchTrajectory.getState().frame') == 1
             checks.append({'page':relative, 'layout':layout, 'status':'passed'})
         assert not errors, errors
         assert not external, external

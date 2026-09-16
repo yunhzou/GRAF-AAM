@@ -1,11 +1,19 @@
 # Paper benchmark index
 
 Start here when querying results or preparing the paper. Existing reports and
-raw runs are preserved in place; this index does not merge experimental protocols.
+numerical evidence and raw-run references are preserved in place; this index
+does not merge experimental protocols. Historical driver code is stored in
+[bench/archive](../bench/archive/README.md). Old generated viewer links resolve
+to their preserved Git revision after publication cleanup.
 
 ## Current published method
 
 [Baseline GRAFT, competition disabled](published_baseline_20260915/README.md) is the current coordinate evidence and film provenance. Golden scores are unchanged. Older reports below retain their original protocols and may include experimental extensions; do not use them as the current published pipeline.
+
+[Final end-to-end timing](final_end_to_end_20260916/README.md) and
+[decoder optimization](decoder_optimization_20260916/README.md) describe the
+final public pipeline. [Notebook validation](self_contained_notebook_20260916/README.md)
+checks the importable interface on embedded molecules.
 
 ## Archived evidence
 

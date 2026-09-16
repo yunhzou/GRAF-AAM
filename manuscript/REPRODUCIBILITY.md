@@ -24,6 +24,16 @@ This reads the checked-in evidence and runs no mapping searches. It checks numer
 
 The default branch cap is 100. The original Golden tables use cap 100; the original coordinate tables and Figure 3 use cap 2,000 and are labeled as the larger-budget comparison. The paired coordinate cap study reports both settings separately. The completed same-CPU Golden cap ablation is reported separately in the appendix and in `reports/golden_controlled_20260915/final/`.
 
+## Benchmark source layout
+
+The current entry points and evaluators are indexed in `bench/README.md`.
+Historical campaign drivers are preserved byte-for-byte under
+`bench/archive/campaigns/`; original paths and SHA256 hashes are recorded in
+`docs/publication_cleanup_20260916.json`. Measurements and witnesses remain in
+`reports/`. For historical reproduction use the recorded source/input pins;
+current library defaults are not a substitute. Superseded visual artifacts
+remain available at the Git revision recorded in the cleanup manifest.
+
 ## Search and comparison protocols
 
 The active-edge floor is $b=0.2$ and the matching tolerance is $\tau_{\mathrm{iso}}=1.0$. Default GRAFT uses one seed ordering per cut and the sweep. Both published evaluations exclude the experimental competition extension. Additional seeds and the no-sweep ablation are explicitly labeled. Seed streams are deterministic with root seed 42. Sweeps retain the uncut search and individual source-edge deletions. Bidirectional Golden output is a union of returned relations; branches from opposite directions are not spliced. Growth and branch caps bound compressed candidates rather than explicit mapping counts.

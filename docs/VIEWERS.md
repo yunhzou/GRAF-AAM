@@ -22,8 +22,9 @@ style. Catalog layouts retain their existing result-navigation behavior.
 Different layouts and chemical highlight colors are not independent skins.
 
 The reusable **algorithm search trajectory** pipeline is documented in
-[SEARCH_TRAJECTORIES.md](SEARCH_TRAJECTORIES.md). It captures verified fragment
-events from selected saved archives and renders them with `growth_trace_html`.
+[SEARCH_TRAJECTORIES.md](SEARCH_TRAJECTORIES.md). Use `from rxn_core.viewers import aam_growth_html` for direct in-memory
+results; archive capture and `growth_trace_html` remain supported. The executed
+[AAM notebook](AAM_SIMPLE.ipynb) shows a separate animation for each sweep.
 The PR7 example is `reports/pr7_search_trajectory_20260911/algorithm_trajectory.html`.
 Its endpoint coordinates remain fixed; playback follows growth and branching.
 
@@ -57,7 +58,7 @@ is used when provided. No search result is replaced by display fitting.
 - `viewer-bundle-migration.json` records presentation-only archive changes; all
   other archive members were verified byte-for-byte.
 - `tools/check_viewer_consolidation.py` checks the nine saved witnesses, native
-  and aligned geometry, representative Golden/catalog/growth layouts and offline
+  and aligned geometry, retained catalog/growth layouts and offline
   operation. Results and review images are under `docs/viewer-validation/`.
 - Frozen stable branches are retained as historical algorithm baselines. This
   cleanup does not rewrite Git history or alter those baselines.
@@ -71,3 +72,9 @@ acceleration checkouts (CLI artifacts, catalog and Golden viewers, shared style
 policy and proper rigid fitting). Browser checks passed for all nine saved
 witnesses, mobile layout, offline use, and representative diagnostic/catalog/
 recorded-growth pages. The tracked HTML audit found no private styles.
+
+Superseded Golden diagnostic viewers and the early manuscript movies were
+removed from the current checkout during publication cleanup. Their numerical
+evidence and historical Git revision are retained in the
+[cleanup record](PUBLICATION_CLEANUP.md). The viewer checker now uses the
+retained PR7 search trajectory instead of the retired movie.
