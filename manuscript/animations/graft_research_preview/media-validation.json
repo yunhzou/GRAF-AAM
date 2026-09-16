@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "mp4_sha256": "0b13e7d5e110dfcbe5e1060ec8c64425e9cf74d1c61b452706515af28c0f4688",
+  "mp4_sha256": "4623d57a1770b6493a4407d946900c5190188cde43fa0a9c6d6c892af9f59099",
   "mp4_metadata": {
     "ffmpeg_version": "7.1 built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)",
     "codec": "h264",
@@ -19,7 +19,7 @@
   },
   "decoded_video_frames": 528,
   "gif": {
-    "sha256": "1b49643fc4f5d9830143f216ddeceda7741467350b2c9e25820d2e3a8303b5e7",
+    "sha256": "32605d68d65259e61157e18e04e6babaacdfa588fee25c60fdcb2b7c3564fbdc",
     "frames": 264,
     "duration_ms": 22000,
     "size": [
@@ -28,5 +28,5 @@
     ],
     "loop": 0
   },
-  "visual_review": "Baseline-only branch highlights and final event-class merge inspected; no takeover segment. Fragment colors and red/green bond markers retained."
+  "visual_review": "Baseline-only branch highlights inspected; final A and B witnesses project to two distinct event classes, with no third branch or takeover segment. Fragment colors and red/green bond markers retained."
 }

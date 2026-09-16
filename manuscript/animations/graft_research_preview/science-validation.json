@@ -1,15 +1,15 @@
 {
   "status": "passed",
-  "source_sha256": "1b6456feaa260937f7fb64fc306fd4c28b51827e54fefa1ebfddf185c8f26426",
+  "source_sha256": "6eb2b771605f36f688e9d20dd82ba0564cbe6f1c33c687df21aec586f093ea05",
   "checks": [
     "Recorded baseline fragment calls replay exactly",
     "All displayed witnesses come from the saved baseline sweep",
     "All displayed correspondences are element-preserving injections",
     "Final cards have distinct canonical signed-event IDs",
-    "B and C merge into the same signed-event class",
+    "Exactly two recorded growth branches decode to their two distinct signed-event classes",
     "Final cards are decoded catalogue representatives",
     "Complete catalogue has nine classes through six events; two explicitly selected for display",
     "Display conformers preserve endpoint elements, bond orders and atom indexing"
   ],
-  "scope": "Golden case 15; baseline one-seed cut sweep at cap 100. Two recorded growth paths and one additional baseline sweep witness illustrate branching and canonical event-class merging. Two classes are displayed from the completely decoded baseline catalogue through six events. Coordinates are illustrative conformers, not dynamics."
+  "scope": "Golden case 15; baseline one-seed cut sweep at cap 100. Two recorded growth paths illustrate branching and decoding into two distinct event classes. Two classes are displayed from the completely decoded baseline catalogue through six events. Coordinates are illustrative conformers, not dynamics."
 }

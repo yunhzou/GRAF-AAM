@@ -8,6 +8,9 @@ from rxn_core.event_patterns import SignedEventIndex
 from rxn_core.family_query import query_path
 read=lambda p:json.loads(gzip.decompress(p.read_bytes()) if p.suffix=='.gz' else p.read_text())
 a=aam_from_record(read(S/'baseline.json.gz'));cat=FinalBranchCatalogue.from_record(a.problem,read(S/'catalogue.json.gz'));d=read(S/'film-source.json');idx=SignedEventIndex(a.problem);assert 'competition' not in d
+assert len(d['paths'])==2 and {p['terminal'] for p in d['paths']}=={29,30}
+assert len({p['event_class'] for p in d['paths']})==2
+assert all(p['event_class']==d['decoded_candidates'][p['class_index']]['event_class'] for p in d['paths'])
 for p in d['paths']:
  m={int(k):v for k,v in p['mapping'].items()};assert m==dict(a.graph.states[p['terminal']].mapping)
  assert idx.describe([m[i] for i in range(idx.n)])['id']==p['event_class']
@@ -21,4 +24,4 @@ ref=read(S/'reference.json');cert=lambda m:pynauty.certificate(colored_graph(ref
 for c in d['decoded_candidates']:assert (cert({int(k):v for k,v in c['mapping'].items()})==cert(dict(ref['mapping'])))==c['reference_equivalent']
 assert cat.branch_count==44 and len(cat.families)==96
 assert len(read(S/'decode.json')['patterns'])==9 and len({c['event_class'] for c in d['decoded_candidates']})==2
-print('Passed: three baseline witnesses, two distinct displayed classes, reference label, 44 branches / 96 families.')
+print('Passed: two baseline witnesses, two distinct displayed classes, reference label, 44 branches / 96 families.')

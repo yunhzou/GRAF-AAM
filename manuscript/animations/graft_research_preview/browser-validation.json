@@ -15,6 +15,11 @@
     19
   ],
   "branch_focus_check": true,
+  "final_witness_labels": [
+    "A",
+    "B"
+  ],
+  "final_event_class_count": 2,
   "sampled_timeline_injections": 241,
   "viewport": [
     1440,

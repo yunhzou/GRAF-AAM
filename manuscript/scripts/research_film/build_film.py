@@ -26,7 +26,9 @@ def build(repo, out, source):
             assert all(problem.reactant.elements[int(r)] == problem.product.elements[p] for r, p in m.items())
     classes = [c['event_class'] for c in data['decoded_candidates']]
     assert len(classes) == len(set(classes)) == 2
-    assert data['paths'][1]['event_class'] == data['paths'][2]['event_class']
+    assert len(data['paths']) == 2
+    assert {p['event_class'] for p in data['paths']} == set(classes)
+    assert all(p['event_class'] == classes[p['class_index']] for p in data['paths'])
     for c in data['decoded_candidates']:
         vector = [c['mapping'][str(i)] for i in range(index.n)]
         result = index.describe(vector)
@@ -47,7 +49,7 @@ def build(repo, out, source):
     (out / 'science-validation.json').write_text(json.dumps(dict(status='passed', source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
         checks=['Recorded baseline fragment calls replay exactly', 'All displayed witnesses come from the saved baseline sweep',
                 'All displayed correspondences are element-preserving injections', 'Final cards have distinct canonical signed-event IDs',
-                'B and C merge into the same signed-event class', 'Final cards are decoded catalogue representatives',
+                'Exactly two recorded growth branches decode to their two distinct signed-event classes', 'Final cards are decoded catalogue representatives',
                 'Complete catalogue has nine classes through six events; two explicitly selected for display',
                 'Display conformers preserve endpoint elements, bond orders and atom indexing'], scope=data['scope']), indent=2) + '\n')
     print(out / 'index.html')

@@ -57,7 +57,7 @@ Figure 4 uses Golden case 9: the recovered reference and two alternative mapping
 
 ## 3D research preview
 
-[Grow. Branch. Decode.](animations/graft_research_preview/index.html) is a 22-second baseline-only 3D film of Golden case 15. Conditional fragment placements grow into a tree and final witnesses merge by event class. The complete baseline catalogue has 44 unordered branches, 96 families and nine classes through six events; two classes are shown. [MP4](animations/graft_research_preview/graft-grow-branch-decode.mp4) · [GIF](animations/graft_research_preview/graft-grow-branch-decode.gif).
+[Grow. Branch. Decode.](animations/graft_research_preview/index.html) is a 22-second baseline-only 3D film of Golden case 15. Conditional fragment placements grow into a tree and the two shown branches decode to two distinct event classes. The complete baseline catalogue has 44 unordered branches, 96 families and nine classes through six events; two classes are shown. [MP4](animations/graft_research_preview/graft-grow-branch-decode.mp4) · [GIF](animations/graft_research_preview/graft-grow-branch-decode.gif).
 
 The completed same-CPU Golden cap ablation is in the appendix (`evidence/golden_cap_ablation.json`). It includes cap 100 and cap 2,000 accuracy, unknown outcomes, and search CPU for all four swept seed settings, both uncut controls, and SLAP baselines. All paired timings use the same 1,403 reactions; all-attempt recorded cost is shown separately. Full results are in `reports/golden_controlled_20260915/final/`. The 3D film uses the verified baseline Golden example in `reports/published_baseline_20260915/film/`.
 

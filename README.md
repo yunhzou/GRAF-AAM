@@ -13,9 +13,9 @@ R/P/TS presentation and the catalog/results presentation.
 
 ## Grow, branch, decode
 
-![GRAFT: Golden fragment growth, branching and decoded event-class merging](manuscript/animations/graft_research_preview/graft-grow-branch-decode.gif)
+![GRAFT: Golden fragment growth, branching and two distinct decoded event classes](manuscript/animations/graft_research_preview/graft-grow-branch-decode.gif)
 
-A 22-second Golden example: fragments grow into conditional branches, and equivalent baseline outcomes visibly merge in the decoder on the right. Two decoded event classes are illustrated, including the reference-equivalent class; the saved catalogue contains nine. Red × marks show breaking or weakening; green inward arrows show forming or strengthening.
+A 22-second Golden example: fragments grow into conditional branches, and the two grown branches decode to two distinct event classes on the right. Two decoded event classes are illustrated, including the reference-equivalent class; the saved catalogue contains nine. Red × marks show breaking or weakening; green inward arrows show forming or strengthening.
 
 [Full-resolution MP4](manuscript/animations/graft_research_preview/graft-grow-branch-decode.mp4) · [Offline interactive viewer](manuscript/animations/graft_research_preview/index.html) · [Example and provenance](manuscript/animations/graft_research_preview/README.md)
 
