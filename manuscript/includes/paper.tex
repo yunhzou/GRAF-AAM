@@ -257,6 +257,8 @@ We also check whether GRAFT retains SLAP's minimum-event patterns when GRAFT fin
 
 Sweep search takes a mean 1.05 CPU seconds per reaction. SLAP sweep takes 1.34 CPU seconds for mapping and 0.053 for hydrogen refinement and initial scoring. GRAFT's separate decoder reports all retained event classes in the specified windows, whereas SLAP refinement covers its returned witnesses; these timings therefore do not imply an end-to-end speed ranking. We did not separately time native SLAP or minimum-only GRAFT decoding.
 
+\input{includes/generated-end-to-end-text}
+
 \subsection{Final representation and complete window decoding}
 
 Unordered grouping collects histories with the same matched fragment pairs while retaining their constrained mapping families. Every saved baseline family is decoded or certified within its specified event window. The resulting 300 reaction-specific classes each have a mapping witness. This certifies the saved output within the window, not exhaustive structural search. Counts and per-family certificates are provided with the code.

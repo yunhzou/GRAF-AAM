@@ -68,3 +68,16 @@ We reran the twelve configurations in \Cref{tab:golden-caps} on all 1,851 Golden
 \end{table}
 
 The ten-seed cap-2,000 run leaves five references recovered at cap 100 unresolved, accounting for its lower confirmed count. The bounded SLAP sweep confirms 1,794 references here, compared with 1,796 in the main evaluation: two previously recovered cases are unresolved under this study's limits. These outcomes are reported separately from verified exclusions. The paired timing cohort excludes 448 reactions because at least one configuration does not finish; the all-attempt cost column exposes the additional computational cost on those difficult reactions. Source pins, individual outcomes, directional costs, and reproduction scripts are provided with the code.
+
+
+\clearpage
+\subsection{Fresh end-to-end timing on coordinate reactions}
+
+\input{includes/generated-end-to-end-scope}
+
+\begin{table}[htbp]
+\centering
+\caption{\textbf{GRAFT search plus bond-event decoding.} CPU seconds per reaction on the completed subset of the fresh 140-reaction pass. The final row measures the whole pipeline; medians and percentiles of individual stages are not additive. Interrupted attempts are listed in the accompanying text and are excluded from these completed-runtime distributions.}
+\label{tab:end-to-end}
+\input{includes/generated-end-to-end-table}
+\end{table}

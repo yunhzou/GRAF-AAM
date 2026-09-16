@@ -7,6 +7,7 @@ mechanism-local transition-state analysis.
 
 Paper benchmarks: [results and artifact index](reports/README.md) ·
 [benchmark scripts and reproduction guide](bench/README.md).
+[Final end-to-end timing](reports/final_end_to_end_20260916/README.md) records search plus bond-event decoding, including watchdog interruptions.
 
 Interactive views use [two shared styles](docs/VIEWERS.md): the original white
 R/P/TS presentation and the catalog/results presentation.

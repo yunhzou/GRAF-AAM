@@ -172,3 +172,31 @@ for key,label in [('graft_search','GRAFT sweep search'),('graft_decoding','GRAFT
  d=coord['timing'][key]['stats'];cells=[label]+[f'{d[k]:.3f}' for k in ['mean','median','p95']]
  rows.append(' & '.join(cells)+r"\\")
 (MAN/'includes/generated-coordinate-time-table.tex').write_text(r"\begin{tabular}{@{}lrrr@{}}\toprule"+'\n'+r"Recorded stage & Mean CPU s & Median CPU s & 95th pct. CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+
+
+# Final public pipeline: keep fresh end-to-end timings separate from archived stages.
+e2e=read('end_to_end_timing.json')
+assert e2e['attempted']==e2e['requested']==140 and e2e['all_completed_match']
+n=e2e['completed'];missing=len(e2e['incomplete_cases']);st=e2e['complete_cohort']
+rows=[]
+for key,label in [('search','GRAFT sweep search'),('catalogue','Final-family catalogue'),('decode','Bond-event decoding'),('serialize','Candidate serialization'),('end_to_end','End to end')]:
+ d=st[key]['cpu_seconds'];rows.append(' & '.join([label]+[f"{d[k]:.3f}" for k in ['mean','median','p95']])+r"\\")
+(MAN/'includes/generated-end-to-end-table.tex').write_text(r"\begin{tabular}{@{}lrrr@{}}\toprule"+'\n'+r"Stage & Mean CPU s & Median CPU s & 95th pct. CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+total=st['end_to_end']['cpu_seconds'];decode=st['decode']['cpu_seconds']
+text=(f"A fresh end-to-end timing pass of the final implementation completed {n}/140 reactions within a five-minute per-reaction watchdog. "
+ f"On this completed subset, search through serialized event candidates takes a mean {total['mean']:.2f} CPU seconds per reaction "
+ f"(median {total['median']:.2f}; 95th percentile {total['p95']:.2f}). Bond-event decoding alone takes a mean {decode['mean']:.2f} CPU seconds "
+ f"(median {decode['median']:.2f}). The remaining {missing} reactions reached the watchdog; these completed-subset averages therefore do not estimate "
+ r"full-dataset completion cost. This end-to-end measurement is distinct from the search-only comparison above (\Cref{tab:end-to-end})."+'\n')
+(MAN/'includes/generated-end-to-end-text.tex').write_text(text)
+wall=st['end_to_end']['wall_seconds'];cpu=e2e['manifest']['cpu']
+scope=(f"We reran one-seed, cap-2,000 cut-sweep search and the public event decoder on all 140 coordinate reactions using the {cpu} CPU. "
+ "Four independent reactions ran concurrently, each with one numerical thread. The event windows and thresholds match the bond-event comparison, "
+ "with no class-count cap. Timing includes input loading, search checkpoint I/O, final-family construction, decoding, and candidate serialization; "
+ "initial imports and reference-set verification are excluded. Light progress journaling is included. "
+ f"All {n} completed reactions reproduce the archived event-class sets and family counts. "
+ f"The completed-subset median wall time is {wall['median']:.2f} seconds; parallel campaign throughput is a different quantity. "
+ f"The {missing} interrupted cases are indexed "+', '.join(map(str,e2e['incomplete_cases']))+" in the released records. "
+ "They stopped during decoding, and retain partial results without a completion certificate. Per-case stage times, stop records, source hashes, "
+ "and reproduction commands are provided with the code.\n")
+(MAN/'includes/generated-end-to-end-scope.tex').write_text(scope)

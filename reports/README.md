@@ -168,3 +168,5 @@ from each run's manifests/submission records for historical reproduction; curren
 repository code can change. All other `golden_*` reports here are exploratory or
 stage-specific history unless explicitly identified above. In particular, the
 SLAP `golden_slap_budget_20260908` cluster pilot is not the completed expanded run.
+
+Final public-pipeline timing: [fresh 140-reaction end-to-end pass](final_end_to_end_20260916/README.md), including search, event decoding, and explicitly reported watchdog interruptions.

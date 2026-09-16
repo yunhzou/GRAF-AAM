@@ -170,6 +170,17 @@ assert ablation['paired_cap_audit'][-1]['cap100_recovered_now_unknown']==[833,85
 for word in ['1,403','1,835','99.14','43.843','Spent CPU','19 confirmed recoveries']:
  assert word in alltext.replace('\n',' '),word
 
+# Fresh end-to-end timing explicitly retains all interrupted attempts.
+e2e=read('end_to_end_timing.json')
+assert e2e['attempted']==140 and e2e['completed']+len(e2e['incomplete_cases'])==140
+assert e2e['all_completed_match'] and not e2e['errors']
+for key,units in e2e['complete_cohort'].items():
+ for unit,d in units.items():
+  values=[(r['result']['end_to_end'] if key=='end_to_end' else r['result']['stages'][key])[unit] for r in e2e['rows'] if r['execution']['complete']]
+  assert d['n']==len(values)==e2e['completed'] and abs(d['mean']-sum(values)/len(values))<1e-8
+assert 'GRAFT search plus bond-event decoding' in alltext
+assert f"{e2e['complete_cohort']['end_to_end']['cpu_seconds']['mean']:.2f}" in alltext
+assert 'completed-subset averages' in alltext.replace('\n',' ')
 result=dict(status='passed',pages=len(pages),figures=figs,source_checks=True,references_resolved=True,no_overfull_boxes=True,
  manual_visual_review_required=True,scope='Numerical and build validation; visual review is recorded separately. GRAFT and the SLAP sweep use final-source campaigns; archived default-comparator outputs were rescored with the current evaluator. Completeness and limits are recorded in the evidence.',
  manuscript_sha256=hashlib.sha256((MAN/'manuscript.pdf').read_bytes()).hexdigest())

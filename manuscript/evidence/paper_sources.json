@@ -85,6 +85,11 @@
       "source": "reports/colored_alternatives_20260914/coordinate_case127.json",
       "scope": "Three saved four-event GRAFT candidates and source fragment partitions for coordinate case127; read-only family and WBO verification. No search or decoder rerun.",
       "sha256": "8991c096bc9c7a440f3862de0615f95740ad4911a5d1b59196791c5f7deb3b18"
+    },
+    {
+      "snapshot": "end_to_end_timing.json",
+      "source": "reports/final_end_to_end_20260916/summary.json",
+      "sha256": "32df661bdf66706747ae8e02248f35eba0d8f1ae3d1e6649c06aa9a29f5714e9"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has eleven completed nonrecoveries and no unresolved reactions. Timing from different CPU cohorts is not pooled.",

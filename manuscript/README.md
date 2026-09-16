@@ -64,3 +64,5 @@ The completed same-CPU Golden cap ablation is in the appendix (`evidence/golden_
 ## Published pipeline
 
 The published method uses one-seed cut sweep followed by separate decoding. Competition is excluded. Golden results are unchanged. Baseline-only coordinate evidence and decoding checks are in [the publication report](../reports/published_baseline_20260915/). At cap 2,000, GRAFT recovers 162/168 SLAP-sweep patterns and 151/160 native-SLAP patterns within the fixed windows. At equal minima, the corresponding counts are 158/164 and 138/140. The output has 300 event patterns, including 166 at GRAFT's own minima.
+
+Fresh end-to-end timing is recorded in `evidence/end_to_end_timing.json`: 138/140 reactions completed the five-minute watchdog, with all completed class sets matching the archived baseline. The main text and appendix distinguish completed-subset timing from full-dataset completion cost.
