@@ -105,9 +105,12 @@ def compile_path(path, problem, reference, *, source_atoms, source_generators=()
             program.append(('domain',edge,{p:v[0] for p,v in table.items()},pool))
         values=act(values,[g.images for g in placement.target_generators],edge)
     mapped=tuple(representative)
-    if len(mapped)>1:
-        solver.add(z3.Distinct(*(z3.IntVal(values[r][0]) if isinstance(values[r][0],int)
-                                else values[r][0] for r in mapped)))
+    # Every action is a permutation: local pool Distinct constraints and
+    # correlated group factors already preserve injectivity under composition.
+    # A global Distinct over the nested image expressions is redundant and
+    # forces the solver to rediscover that group-theoretic fact for each family.
+    if len(set(representative.values())) != len(representative):
+        solver.add(False)
     for r in mapped:
         solver.add(z3.Or(*(values[r][0]==p for p in values[r][1]
                           if p<np_ and problem.reactant.elements[r]==problem.product.elements[p])))

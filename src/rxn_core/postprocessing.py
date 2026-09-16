@@ -196,9 +196,14 @@ def decode_events(aam, config=None):
         metal_threshold=config.metal_threshold,
     )
     candidates, reports = {}, []
+    source_edges = {}
     for i, family in enumerate(catalogue.families):
+        floor = family.policy[0]
+        if floor not in source_edges:
+            source_edges[floor] = tuple((int(a), int(b)) for a, b in zip(index.a, index.b)
+                                       if index.r[a, b] >= floor)
         report = extract_path_events(
-            family.as_path(catalogue.problem),
+            family.as_path(catalogue.problem, source_edges[floor]),
             catalogue.problem,
             index,
             max_events=config.max_events,

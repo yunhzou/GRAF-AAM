@@ -183,20 +183,22 @@ for key,label in [('search','GRAFT sweep search'),('catalogue','Final-family cat
  d=st[key]['cpu_seconds'];rows.append(' & '.join([label]+[f"{d[k]:.3f}" for k in ['mean','median','p95']])+r"\\")
 (MAN/'includes/generated-end-to-end-table.tex').write_text(r"\begin{tabular}{@{}lrrr@{}}\toprule"+'\n'+r"Stage & Mean CPU s & Median CPU s & 95th pct. CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
 total=st['end_to_end']['cpu_seconds'];decode=st['decode']['cpu_seconds']
-text=(f"A fresh end-to-end timing pass of the final implementation completed {n}/140 reactions within a five-minute per-reaction watchdog. "
- f"On this completed subset, search through serialized event candidates takes a mean {total['mean']:.2f} CPU seconds per reaction "
- f"(median {total['median']:.2f}; 95th percentile {total['p95']:.2f}). Bond-event decoding alone takes a mean {decode['mean']:.2f} CPU seconds "
- f"(median {decode['median']:.2f}). The remaining {missing} reactions reached the watchdog; these completed-subset averages therefore do not estimate "
- r"full-dataset completion cost. This end-to-end measurement is distinct from the search-only comparison above (\Cref{tab:end-to-end})."+'\n')
+cohort = "completed subset" if missing else "full set"
+text=(f"A fresh run of the final implementation completed search and event decoding for {n}/140 coordinate reactions. "
+ f"On this {cohort}, the full pipeline takes a mean {total['mean']:.2f} CPU seconds per reaction "
+ f"(median {total['median']:.2f}; 95th percentile {total['p95']:.2f}). Decoding accounts for a mean {decode['mean']:.2f} CPU seconds "
+ f"(median {decode['median']:.2f}). "
+ + (f"The remaining {missing} reactions reached the five-minute watchdog; completed-subset averages do not estimate full-dataset completion cost. " if missing else "")
+ + r"These measurements include search, final-family construction, decoding, and candidate output; they are separate from the search-only comparison above (\Cref{tab:end-to-end})."+'\n')
 (MAN/'includes/generated-end-to-end-text.tex').write_text(text)
 wall=st['end_to_end']['wall_seconds'];cpu=e2e['manifest']['cpu']
-scope=(f"We reran one-seed, cap-2,000 cut-sweep search and the public event decoder on all 140 coordinate reactions using the {cpu} CPU. "
- "Four independent reactions ran concurrently, each with one numerical thread. The event windows and thresholds match the bond-event comparison, "
- "with no class-count cap. Timing includes input loading, search checkpoint I/O, final-family construction, decoding, and candidate serialization; "
- "initial imports and reference-set verification are excluded. Light progress journaling is included. "
+scope=(f"We measured one-seed, cap-2,000 cut-sweep search followed by the public event decoder on the {cpu} CPU. "
+ "Four reactions ran concurrently, with one numerical thread per reaction. CPU times are per reaction, not divided by the worker count. "
+ "The event thresholds and windows match the bond-event comparison, with no class-count cap. "
  f"All {n} completed reactions reproduce the archived event-class sets and family counts. "
- f"The completed-subset median wall time is {wall['median']:.2f} seconds; parallel campaign throughput is a different quantity. "
- f"The {missing} interrupted cases are indexed "+', '.join(map(str,e2e['incomplete_cases']))+" in the released records. "
- "They stopped during decoding, and retain partial results without a completion certificate. Per-case stage times, stop records, source hashes, "
- "and reproduction commands are provided with the code.\n")
+ f"Median end-to-end wall time is {wall['median']:.2f} seconds. "
+ "Timing includes input loading, checkpoint I/O, final-family construction, decoding, candidate serialization, and progress recording; "
+ "initial imports and reference-set verification are excluded. "
+ + ("Interrupted cases are indexed "+', '.join(map(str,e2e['incomplete_cases']))+" in the released records; their partial results are not completion certificates. " if missing else "All 140 reactions finish within the five-minute watchdog. ")
+ + "Per-case timings, source hashes, and reproduction commands are provided with the code.\n")
 (MAN/'includes/generated-end-to-end-scope.tex').write_text(scope)

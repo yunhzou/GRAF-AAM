@@ -217,7 +217,6 @@ def classify_bonds(mapping, wbo_R, wbo_P, dwbo_threshold=0.5,
     Returns (broken_list, formed_list, core_R, core_P) where each bond
     record is (i, j, wbo_R_or_None, wbo_P_or_None)."""
     inv = {v: k for k, v in mapping.items()}
-    nR, nP = wbo_R.shape[0], wbo_P.shape[0]
     default_threshold = float(dwbo_threshold)
     metal_threshold = (
         None if metal_dwbo_threshold is None
@@ -228,33 +227,36 @@ def classify_bonds(mapping, wbo_R, wbo_P, dwbo_threshold=0.5,
     metal_P = (
         None if elements_P is None or metal_threshold is None
         else tuple(is_metal_element(element) for element in elements_P))
+    def eligible(matrix, metal):
+        # Screen absent/subthreshold pairs in NumPy. The scalar subtraction
+        # below remains the event oracle, including exact floating boundaries.
+        threshold = default_threshold
+        if metal is not None:
+            flags = np.asarray(metal, dtype=bool)
+            threshold = np.where(flags[:, None] | flags[None, :],
+                                 metal_threshold, default_threshold)
+        a, b = np.nonzero(np.triu(~(matrix < threshold), k=1))
+        return zip(a.tolist(), b.tolist())
+
     broken, formed = [], []
-    for i in range(nR):
-        for j in range(i + 1, nR):
-            threshold = (
-                metal_threshold
-                if metal_R is not None and (metal_R[i] or metal_R[j])
-                else default_threshold)
-            wR = wbo_R[i, j]
-            if wR < threshold: continue
-            if i not in mapping or j not in mapping:
-                broken.append((i, j, float(wR), None)); continue
-            wP = wbo_P[mapping[i], mapping[j]]
-            if wR - wP >= threshold:
-                broken.append((i, j, float(wR), float(wP)))
-    for ip in range(nP):
-        for jp in range(ip + 1, nP):
-            threshold = (
-                metal_threshold
-                if metal_P is not None and (metal_P[ip] or metal_P[jp])
-                else default_threshold)
-            wP = wbo_P[ip, jp]
-            if wP < threshold: continue
-            if ip not in inv or jp not in inv:
-                formed.append((ip, jp, None, float(wP))); continue
-            wR = wbo_R[inv[ip], inv[jp]]
-            if wP - wR >= threshold:
-                formed.append((ip, jp, float(wR), float(wP)))
+    for i, j in eligible(wbo_R, metal_R):
+        threshold = (metal_threshold if metal_R is not None and (metal_R[i] or metal_R[j])
+                     else default_threshold)
+        wR = wbo_R[i, j]
+        if i not in mapping or j not in mapping:
+            broken.append((i, j, float(wR), None)); continue
+        wP = wbo_P[mapping[i], mapping[j]]
+        if wR - wP >= threshold:
+            broken.append((i, j, float(wR), float(wP)))
+    for ip, jp in eligible(wbo_P, metal_P):
+        threshold = (metal_threshold if metal_P is not None and (metal_P[ip] or metal_P[jp])
+                     else default_threshold)
+        wP = wbo_P[ip, jp]
+        if ip not in inv or jp not in inv:
+            formed.append((ip, jp, None, float(wP))); continue
+        wR = wbo_R[inv[ip], inv[jp]]
+        if wP - wR >= threshold:
+            formed.append((ip, jp, float(wR), float(wP)))
     core_R = sorted({i for (i, j, _, _) in broken}
                     | {j for (i, j, _, _) in broken})
     core_P = sorted({i for (i, j, _, _) in formed}

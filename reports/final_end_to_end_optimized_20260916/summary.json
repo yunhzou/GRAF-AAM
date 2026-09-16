@@ -21017,10 +21017,5 @@
       }
     ],
     "wall_seconds": 291.5534602080006
-  },
-  "provenance": {
-    "report": "reports/final_end_to_end_optimized_20260916",
-    "pipeline_driver": "bench/final_end_to_end.py",
-    "summary_sha256": "8a9f3def7b77a514bb300b1f92ed7376ac2eced1dc0bca179598841c8dddafe7"
   }
 }

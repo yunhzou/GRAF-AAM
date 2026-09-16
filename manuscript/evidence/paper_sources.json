@@ -88,11 +88,11 @@
     },
     {
       "snapshot": "end_to_end_timing.json",
-      "source": "reports/final_end_to_end_20260916/summary.json",
-      "sha256": "32df661bdf66706747ae8e02248f35eba0d8f1ae3d1e6649c06aa9a29f5714e9"
+      "source": "reports/final_end_to_end_optimized_20260916/summary.json",
+      "sha256": "f8c38b4b298458f2567b859d4511c42fb25c3740c90855fd2201d585843ac1c0"
     }
   ],
   "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has eleven completed nonrecoveries and no unresolved reactions. Timing from different CPU cohorts is not pooled.",
   "publication_pipeline": "one-seed cut sweep; competition disabled",
-  "coordinate_refresh": "Baseline-only projection of complete saved certificates; fresh partial checks reported separately."
+  "coordinate_refresh": "Fresh final search plus optimized public decoding completes all 140; all archived event-class sets and family counts match."
 }

@@ -4,7 +4,7 @@ Search constraints stay at their recorded tolerance. Output identity uses
 raw-WBO event responses, with no bijection or group-element expansion.
 The existing Golden floor-based scorer and historical pattern IDs are separate.
 """
-from collections import Counter, defaultdict
+from collections import Counter, defaultdict, OrderedDict
 from functools import cached_property
 import hashlib
 import json
@@ -74,6 +74,40 @@ class SignedEventIndex:
             self.tau[metal[self.a] | metal[self.b]] = self.metal_threshold
         self.cache = {}
         self._actions = {}
+        self._pair_tables = OrderedDict()
+
+    def pair_table(self, weight, tau, xs, ys):
+        """Reuse exact local responses across pairs/families, never mappings.
+
+        Raw weights remain in the key: no rounding or tolerance approximation.
+        The bounded cache only saves work; eviction cannot change the result.
+        """
+        key = float(weight), float(tau), xs, ys
+        if key in self._pair_tables:
+            self._pair_tables.move_to_end(key)
+            return self._pair_tables[key]
+        xx, yy = sorted(xs), sorted(ys)
+        delta = self.p[np.ix_(xx, yy)] - weight
+        valid = np.asarray(xx)[:, None] != np.asarray(yy)[None, :]
+        signs = np.where(delta <= -tau, -1, np.where(delta >= tau, 1, 0))
+        counts = {int(k): int(v) for k, v in zip(*np.unique(signs[valid], return_counts=True))}
+        rectangles = {}
+        default = max(counts, key=counts.get) if counts else 0
+        if len(counts) > 1:
+            for sign in counts:
+                if sign == default:
+                    continue
+                rows = defaultdict(list)
+                for i, x in enumerate(xx):
+                    selected = tuple(yy[j] for j in np.flatnonzero(valid[i] & (signs[i] == sign)))
+                    if selected:
+                        rows[selected].append(x)
+                rectangles[sign] = tuple((tuple(row), col) for col, row in rows.items())
+        result = default, rectangles, min((int(k != 0) for k in counts), default=0), sum(counts.values())
+        self._pair_tables[key] = result
+        if len(self._pair_tables) > 16384:
+            self._pair_tables.popitem(last=False)
+        return result
 
     @property
     def policy(self):
@@ -239,65 +273,90 @@ class SignedEventIndex:
                     policy=self.policy)
 
 
+class _EventTerms(dict):
+    """Signed terms plus exact Boolean event-presence indicators."""
+    def __init__(self):
+        super().__init__()
+        self.constant_count = 0
+        self.event_flags = []
+
+
 def _event_model(compiled, index, deadline):
     """Small local pair tables; never enumerate complete assignments."""
     import z3
-    terms, objective, variable_pairs, table_entries, lower = {}, [], 0, 0, 0
+    terms, objective, variable_pairs, table_entries, lower = _EventTerms(), [], 0, 0, 0
     constant_events = 0
+    selectors = {}
+
+    def select(value, subset):
+        expr, support = value
+        if len(subset) == len(support):
+            return True
+        if isinstance(expr, int):
+            return expr in subset
+        key = expr.get_id(), subset
+        if key not in selectors:
+            selectors[key] = z3.Or(*(expr == x for x in subset))
+        return selectors[key]
+
     for a, b, tau in zip(index.a, index.b, index.tau):
         if time.perf_counter() >= deadline:
             raise TimeoutError('event encoding budget')
         va, vb = compiled.values[a], compiled.values[b]
-        groups = defaultdict(lambda: defaultdict(list))
-        for x in sorted(va[1]):
-            if time.perf_counter() >= deadline:
-                raise TimeoutError('event encoding budget')
-            for y in sorted(vb[1]):
-                if x == y:
-                    continue
-                delta = index.p[x, y] - index.r[a, b]
-                sign = -1 if delta <= -tau else 1 if delta >= tau else 0
-                groups[sign][x].append(y)
-                table_entries += 1
-        if not groups:
+        default, rectangles, pair_lower, entries = index.pair_table(index.r[a, b], tau, va[1], vb[1])
+        table_entries += entries
+        term = default
+        if not entries:
             compiled.solver.add(False)
-            term = 0
-        elif len(groups) == 1:
-            term = next(iter(groups))
-        else:
-            default = max(groups, key=lambda k: sum(map(len, groups[k].values())))
-            term = default
-            for sign, rows in groups.items():
-                if sign != default:
-                    # Rows with equal image sets form one exact rectangle.
-                    # Factor their selectors instead of rebuilding the same
-                    # target disjunction once for every source image.
-                    rectangles = defaultdict(list)
-                    for x, ys in rows.items():
-                        rectangles[tuple(ys)].append(x)
-                    conditions = []
-                    for ys, xs in rectangles.items():
-                        left = True if len(xs) == len(va[1]) else z3.Or(*(va[0] == x for x in xs))
-                        right = True if len(ys) == len(vb[1]) else z3.Or(*(vb[0] == y for y in ys))
-                        conditions.append(right if left is True else left if right is True else z3.And(left, right))
-                    condition = z3.Or(*conditions)
-                    term = z3.If(condition, sign, term)
-            variable_pairs += 1
-        lower += min((int(sign != 0) for sign in groups), default=0)
+        sign_conditions = {}
+        for sign, blocks in rectangles.items():
+            conditions = []
+            for xs, ys in blocks:
+                left, right = select(va, xs), select(vb, ys)
+                conditions.append(right if left is True else left if right is True else z3.And(left, right))
+            condition = z3.Or(*conditions)
+            sign_conditions[sign] = condition
+            term = z3.If(condition, sign, term)
+        variable_pairs += bool(rectangles)
+        lower += pair_lower
         terms[int(a), int(b)] = term
-        if isinstance(term, int):
-            constant_events += int(term != 0)
-        else:
-            objective.append(z3.If(term != 0, 1, 0))
+        if pair_lower:
+            # This pair is always an event, even if its sign may change.
+            constant_events += 1
+        elif rectangles:
+            # Count presence directly, without asking the arithmetic solver
+            # to derive If(sign_condition, -1, +1) != 0 repeatedly.
+            present = (z3.Or(*sign_conditions.values()) if default == 0
+                       else z3.Not(sign_conditions[0]))
+            terms.event_flags.append(present)
+            objective.append(z3.If(present, 1, 0))
+    terms.constant_count = constant_events
     total = constant_events + z3.Sum(objective) if objective else z3.IntVal(constant_events)
     return terms, total, dict(
         variable_pairs=variable_pairs, pair_table_entries=table_entries, event_lower_bound=lower)
 
 
+def _event_count_constraint(terms, count, *, at_most=False):
+    """Exact Boolean cardinality, avoiding arithmetic search for an event sum."""
+    import z3
+    if isinstance(terms, _EventTerms):
+        constant = terms.constant_count
+        choices = [(flag, 1) for flag in terms.event_flags]
+    else:
+        constant = sum(int(t != 0) for t in terms.values() if isinstance(t, int))
+        choices = [(t != 0, 1) for t in terms.values() if not isinstance(t, int)]
+    remaining = count - constant
+    if remaining == 0 and choices:
+        return z3.And(*(z3.Not(flag) for flag, _ in choices))
+    if not choices:
+        return z3.BoolVal(remaining >= 0 if at_most else remaining == 0)
+    return z3.PbLe(choices, remaining) if at_most else z3.PbEq(choices, remaining)
+
+
 def _same_event_pattern(terms, objective, pattern):
     """Exact sparse equality, also safe when different event counts are allowed."""
     import z3
-    return z3.And(objective == pattern['total'], *(terms[tuple(pair)] == sign
+    return z3.And(_event_count_constraint(terms, pattern['total']), *(terms[tuple(pair)] == sign
         for kind, sign in (('broken', -1), ('formed', 1)) for pair in pattern['events'][kind]))
 
 
@@ -318,7 +377,7 @@ def _same_event_orbit(terms, objective, pattern, index):
     moved = encoder.act([encoder.constant(a) for a in atoms], index.source_generators,
                         'signed_event_equivalence')
     images = dict(zip(atoms, moved))
-    conditions = [objective == pattern['total']]
+    conditions = [_event_count_constraint(terms, pattern['total'])]
     for kind, sign in (('broken', -1), ('formed', 1)):
         for a, b in pattern['events'][kind]:
             va, vb = images[a], images[b]
@@ -411,7 +470,7 @@ def extract_path_events(path, search_problem, index, *, max_events=None, seconds
         return finish(False, 'event_encoding_budget')
     metrics.update(counts)
     if max_events is not None:
-        compiled.solver.add(objective <= max_events)
+        compiled.solver.add(_event_count_constraint(terms, max_events, at_most=True))
     if seed is not None:
         compiled.solver.add(z3.Not(_same_event_orbit(terms, objective, seed, index)))
     while time.perf_counter() < deadline:
