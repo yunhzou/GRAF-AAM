@@ -72,7 +72,7 @@ does not invoke xTB.
 
 ## Python API
 
-Start with the short [AAM notebook](docs/AAM_SIMPLE.ipynb): matching, unique bond-event candidates, certified symmetry queries, and py3Dmol inspection. The [Python API guide](docs/PYTHON_API.md) lists anchors, directions, conditional matching, all configuration controls, and current chirality limitations. Install its dependencies with `python -m pip install -e ".[notebook]"`.
+Start with the executed, self-contained [AAM notebook](docs/AAM_SIMPLE.ipynb): embedded molecules, matching, raw branch inspection, unique bond-event candidates, certified symmetry queries, py3Dmol inspection, and a growth animation for each sweep. All inputs and display helpers are in the notebook; no benchmark files are needed. The [Python API guide](docs/PYTHON_API.md) lists anchors, directions, conditional matching, all configuration controls, and current chirality limitations. Install its dependencies with `python -m pip install -e ".[notebook]"`.
 
 ```python
 from rxn_core import (

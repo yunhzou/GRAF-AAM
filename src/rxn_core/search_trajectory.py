@@ -7,11 +7,12 @@ import hashlib
 import importlib
 import gzip
 import json
+import math
 from pathlib import Path
 
 import numpy as np
 from .artifacts import read_aam_checkpoint, aam_from_record
-from .frag import build_graph
+from .frag import build_graph, classify_bonds
 from .matcher import _nauty_orbits, _cand_possible_p_atoms, _support_witness_for_value, _sym_block_indexes
 from .matcher.support import _refine_sym_assignments
 from .growth.trace import cands_pattern_sample
@@ -104,16 +105,21 @@ def replay(source, target, state, edge, po, ro, context):
     return dict(events=events,calls=calls,isos=[dict(i) for i in isos],verified=True)
 
 
-def bond_events(raw, mapping, floor=.2, tolerance=.5):
+def bond_events(raw, mapping, floor=.2, tolerance=.5, metal_tolerance=.3):
+    """Same signed-event thresholds as decoding; floor only labels the drawing."""
     r=np.array(raw['reactant']['wbo']);p=np.array(raw['product']['wbo'])
+    broken,formed,_,_=classify_bonds(mapping,r,p,dwbo_threshold=tolerance,
+        elements_R=raw['reactant']['elements'],elements_P=raw['product']['elements'],
+        metal_dwbo_threshold=metal_tolerance)
+    inverse={p:r for r,p in mapping.items()}
     out=[]
-    for a in range(len(r)):
-        for b in range(a+1,len(r)):
-            x,y=float(r[a,b]),float(p[mapping[a],mapping[b]])
-            kind=('broken' if x>floor and y<=floor else 'formed' if x<=floor and y>floor else
-                  'weakened' if x>floor and y>floor and x-y>tolerance else
-                  'strengthened' if x>floor and y>floor and y-x>tolerance else None)
-            if kind:out.append(dict(kind=kind,r=[a,b],p=[mapping[a],mapping[b]],wbo=[x,y]))
+    for a,b,x,y in broken:
+        out.append(dict(kind='broken' if y<=floor else 'weakened',r=[a,b],
+                        p=[mapping[a],mapping[b]],wbo=[x,y]))
+    for u,v,x,y in formed:
+        a,b=sorted((inverse[u],inverse[v]))
+        out.append(dict(kind='formed' if x<=floor else 'strengthened',r=[a,b],
+                        p=[mapping[a],mapping[b]],wbo=[x,y]))
     return out
 
 
@@ -187,18 +193,31 @@ def read_archive(path):
     return read_aam_checkpoint(path)
 
 
-def build_trajectory(selections, *, title=None, key_atoms=None, watch_targets=None, event_tolerance=.5):
+def build_trajectory(selections, *, title=None, key_atoms=None, watch_targets=None,
+                     event_tolerance=.5, metal_event_tolerance=.3):
     """Capture selected contexts from compatible archives of the same endpoints.
 
-    Each selection specifies archive + context, with optional terminals, label,
+    Each selection specifies either an in-memory ``aam`` or an ``archive``,
+    plus a context, with optional terminals, label,
     path_labels, default_terminal and focus={source_edge:[a,b], target:p}.
     One recorded history is followed per terminal; compressed permutations are
     represented, not expanded. A replay mismatch raises instead of publishing.
     """
+    if not math.isfinite(event_tolerance) or event_tolerance <= 0:
+        raise ValueError('event_tolerance must be finite and positive')
+    if metal_event_tolerance is not None and (not math.isfinite(metal_event_tolerance) or metal_event_tolerance <= 0):
+        raise ValueError('metal_event_tolerance must be finite and positive')
     runs,checks,raw=[],[],None
     for selection in selections:
-        archive=Path(selection['archive'])
-        result=read_archive(archive);g=result.graph
+        if ('aam' in selection) == ('archive' in selection):
+            raise ValueError('Select exactly one of aam or archive')
+        if 'aam' in selection:
+            result=selection['aam']; origin='in_memory'
+            provenance=dict(source='in_memory',problem=result.problem.name)
+        else:
+            archive=Path(selection['archive']);result=read_archive(archive);origin=str(archive)
+            provenance=dict(archive=str(archive),sha256=hashlib.sha256(archive.read_bytes()).hexdigest())
+        g=result.graph
         context_id=int(selection.get('context',0));c=g.contexts[context_id]
         current=dict(name=result.problem.name,
                      reactant=endpoint_record(result.problem.reactant),product=endpoint_record(result.problem.product))
@@ -220,7 +239,7 @@ def build_trajectory(selections, *, title=None, key_atoms=None, watch_targets=No
         for t in terminals:
             frames=frames_for(g,t,traces);mapping=dict(g.states[t].mapping)
             complete=len(mapping)==len(raw['reactant']['elements'])
-            events=bond_events(raw,mapping,c.graph_floor,event_tolerance) if complete else []
+            events=bond_events(raw,mapping,c.graph_floor,event_tolerance,metal_event_tolerance) if complete else []
             for frame in frames:
                 for candidate in frame['candidates']:
                     preview={**frame['locked'],**candidate['witness']}
@@ -229,25 +248,25 @@ def build_trajectory(selections, *, title=None, key_atoms=None, watch_targets=No
                         raise ValueError('Invalid replayed candidate mapping')
             paths.append(dict(terminal=t,label=selection.get('path_labels',{}).get(str(t),f'Terminal {t}'),
                               frames=frames,mapping=mapping,events=events,complete=complete))
-            checks.append(dict(archive=str(archive),context=context_id,terminal=t,frames=len(frames),
+            checks.append(dict(archive=origin,context=context_id,terminal=t,frames=len(frames),
                                archived_fragment_matches='exact',complete=complete,events=len(events)))
         nodes=[s for s in g.states if s.context==context_id]
         runs.append(dict(label=selection.get('label',f'Context {context_id} · R{c.seed_order[0]} first'),
             context=context_id,seed_order=list(c.seed_order),cuts=list(c.cuts),paths=paths,
             default_terminal=selection.get('default_terminal',terminals[0]),focus=selection.get('focus'),
             config=dict(graph_floor=c.graph_floor,iso_tolerance=c.iso_tolerance,branch_limit=c.branch_limit,
-                        event_tolerance=event_tolerance),
+                        event_tolerance=event_tolerance,metal_event_tolerance=metal_event_tolerance),
             graph=dict(states=[dict(id=s.id,assigned=len(s.mapping)) for s in nodes],
                 transitions=[dict(id=eid,source=g.transitions[eid].source,target=g.transitions[eid].target,
                     seed=g.transitions[eid].seed,size=len(g.transitions[eid].match['fragment']) if g.transitions[eid].match else 0)
                     for eid in sorted(ids)]),
-            provenance=dict(archive=str(archive),sha256=hashlib.sha256(archive.read_bytes()).hexdigest()),traces=traces))
+            provenance=provenance,traces=traces))
     if raw is None:raise ValueError('At least one archive selection is required')
     default_keys=sorted({a for run in runs for path in run['paths'] for event in path['events'] for a in event['r']})
     return dict(schema='rxn_core.search_trajectory/v1',name=title or raw['name'] or 'AAM search trajectory',
         input=raw,runs=runs,key_atoms=default_keys if key_atoms is None else key_atoms,
         watch_targets=[] if watch_targets is None else watch_targets,
-        capture_source={str(p):hashlib.sha256(p.read_bytes()).hexdigest()
+        capture_source={('rxn_core/search_trajectory.py' if p == Path(__file__) else str(p.relative_to(Path(growth.__file__).parents[2]))):hashlib.sha256(p.read_bytes()).hexdigest()
             for p in sorted(set(Path(growth.__file__).parents[1].rglob('*.py'))|{Path(__file__)})},
         scope='Diagnostic replay of selected saved fragment calls; one recorded history per terminal. '
               'All live compressed candidates are included, each with an actual representative and symmetry blocks. '

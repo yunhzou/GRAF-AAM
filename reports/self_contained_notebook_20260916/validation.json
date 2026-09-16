@@ -1,0 +1,85 @@
+{
+  "molecule": {
+    "canvases": 1,
+    "warning": null
+  },
+  "inspection": [
+    {
+      "context": 0,
+      "paths": 1,
+      "frames": 24
+    },
+    {
+      "context": 1,
+      "paths": 2,
+      "frames": 55
+    },
+    {
+      "context": 2,
+      "paths": 1,
+      "frames": 20
+    },
+    {
+      "context": 3,
+      "paths": 2,
+      "frames": 45
+    },
+    {
+      "context": 4,
+      "paths": 1,
+      "frames": 20
+    },
+    {
+      "context": 5,
+      "paths": 1,
+      "frames": 20
+    }
+  ],
+  "playback": {
+    "run": 1,
+    "path": 0,
+    "frame": 2,
+    "candidate": 0,
+    "trial": null,
+    "playing": false
+  },
+  "errors": [],
+  "external": [],
+  "notebook": "docs/AAM_SIMPLE.ipynb",
+  "sha256": "a659785f760996979a16338767abebc35829f0cf0d1234517ace2c22b806d287",
+  "code_cells": 16,
+  "display_errors": 0,
+  "static_pngs": 2,
+  "workers": 1,
+  "python": "3.12.14",
+  "packages": {
+    "rxn_core": "0.2.0",
+    "numpy": "2.3.5",
+    "rdkit": "2026.3.6",
+    "py3Dmol": "2.5.5",
+    "nbclient": "0.11.0",
+    "ipykernel": "7.3.0",
+    "z3-solver": "5.1.0.0"
+  },
+  "execution": "Executed 16 cells in 1.7 seconds",
+  "focused_tests": {
+    "passed": 11
+  },
+  "search": {
+    "contexts": 6,
+    "states": 33,
+    "transitions": 27,
+    "terminals": 8,
+    "capped": false
+  },
+  "decoding": {
+    "complete": true,
+    "branches": 7,
+    "families": 7,
+    "candidate_event_counts": [
+      4,
+      6
+    ]
+  },
+  "alternative_candidate_inspection": "passed"
+}

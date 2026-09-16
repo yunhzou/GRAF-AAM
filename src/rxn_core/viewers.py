@@ -100,6 +100,40 @@ def reaction_html(document):
             .replace('__DATA__', _json(document)))
 
 
+def aam_growth_html(aam, *, context=None, terminals=None, title=None,
+                    event_threshold=0.5, metal_event_threshold=0.3):
+    """Offline interactive growth replay directly from an AAMResult.
+
+    ``context=None`` includes every saved sweep/seed context having terminals;
+    an integer selects one. No terminal/history or symmetry enumeration cap is
+    added. One recorded history per terminal is replayed against its producer's
+    matcher and checked exactly; this is not exhaustive decoded-event output.
+    Coordinates are required. Capture temporarily observes matcher functions:
+    call serially, not concurrently with another search/replay in this process.
+    HTML embeds its renderer and data. In Jupyter, display it in an iframe so
+    several viewers can coexist without sharing JavaScript state.
+    """
+    from .search_trajectory import build_trajectory
+    if terminals is not None and context is None:
+        raise ValueError('Select one context when specifying terminals')
+    if context is None:
+        contexts=sorted({aam.graph.states[t].context for t in aam.graph.terminals})
+    else:
+        if not isinstance(context,int) or not 0 <= context < len(aam.graph.contexts):
+            raise ValueError('context must index a saved search context')
+        contexts=[context]
+    selections=[]
+    for i in contexts:
+        c=aam.graph.contexts[i]
+        label=f'Sweep {i}: '+(', '.join(f'R{a}–R{b}' for a,b in c.cuts) if c.cuts else 'uncut')
+        selection=dict(aam=aam,context=i,label=label)
+        if terminals is not None:selection['terminals']=list(terminals)
+        selections.append(selection)
+    document=build_trajectory(selections,title=title,event_tolerance=event_threshold,
+                              metal_event_tolerance=metal_event_threshold)
+    return growth_trace_html(document)
+
+
 def growth_trace_html(document):
     """Present recorded algorithm events using the shared 3D reaction style."""
     template = (ASSETS / 'growth_trace.html').read_text()

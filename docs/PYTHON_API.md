@@ -1,6 +1,6 @@
 # Importable AAM API
 
-Start with [AAM_SIMPLE.ipynb](AAM_SIMPLE.ipynb): a six-atom reaction, unique event candidates, a certified hydrogen shuffle, anchors, and conditional matching. It uses one worker. The longer [TUTORIAL.ipynb](TUTORIAL.ipynb) covers R/P geometry and TS analysis.
+Start with [AAM_SIMPLE.ipynb](AAM_SIMPLE.ipynb): a self-contained six-atom reaction with embedded coordinates, bond orders, and display helpers. It inspects the raw AAM, unique event candidates, certified shuffles, anchors, both search directions, conditional matching, serialization, and one growth animation per sweep. It uses one worker and can run outside the checkout after installation. Saved tables and static molecule drawings render on GitHub; interactive views require a trusted Jupyter notebook. The longer [TUTORIAL.ipynb](TUTORIAL.ipynb) covers R/P geometry and TS analysis.
 
 Install `python -m pip install -e ".[notebook]"` for the notebook, or `.[postprocessing]` for symbolic event decoding without notebook packages. A C++17 compiler builds the bookkeeping extensions. The optional fast growth engine requires `python native/build_engine.py`; see [native installation](../native/README.md). Ordinary `search_aam` can use the Python reference growth implementation. `compete_fragments` and `execution="reused_native"` / `"shared_policies"` require that optional engine and fail explicitly if unavailable. No xTB is needed when coordinates and bond-order matrices are supplied.
 
@@ -43,6 +43,23 @@ This is a conditional existence query over the saved family union. Unspecified a
 
 The evidence retains ordered target generators/pools, required fragment edges, matching policy, and archive/path provenance. Individual orbit memberships are not independent shuffle permissions. Intrinsic fragment automorphisms and event-preserving equivalences are different objects. Final event symmetry uses exact response labels at the selected thresholds, rather than a second approximate tolerance. Changing event thresholds never changes the saved search. Advanced callers can use `SignedEventIndex`, `extract_path_events`, and `query_path` directly.
 
+## Inspect growth directly from a result
+
+```python
+from html import escape
+from IPython.display import HTML, display
+from rxn_core.viewers import aam_growth_html
+
+page = aam_growth_html(aam, context=None, event_threshold=0.5,
+                       metal_event_threshold=0.3)
+display(HTML('<iframe style="width:100%;height:1020px" srcdoc="'
+             + escape(page, quote=True) + '"></iframe>'))
+```
+
+No archive is required. `context=None` includes all saved cut/seed contexts with terminals; an integer selects one. With a selected context, `terminals=[...]` selects its terminal paths. The HTML embeds its JavaScript and can also be saved as a standalone file. Each tab provides playback, candidate inspection, compressed symmetry, and the search graph.
+
+This is verified local replay, not another sweep search or full decoding. It replays one recorded history per terminal and checks fragment results against the saved decisions. It does not enumerate symmetry permutations or impose another branch cap. Coordinates remain fixed. Capture temporarily observes matcher calls, so run it serially within a process. Event overlays use the same inclusive WBO-change thresholds and metal rule as decoding; the graph floor only distinguishes a broken/formed edge from an order decrease/increase in the drawing.
+
 ## Directions and anchors
 
 ```python
@@ -77,7 +94,7 @@ Keep compressed results in their search direction. Invert only concrete witnesse
 | `FragmentMatchContext` | `locked_mapping`; `islands`; `deferred_edges`; optional reusable `source_orbits`, `target_orbits`, `growth_replay` |
 | `CompetitionConfig` | `operation_budget=128`; `seconds=270`; `parent_limit=8`; `depth_limit=2`; `queue_limit=512`; `dependent_component_limit=8` |
 
-The library branch-limit default remains 100; the coordinate notebook explicitly uses 2,000. A cap bounds a growth call's live alternatives, not the number of saved histories or all permutations. The default pipeline uses one seed and cut sweep; no-sweep is an explicit ablation (`sweep_cuts=False`). The random seed controls reproducible, independent per-cut streams and is separate from the number of seed orderings.
+The library and this notebook use the branch-limit default of 100. A cap bounds a growth call's live alternatives, not the number of saved histories or all permutations. The default pipeline uses one seed and cut sweep; no-sweep is an explicit ablation (`sweep_cuts=False`). The random seed controls reproducible, independent per-cut streams and is separate from the number of seed orderings.
 
 For compatibility, `AAMSearchConfig` also retains `event_threshold`, `metal_event_threshold`, `symmetry_repair`, `symmetry_repair_min_changes`, and `symmetry_repair_max_evaluations`. The raw search does not classify or repair events. These fields configure the older mechanism/geometry pipeline; competition also uses its event thresholds for parent ordering. The separate signed-event decoder uses **only its own `EventDecodeConfig`**, not these legacy event fields. `group_mechanisms`, `compile_mapping_families`, `compile_mechanism_families`, `select_rp_mappings`, and TS routines remain available and unchanged.
 

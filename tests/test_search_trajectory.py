@@ -61,3 +61,52 @@ def test_mismatched_endpoints_are_rejected(tmp_path):
     a,b=toy_archive(tmp_path),toy_archive(tmp_path,'_other',translation=2)
     with pytest.raises(ValueError,match='identical endpoint'):
         build_trajectory([dict(archive=str(a)),dict(archive=str(b))])
+
+
+def test_in_memory_replay_matches_archive_and_keeps_result(tmp_path, monkeypatch):
+    from rxn_core import search_trajectory
+    from rxn_core.viewers import aam_growth_html
+    archive = toy_archive(tmp_path)
+    aam = read_aam_checkpoint(archive)
+    before = aam_json(aam)
+    archived = build_trajectory([dict(archive=str(archive), context=0)])
+    def fail(*a, **k):
+        raise AssertionError('In-memory viewing must not read an archive')
+    monkeypatch.setattr(search_trajectory, 'read_archive', fail)
+    direct = build_trajectory([dict(aam=aam, context=0)])
+    assert direct['runs'][0]['paths'] == archived['runs'][0]['paths']
+    assert direct['runs'][0]['traces'] == archived['runs'][0]['traces']
+    assert direct['runs'][0]['provenance']['source'] == 'in_memory'
+    assert aam_json(aam) == before
+    page = aam_growth_html(aam, context=0)
+    assert 'data-viewer-layout="growth_trace"' in page
+    assert 'Sweep 0:' in page
+    with pytest.raises(ValueError, match='one context'):
+        aam_growth_html(aam, terminals=[aam.graph.terminals[0]])
+    with pytest.raises(ValueError, match='context must index'):
+        aam_growth_html(aam, context=-1)
+    with pytest.raises(ValueError, match='exactly one'):
+        build_trajectory([dict(aam=aam, archive=str(archive))])
+
+
+def test_event_overlay_uses_decoder_thresholds_and_target_indexing():
+    from rxn_core.search_trajectory import bond_events
+    # Inclusive 0.5 boundary, metal-only 0.3 event, subthreshold edge loss,
+    # and a formed bond under a nonidentity atom mapping.
+    elements = ['C', 'O', 'Fe', 'H']
+    r = np.zeros((4, 4)); p = np.zeros((4, 4))
+    for a, b, x, y in [(0, 1, 1., .5), (0, 2, .3, 0.),
+                        (0, 3, .25, 0.), (1, 3, 0., .5)]:
+        r[a, b] = r[b, a] = x
+        p[a, b] = p[b, a] = y
+    order = [3, 2, 1, 0]
+    mapping = {i: order.index(i) for i in range(4)}
+    raw = dict(reactant=dict(elements=elements, wbo=r.tolist()),
+               product=dict(elements=[elements[i] for i in order],
+                            wbo=p[np.ix_(order, order)].tolist()))
+    events = bond_events(raw, mapping)
+    assert {(e['kind'], tuple(e['r'])) for e in events} == {
+        ('weakened', (0, 1)), ('broken', (0, 2)), ('formed', (1, 3))}
+    assert all(e['p'] == [mapping[a] for a in e['r']] for e in events)
+    uniform = bond_events(raw, mapping, metal_tolerance=None)
+    assert {tuple(e['r']) for e in uniform} == {(0, 1), (1, 3)}
