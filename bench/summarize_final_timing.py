@@ -55,6 +55,14 @@ spent=summary['sampled_process_cpu_sum_seconds']
 insert=lines.index('**The following distributions cover only completed reactions. They are not full-dataset completed-runtime estimates when any reaction is interrupted.**')
 lines[insert:insert]=['## All attempted work, including timeouts', '',
  f'Observed process CPU spent: approximately {spent/60:.2f} CPU minutes, or {spent/len(rows):.2f} CPU seconds per attempted reaction. This sampled process scope includes startup and interrupted calls. It is not the cost of completing all reactions.', '']
+if not summary['incomplete_cases']:
+ lines[insert] = '## Full campaign cost'
+ lines[insert+2] = (f'Observed process CPU spent: approximately {spent/60:.2f} CPU minutes, '
+  f'or {spent/len(rows):.2f} CPU seconds per reaction. All reactions completed. '
+  'This sampled process scope includes startup; the pipeline timings below exclude initial imports.')
+ lines = [('**The following distributions cover all 140 reactions.**' if line.startswith('**The following distributions cover only') else
+           'All 140 reactions completed; there were no watchdog or resource stops.' if line.startswith('Incomplete cases: []') else line)
+          for line in lines]
 (W/'README.md').write_text('\n'.join(lines)+'\n')
 print(json.dumps({k:v for k,v in summary.items() if k not in ['rows','complete_cohort','complete_cases','manifest','campaign']},indent=2))
 for k,v in summary['complete_cohort'].items(): print(k,v)

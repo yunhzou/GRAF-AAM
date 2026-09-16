@@ -4,11 +4,11 @@ Fresh attempts: 140/140; completed within the five-minute watchdog: 140.
 
 One seed, single-edge cut sweep, cap 2,000, R-to-P, competition off. Event windows match the published 140-case comparison. No candidate-count cap. Four processes, each using one numerical thread.
 
-## All attempted work, including timeouts
+## Full campaign cost
 
-Observed process CPU spent: approximately 14.47 CPU minutes, or 6.20 CPU seconds per attempted reaction. This sampled process scope includes startup and interrupted calls. It is not the cost of completing all reactions.
+Observed process CPU spent: approximately 14.47 CPU minutes, or 6.20 CPU seconds per reaction. All reactions completed. This sampled process scope includes startup; the pipeline timings below exclude initial imports.
 
-**The following distributions cover only completed reactions. They are not full-dataset completed-runtime estimates when any reaction is interrupted.**
+**The following distributions cover all 140 reactions.**
 
 | Stage | Mean CPU s | Median CPU s | 95th percentile CPU s | Median wall s |
 |---|---:|---:|---:|---:|
@@ -20,7 +20,7 @@ Observed process CPU spent: approximately 14.47 CPU minutes, or 6.20 CPU seconds
 
 End to end includes input loading, search/checkpoint I/O, catalogue construction, decoding, candidate serialization, and light progress journaling. Initial imports and reference-set validation are excluded. The decoder includes lazy dependency initialization. Stage medians and percentiles are not additive.
 
-Incomplete cases: []. See summary.json for resource-stop status, incurred process time, partial progress, and completed family certificates. An interrupted attempt is not a completed 300-second result.
+All 140 reactions completed; there were no watchdog or resource stops.
 
 All completed class sets and family counts match the archived baseline: True. No saved search or decoder outputs were reused in the timed pipeline.
 

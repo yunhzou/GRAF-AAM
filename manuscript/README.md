@@ -21,12 +21,6 @@ The manuscript does not include abandoned variants, debugging history, or supers
 
 ## Results and scope
 
-
-
-
-
-
-
 `evidence/paper_sources.json` records the source commit, snapshot hashes and full report location. The figure and table builder requires complete fresh-campaign evidence; pending outcomes cannot silently enter a final table.
 
 ## Build
@@ -51,7 +45,7 @@ Paired no-sweep controls are included in the main Golden results table. Evidence
 
 Runtime detail is in Table 4 (same-Mac mean/median/95th-percentile CPU by endpoint-size orientation, paired with recovery), Figure 2, and the archived default-comparator call-time table. `timing_comparison.json` retains per-case measurements and matched-cohort identities. Default-mapper timings are reported separately because their CPU model is not recorded in the archived summaries; no cross-CPU speed ranking is implied.
 
-The 140-reaction coordinate collection compares bond events under unverified mappings; it is not a mapping-accuracy benchmark. Table 5 now compares branch caps. At cap 100, 138 reactions yield complete mappings; cap 2,000 yields mappings for all 140. Cases 123 and 125 are the only losses, and all other decoded event patterns agree. Tables 6/7 and Figure 3 explicitly report cap 2,000: lower/equal/higher event counts are 4/136/0 against SLAP sweep and 15/125/0 against native SLAP. Evidence for the paired rerun is in `evidence/coordinate_cap_comparison.json` and `reports/coordinate_cap_consistency_20260915/`.
+The 140-reaction coordinate collection compares bond events under unverified mappings; it is not a mapping-accuracy benchmark. The cap control returns complete mappings for 138 reactions at cap 100 and all 140 at cap 2,000; cases 123 and 125 are the two search-completion losses. Table 5 reports the baseline-only bond-event comparison at cap 2,000, Table 6 reports archived stage costs, and Table A5 reports fresh full-pipeline timing. Against SLAP sweep and native SLAP, lower/equal/higher event counts are 4/136/0 and 15/125/0, respectively. Final event-pattern evidence is in `reports/published_baseline_20260915/`; older competition-enabled decoding reports are excluded.
 
 Figure 4 uses Golden case 9: the recovered reference and two alternative mappings. Compact red × marks for losses and paired green inward arrows for gains sit on the affected bonds in Figures 1 and 4, retaining fragment colors and the original black bond lines. Golden labels concern heavy atoms; totals explicitly include unannotated H assignments. The three selected witnesses are not an exhaustive decoded set. Evidence: `golden_case9.json` and `golden_case9_verification.json`.
 
@@ -65,4 +59,4 @@ The completed same-CPU Golden cap ablation is in the appendix (`evidence/golden_
 
 The published method uses one-seed cut sweep followed by separate decoding. Competition is excluded. Golden results are unchanged. Baseline-only coordinate evidence and decoding checks are in [the publication report](../reports/published_baseline_20260915/). At cap 2,000, GRAFT recovers 162/168 SLAP-sweep patterns and 151/160 native-SLAP patterns within the fixed windows. At equal minima, the corresponding counts are 158/164 and 138/140. The output has 300 event patterns, including 166 at GRAFT's own minima.
 
-Fresh end-to-end timing is recorded in `evidence/end_to_end_timing.json`: 138/140 reactions completed the five-minute watchdog, with all completed class sets matching the archived baseline. The main text and appendix distinguish completed-subset timing from full-dataset completion cost.
+Final end-to-end timing is recorded in `evidence/end_to_end_timing.json` and Table A5: all 140 reactions complete within the five-minute watchdog, preserving all 300 archived event classes and all 120,052 saved families. Mean/median CPU seconds are 1.257/0.300 for search, 4.647/0.288 for decoding, and 6.073/0.812 end to end. These are per-reaction CPU times, not divided by the four workers. Golden timings retain their explicitly labeled search-only scope. The final paper results, evidence, and bundle are ready; no further run is pending for these reported claims.
