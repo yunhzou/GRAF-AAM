@@ -1,19 +1,22 @@
-\begin{tabular}{@{}lllr@{}}\toprule
-Method & Search setting & Evaluated output & Reference recovered\\\midrule
-GRAFT & 1 seed, sweep (default) & Families & 1,834 (99.08\%) \\
-GRAFT & 2 seeds, sweep & Families & 1,834 (99.08\%) \\
-GRAFT & 3 seeds, sweep & Families & 1,837 (99.24\%) \\
-GRAFT & 10 seeds, sweep & Families & 1,840 (99.41\%) \\
-GRAFT & 1 seed, no sweep (ablation) & Families & 1,489 (80.44\%) \\
+\begin{tabular}{@{}lllr r@{}}\toprule
+Method & Search setting & Output & Reference recovered & Mean CPU s\\\midrule
+\multicolumn{5}{@{}l}{\textit{A. Matched search timing: AMD EPYC 9J14; 1,403 reactions}}\\
+\addlinespace[3pt]
+GRAFT & 1 seed, sweep (default) & Families & 1,834 (99.08\%) & 0.963 \\
+GRAFT & 2 seeds, sweep & Families & 1,834 (99.08\%) & 1.619 \\
+GRAFT & 3 seeds, sweep & Families & 1,837 (99.24\%) & 2.265 \\
+GRAFT & 10 seeds, sweep & Families & 1,840 (99.41\%) & 6.993 \\
+GRAFT & 1 seed, no sweep & Families & 1,489 (80.44\%) & 0.040 \\
+SLAP, union & No sweep & Candidates & 1,661 (89.74\%) & 0.105 \\
+SLAP, union$^{\ddagger}$ & Sweep & Candidates & 1,796 (97.03\%) & 2.793 \\
 \midrule
-SLAP, binary & Default, no sweep & Candidates & 1,591 (85.95\%) \\
-SLAP, weighted & Default, no sweep & Candidates & 1,564 (84.49\%) \\
-SLAP, union & No sweep & Candidates & 1,661 (89.74\%) \\
-SLAP, union$^{\ddagger}$ & Sweep & Candidates & 1,796 (97.03\%) \\
-\midrule
-RXNMapper & Default, no sweep & Mapping & 1,547 (83.58\%) \\
-LocalMapper$^{\dagger}$ & Default, no sweep & Mapping & 1,605 (86.71\%) \\
-Chython & Default, no sweep & Mapping & 1,561 (84.33\%) \\
-Indigo & Default, no sweep & Mapping & 692 (37.39\%) \\
-RDT & Default, no sweep & Mapping & 1,030 (55.65\%) \\
+\multicolumn{5}{@{}l}{\textit{B. Archived default calls: CPU model not recorded}}\\
+\addlinespace[3pt]
+SLAP, binary & Default, no sweep & Candidates & 1,591 (85.95\%) & 0.075 \\
+SLAP, weighted & Default, no sweep & Candidates & 1,564 (84.49\%) & 0.058 \\
+RXNMapper & Default, no sweep & Mapping & 1,547 (83.58\%) & 0.056 \\
+LocalMapper$^{\dagger}$ & Default, no sweep & Mapping & 1,605 (86.71\%) & 0.294 \\
+Chython & Default, no sweep & Mapping & 1,561 (84.33\%) & 0.612 \\
+Indigo & Default, no sweep & Mapping & 692 (37.39\%) & 0.184 \\
+RDT & Default, no sweep & Mapping & 1,030 (55.65\%) & 1.021 \\
 \bottomrule\end{tabular}

@@ -44,16 +44,7 @@ a.set(yticks=ys,yticklabels=['Smaller-first','Larger-first','Bidirectional'],xli
 a.set_title('b  Search cost by size orientation',loc='left',weight='bold',pad=13)
 a.legend(loc='upper left',frameon=False,fontsize=8);a.grid(axis='x',alpha=.15);a.set_axisbelow(True)
 save(fig,'fig2_golden')
-uncut=read('unswept.json');table=[]
-for name,label in [('graft','GRAFT, no sweep (ablation)'),('slap','SLAP, no sweep')]:
- o=uncut['methods'][name]['counts']
- table.append(f"{label} & {o['recovered']:,} & {100*o['recovered']/N:.2f} & {o['not_recovered']} & {o.get('unknown',0)} & {format(timing['slap_unswept_bidirectional']['mean'],'.3f') if name=='slap' else '--'} " + r"\\")
-ablations=table;table=[]
-for k,label in zip(keys,['GRAFT, 1 seed (default) + sweep','GRAFT, 2 seeds + sweep','GRAFT, 3 seeds + sweep','GRAFT, 10 seeds + sweep']):
- d=methods[k];o=d['golden_outcomes'];cost_text=f"{d['common_mean_cpu_seconds']:.2f}" if d['common_mean_cpu_seconds'] is not None else '--';table.append(f"{label} & {o['recovered']:,} & {d['golden_recovery_percent']:.2f} & {o['not_recovered']} & {o['unknown']} & {cost_text} \\\\")
-table.append(f"SLAP sweep (prior baseline) & {slap['outcomes']['recovered']:,} & {100*slap['outcomes']['recovered']/N:.2f} & {slap['outcomes']['not_recovered']} & {slap['outcomes']['unknown']} & {shown[2]:.2f} " + r"\\")
-table += [r'\midrule'] + ablations
-(MAN/'includes/generated-seed-table.tex').write_text('\\begin{tabular}{lrrrrr}\\toprule\nConfiguration & Recovered & \\% & Absent & Unknown & CPU s/reaction\\\\\\midrule\n'+'\n'.join(table)+'\n\\bottomrule\\end{tabular}\n')
+uncut=read('unswept.json')
 
 dedup=read('final_dedup.json');rows=dedup['per_case']
 assert len(rows)==140 and sum(r['flat_saved_families'] for r in rows)==dedup['flat_families']
@@ -112,26 +103,42 @@ macros=dict(GoldenOneRecovered=f"{counts[0]:,}",GoldenOnePercent=f"{100*counts[0
 (MAN/'includes/generated-results.tex').write_text('% Generated from complete fresh benchmark evidence.\n'+''.join('\\newcommand{\\'+k+'}{'+v+'}\n' for k,v in macros.items()))
 print('Built four main figures and complete-campaign tables and numerical macros.')
 
-competitors=read('competitors.json');assert competitors['rescored_with_current_evaluator'] and competitors['unchanged_case_outcomes']
-labels={'rxnmapper':'RXNMapper','localmapper':r'LocalMapper$^{\dagger}$','chython':'Chython','slap_binary':'SLAP, binary','slap_weighted':'SLAP, weighted','indigo':'Indigo','rdt':'RDT'}
-rows=[]
-def comparison_row(name,setting,output,n):
- return f"{name} & {setting} & {output} & {n:,} ({100*n/N:.2f}\\%) " + r"\\"
+# One main comparison: primary recovery plus explicitly identified timing cohorts.
+competitors=read('competitors.json')
+assert competitors['rescored_with_current_evaluator'] and competitors['unchanged_case_outcomes']
+controlled=read('golden_cap_ablation.json')
+controlled_rows={r['key']:r for r in controlled['rows']}
+call_times={r['key']:r for r in timing['default_comparators']}
+labels={'rxnmapper':'RXNMapper','localmapper':r'LocalMapper$^{\dagger}$','chython':'Chython',
+        'slap_binary':'SLAP, binary','slap_weighted':'SLAP, weighted','indigo':'Indigo','rdt':'RDT'}
+rows=[r'\multicolumn{5}{@{}l}{\textit{A. Matched search timing: AMD EPYC 9J14; 1,403 reactions}}\\',r'\addlinespace[3pt]']
+audit=[]
+def comparison_row(name,setting,output,n,cpu,key,timing_group):
+ assert 0 <= n <= N and cpu >= 0
+ audit.append(dict(method=name,setting=setting,output=output,recovered=n,denominator=N,
+                   mean_cpu_seconds=cpu,timing_key=key,timing_group=timing_group))
+ return f"{name} & {setting} & {output} & {n:,} ({100*n/N:.2f}\\%) & {cpu:.3f} " + r"\\"
 for k,nseed in zip(keys,[1,2,3,10]):
- rows.append(comparison_row('GRAFT',f'{nseed} seed'+('s' if nseed>1 else '')+', sweep'+(' (default)' if nseed==1 else ''),'Families',methods[k]['golden_outcomes']['recovered']))
-rows.append(comparison_row('GRAFT','1 seed, no sweep (ablation)','Families',uncut['methods']['graft']['counts']['recovered']))
-rows.append(r"\midrule")
-for d in competitors['methods']:
+ tkey=f'graft_c100_s{nseed}_sweep';cost=controlled_rows[tkey]
+ n=methods[k]['golden_outcomes']['recovered']
+ assert len(cost['cases']['recovered'])==n
+ rows.append(comparison_row('GRAFT',f'{nseed} seed'+('s' if nseed>1 else '')+', sweep'+(' (default)' if nseed==1 else ''),'Families',n,cost['paired_mean'],tkey,'A'))
+tkey='graft_c100_s1_uncut'
+rows.append(comparison_row('GRAFT','1 seed, no sweep','Families',uncut['methods']['graft']['counts']['recovered'],controlled_rows[tkey]['paired_mean'],tkey,'A'))
+for key,setting,n in [('slap_uncut','No sweep',uncut['methods']['slap']['counts']['recovered']),('slap_sweep','Sweep',slap['sweep_union_recovered'])]:
+ name=r'SLAP, union$^{\ddagger}$' if key=='slap_sweep' else 'SLAP, union'
+ rows.append(comparison_row(name,setting,'Candidates',n,controlled_rows[key]['paired_mean'],key,'A'))
+rows += [r'\midrule',r'\multicolumn{5}{@{}l}{\textit{B. Archived default calls: CPU model not recorded}}\\',r'\addlinespace[3pt]']
+for key in ['slap_binary','slap_weighted','rxnmapper','localmapper','chython','indigo','rdt']:
+ d=next(d for d in competitors['methods'] if d['method']==key)
  assert d['total']==N and len(d['any_correct_cases'])==d['any_correct']
- if not d['method'].startswith('slap'):continue
- rows.append(comparison_row(labels[d['method']],'Default, no sweep','Candidates',d['any_correct']))
-rows.append(comparison_row('SLAP, union','No sweep','Candidates',uncut['methods']['slap']['counts']['recovered']))
-rows.append(comparison_row(r'SLAP, union$^{\ddagger}$','Sweep','Candidates',slap['sweep_union_recovered']))
-rows.append(r"\midrule")
-for d in competitors['methods']:
- if d['method'].startswith('slap'):continue
- rows.append(comparison_row(labels[d['method']],'Default, no sweep','Mapping',d['any_correct']))
-(MAN/'includes/generated-competitor-table.tex').write_text(r"\begin{tabular}{@{}lllr@{}}\toprule"+'\n'+r"Method & Search setting & Evaluated output & Reference recovered\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+ rows.append(comparison_row(labels[key],'Default, no sweep','Candidates' if key.startswith('slap') else 'Mapping',d['any_correct'],call_times[key]['mean_cpu_seconds'],key,'B'))
+(MAN/'includes/generated-competitor-table.tex').write_text(r"\begin{tabular}{@{}lllr r@{}}\toprule"+'\n'+r"Method & Search setting & Output & Reference recovered & Mean CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
+(MAN/'build/golden-comparison-table.json').write_text(json.dumps(dict(rows=audit,
+ recovery_scope='Primary evaluation: all 1,851 records; failures and unknowns retained.',
+ timing_A='golden_cap_ablation.json: paired_mean, common 1,403 completed reactions, AMD EPYC 9J14, search only.',
+ timing_B='timing_comparison.json: default_comparators mean_cpu_seconds, completed calls including invalid outputs, CPU model unrecorded.',
+ no_cross_group_speed_ranking=True),indent=2)+'\n')
 
 # The case-level failure table is generated from the audited final misses.
 misses=read('golden_miss_analysis.json')

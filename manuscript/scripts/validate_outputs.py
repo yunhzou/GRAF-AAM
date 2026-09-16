@@ -80,11 +80,27 @@ r=PdfReader(MAN/'manuscript.pdf');pages=[p.extract_text() for p in r.pages];allt
 assert '??' not in alltext
 for value in [f"{seed['methods']['seeds1']['golden_recovery_percent']:.2f}",f"{seed['methods']['seeds3']['golden_recovery_percent']:.2f}",'120,052','300','162','168']:
  assert value in alltext,value
-assert 'GRAFT and benchmarked mapping implementations on Golden' in alltext
+assert 'Golden reference recovery and runtime' in alltext
 assert 'First correct' not in alltext and 'two ten-order cases remain unresolved' not in alltext
 comparison=(MAN/'includes/generated-competitor-table.tex').read_text()
 assert comparison.count('GRAFT &')==5
 assert comparison.count('SLAP,')==4
+assert 'generated-seed-table' not in tex
+assert not (MAN/'includes/generated-seed-table.tex').exists()
+merged=read('golden_cap_ablation.json')
+merged_costs={r['key']:r for r in merged['rows']}
+merged_calls={r['key']:r for r in read('timing_comparison.json')['default_comparators']}
+merged_audit=json.loads((MAN/'build/golden-comparison-table.json').read_text())
+assert len(merged_audit['rows'])==14 and merged_audit['no_cross_group_speed_ranking']
+for row in merged_audit['rows']:
+ expected=(merged_costs[row['timing_key']]['paired_mean'] if row['timing_group']=='A'
+           else merged_calls[row['timing_key']]['mean_cpu_seconds'])
+ assert row['mean_cpu_seconds']==expected
+ assert f"{expected:.3f}" in comparison
+ assert row['denominator']==1851
+assert 'AMD EPYC 9J14' in comparison and 'CPU model not recorded' in comparison
+assert '--' not in comparison
+
 for fig in figs:
  assert 'GRAFT' in PdfReader(MAN/fig).pages[0].extract_text(), fig
 for value in ['1,489','1,661','80.44','89.74']:assert value in alltext
