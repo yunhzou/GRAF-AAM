@@ -1,0 +1,7 @@
+{
+  "source_sha256": "07f4e60a0b7cc1c5e464fdc6ff1cdcb58d84ede3f06f9b44730e7fc72639f025",
+  "rdt_final_evaluation_job": "452296",
+  "tests": "18 passed",
+  "input_endpoint_check": "all 1851 match",
+  "rdt_agent_field": "included on input endpoint without modifying labels"
+}

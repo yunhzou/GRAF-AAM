@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61", "wheel"]
+requires = ["setuptools>=61", "wheel", "pybind11>=2.10"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -25,8 +25,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+notebook = ["rdkit>=2022.9", "z3-solver>=4.13", "py3Dmol>=2.0", "nbformat", "nbclient", "ipykernel", "jupyterlab"]
+postprocessing = ["z3-solver>=4.13"]
 dev = ["pytest", "nbclient", "ipykernel"]
 smiles = ["rdkit>=2022.9"]
+catalog = ["rdkit>=2022.9", "msgspec>=0.21"]
+benchmark = ["rdkit>=2022.9", "z3-solver>=4.13"]
 sessions = ["pymongo>=4.6"]
 
 [project.scripts]
@@ -40,7 +44,10 @@ Repository = "https://github.com/yunhzou/coordinate_alignment"
 where = ["src"]
 
 [tool.setuptools.package-data]
-rxn_core = ["static/*.js", "static/LICENSES/*"]
+rxn_core = ["static/*.js", "static/*.html", "static/*.css", "static/LICENSES/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 # Note: xtb (Grimme) is a runtime requirement but not a Python dependency;
 # install it via your system package manager (e.g. conda install -c conda-forge xtb).

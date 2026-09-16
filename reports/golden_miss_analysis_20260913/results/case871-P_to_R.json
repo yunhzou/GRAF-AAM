@@ -1,0 +1,1033 @@
+{
+  "case": 871,
+  "direction": "P_to_R",
+  "seed_count": 10,
+  "branch_cap": 100,
+  "expected_cuts": 50,
+  "checked_cuts": 50,
+  "reference_pairs": 20,
+  "heavy_counts": [
+    20,
+    20
+  ],
+  "cuts": [
+    {
+      "index": 0,
+      "sha256": "4ddc84c837fcac4ebb1354416f5dd92b29e60d0a8e0ffbf309f74379b8f427a2",
+      "terminals": 734,
+      "cardinality_histogram": {
+        "20": 734
+      },
+      "same_cardinality": 734,
+      "source_orbit_selection_matches": 734,
+      "cap_stops": {
+        "combined_live_leaves": 1247
+      },
+      "states": 5654,
+      "transitions": 5644,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2724,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 1,
+      "sha256": "d22ba0048ff49721467d38a796a65c436aee1f36b3b371de15f197e8e004ff48",
+      "terminals": 762,
+      "cardinality_histogram": {
+        "20": 762
+      },
+      "same_cardinality": 762,
+      "source_orbit_selection_matches": 762,
+      "cap_stops": {
+        "combined_live_leaves": 3316
+      },
+      "states": 9017,
+      "transitions": 9007,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2549,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 2,
+      "sha256": "8a24ed46aa6ed5ac5bb78ce016cec5251bfb23d353226471cfd3acc366b5c4c4",
+      "terminals": 757,
+      "cardinality_histogram": {
+        "20": 757
+      },
+      "same_cardinality": 757,
+      "source_orbit_selection_matches": 757,
+      "cap_stops": {
+        "combined_live_leaves": 2954
+      },
+      "states": 8880,
+      "transitions": 8870,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2856,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 3,
+      "sha256": "89f530e4ceaeba9b738ba1f4bd9bb18118f8107068f413ae0779ed53228543e6",
+      "terminals": 831,
+      "cardinality_histogram": {
+        "20": 831
+      },
+      "same_cardinality": 831,
+      "source_orbit_selection_matches": 831,
+      "cap_stops": {
+        "combined_live_leaves": 3006
+      },
+      "states": 8787,
+      "transitions": 8777,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3465,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 4,
+      "sha256": "d3f493084afe20c4781da80df3eeb3803aa2d02c9102c5908f6a8a0d279bc739",
+      "terminals": 908,
+      "cardinality_histogram": {
+        "20": 908
+      },
+      "same_cardinality": 908,
+      "source_orbit_selection_matches": 908,
+      "cap_stops": {
+        "combined_live_leaves": 2413
+      },
+      "states": 8313,
+      "transitions": 8303,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2478,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 5,
+      "sha256": "2bfe0a14ff88864d692a61c555f115e84b80582ccbc93f7a345dd32d0b49f34e",
+      "terminals": 818,
+      "cardinality_histogram": {
+        "20": 818
+      },
+      "same_cardinality": 818,
+      "source_orbit_selection_matches": 818,
+      "cap_stops": {
+        "combined_live_leaves": 1799
+      },
+      "states": 7090,
+      "transitions": 7080,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2836,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 6,
+      "sha256": "857f7ae1025573d6f87295af6a9de6cd93c3d68fb7dd7c4613454833c87f00d0",
+      "terminals": 859,
+      "cardinality_histogram": {
+        "20": 859
+      },
+      "same_cardinality": 859,
+      "source_orbit_selection_matches": 859,
+      "cap_stops": {
+        "combined_live_leaves": 1512
+      },
+      "states": 7042,
+      "transitions": 7032,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 4034,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 7,
+      "sha256": "29bdb74bc4a82e05775b60ccfd1d853e48f3a8f1ec9539f639945dafc6264fed",
+      "terminals": 824,
+      "cardinality_histogram": {
+        "20": 824
+      },
+      "same_cardinality": 824,
+      "source_orbit_selection_matches": 824,
+      "cap_stops": {
+        "combined_live_leaves": 1891
+      },
+      "states": 7245,
+      "transitions": 7235,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2888,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 8,
+      "sha256": "371e24b8eb19c72acdb6ea136ad9b3880d7610fd79c4d55ca562c2a13533c6f4",
+      "terminals": 984,
+      "cardinality_histogram": {
+        "20": 984
+      },
+      "same_cardinality": 984,
+      "source_orbit_selection_matches": 984,
+      "cap_stops": {
+        "combined_live_leaves": 2797
+      },
+      "states": 9526,
+      "transitions": 9516,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1992,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 9,
+      "sha256": "890ceeb9493dc1ed681a787cdb85b8b3be926a3d841678cc3cf0643ab0ae8751",
+      "terminals": 894,
+      "cardinality_histogram": {
+        "20": 894
+      },
+      "same_cardinality": 894,
+      "source_orbit_selection_matches": 894,
+      "cap_stops": {
+        "combined_live_leaves": 3839
+      },
+      "states": 11465,
+      "transitions": 11455,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 4146,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 10,
+      "sha256": "6e46e5f4b4f640d508e64bef12137e915f87107b4f9b967401044e60ff64afb1",
+      "terminals": 511,
+      "cardinality_histogram": {
+        "20": 511
+      },
+      "same_cardinality": 511,
+      "source_orbit_selection_matches": 511,
+      "cap_stops": {
+        "combined_live_leaves": 336
+      },
+      "states": 3219,
+      "transitions": 3209,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2258,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 11,
+      "sha256": "32a3120ce4deb2cbb7ac7e84bb1773efb554f023b9c510a27bb8c3bfe82e4c41",
+      "terminals": 332,
+      "cardinality_histogram": {
+        "20": 332
+      },
+      "same_cardinality": 332,
+      "source_orbit_selection_matches": 332,
+      "cap_stops": {
+        "combined_live_leaves": 494
+      },
+      "states": 2663,
+      "transitions": 2653,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2296,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 12,
+      "sha256": "4b0160cc5a36ca1f279f2ef3adde37c44ee7ef37a92d3f99c9bf7833c30587d0",
+      "terminals": 111,
+      "cardinality_histogram": {
+        "20": 111
+      },
+      "same_cardinality": 111,
+      "source_orbit_selection_matches": 111,
+      "cap_stops": {},
+      "states": 608,
+      "transitions": 598,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 960,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 13,
+      "sha256": "d26ad5b10ce6ca32a69c0053654e16826d74c69ed057fc4b3e91dc834c10cbb8",
+      "terminals": 1000,
+      "cardinality_histogram": {
+        "20": 1000
+      },
+      "same_cardinality": 1000,
+      "source_orbit_selection_matches": 1000,
+      "cap_stops": {
+        "combined_live_leaves": 4784
+      },
+      "states": 12848,
+      "transitions": 12838,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2594,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 2,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 14,
+      "sha256": "68e369d641e5df2746234eb3f796403ee87fcf85597a92c6530d387c34533160",
+      "terminals": 509,
+      "cardinality_histogram": {
+        "20": 509
+      },
+      "same_cardinality": 509,
+      "source_orbit_selection_matches": 509,
+      "cap_stops": {
+        "combined_live_leaves": 1285
+      },
+      "states": 5022,
+      "transitions": 5012,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2748,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 15,
+      "sha256": "16148f8e8cadd80aa5447b37b592d27f320609f072eceb091619876a49fb275e",
+      "terminals": 401,
+      "cardinality_histogram": {
+        "20": 401
+      },
+      "same_cardinality": 401,
+      "source_orbit_selection_matches": 401,
+      "cap_stops": {
+        "combined_live_leaves": 404
+      },
+      "states": 2631,
+      "transitions": 2621,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1813,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 16,
+      "sha256": "d49ddfdb5009fd713ef97a82c4ac1f1b4ee43e19d342aaf0b9d9167252827980",
+      "terminals": 909,
+      "cardinality_histogram": {
+        "20": 909
+      },
+      "same_cardinality": 909,
+      "source_orbit_selection_matches": 909,
+      "cap_stops": {
+        "combined_live_leaves": 3435
+      },
+      "states": 9602,
+      "transitions": 9592,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2702,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 17,
+      "sha256": "5dd36ce551dd823f8afdf94295fb30e25ac98cb65bbcec0493df04db8455dd0b",
+      "terminals": 412,
+      "cardinality_histogram": {
+        "20": 412
+      },
+      "same_cardinality": 412,
+      "source_orbit_selection_matches": 412,
+      "cap_stops": {
+        "combined_live_leaves": 636
+      },
+      "states": 2924,
+      "transitions": 2914,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 552,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 18,
+      "sha256": "4f05971c66cf4a55478f9658c3b4943391f45ed9949d81c082d11133fd33bd02",
+      "terminals": 612,
+      "cardinality_histogram": {
+        "20": 612
+      },
+      "same_cardinality": 612,
+      "source_orbit_selection_matches": 612,
+      "cap_stops": {
+        "combined_live_leaves": 1681
+      },
+      "states": 5663,
+      "transitions": 5653,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1405,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 19,
+      "sha256": "db988938d1d44f6fdbbbd6f8e25822a83b22e97c30c482e2d1c7a7dcb84533a7",
+      "terminals": 859,
+      "cardinality_histogram": {
+        "20": 859
+      },
+      "same_cardinality": 859,
+      "source_orbit_selection_matches": 859,
+      "cap_stops": {
+        "combined_live_leaves": 2086
+      },
+      "states": 7356,
+      "transitions": 7346,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3511,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 20,
+      "sha256": "60be5a38c39e608fc936ca650ce597279864886644b9f5ac4a8be4f98f76ee11",
+      "terminals": 552,
+      "cardinality_histogram": {
+        "20": 552
+      },
+      "same_cardinality": 552,
+      "source_orbit_selection_matches": 552,
+      "cap_stops": {
+        "combined_live_leaves": 4396
+      },
+      "states": 9900,
+      "transitions": 9890,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2418,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 21,
+      "sha256": "526f702dc95d3036e4df987746bcda077b481a68cb9f767a32cba1875365b681",
+      "terminals": 713,
+      "cardinality_histogram": {
+        "20": 713
+      },
+      "same_cardinality": 713,
+      "source_orbit_selection_matches": 713,
+      "cap_stops": {
+        "combined_live_leaves": 1559
+      },
+      "states": 6477,
+      "transitions": 6467,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3599,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 22,
+      "sha256": "8fbf8b7d99954b6df156c44f775ca76d5940087714c97e39b0462cc05fb153cb",
+      "terminals": 1000,
+      "cardinality_histogram": {
+        "20": 1000
+      },
+      "same_cardinality": 1000,
+      "source_orbit_selection_matches": 1000,
+      "cap_stops": {
+        "combined_live_leaves": 4043
+      },
+      "states": 11253,
+      "transitions": 11243,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2053,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 23,
+      "sha256": "cf03f83d009af30608e52aa058b66312812fc1cff96366c519620e5408cdc8ac",
+      "terminals": 830,
+      "cardinality_histogram": {
+        "20": 830
+      },
+      "same_cardinality": 830,
+      "source_orbit_selection_matches": 830,
+      "cap_stops": {
+        "combined_live_leaves": 1126
+      },
+      "states": 6074,
+      "transitions": 6064,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2878,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 24,
+      "sha256": "28931652a07ddc16c0f6395a37465cb9a74ed00348f727afcd31b7343696c003",
+      "terminals": 849,
+      "cardinality_histogram": {
+        "20": 849
+      },
+      "same_cardinality": 849,
+      "source_orbit_selection_matches": 849,
+      "cap_stops": {
+        "combined_live_leaves": 4711
+      },
+      "states": 11217,
+      "transitions": 11207,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1837,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 25,
+      "sha256": "861e3826bd242dd52cd16a62664b995d125f5a1b1cdfae5a82178133617685ec",
+      "terminals": 1000,
+      "cardinality_histogram": {
+        "20": 1000
+      },
+      "same_cardinality": 1000,
+      "source_orbit_selection_matches": 1000,
+      "cap_stops": {
+        "combined_live_leaves": 4216
+      },
+      "states": 12192,
+      "transitions": 12182,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3034,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 26,
+      "sha256": "1f8052154ab3042e08befced6b8b67abd9c87e54938288e181683691dd0f6ab6",
+      "terminals": 864,
+      "cardinality_histogram": {
+        "20": 864
+      },
+      "same_cardinality": 864,
+      "source_orbit_selection_matches": 864,
+      "cap_stops": {
+        "combined_live_leaves": 3388
+      },
+      "states": 9268,
+      "transitions": 9258,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2171,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 27,
+      "sha256": "5da6d462ebbde8fbf2c9dec1197fa08d3550bb26dff0be6c7bc6633b8e398a92",
+      "terminals": 1000,
+      "cardinality_histogram": {
+        "20": 1000
+      },
+      "same_cardinality": 1000,
+      "source_orbit_selection_matches": 1000,
+      "cap_stops": {
+        "combined_live_leaves": 2994
+      },
+      "states": 9729,
+      "transitions": 9719,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3713,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 28,
+      "sha256": "655f9616075f908a249ae60fbb0daa07e0bf9ce8aed7176158163255c59a9887",
+      "terminals": 999,
+      "cardinality_histogram": {
+        "20": 999
+      },
+      "same_cardinality": 999,
+      "source_orbit_selection_matches": 999,
+      "cap_stops": {
+        "combined_live_leaves": 5174
+      },
+      "states": 12971,
+      "transitions": 12961,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3228,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 29,
+      "sha256": "9b0e656edabd156c7474d936ec2d3653c59c53bd5301ff1961e2861ac84b633c",
+      "terminals": 948,
+      "cardinality_histogram": {
+        "20": 948
+      },
+      "same_cardinality": 948,
+      "source_orbit_selection_matches": 948,
+      "cap_stops": {
+        "combined_live_leaves": 4790
+      },
+      "states": 12037,
+      "transitions": 12027,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2652,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 30,
+      "sha256": "da66d174c79a4f2d2c958c1c46100833ff95aaa2c3889af971101eace0096ee6",
+      "terminals": 677,
+      "cardinality_histogram": {
+        "20": 677
+      },
+      "same_cardinality": 677,
+      "source_orbit_selection_matches": 677,
+      "cap_stops": {
+        "combined_live_leaves": 1277
+      },
+      "states": 5611,
+      "transitions": 5601,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1792,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 31,
+      "sha256": "fc5f6dc26b51a08db314eb0788c128ef76e439c52e6dc2f86e0615d812d44c57",
+      "terminals": 860,
+      "cardinality_histogram": {
+        "20": 860
+      },
+      "same_cardinality": 860,
+      "source_orbit_selection_matches": 860,
+      "cap_stops": {
+        "combined_live_leaves": 3039
+      },
+      "states": 9555,
+      "transitions": 9545,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2589,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 10,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 32,
+      "sha256": "0c5dd986871dd948a5ef88a194f80dc316594702b6ce5f0cd4503b856a59b714",
+      "terminals": 818,
+      "cardinality_histogram": {
+        "20": 818
+      },
+      "same_cardinality": 818,
+      "source_orbit_selection_matches": 818,
+      "cap_stops": {
+        "combined_live_leaves": 2218
+      },
+      "states": 7451,
+      "transitions": 7441,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2113,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 33,
+      "sha256": "e76f90952f738de5aca5783bd5a563cf71731adbaf831d8a0554f037d863cc81",
+      "terminals": 843,
+      "cardinality_histogram": {
+        "20": 843
+      },
+      "same_cardinality": 843,
+      "source_orbit_selection_matches": 843,
+      "cap_stops": {
+        "combined_live_leaves": 2510
+      },
+      "states": 8729,
+      "transitions": 8719,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2417,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 34,
+      "sha256": "bbee6f5ea5ac8a76b33ff03f81d8f2a518aedc1a3ca009bbaa1cceb885970bbb",
+      "terminals": 916,
+      "cardinality_histogram": {
+        "20": 916
+      },
+      "same_cardinality": 916,
+      "source_orbit_selection_matches": 916,
+      "cap_stops": {
+        "combined_live_leaves": 3482
+      },
+      "states": 10347,
+      "transitions": 10337,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2553,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 35,
+      "sha256": "186dfb12cec8ab2fc9819266758720a8677ae56883116e2badb1d3a41de2a49c",
+      "terminals": 886,
+      "cardinality_histogram": {
+        "20": 886
+      },
+      "same_cardinality": 886,
+      "source_orbit_selection_matches": 886,
+      "cap_stops": {
+        "combined_live_leaves": 1947
+      },
+      "states": 7550,
+      "transitions": 7540,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3724,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 36,
+      "sha256": "e5397df753f798cb407d6188d2056f41719c988f4dcf7da6036b34521d48a796",
+      "terminals": 817,
+      "cardinality_histogram": {
+        "20": 817
+      },
+      "same_cardinality": 817,
+      "source_orbit_selection_matches": 817,
+      "cap_stops": {
+        "combined_live_leaves": 3073
+      },
+      "states": 8707,
+      "transitions": 8697,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2580,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 37,
+      "sha256": "7b627ee01cf5ecabf5ea33154294bac4d2662382690e572c3e5c50b44155797b",
+      "terminals": 752,
+      "cardinality_histogram": {
+        "20": 752
+      },
+      "same_cardinality": 752,
+      "source_orbit_selection_matches": 752,
+      "cap_stops": {
+        "combined_live_leaves": 2170
+      },
+      "states": 6718,
+      "transitions": 6708,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1259,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 38,
+      "sha256": "07bffea0c00e44549800170d51fcc543ee99a76c2e39835ad68ea546b0596f5a",
+      "terminals": 825,
+      "cardinality_histogram": {
+        "20": 825
+      },
+      "same_cardinality": 825,
+      "source_orbit_selection_matches": 825,
+      "cap_stops": {
+        "combined_live_leaves": 1764
+      },
+      "states": 6845,
+      "transitions": 6835,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2230,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 39,
+      "sha256": "0db40b63df6d57fe69fa1f1ca0c6e3a6548a2a85bdc43dbecc71f9a5727cefe5",
+      "terminals": 905,
+      "cardinality_histogram": {
+        "20": 905
+      },
+      "same_cardinality": 905,
+      "source_orbit_selection_matches": 905,
+      "cap_stops": {
+        "combined_live_leaves": 4002
+      },
+      "states": 11845,
+      "transitions": 11835,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 4313,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 40,
+      "sha256": "b072b0e83456403318a36c3bd9bc1ecff1e6da61ab6aef8e743e660091f5fc19",
+      "terminals": 999,
+      "cardinality_histogram": {
+        "20": 999
+      },
+      "same_cardinality": 999,
+      "source_orbit_selection_matches": 999,
+      "cap_stops": {
+        "combined_live_leaves": 5809
+      },
+      "states": 14339,
+      "transitions": 14329,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1868,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 41,
+      "sha256": "b2ebf81b6695099741a5868677088c7dddb44004de6d0edd73b30259cce14c39",
+      "terminals": 903,
+      "cardinality_histogram": {
+        "20": 903
+      },
+      "same_cardinality": 903,
+      "source_orbit_selection_matches": 903,
+      "cap_stops": {
+        "combined_live_leaves": 5796
+      },
+      "states": 13304,
+      "transitions": 13294,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1748,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 42,
+      "sha256": "c0dfb5c0ca5620837c10a6c1f3bb1c45c591433865f22023bcdeb27f37e02987",
+      "terminals": 738,
+      "cardinality_histogram": {
+        "20": 738
+      },
+      "same_cardinality": 738,
+      "source_orbit_selection_matches": 738,
+      "cap_stops": {
+        "combined_live_leaves": 3783
+      },
+      "states": 10013,
+      "transitions": 10003,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2341,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 43,
+      "sha256": "f54fe291dc9fe8f26ece2c7374a326773253f8ed46cd61aef57b38792a53381b",
+      "terminals": 919,
+      "cardinality_histogram": {
+        "20": 919
+      },
+      "same_cardinality": 919,
+      "source_orbit_selection_matches": 919,
+      "cap_stops": {
+        "combined_live_leaves": 3786
+      },
+      "states": 11427,
+      "transitions": 11417,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 4136,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 21,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 44,
+      "sha256": "f0095e43303733a5fd0cdfadb18481c86d334abe1aeb79bade6ed1cb1cad4c85",
+      "terminals": 928,
+      "cardinality_histogram": {
+        "20": 928
+      },
+      "same_cardinality": 928,
+      "source_orbit_selection_matches": 928,
+      "cap_stops": {
+        "combined_live_leaves": 5531
+      },
+      "states": 13012,
+      "transitions": 13002,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 1725,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 45,
+      "sha256": "d32010bd22b7eab37780e9383903ed9faafb55ce5d5fa1e41cfe93588ce0ec82",
+      "terminals": 918,
+      "cardinality_histogram": {
+        "20": 918
+      },
+      "same_cardinality": 918,
+      "source_orbit_selection_matches": 918,
+      "cap_stops": {
+        "combined_live_leaves": 4618
+      },
+      "states": 12509,
+      "transitions": 12499,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2848,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 46,
+      "sha256": "d8005f520fd5c3398fea67765e7bf3beb3ce977bafbf4cf1d67cedeab72fc1b8",
+      "terminals": 1000,
+      "cardinality_histogram": {
+        "20": 1000
+      },
+      "same_cardinality": 1000,
+      "source_orbit_selection_matches": 1000,
+      "cap_stops": {
+        "combined_live_leaves": 4946
+      },
+      "states": 12828,
+      "transitions": 12818,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 3314,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 1,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 47,
+      "sha256": "ddc5833bef717b47a96374899f491807ea2fe90db87d8b2e079ece114634141f",
+      "terminals": 899,
+      "cardinality_histogram": {
+        "20": 899
+      },
+      "same_cardinality": 899,
+      "source_orbit_selection_matches": 899,
+      "cap_stops": {
+        "combined_live_leaves": 3645
+      },
+      "states": 10224,
+      "transitions": 10214,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2424,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 48,
+      "sha256": "6014f8caf17349b7fdd2f55f7f9ff03269f43e53ef9184cef22d68ec95d31814",
+      "terminals": 924,
+      "cardinality_histogram": {
+        "20": 924
+      },
+      "same_cardinality": 924,
+      "source_orbit_selection_matches": 924,
+      "cap_stops": {
+        "combined_live_leaves": 4007
+      },
+      "states": 10659,
+      "transitions": 10649,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2105,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    },
+    {
+      "index": 49,
+      "sha256": "eceeedb143177a1a8931d6c45ede7abd956aaa40f764f576617c9764cb3fee24",
+      "terminals": 906,
+      "cardinality_histogram": {
+        "20": 906
+      },
+      "same_cardinality": 906,
+      "source_orbit_selection_matches": 906,
+      "cap_stops": {
+        "combined_live_leaves": 4729
+      },
+      "states": 11607,
+      "transitions": 11597,
+      "representative_exact_orbit_pair_matches": 0,
+      "heavy_action_records": 2106,
+      "non_endpoint_actions": 0,
+      "free_heavy_blocks": 0,
+      "relaxed_target_orbit_pair_matches": 0
+    }
+  ],
+  "cpu_seconds": 18.785245733,
+  "wall_seconds": 18.96695158095099,
+  "peak_mib": 155.47265625,
+  "input_sha256": "f2c1b323f6ba0bd0c309a2927b7d75f8111c0f37221ab659c7983e74f54d1c71",
+  "reference_sha256": "04d1d103b1f274000cf2733fba32eee84532331e1148736bfbd38d4cac8d8384",
+  "driver_sha256": "6bfbcc45fbb9f8352ca64745e51d73448eaaa5f13be555112719b44280d92a2a",
+  "terminals": 40215,
+  "same_cardinality": 40215,
+  "source_orbit_selection_matches": 40215,
+  "representative_exact_orbit_pair_matches": 0,
+  "relaxed_target_orbit_pair_matches": 0,
+  "heavy_action_records": 128575,
+  "non_endpoint_actions": 0,
+  "free_heavy_blocks": 34,
+  "cardinality_histogram": {
+    "20": 40215
+  },
+  "cap_stops": {
+    "combined_live_leaves": 148444
+  }
+}

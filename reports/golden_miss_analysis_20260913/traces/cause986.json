@@ -1,0 +1,535 @@
+{
+  "case": 986,
+  "direction": "R_to_P",
+  "source": "current frozen benchmark engine",
+  "native_python_graph_equal": true,
+  "reference_heavy_pair_changes": 7,
+  "rows": [
+    {
+      "policy": "ordinary",
+      "reference_directed": false,
+      "capped": false,
+      "terminals": 1,
+      "exact_reference_witnesses": 0,
+      "reference_equivalent_witnesses": 0,
+      "heavy_pair_changes": [
+        3
+      ],
+      "trace_conflicts": [
+        {
+          "source_edge": [
+            13,
+            12
+          ],
+          "target_edge": [
+            5,
+            3
+          ],
+          "weights": [
+            1.5,
+            0.0
+          ],
+          "fragment": [
+            12,
+            13,
+            14,
+            26
+          ]
+        },
+        {
+          "source_edge": [
+            11,
+            10
+          ],
+          "target_edge": [
+            4,
+            2
+          ],
+          "weights": [
+            1.5,
+            0.0
+          ],
+          "fragment": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            26
+          ]
+        }
+      ],
+      "seconds": 0.007255249889567494,
+      "mappings": [
+        [
+          [
+            0,
+            13
+          ],
+          [
+            1,
+            12
+          ],
+          [
+            2,
+            11
+          ],
+          [
+            3,
+            10
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            6,
+            14
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            15
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            11,
+            3
+          ],
+          [
+            12,
+            4
+          ],
+          [
+            13,
+            5
+          ],
+          [
+            14,
+            6
+          ],
+          [
+            15,
+            7
+          ],
+          [
+            16,
+            24
+          ],
+          [
+            17,
+            25
+          ],
+          [
+            18,
+            23
+          ],
+          [
+            19,
+            22
+          ],
+          [
+            20,
+            27
+          ],
+          [
+            21,
+            17
+          ],
+          [
+            22,
+            16
+          ],
+          [
+            23,
+            18
+          ],
+          [
+            24,
+            19
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            26,
+            21
+          ]
+        ]
+      ]
+    },
+    {
+      "policy": "ordinary_native",
+      "reference_directed": false,
+      "capped": false,
+      "terminals": 1,
+      "exact_reference_witnesses": 0,
+      "reference_equivalent_witnesses": 0,
+      "heavy_pair_changes": [
+        3
+      ],
+      "trace_conflicts": [],
+      "seconds": 0.002076416974887252,
+      "mappings": [
+        [
+          [
+            0,
+            13
+          ],
+          [
+            1,
+            12
+          ],
+          [
+            2,
+            11
+          ],
+          [
+            3,
+            10
+          ],
+          [
+            4,
+            9
+          ],
+          [
+            5,
+            8
+          ],
+          [
+            6,
+            14
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            15
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            11,
+            3
+          ],
+          [
+            12,
+            4
+          ],
+          [
+            13,
+            5
+          ],
+          [
+            14,
+            6
+          ],
+          [
+            15,
+            7
+          ],
+          [
+            16,
+            24
+          ],
+          [
+            17,
+            25
+          ],
+          [
+            18,
+            23
+          ],
+          [
+            19,
+            22
+          ],
+          [
+            20,
+            27
+          ],
+          [
+            21,
+            17
+          ],
+          [
+            22,
+            16
+          ],
+          [
+            23,
+            18
+          ],
+          [
+            24,
+            19
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            26,
+            21
+          ]
+        ]
+      ]
+    },
+    {
+      "policy": "reference_constrained",
+      "reference_directed": true,
+      "capped": false,
+      "terminals": 1,
+      "exact_reference_witnesses": 1,
+      "reference_equivalent_witnesses": 1,
+      "heavy_pair_changes": [
+        7
+      ],
+      "trace_conflicts": [],
+      "seconds": 0.004821707960218191,
+      "mappings": [
+        [
+          [
+            0,
+            8
+          ],
+          [
+            1,
+            9
+          ],
+          [
+            2,
+            10
+          ],
+          [
+            3,
+            11
+          ],
+          [
+            4,
+            12
+          ],
+          [
+            5,
+            13
+          ],
+          [
+            6,
+            14
+          ],
+          [
+            7,
+            0
+          ],
+          [
+            8,
+            15
+          ],
+          [
+            9,
+            1
+          ],
+          [
+            10,
+            2
+          ],
+          [
+            11,
+            4
+          ],
+          [
+            12,
+            3
+          ],
+          [
+            13,
+            5
+          ],
+          [
+            14,
+            6
+          ],
+          [
+            15,
+            7
+          ],
+          [
+            16,
+            23
+          ],
+          [
+            17,
+            22
+          ],
+          [
+            18,
+            25
+          ],
+          [
+            19,
+            24
+          ],
+          [
+            20,
+            27
+          ],
+          [
+            21,
+            17
+          ],
+          [
+            22,
+            16
+          ],
+          [
+            23,
+            19
+          ],
+          [
+            24,
+            18
+          ],
+          [
+            25,
+            20
+          ],
+          [
+            26,
+            21
+          ]
+        ]
+      ]
+    }
+  ],
+  "reference_mapping": [
+    [
+      0,
+      8
+    ],
+    [
+      1,
+      9
+    ],
+    [
+      2,
+      10
+    ],
+    [
+      3,
+      11
+    ],
+    [
+      4,
+      12
+    ],
+    [
+      5,
+      13
+    ],
+    [
+      6,
+      14
+    ],
+    [
+      7,
+      0
+    ],
+    [
+      8,
+      15
+    ],
+    [
+      9,
+      1
+    ],
+    [
+      10,
+      2
+    ],
+    [
+      11,
+      4
+    ],
+    [
+      12,
+      3
+    ],
+    [
+      13,
+      5
+    ],
+    [
+      14,
+      6
+    ],
+    [
+      15,
+      7
+    ]
+  ],
+  "seed_order": [
+    16,
+    26,
+    21,
+    23,
+    20,
+    18,
+    7,
+    12,
+    17,
+    2,
+    10,
+    6,
+    8,
+    19,
+    5,
+    25,
+    13,
+    0,
+    15,
+    24,
+    3,
+    11,
+    14,
+    4,
+    22,
+    9,
+    1
+  ],
+  "benchmark_score_unchanged": true,
+  "diagnostic_label_swap": {
+    "source_indices": [
+      11,
+      12
+    ],
+    "original_rdf_labels": [
+      15,
+      16
+    ],
+    "heavy_pair_changes": 3,
+    "ordinary_equivalent": true
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "peak_mib": 199.57421875,
+  "elapsed_seconds": 48.9388981230004,
+  "host": "cpu-0019",
+  "job_id": "6777899",
+  "platform": "linux",
+  "memory_limit_mib": 6144,
+  "watchdog_seconds": 300,
+  "runtime_sha256": "85eb0a2a8fa9a207f8ad93dbdc2b676aed1c4976f56c4d16bec22b814458c675",
+  "engine_sha256": "ef46a791f572e67bd10ddfcdf2deba78e888fa1117a46f4eabd1af1c8152d9f6",
+  "phase": "checkpoint_score",
+  "task": {
+    "seed": 10,
+    "case": 1358,
+    "direction": "P_to_R"
+  },
+  "previous_attempt": "/lustre/fs1/portfolios/nvr/projects/nvr_lpr_agentic/users/yunhengz/Projects/coordinate_alignment/validation_20260912/hpc/late-cuts/seed10-case1358-P_to_R",
+  "scope": "Positive reference membership from existing raw cuts only; no new search and no inference of absence.",
+  "reference_recovery": "unknown"
+}

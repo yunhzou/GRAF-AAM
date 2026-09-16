@@ -1,0 +1,17 @@
+{
+  "competition": false,
+  "search_reruns": 0,
+  "branch_cap": 2000,
+  "seed_count": 1,
+  "sweep": true,
+  "iso_tolerance": 1,
+  "event_threshold": 0.5,
+  "metal_event_threshold": 0.3,
+  "sources": {
+    "reports/current_validation_20260912/final_dedup.json": "760ccf5d50d0aa8fc7c648eca0cd96e38541355fe9f5fc96a3202a03c8e90426",
+    "reports/current_validation_20260912/coordinate-decoded.json.gz": "f2d4dbbed48123c4d4c7e7a8d87d75f19bf94eab13d8890c4957a4697d8ab6e5",
+    "reports/current_validation_20260912/competition_final.json": "14f54e5dc2e7c24cc0625385bb1cad6d5205f352b76bd85c921b48921fca9608",
+    "reports/coordinate_minima_20260914/coordinate_minima.json": "409938d4b183f5483fc6c485731c5e9756ef01caca1bb923395f8b9969a4dd92"
+  },
+  "decode_timing": "Not reported: no complete fresh baseline-only timing pass"
+}

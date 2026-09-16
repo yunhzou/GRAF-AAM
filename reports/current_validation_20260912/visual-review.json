@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "manuscript_sha256": "98ec16677416e86082707cbaff3707852d4db56f6fc7588c39d3420e9e6b7b79",
+  "pages": 11,
+  "reviewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "render": "Poppler PNG, 1500-pixel maximum dimension",
+  "review": "All pages visually inspected. Following final presentation edits, pages 7 and 9 were rerendered and reviewed; the other nine rendered pages are byte-identical to their reviewed versions. No clipping, overlap, or unreadable labels observed."
+}

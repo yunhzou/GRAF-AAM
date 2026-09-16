@@ -1,0 +1,19 @@
+\begin{tabular}{@{}lllr@{}}\toprule
+Method & Search setting & Evaluated output & Reference recovered\\\midrule
+GRAFT & 1 seed, sweep (default) & Families & 1,834 (99.08\%) \\
+GRAFT & 2 seeds, sweep & Families & 1,834 (99.08\%) \\
+GRAFT & 3 seeds, sweep & Families & 1,837 (99.24\%) \\
+GRAFT & 10 seeds, sweep & Families & 1,840 (99.41\%) \\
+GRAFT & 1 seed, no sweep (ablation) & Families & 1,489 (80.44\%) \\
+\midrule
+SLAP, binary & Default, no sweep & Candidates & 1,591 (85.95\%) \\
+SLAP, weighted & Default, no sweep & Candidates & 1,564 (84.49\%) \\
+SLAP, union & No sweep & Candidates & 1,661 (89.74\%) \\
+SLAP, union$^{\ddagger}$ & Sweep & Candidates & 1,796 (97.03\%) \\
+\midrule
+RXNMapper & Default, no sweep & Mapping & 1,547 (83.58\%) \\
+LocalMapper$^{\dagger}$ & Default, no sweep & Mapping & 1,605 (86.71\%) \\
+Chython & Default, no sweep & Mapping & 1,561 (84.33\%) \\
+Indigo & Default, no sweep & Mapping & 692 (37.39\%) \\
+RDT & Default, no sweep & Mapping & 1,030 (55.65\%) \\
+\bottomrule\end{tabular}

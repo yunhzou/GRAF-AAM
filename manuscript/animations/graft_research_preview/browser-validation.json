@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "errors": [],
+  "preview_times": [
+    0,
+    3,
+    6,
+    7.2,
+    7.6,
+    8.2,
+    8.6,
+    9.5,
+    11.2,
+    13.5,
+    19
+  ],
+  "branch_focus_check": true,
+  "final_witness_labels": [
+    "A",
+    "B"
+  ],
+  "final_event_class_count": 2,
+  "sampled_timeline_injections": 241,
+  "viewport": [
+    1440,
+    900
+  ],
+  "mode": "video"
+}

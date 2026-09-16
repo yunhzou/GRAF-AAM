@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "pages": 21,
+  "manuscript_sha256": "f63bd5f66fadffffb8e28dfb66c166d9e8fe84312915571784825aa386c3598d",
+  "review": "All21 pages rendered and layout reviewed in contact sheets; Methods pages2\u20134 inspected individually. Final refinement rerendered all21; only pages3\u20135 and21 changed and were individually inspected. Cut-sweep subsection and Golden appendix consistent; figures preserved. Numerical/reference/molecular/overflow checks passed."
+}

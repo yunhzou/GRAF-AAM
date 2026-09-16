@@ -1,0 +1,146 @@
+[
+  {
+    "case": 6,
+    "mode": "local",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 168.671875,
+    "wall_seconds": 1.848817375022918
+  },
+  {
+    "case": 11,
+    "mode": "local",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 95.4375,
+    "wall_seconds": 1.8394146251957864
+  },
+  {
+    "case": 59,
+    "mode": "local",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 58.78125,
+    "wall_seconds": 0.8155839580576867
+  },
+  {
+    "case": 64,
+    "mode": "local",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 59.71875,
+    "wall_seconds": 0.8140476250555366
+  },
+  {
+    "case": 101,
+    "mode": "local",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 72.65625,
+    "wall_seconds": 1.3013612078502774
+  },
+  {
+    "case": 6,
+    "mode": "prefix",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 169.046875,
+    "wall_seconds": 1.8098029170650989
+  },
+  {
+    "case": 11,
+    "mode": "prefix",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 681.890625,
+    "wall_seconds": 15.466085416963324
+  },
+  {
+    "case": 59,
+    "mode": "prefix",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 59.3125,
+    "wall_seconds": 0.7812207909300923
+  },
+  {
+    "case": 64,
+    "mode": "prefix",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 56.796875,
+    "wall_seconds": 0.7718555831816047
+  },
+  {
+    "case": 101,
+    "mode": "prefix",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 61.4375,
+    "wall_seconds": 0.7735840000677854
+  },
+  {
+    "case": 11,
+    "mode": "extended",
+    "stage": "search",
+    "status": "passed",
+    "peak_mib": 2456.625,
+    "wall_seconds": 49.181838707998395
+  },
+  {
+    "case": 6,
+    "mode": "prefix",
+    "stage": "decode",
+    "status": "passed",
+    "peak_mib": 278.03125,
+    "wall_seconds": 5.926047625020146
+  },
+  {
+    "case": 11,
+    "mode": "prefix",
+    "stage": "decode",
+    "status": "passed",
+    "peak_mib": 683.703125,
+    "wall_seconds": 19.99198841699399
+  },
+  {
+    "case": 59,
+    "mode": "prefix",
+    "stage": "decode",
+    "status": "passed",
+    "peak_mib": 58.984375,
+    "wall_seconds": 1.2921054170001298
+  },
+  {
+    "case": 64,
+    "mode": "prefix",
+    "stage": "decode",
+    "status": "passed",
+    "peak_mib": 58.828125,
+    "wall_seconds": 1.3028136671055108
+  },
+  {
+    "case": 101,
+    "mode": "prefix",
+    "stage": "decode",
+    "status": "passed",
+    "peak_mib": 84.921875,
+    "wall_seconds": 1.5373761248774827
+  },
+  {
+    "case": 59,
+    "mode": "local",
+    "stage": "decode",
+    "status": "passed",
+    "peak_mib": 54.734375,
+    "wall_seconds": 1.0365617088973522
+  },
+  {
+    "case": 11,
+    "mode": "extended",
+    "stage": "decode",
+    "status": "passed",
+    "peak_mib": 1445.125,
+    "wall_seconds": 45.632144124945626
+  }
+]

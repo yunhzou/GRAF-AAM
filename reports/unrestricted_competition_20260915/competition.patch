@@ -1,0 +1,79 @@
+--- a/src/rxn_core/competition.py
++++ b/src/rxn_core/competition.py
+@@ -17,0 +18 @@
++    proposal_mode: str = "local"
+@@ -25,0 +27,2 @@
++        if self.proposal_mode not in {"local", "anchored", "free", "extended"}:
++            raise ValueError("proposal_mode must be local, anchored, free, or extended")
+@@ -173,0 +177 @@
++    expansion_cache = {}
+@@ -244,0 +249,6 @@
++        if config.proposal_mode not in {"local", "extended"}:
++            # One whole-graph proposal per B/seed, not one duplicate per contact.
++            distinct = {}
++            for owner, atoms, seed, contact in tasks:
++                distinct.setdefault((owner, seed), (owner, atoms, seed, contact))
++            tasks = list(distinct.values())
+@@ -253,0 +264,4 @@
++            if config.proposal_mode == "free":
++                key = ("free", seed)
++            elif config.proposal_mode == "anchored":
++                key = ("anchored", tuple(sorted(base.items())), seed)
+@@ -259 +273,6 @@
+-                proposal_source = offer_source.subgraph(set(atoms) | {contact}).copy()
++                proposal_source = (offer_source.subgraph(set(atoms) | {contact}).copy()
++                                   if config.proposal_mode in {"local", "extended"} else offer_source)
++                proposal_context = FragmentMatchContext({}, {}, (), target_orbits=po)
++                if config.proposal_mode == "anchored":
++                    # Only B is protected. All other fragments can be consumed.
++                    proposal_context = FragmentMatchContext(base, {r: 0 for r in atoms}, (), target_orbits=po)
+@@ -264 +283 @@
+-                    context=FragmentMatchContext({}, {}, (), target_orbits=po),
++                    context=proposal_context,
+@@ -269 +288 @@
+-                        allow_mapped_seed=False,
++                        allow_mapped_seed=config.proposal_mode == "anchored",
+@@ -276 +295,37 @@
+-            for placement in result.matches:
++            def expanded_proposals(matches):
++                for local in matches:
++                    if contact not in local:
++                        counts["no_contact_reached"] += 1
++                        continue
++                    initial = dict(local)
++                    key2 = (tuple(sorted(initial.items())), seed)
++                    if key2 not in expansion_cache:
++                        if counts["expansion_calls"] >= BUDGET or time.perf_counter() >= deadline:
++                            break
++                        counts["expansion_calls"] += 1
++                        expansion_cache[key2] = match_fragment(
++                            offer_source, target, seed=seed,
++                            context=FragmentMatchContext(initial, {r: 0 for r in initial}, (), target_orbits=po),
++                            config=FragmentMatchConfig(graph_floor=cfg.graph_floor, iso_tolerance=cfg.iso_tolerance,
++                                branch_limit=cfg.branch_limit, allow_mapped_seed=True))
++                    else:
++                        counts["expansion_cache_hits"] += 1
++                    expanded = expansion_cache[key2]
++                    if expanded.capped:
++                        counts["expansion_capped"] += 1
++                        continue
++                    for match in expanded.matches:
++                        if any(r in match and match[r] != p for r, p in initial.items()):
++                            counts["expansion_changed_anchor_rejected"] += 1
++                            continue
++                        # A saturated connected fragment may not revisit every
++                        # initial anchor; those anchors remain part of the offer.
++                        counts["expansion_partial_initial"] += int(any(r not in match for r in initial))
++                        merged = dict(initial)
++                        merged.update(dict(match))
++                        if len(set(merged.values())) != len(merged):
++                            counts["expansion_anchor_collision_rejected"] += 1
++                            continue
++                        yield merged
++            proposals = expanded_proposals(result.matches) if config.proposal_mode == "extended" else result.matches
++            for placement in proposals:
+@@ -281 +336 @@
+-                if contact not in placement:
++                if config.proposal_mode == "local" and contact not in placement:
+@@ -397,0 +453 @@
++                    proposal_mode=config.proposal_mode,

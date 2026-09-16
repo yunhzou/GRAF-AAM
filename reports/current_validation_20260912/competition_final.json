@@ -1,0 +1,3596 @@
+{
+  "comparisons": {
+    "native_slap": {
+      "union_classes": 155,
+      "total_classes": 160,
+      "union_complete_cases": 139,
+      "missing_cases": [
+        64
+      ],
+      "baseline_classes": 151,
+      "baseline_complete_cases": 136
+    },
+    "slap_sweep": {
+      "union_classes": 166,
+      "total_classes": 168,
+      "union_complete_cases": 139,
+      "missing_cases": [
+        64
+      ],
+      "baseline_classes": 162,
+      "baseline_complete_cases": 136
+    }
+  },
+  "cases": [
+    {
+      "case": 0,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 1,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 1,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 2,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 3,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 4,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 3,
+          "union": 3,
+          "total": 3,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 3,
+          "union": 3,
+          "total": 3,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 5,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 1,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 6,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 3,
+          "union": 4,
+          "total": 4,
+          "baseline_complete": false,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:5481538612c19e0797b685df3e77863fd5cbb489e1ea3de7c3be34787c093550",
+        "rxn_core.signed_events/v1:861a5d943cdc6b9fdb77692b24d75da15aadf9e28cb49128cf49187f9688ae94"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 7,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 3,
+          "union": 3,
+          "total": 3,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 8,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 9,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:234b02754a2d737908d401362c2a59aad4e71f578479b22c07a6c663330df023"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 10,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 11,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 0,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": false,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": false,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:2f4e3c09660b9fc9559bb8f2616340e019fdec632db28777b7b7ff1103c0694b"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 12,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 13,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 14,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 15,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 16,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 17,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 18,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 19,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 20,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 21,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 22,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 23,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 24,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 25,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 26,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 7,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 27,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 28,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 29,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 30,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 31,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 7,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 32,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 33,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 34,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 35,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 36,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 37,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 38,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 39,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 40,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 41,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 42,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 43,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 44,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 45,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 46,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 47,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 48,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 49,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 50,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 51,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 52,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 53,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 54,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 55,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 56,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 57,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 58,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 59,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 0,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": false,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:7452484357cbbb929b74f81d9b2a3a674168828b65f7b029bd431e3229547c9e",
+        "rxn_core.signed_events/v1:984e1c2f5c92d330227485dd89cef9b41db311cdf7bab86a06598865124e8dfc"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 60,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 61,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 1,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 62,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 63,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 1,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 64,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 0,
+          "union": 1,
+          "total": 6,
+          "baseline_complete": false,
+          "union_complete": false,
+          "missing": [
+            "rxn_core.signed_events/v1:019a0a9fcdd3f6eed1ad87f3749c274071360726a6b8f15794d3e8813f2d6953",
+            "rxn_core.signed_events/v1:03c167a93c4844a735b967916a0287c8f803d39fcd5fa8a33ee106a7bdb43e7e",
+            "rxn_core.signed_events/v1:714adf76ee8963d70f050e406a6b584f5c9969200a751943029edaa3240b9afa",
+            "rxn_core.signed_events/v1:7d5df0ae13b8a4ea88855247abdb5482044dbceb1957d1d48d74a2fe9071e20f",
+            "rxn_core.signed_events/v1:aa81ca05b9f4530995bfaf0cfbd7681beddc95a0cf4db586ddef97cc6ee272c9"
+          ]
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 3,
+          "total": 5,
+          "baseline_complete": false,
+          "union_complete": false,
+          "missing": [
+            "rxn_core.signed_events/v1:4d53b7f4748f3b75d8192e9a037e3cc991d5472f3bc4394cb7e6ffcfb3af3718",
+            "rxn_core.signed_events/v1:bb0e727cde1a364a48c3184bd4d63029a232277009d95897b28144465b42489f"
+          ]
+        }
+      },
+      "window": 8,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:1d6c3ac572f0aa6e776d636c1757c28dd28f8376e8f368fa2cb14ee93d169143",
+        "rxn_core.signed_events/v1:21b48cbb7713c5e359a54ffddea0b397e7e0ae9b7ac979dd5a15ddfb7838776f",
+        "rxn_core.signed_events/v1:39c7375eefb63621eecc11b75e748bbe2f0ae65419d85762e8152c53e91cd876",
+        "rxn_core.signed_events/v1:7de155536c5a8f28ecd296c4c783f3f2f33c9dec6b6caea4fe6fedf45606c04c",
+        "rxn_core.signed_events/v1:81c1ffb3ad2348f00fd30a6616cc078c1bbe6fbdda333f6a6ff9ea630d854730",
+        "rxn_core.signed_events/v1:8628f45ff0a6a5016f336a9c515d7a364709cd51043ee9f986806859e648b076",
+        "rxn_core.signed_events/v1:8732562866dd1dd961a5fe0d08279cf5397abfd062941d627b6e7b697488e67a",
+        "rxn_core.signed_events/v1:890f8ededb20daa6640762022464784cf09961fe8c954e5e7732a0c2677c2180",
+        "rxn_core.signed_events/v1:96c4017af30f38dc4dde5caed5f4f61abae10e41c6c3dd4b10aeb92ee8130c8e",
+        "rxn_core.signed_events/v1:a2d3fb54578147bd469ac2f9a9c12b470624f2742f6e2099dcbf5726165d2610",
+        "rxn_core.signed_events/v1:a31d44f6eb2bc7cc0efb1dc698a39726e1904069c9dae1e74125beb3c404cbd6",
+        "rxn_core.signed_events/v1:a445758d1175b4f380fd3c934e084a45e44b53bb21025643f0f81a69360dd3ee",
+        "rxn_core.signed_events/v1:b0923b1b5f25e1be6201f4ce81e296c8f124fefcf6086e726ebb9ad887f35ab1",
+        "rxn_core.signed_events/v1:ccc6d18d1ea5f88c1bee9e604cd6a50600c7f0562821a7887f70e83b4396e2e4",
+        "rxn_core.signed_events/v1:d4a2fc70b6411cd88bc7f7cd32cf62e40cf10f73b07fa8cb36fe335448848fa4",
+        "rxn_core.signed_events/v1:dfc07f70431779e04231e77f5d35fb49cc9aefe5775508a106da0491262a90b2",
+        "rxn_core.signed_events/v1:ee05954902ef935b8bc1e1ff417fbe33e5326a8c07f707047f2c115abcf7bc03",
+        "rxn_core.signed_events/v1:f9cea130bce281390f3e7235958f6cc1854a05a2eeaa68c9bed0c1d3555a9d85",
+        "rxn_core.signed_events/v1:ffb3dc7691e0d33bd5c443a20c7ac48b402b98ce05e6a82dfd7d889f203eca6c"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 65,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 66,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 67,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 68,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 69,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 70,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 71,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 72,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 7,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 73,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 74,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 75,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 76,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 77,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 78,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 79,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 1,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 80,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 81,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 82,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 83,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 84,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 85,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 86,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 87,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 88,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 7,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 89,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 1,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 90,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 7,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 91,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 92,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 93,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 94,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 95,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 96,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 97,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 98,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 99,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 100,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 101,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": false,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": false,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 102,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 103,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 104,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 105,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 106,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 107,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 108,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 109,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 110,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 111,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 112,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 113,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 114,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:0af99e7bff297453100aeba81ea77839c4a3d370bd2c3a749d5fedfa6acc3ade",
+        "rxn_core.signed_events/v1:d3d586d0f0f193a9228d76a9777ca0fc1667d457cd2430921722e7e9b40fc1dd"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 115,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 6,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:6108f2c04d2c08a8b07b4e768642792b8b960819d6b76387ebaceea6596cdb57",
+        "rxn_core.signed_events/v1:e6b26223ca87d7f0842810fe0ce21c87e7ad330872d9faa89a6382b12e26764a"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 116,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 117,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 2,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 118,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 119,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 120,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 121,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 7,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 122,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 123,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 124,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 2,
+          "union": 2,
+          "total": 2,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 125,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 126,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 127,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 3,
+          "union": 3,
+          "total": 3,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 128,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 129,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 9,
+      "new_window_classes": [
+        "rxn_core.signed_events/v1:251f98d986f938f2f6202f966ee7c55bed18abc8250552864c844e6b5dd9d5e6",
+        "rxn_core.signed_events/v1:6eb4fe333513f4c37c47770b45c5d1624aa8a5904295f0b8dcfcd03e968d492d",
+        "rxn_core.signed_events/v1:7207f38276a23b6fdad031d47dc130a5f0168c0751e101684a19aae7d471e9f5",
+        "rxn_core.signed_events/v1:929512eca7eceac23b1d73a098cb1092e484629cbad4c20539b3a972b2bc9b10",
+        "rxn_core.signed_events/v1:be3d3fd39a32c01f0de02c05974edfed04725b5b43708743ac9cc8637242afa2",
+        "rxn_core.signed_events/v1:ced41aa520e738636d194c42c8b45788cf657e4b25225db3196cd75ab1c82595"
+      ],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": [
+        "rxn_core.signed_events/v1:251f98d986f938f2f6202f966ee7c55bed18abc8250552864c844e6b5dd9d5e6"
+      ]
+    },
+    {
+      "case": 130,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 131,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 132,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 133,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 134,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 7,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 135,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 136,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 137,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 5,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 138,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 4,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    },
+    {
+      "case": 139,
+      "comparisons": {
+        "native_slap": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        },
+        "slap_sweep": {
+          "baseline": 1,
+          "union": 1,
+          "total": 1,
+          "baseline_complete": true,
+          "union_complete": true,
+          "missing": []
+        }
+      },
+      "window": 3,
+      "new_window_classes": [],
+      "complete_saved_windows": true,
+      "new_classes_absent_from_repair_representatives": []
+    }
+  ],
+  "new_window_class_count": 36,
+  "new_window_cases": [
+    6,
+    9,
+    11,
+    59,
+    64,
+    101,
+    114,
+    115,
+    129
+  ],
+  "fresh": true,
+  "comparison_scope": "Minimum signed-event classes among returned, H-refined SLAP mapping witnesses, rescored on the original WBO inputs; not exhaustive decoding of SLAP hydrogen label families. Original XYZ-derived adjacency restored and verified; XYZ preparation not rerun."
+}

@@ -1,0 +1,53 @@
+{
+  "cases": 1821,
+  "excluded_cases": [
+    410,
+    575,
+    709,
+    824,
+    825,
+    830,
+    834,
+    836,
+    852,
+    1386,
+    1503,
+    1504,
+    1561,
+    1606,
+    1647,
+    1665,
+    1667,
+    1668,
+    1674,
+    1682,
+    1691,
+    1694,
+    1702,
+    1722,
+    1723,
+    1756,
+    1776,
+    1793,
+    1799,
+    1823
+  ],
+  "metrics": {
+    "aam_seed1": {
+      "mean_seconds": 2.5180029857221307,
+      "median_seconds": 0.7185599999999999,
+      "total_cpu_minutes": 76.42139061666667
+    },
+    "aam_seed2": {
+      "mean_seconds": 4.953114015376167,
+      "median_seconds": 1.2495219999999998,
+      "total_cpu_minutes": 150.32701036666668
+    },
+    "slap": {
+      "mean_seconds": 4.818972615595827,
+      "median_seconds": 0.8813799999999983,
+      "total_cpu_minutes": 146.25581888333335
+    }
+  },
+  "scope": "Same-reaction Mac cohort: both AAM directions completed on Mac at seed settings 1 and 2; SLAP mapping complete. AAM search CPU includes finalizing/compressing its saved output. SLAP workflow CPU includes graph construction, mapping and export but excludes IO. Reference-membership verification excluded for both. SLAP uses both directions, binary/weighted modes, uncut and all single-edge cuts. Not a comparison of identical output products; higher-seed mixed-host timings excluded."
+}

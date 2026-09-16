@@ -1,0 +1,93 @@
+{
+  "algorithm_commit": "3a9ef9a8aec3e129ea5f4ee67df47ce2c25ade3c",
+  "frozen_search_commit": "eb1a7d150e9c3c80da79639ea59c300d8f834038",
+  "version_proof": "reports/current_validation_20260912/version-proof.json",
+  "fresh_campaign_complete": true,
+  "snapshots": [
+    {
+      "snapshot": "seed_comparison.json",
+      "source": "reports/checkpoint_memory_fix_20260913/seed_comparison.json",
+      "scope": "Complete saved-cut negative verdicts replace conservative unknown aggregates. No new searches or changed recovered cases; original execution statuses and timings preserved.",
+      "sha256": "ec3d8b4f77ecd71a34a6618e71e0d032a641cf96e69dc1b61c2a6ce23518da56",
+      "source_sha256": "a8c83fc06481f3511fb44e62c452ed0106a4920ca2f2b6e1e69c50b770467b97",
+      "publication_projection": "Execution identifiers omitted; numerical results and timing-cohort membership unchanged."
+    },
+    {
+      "snapshot": "slap_sweep.json",
+      "source": "reports/current_validation_20260912/slap_sweep.json",
+      "scope": "Fresh pinned SLAP Golden sweep and reference verification",
+      "sha256": "740cd679895a902c885c1fbbc6c628cfc607fe3fb7b4ed87864827d40f3c2288"
+    },
+    {
+      "snapshot": "final_dedup.json",
+      "source": "reports/published_baseline_20260915/final_dedup.json",
+      "scope": "Baseline-only saved output, competition excluded",
+      "sha256": "947fbcd0711e44983d755d7b2550dc7d6bfe76362d5b453cf74a43bf1e101205"
+    },
+    {
+      "snapshot": "competitors.json",
+      "source": "reports/golden_competitor_recheck_20260913/competitors.json",
+      "scope": "Archived default-implementation outputs, freshly rescored. First and any explicitly returned mapping are separate. This is not exhaustive SLAP label-family decoding. All errors and invalid predictions stay in the denominator. No cross-host timing comparison is made.",
+      "sha256": "0380c810f4ceeaddc1f07557a65a99c3af22d8903890c06b3bcdd9cc13edc774"
+    },
+    {
+      "snapshot": "unswept.json",
+      "source": "reports/golden_unswept_20260913/unswept.json",
+      "scope": "Paired final-campaign uncut controls; one-seed GRAFT and binary/weighted SLAP, both directions.",
+      "sha256": "1cdfbb43cda0e695460fc1f380bf20389322f98202588f785ef215a9905e4774"
+    },
+    {
+      "snapshot": "checkpoint_verdict_audit.json",
+      "source": "reports/checkpoint_memory_fix_20260913/audit.json",
+      "scope": "Complete cut-coverage audit for cases 590 and 1358; prior execution failures remain recorded.",
+      "sha256": "72c15bfe47fdda888cfdd980554b2707b8923bf9590be3071c8c003143464ed4"
+    },
+    {
+      "snapshot": "golden_miss_analysis.json",
+      "source": "reports/golden_miss_analysis_20260913/summary.json",
+      "scope": "Audit of final saved ten-seed families. Sensitivity and reference-directed feasibility probes are separate, excluded from benchmark scores. Strict absence is not proof of global unreachability or annotation error.",
+      "sha256": "e3dc6e8635203c0b39b3544e890e95aa4ada70d84ac8e618b8f083d451372ab1"
+    },
+    {
+      "snapshot": "direction_recovery.json",
+      "source": "reports/golden_direction_size_20260914/direction_recovery.json",
+      "scope": "One- and two-seed size-ordered policies derived from hash-verified saved explicit-atom inputs and complete directional verdicts. Ties preserve original order for smaller-first, reverse it for larger-first. No search reruns.",
+      "sha256": "9eb3313f864649142644f1175b40549ea32258aa46058dbc94ac72e1b22de934"
+    },
+    {
+      "snapshot": "timing_comparison.json",
+      "source": "reports/golden_timing_detail_20260914/timing_comparison.json",
+      "scope": "Same1821Mac cohort: size-ordered GRAFT and SLAP CPU distributions, plus separately scoped separately recorded default-mapper CPU call times. Saved scalar timer audit; no searches rerun.",
+      "sha256": "62785210df89b07ba9472d077bef02fafffaee2d502a7960f486dbee3141a61e",
+      "source_sha256": "19aac7ee35e0d72459cce5a2d120d3c8e5fc1715f5149986de374885974ff2a5",
+      "publication_projection": "Execution identifiers and obsolete combined coordinate decoder timings omitted; Golden numerical results and cohort membership unchanged."
+    },
+    {
+      "snapshot": "coordinate_minima.json",
+      "source": "reports/published_baseline_20260915/coordinate_minima.json",
+      "scope": "Baseline-only saved output, competition excluded",
+      "sha256": "758634ed55bf93625d810c3f661c6395f747e344c33731ae2955933ab7825e8b"
+    },
+    {
+      "snapshot": "multicandidate_example.json",
+      "source": "reports/multicandidate_discussion_20260914/multicandidate_example.json",
+      "scope": "Current public API, six atoms: two event classes and conditional shuffle queries; one core, no benchmark reruns.",
+      "sha256": "ff2462a0e3e229007043a2bb5e61994facd70d3a5313aecf67be0ebbcc2140b6"
+    },
+    {
+      "snapshot": "output_multiplicity.json",
+      "source": "reports/multicandidate_discussion_20260914/output_multiplicity.json",
+      "scope": "Read-only explicit candidate record counts from all archived comparator predictions. Not symmetry-expanded candidate counts.",
+      "sha256": "470fc3adb10527f600ae55912fbbd1e91049fa4e7e9f5df6254b423ae9db799f"
+    },
+    {
+      "snapshot": "coordinate_case127.json",
+      "source": "reports/colored_alternatives_20260914/coordinate_case127.json",
+      "scope": "Three saved four-event GRAFT candidates and source fragment partitions for coordinate case127; read-only family and WBO verification. No search or decoder rerun.",
+      "sha256": "8991c096bc9c7a440f3862de0615f95740ad4911a5d1b59196791c5f7deb3b18"
+    }
+  ],
+  "limits": "Coordinate final pipeline has only a one-seed run. Golden ten-seed has eleven completed nonrecoveries and no unresolved reactions. Timing from different CPU cohorts is not pooled.",
+  "publication_pipeline": "one-seed cut sweep; competition disabled",
+  "coordinate_refresh": "Baseline-only projection of complete saved certificates; fresh partial checks reported separately."
+}

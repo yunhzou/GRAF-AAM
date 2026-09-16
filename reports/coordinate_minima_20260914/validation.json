@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "cases": 140,
+  "mapping_runs": 0,
+  "saved_windows_complete": true,
+  "source_hashes_checked": true,
+  "minimum_counts_and_patterns_checked": true,
+  "timing_source_files": 700,
+  "manuscript_sha256": "d91720ff0da93eb3e949e4ce0c0b8287417b6421b832b5afe8384b0d4f3ae376"
+}

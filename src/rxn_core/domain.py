@@ -12,8 +12,10 @@ from types import MappingProxyType
 from typing import Any, Mapping
 
 import numpy as np
+import math
 
 from .alignment.post_aam import AAMBranch, AAMHierarchy, AtomBijection
+from .search_graph import AAMSearchGraph
 
 
 def _readonly_array(value, *, shape=None, ndim=None):
@@ -80,14 +82,23 @@ class AAMProblem:
     name: str = ""
 
     def __post_init__(self):
-        if self.reactant.atom_count != self.product.atom_count:
-            raise ValueError("AAM endpoints must have equal atom counts")
-        if Counter(self.reactant.elements) != Counter(self.product.elements):
-            raise ValueError("AAM endpoints must have equal compositions")
         object.__setattr__(self, "name", str(self.name))
 
     @property
+    def balanced(self):
+        return Counter(self.reactant.elements) == Counter(self.product.elements)
+
+    @property
+    def source_atom_count(self):
+        return self.reactant.atom_count
+
+    @property
+    def target_atom_count(self):
+        return self.product.atom_count
+
+    @property
     def atom_count(self):
+        """Source endpoint size; use target_atom_count for the other side."""
         return self.reactant.atom_count
 
 
@@ -100,15 +111,30 @@ class AAMSearchConfig:
     iso_tolerance: float = 1.0
     event_threshold: float = 0.5
     metal_event_threshold: float | None = 0.3
-    seed_count: int = 3
+    seed_count: int = 1
     branch_limit: int = 100
     task_chunksize: int = 1
     symmetry_repair: bool = True
     symmetry_repair_min_changes: int = 1
     symmetry_repair_max_evaluations: int = 20_000
     anchors: tuple[tuple[int, int], ...] = ()
+    seed_selection: str = 'random'
+    random_seed: int = 42
+    sweep_cuts: bool = True
 
     def __post_init__(self):
+        for name in ('cut_floor', 'graph_floor', 'iso_tolerance', 'event_threshold'):
+            if not math.isfinite(getattr(self, name)):
+                raise ValueError(f'{name} must be finite')
+        if self.metal_event_threshold is not None and (
+                not math.isfinite(self.metal_event_threshold) or self.metal_event_threshold <= 0):
+            raise ValueError('metal event threshold must be finite and positive')
+        if not isinstance(self.random_seed, int):
+            raise ValueError('random_seed must be an integer')
+        if not isinstance(self.sweep_cuts, bool):
+            raise ValueError('sweep_cuts must be boolean')
+        if self.seed_selection not in ('random', 'distance'):
+            raise ValueError('unknown seed selection policy')
         if self.cut_floor <= 0 or self.graph_floor <= 0:
             raise ValueError("graph and cut floors must be positive")
         if self.iso_tolerance <= 0:
@@ -142,6 +168,10 @@ class AAMSearchMetrics:
     completed_group_requests: int = 0
     completed_group_calculations: int = 0
     completed_group_cache_hits: int = 0
+    worker_search_seconds: float | None = None
+    checkpoint_seconds: float | None = None
+    symmetry_finalization_seconds: float | None = None
+    checkpoint_restore_and_finalize_seconds: float | None = None
 
     @classmethod
     def from_record(cls, record, elapsed_seconds):
@@ -164,6 +194,10 @@ class AAMSearchMetrics:
                 "completed_candidate_group_calculations", 0)),
             completed_group_cache_hits=int(record.get(
                 "completed_candidate_group_cache_hits", 0)),
+            worker_search_seconds=record.get('worker_search_seconds'),
+            checkpoint_seconds=record.get('checkpoint_seconds'),
+            symmetry_finalization_seconds=record.get('symmetry_finalization_seconds'),
+            checkpoint_restore_and_finalize_seconds=record.get('checkpoint_restore_and_finalize_seconds'),
         )
 
 
@@ -197,21 +231,30 @@ class AAMMechanism:
 
 @dataclass(frozen=True)
 class AAMResult:
-    """Complete output of AAM search, before geometry post-processing."""
+    """Raw fragment-decision graph, independent of mechanism classification."""
 
     problem: AAMProblem
     config: AAMSearchConfig
-    mechanisms: tuple[AAMMechanism, ...]
+    graph: AAMSearchGraph
     metrics: AAMSearchMetrics
 
-    def __post_init__(self):
-        mechanisms = tuple(self.mechanisms)
-        if any(mechanism.representative.degree != self.problem.atom_count
-               for mechanism in mechanisms):
-            raise ValueError("AAM result contains a wrong-degree mapping")
-        if len({mechanism.key for mechanism in mechanisms}) != len(mechanisms):
-            raise ValueError("AAM mechanism keys must be unique")
-        object.__setattr__(self, "mechanisms", mechanisms)
+    @property
+    def branches(self):
+        return self.graph.branches()
+
+    def final_catalogue(self):
+        """Unordered branches and unique flat families for exact postprocessing."""
+        from .final_branches import deduplicate_final_branches
+        return deduplicate_final_branches(self)
+
+
+@dataclass(frozen=True)
+class MechanismResult:
+    """Optional event grouping with a reference to the unmodified search."""
+
+    aam: AAMResult
+    mechanisms: tuple[AAMMechanism, ...]
+    elapsed_seconds: float
 
     def minimum_event_mechanisms(self):
         if not self.mechanisms:
@@ -220,6 +263,15 @@ class AAMResult:
         return tuple(
             mechanism for mechanism in self.mechanisms
             if mechanism.event_count == minimum)
+
+
+@dataclass(frozen=True)
+class MappingFamilyResult:
+    """Compiled branch relations without mechanism grouping."""
+
+    aam: AAMResult
+    branches: tuple[AnalyticalBranch, ...]
+    elapsed_seconds: float
 
 
 @dataclass(frozen=True)
@@ -425,6 +477,7 @@ class CoreAAMBranch:
     hierarchy: AAMHierarchy
     exact_assignments: tuple[AtomAssignment, ...]
     seed_index: int
+    search_path: object = None
 
     def __post_init__(self):
         exact = tuple(self.exact_assignments)

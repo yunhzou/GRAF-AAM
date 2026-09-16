@@ -1,0 +1,41 @@
+{
+  "dataset": "/h/399/yunhengzou/coordinate_alignment/data/aam_benchmarks/golden_original_20260906",
+  "dataset_manifest": {
+    "repository": "Laboratoire-de-Chemoinformatique/Reaction_Data_Cleaning",
+    "upstream_commit": "793475e54d8b2c7f714165a61e4eb439435d7d92",
+    "download_url": "https://raw.githubusercontent.com/Laboratoire-de-Chemoinformatique/Reaction_Data_Cleaning/793475e54d8b2c7f714165a61e4eb439435d7d92/data/golden_dataset.zip",
+    "zip_sha256": "baf10464a6cd92dc4719f8becd5f001ab4b6bdafd363d74c5ae9dee77755f3d6",
+    "rdf_sha256": "4e287d49b70791ec30acee6d12babc26a8b7d15bd5730a3a4464e78e43eb74ce",
+    "rdkit_version": "2026.03.5",
+    "total_records": 1851,
+    "parsed_records": 1851,
+    "parse_or_sanitize_errors": 0,
+    "both_sides": 1851,
+    "balanced_heavy": 1015,
+    "balanced_explicit_H": 733,
+    "duplicate_map_label_records": 0,
+    "duplicate_input_records": 0,
+    "reference_mapped_H_records": 11,
+    "note": "Input audit only, not AAM accuracy. No repairs, filtering, or byproduct completion applied."
+  },
+  "audit_sha256": "d7c0f678b2a8112a0d96036e5553f0ea9d28959217d082b05772c1213199bd0e",
+  "input_sha256": "911797d14a785ba5076a6461bd2ae1aa262797076836601ea7a255d1188fdb2c",
+  "git_commit": "da7cf480f8a6333e0f6f2084c5857e4add478634",
+  "script_sha256": "bfef8e1ded6c3c2bf046a490dee1785cd2f42c5cd5f763a91ab1649f6572fb13",
+  "seed": 20260908,
+  "methods": [
+    "rxnmapper",
+    "localmapper",
+    "slap_binary",
+    "slap_weighted",
+    "indigo",
+    "chython"
+  ],
+  "settings": "upstream defaults; CPU; 1 thread except Chython ONNX default 8 threads",
+  "slap_variants": "binary=True default and binary=False separately; add_Hs=True; break_sym=heavy",
+  "watchdog_seconds": 300,
+  "model_startup_timeout_seconds": 300,
+  "ranking": "upstream output order, unmodified; SLAP first is not asserted to be a ranked top-one",
+  "evaluation": "exact heavy-atom relation modulo endpoint chemical symmetry; unmatched atoms retained",
+  "note": "Local reproduction on pinned Golden, not an assertion of identical historical paper protocol."
+}

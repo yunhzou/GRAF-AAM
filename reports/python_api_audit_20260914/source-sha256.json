@@ -1,0 +1,15 @@
+{
+  "src/rxn_core/search_orientation.py": "3b12bd6a046b2d217b932e45f2a43f29ac80f8e0ea85837d77dae9de6157ffbf",
+  "src/rxn_core/domain.py": "5358e19a3097f3e25db9dbe76e800f6a16ae85efa04e101eeec93a94cf7ece16",
+  "src/rxn_core/competition.py": "cbe1dd636062adb7fcb35046af6ff6fb2532ec75f70009dc1f6aeca00a91dab1",
+  "src/rxn_core/__init__.py": "f79c7d5ea80b1a2d4825b17c0ecd17fd97dbdbf2a3c6bb17aca3e95acc071b38",
+  "src/rxn_core/aam.py": "afb9848dd7db598f4f73ba219a1bf06f1a0b74fce4ce9e1a2e2ed73228b988b0",
+  "src/rxn_core/postprocessing.py": "cb4a1933dcb801e3c8c3076224c3db599a0b2ff847c63ae42bfd0f488092789c",
+  "src/rxn_core/shared_seed_search.py": "37086544a1a534150e45293a4beaeb78dfc0342d82e8a6d4aa575af26d3abb4e",
+  "docs/PYTHON_API.md": "344a0dcc58a16e22a10a902cece6f4f3f50f4e2e90c4b07d1428383bd62e5227",
+  "docs/AAM_SIMPLE.ipynb": "b6e2752fd1ef261dee867681c7368d760719ad1f0b57a8cdd04bb2f1653231be",
+  "docs/notebook_helpers.py": "4848d75bceae33aba3af8c623e0f8d1cf222f9419b09f80895c5ad2d89902b83",
+  "tests/test_python_workflow.py": "67b705d52be375366a1089a0b3fbdd8cccb1ca323c06421db792e2022d1a4947",
+  "README.md": "3f73f81f27b30ff81cc4192dab02fb27a785a2cd7540a893c38950a5bed4f008",
+  "pyproject.toml": "e36c13f8f6f9d1d4e385614abd13dce7e885395541a3b56ab9c688d1e06ba3f9"
+}

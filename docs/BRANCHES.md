@@ -1,15 +1,17 @@
 # Repository branches and preserved baselines
 
-Organized on 10 September 2026. `main` remains the default branch. This cleanup
-changes reference names and adds documentation; it does not merge experimental
-acceleration into the default implementation or rewrite implementation history.
+Updated on 15 September 2026. `main` is the default branch and now contains the
+finalized GRAFT implementation, manuscript, results, notebook examples, and
+research animation from `paper/continuous-fragment-growth` (through `1b750a0`).
+Fragment competition remains experimental, optional, and off by default.
+The merge preserves both histories and leaves the stable baseline branches unchanged.
 
 ## Where to work
 
 | Branch | Purpose | Preserved implementation / starting point |
 | --- | --- | --- |
-| `main` | Default project entry point and branch guide | Implementation at `2d5ac7a`; this organization adds documentation only |
-| `paper/continuous-fragment-growth` | Manuscript, figures, movies, SLAP sweep and seed benchmarks | Continues `experiment_slap_sweep_cut` from `2704cd9` |
+| `main` | Published GRAFT implementation, manuscript, results, examples, and animation | Finalized paper version through `1b750a0`, merged on 15 September 2026 |
+| `paper/continuous-fragment-growth` | Preserved paper development branch | Promoted to `main` through `1b750a0` |
 | `stable/pre-acceleration` | Mature sequential pipeline before the September 9–10 cut-replay, dependency-repair and conditioned-reuse work | **`3e9a70a2ab23b2a9e9a0a8d374d951531e1fb0b0`** |
 | `stable/benchmark-baseline` | Frozen native-reuse engine used by the current seed ablation, before adaptive-policy acceleration | **`98b01b175eeed31f70d13e7cbf178b80bf07c9e0`** |
 | `stable/legacy-aam` | Earlier exact-symmetry stable backup | `a604d1a2e75112a02bf930825707d108a6987b87` |
@@ -17,11 +19,9 @@ acceleration into the default implementation or rewrite implementation history.
 | `dev/native-engine` | Separate native-engine line, including its unmerged target-element-table fix | `4088b2739e2ce4dfc3796abfed3cec6cc0198b00` |
 | `dev/native-index` | Separate native index/chirality/path work | `fc8eb8b34137213096b9cc87e521a4c1ac7ea497` |
 
-Start reading at the [manuscript folder](https://github.com/yunhzou/coordinate_alignment/tree/paper/continuous-fragment-growth/manuscript).
-It contains the compiled PDF, five editable figures, two MP4/GIF movies, a
-standalone interactive viewer, evidence snapshots and a downloadable source bundle.
-The paper is a first draft; author information and specified provenance details
-remain to be finalized.
+Start reading at the [manuscript folder](../manuscript) on `main`.
+It contains the compiled PDF, editable figures, the research animation, a
+standalone interactive viewer, evidence snapshots, and a downloadable source bundle.
 
 Keep the stable branches at their recorded commits. Make new changes on a
 development branch. No hosting-level branch-protection rule is implied by a

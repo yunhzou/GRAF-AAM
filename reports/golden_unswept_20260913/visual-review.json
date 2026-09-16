@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "pages": 12,
+  "reviewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "render": "Poppler, 1450-pixel maximum dimension",
+  "checks": [
+    "All final pages visually reviewed; unchanged appendix pages verified by render hashes",
+    "Correct alcohol OH matches and three-level conditional tree",
+    "Hydrogen-inclusive molecular consistency assertions pass",
+    "Swept/unswept and released-comparator tables fit and are readable",
+    "No overfull boxes or unresolved references"
+  ],
+  "manuscript_sha256": "5efe1936f345384880e0e0b19a43d77fe4058777f6af27923921bacb997ea981"
+}

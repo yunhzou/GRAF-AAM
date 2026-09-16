@@ -1,0 +1,9 @@
+{
+  "parent_engine_sha256": "ab5b71341eb22fb7504b63cbb2bbc0dbc3d837af9f7d7be985eb63ca39523838",
+  "parent_commit": "eb1a7d150e9c3c80da79639ea59c300d8f834038",
+  "changed_files": {
+    "src/rxn_core/action_reduction.py": "60b11787311bb77aaa59edef607698c334a3ecc422645c52cc5ac689c4d04d9e",
+    "src/rxn_core/final_branches.py": "9010459836bad1fda3483123f830c875fc3df38977b685245e63aa3eb6169fc1"
+  },
+  "scope": "Only the final-family decoder action product is reduced using adjacent subgroup containment. Search, cuts, seeds, caps, competition, family records, final constraints, event policy and family IDs are unchanged. GH=HG=G when H is a subgroup of G. No group-element enumeration."
+}

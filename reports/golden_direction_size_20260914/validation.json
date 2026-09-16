@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "input_hashes_verified": 1851,
+  "directional_verdicts_checked": 7404,
+  "searches_rerun": 0,
+  "public_defaults": "API and CLI use seed_count=1; explicit seed_count=3 override passes",
+  "focused_tests": "4 passed in 2.34 s; staged native extensions restored before final run"
+}

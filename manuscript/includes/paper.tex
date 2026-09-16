@@ -1,0 +1,310 @@
+\section{Introduction}
+
+Atom-to-atom mapping assigns corresponding atoms across a reaction. It underlies reaction-center identification, template extraction, and the preparation of endpoint structures for mechanistic calculations. A reaction can admit several plausible correspondences, while many different atom-index assignments are chemically equivalent. An algorithm intended to retain alternatives must therefore resolve two questions: which structural choices deserve separate candidates, and which permutations can be represented together?
+
+Existing approaches use learned correspondence signals or graph-based optimization. RXNMapper derives mappings from attention in a reaction language model~\citep{schwaller2021}; LocalMapper learns from chemist-labeled reactions~\citep{chen2024}; and SLAPMapper combines iterative label refinement with sequential linear assignment~\citep{koda2025}. The Golden benchmark provides a common set of annotated reactions for assessing mapping recovery~\citep{lin2022}. For applications requiring alternatives, recovering the annotation somewhere in a returned family is a different objective from producing one correct top-ranked mapping.
+
+Weighted endpoint graphs introduce a further distinction. A permissive matching tolerance can preserve a fragment despite changes in its bond orders, but the corresponding atom shuffles need not preserve the bond events assigned at a finer threshold. Replacing a compressed family by one representative can therefore hide distinct transformations. Likewise, greedily growing one fragment can prevent a neighboring fragment from reaching an alternative assignment.
+
+GRAFT addresses these issues by branching over structural fragment choices while keeping symmetry-related atom bijections compressed (\Cref{fig:algorithm}). Continuous growth and alternative placements determine the structural choices. Default GRAFT uses one seed ordering per cut and the cut sweep. We introduce a cut-sweep strategy that changes the search conditions to counteract greedy fragment commitment; it is part of default GRAFT, and we also apply it to SLAP to test its benefit beyond our fragment search. Its final representation groups unordered matched fragment pairs and retains the allowed mapping alternatives within each group. A constraint-based decoder projects these families onto distinct bond-event patterns. The method searches for structurally compatible alternatives without requiring the reference transformation to minimize the number of bond changes.
+
+\section{Method}
+
+
+Algorithm~\ref{alg:graft-overview} connects the fragment-level operations in \Cref{fig:algorithm}. A live branch stores the fragments already placed, their atom assignments, and the compressed choices still allowed by those decisions. Growing and placing the next fragment conditions every later continuation. The matching routine is treated as an operation here; its compatibility tests and symmetry representation are defined below. For bidirectional search, the search phase is applied in each orientation, retaining the orientation of each returned family.
+
+\begin{algorithm}[t]
+\caption{GRAFT: from fragment growth to alternative bond-event candidates}
+\label{alg:graft-overview}
+\small
+\begin{algorithmic}[1]
+\REQUIRE Oriented endpoint graphs, seed orders, optional anchors, search budgets
+\ENSURE Compressed final branches; optionally, distinct bond-event candidates
+\STATE $\mathcal S\gets\varnothing$ \COMMENT{collected terminal branches}
+\FORALL{conditions: uncut source graph and each single-edge source mask}
+  \FORALL{requested seed orders under this condition}
+    \STATE Initialize live branches with the supplied anchors
+    \REPEAT
+      \FORALL{seeds in the current order}
+        \FORALL{live branches eligible to grow from this seed}
+          \STATE Grow a fragment to saturation, conditioned on this branch \COMMENT{Fig.~\ref{fig:algorithm}a}
+          \IF{no admissible fragment placement is found}
+            \STATE Retain this branch for later seeds
+          \ELSE
+            \STATE Fork one continuation per distinct structural fragment placement
+            \STATE Commit each placement; retain its compressed symmetry and constraints
+            \STATE Admit the continuations within the branch budget
+          \ENDIF
+        \ENDFOR
+      \ENDFOR
+    \UNTIL{all branches are finished or a full pass makes no progress}
+    \STATE Add terminal branches and their search-stop status to $\mathcal S$
+  \ENDFOR
+\ENDFOR
+\STATE Group final branches by unordered fragment pairs; retain their family union
+\STATE Expose compressed branches with constraints and provenance
+\IF{bond-event candidates are requested as separate post-processing}
+  \STATE Decode distinct event classes from complete families using the original matrices
+  \STATE Report witnesses, supporting families, and completeness status \COMMENT{Fig.~\ref{fig:algorithm}c}
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+The forks in the search phase represent different fragment placements, not one branch for each symmetry-related bijection. The cut sweep changes the conditions of this search; a single mask can expose a mapping with several bond events. Event decoding is a separate operation on the retained output. Search caps are recorded as truncation, not treated as proof that no alternatives exist.
+
+\subsection{Weighted matching and continuous growth}
+
+Let $V_R,V_P$ be the reactant and product atom sets, $Z_R,Z_P$ their element labels, and $W_R,W_P$ their symmetric bond-weight matrices. A partial mapping $m:D\subseteq V_R\rightarrow V_P$ is injective and element compatible. A mapping assigning every source atom is bijective when the endpoint element counts agree. Explicit hydrogen atoms participate in the search. Molecular coordinates can accompany the graphs but do not determine the growth decisions.
+
+The active source graph contains edges with weight at least $b$. Starting from a seed atom, GRAFT grows a connected source fragment $F$ while carrying multiple compatible product placements. A frontier queue prioritizes stronger source edges. To add an unassigned source atom $u$ with product image $v$, a placement must satisfy
+\begin{equation}
+ Z_R(u)=Z_P(v),\quad v\notin m(D),\quad
+ W_P(v,m(r))\geq b,\quad
+ |W_R(u,r)-W_P(v,m(r))|\leq\tau_{\mathrm{iso}}
+ \label{eq:match}
+\end{equation}
+for every active, nonrelaxed source edge $(u,r)$ into $F$. Injectivity is enforced against all current assignments in $D$, including established fragments. All relevant fragment bonds are checked, rather than only the frontier edge that proposed the extension. Source nonedges do not impose negative matching constraints, so additional product bonds remain possible.
+
+An accepted extension enlarges the fragment and filters its compatible placements. Growth continues even if only one placement remains. An unsupported edge is deferred, and other frontier edges can still be explored. When growth reaches an established fragment, ordinary continuation respects its existing assignments. A fragment saturates when no further admissible extension remains; structurally distinct surviving placements then generate separate continuations for the remaining atoms.
+
+This is a greedy search along each trajectory: an accepted extension can remove placements that would support a different fragment boundary. GRAFT broadens coverage through cut sweeps and seed orderings.
+
+\subsection{Cut sweep to vary greedy fragment boundaries}
+\label{sec:cut-sweep}
+
+Our cut-sweep strategy reruns growth under alternative source-edge conditions. In addition to the uncut graph $G_R=(V_R,E_R)$, it searches a graph with one eligible edge $e$ removed, $G_R^{(e)}=(V_R,E_R\setminus\{e\})$, for each edge at or above the cut threshold. The evaluated cut threshold equals the active-graph floor $b=0.2$, and eligible edges include bonds to H. Each subrun retains the atom set and the original endpoint weight matrices.
+
+Removing $e$ changes both growth and matching: the frontier cannot extend along that edge, and its bond-preservation test is omitted from \Cref{eq:match}. An extension accepted in the uncut run may otherwise merge atoms into a fragment and discard alternative placements. Under the cut condition, that growth route is unavailable; a fragment can stop at a different boundary, grow through another route, or leave atoms for a later seed. The missing preservation test also admits placements previously excluded by $e$. Thus the sweep counteracts greedy commitment by changing the conditions under which growth proceeds. It does not force the endpoints of $e$ into different final fragments or require a bond-breaking event: they may reconnect through other source edges, and the final correspondence may preserve their bond.
+
+GRAFT takes the union of the uncut and single-edge subruns before final branch deduplication. The default one-seed mode uses one seed ordering per subrun, so it already includes the full cut sweep. There are $|E_R|+1$ subruns at the evaluated thresholds. A single-edge cut describes the search perturbation, not the number of bond events in a returned mapping. One removed constraint can redirect subsequent fragment growth and placements throughout the reaction, exposing an alternative with several bond formations, cleavages, or bond-order changes. GRAFT therefore need not enumerate combinations of final bond events to discover multi-event alternatives. Bond-event decoding uses the original matrices, so a search cut itself contributes no event or event-count penalty. Growth remains greedy within each conditioned subrun; the union broadens coverage without making the search exhaustive.
+
+\begin{figure}[t]
+\centering\includegraphics[width=\linewidth]{figs/fig1_algorithm.pdf}
+\caption{\textbf{GRAFT: conditional fragment branching and compressed symmetry.} (a) A local alcohol motif grows while retaining its O--H bond. Three sites in the depicted target have distinct molecular environments. For three source fragments sharing this motif, placing A fixes one site; B then branches over the two unused sites, and C takes the remaining site. The tree illustrates local conditioning and injectivity; R denotes atoms outside the matched subgraph, and this is not a complete reaction-search trajectory. All attached hydrogens in the illustrated local matches are checked. (b) The cut sweep searches the uncut source graph and graphs with one source edge masked. The illustrated ester masks change the growth and preservation constraints; their outputs are pooled. Masking an edge does not itself assign a bond event. (c) Exchanging the two acetate oxygen images preserves the fragment's element and bond-weight matching tests at $\tau_{\mathrm{iso}}=1$, but changes two heavy-atom events into four at threshold $0.5$. Neither acetate oxygen carries H. Solid black lines retain the endpoint bonds. Red $\times$ marks on the bonds indicate cleavage or weakening; paired green arrows pointing inward indicate formation or strengthening. Pastel colors track fragment membership or symmetry sites. Dashed arrows are event projections within a family, not additional search branches. Saved constraints govern allowed symmetry actions. These formal-bond-order event signatures illustrate GRAFT decoding, not distinct mechanisms or resonance-normalized transformations.}
+\label{fig:algorithm}
+\end{figure}
+
+\begin{samepage}
+\subsection{Automorphisms and correlated mapping families}
+
+The distinction between structural branches and explicit bijections is central to the design. Even one fragment family can contain combinatorially many assignments: $k$ independently exchangeable methyl-hydrogen triplets admit $(3!)^k$ bijections. Expanding those automorphisms into separate mappings would multiply the work without adding fragment choices. GRAFT instead stores the permitted permutation actions and their constraints, and decodes event alternatives directly from this representation. Branch caps bound retained alternatives within each growth call; they do not guarantee a small global search. This avoids explicitly listing symmetry-related bijections within each retained family.
+\end{samepage}
+
+Compatible placements are stored using a representative assignment, unresolved assignment blocks, and permutation generators. During growth, graph canonicalization accounts for the current fragment, locked assignments, and boundary information. Each saved transition records its action generators together with conditioning and fragment-preservation constraints; their conjunction defines the allowed mapping relation. Canonical labeling and automorphism computation use nauty~\citep{mckay2014}.
+
+Matching tolerance and automorphism equivalence have different roles. The relation $|x-y|\leq\tau_{\mathrm{iso}}$ is generally not transitive, so it does not by itself define a permutation group. To describe an intrinsic symmetry shared by a final fragment pair, we instead color product bonds by their responses to the fragment's matching tests. For a product weight $w$ and the set $\mathcal W$ of active reactant weights for the same element pair, the label records
+\begin{equation}
+ \chi_{\mathcal W}(w)=\left(\mathbf 1[w\geq b],
+ \left(\mathbf 1[w\geq b\ \land\ |w-v|\leq\tau_{\mathrm{iso}}]\right)_{v\in\mathcal W}\right).
+ \label{eq:response}
+\end{equation}
+An exact automorphism of this colored graph preserves every encoded matching test. This definition depends on the final fragment pair, not its growth order.
+
+The saved mapping relation also contains the constraints imposed by its search decisions. We represent a flat family $\mathcal F_j$ by a seed mapping $m_j$, a sequence of allowed action groups $G_{j,1},\ldots,G_{j,k}$, and final preservation constraints $C_j$:
+\begin{equation}
+ \mathcal F_j=\left\{a_k\circ\cdots\circ a_1\circ m_j:
+ a_i\in G_{j,i},\ C_j(a_k\circ\cdots\circ a_1\circ m_j)\right\}.
+ \label{eq:family}
+\end{equation}
+These actions encode correlated moves; atoms in a common orbit are not independently permutable. Disjoint actions commute and can be placed in a canonical order. The order of overlapping actions is retained. A sequence of groups is not generally equivalent to the group generated by their union.
+
+The intrinsic automorphism of a fragment pair is shared metadata, not permission to enlarge its saved family. Multiple admissible seed mappings can occupy different intrinsic symmetry orbits, and different search constraints can restrict the allowed actions. GRAFT therefore retains these alternatives explicitly inside the compressed representation.
+
+\subsection{Unordered final branches}
+
+During search, history and boundary conditions matter because they determine valid continuation. At completion, the branch identity is instead the unordered collection of matched atom sets,
+\begin{equation}
+ \mathcal B=\{(R_1,P_1),\ldots,(R_q,P_q)\},
+ \qquad P_i=m(R_i),
+ \label{eq:branch}
+\end{equation}
+under a fixed matching policy. Sorting atoms within each set and then sorting the fragment pairs removes dependence on growth order and fragment labels. Growing $A$ before $B$ or $B$ before $A$ yields one branch when the final paired sets agree.
+
+Each branch stores the union of its flat families. Identical normalized family records are shared, while distinct constraints or action programs remain available. This transformation preserves the represented mapping union: it changes its grouping, not its admissible assignments. Provenance links retain the discovering paths, but the original search hierarchy is unnecessary for decoding. This conservative deduplication does not assert that the remaining families are mutually disjoint.
+
+\subsection{Decoding distinct bond-event patterns}
+
+For each complete mapping, define the signed change for an unordered source pair $\{u,v\}$ by
+\begin{equation}
+ \Delta_{uv}(m)=W_P(m(u),m(v))-W_R(u,v),\qquad
+ s_{uv}(m)=
+ \begin{cases}
+ +1,&\Delta_{uv}(m)\geq\delta_{uv},\\
+ -1,&\Delta_{uv}(m)\leq-\delta_{uv},\\
+ 0,&\text{otherwise}.
+ \end{cases}
+ \label{eq:events}
+\end{equation}
+Positive events denote bond formation or strengthening; negative events denote cleavage or weakening. The event count is $E(m)=\sum_{u<v}\mathbf 1[s_{uv}(m)\ne0]$. The evaluation includes hydrogen atoms and all atom pairs. For the WBO collection, $\delta_{uv}=0.3$ for pairs involving a metal and $0.5$ otherwise. These thresholds are independent of $\tau_{\mathrm{iso}}$.
+
+The decoder returns one mapping witness per distinct signed event class, identifying patterns related by exact source permutations that preserve all thresholded bond-change tests. A permutation preserving fragment matching may therefore produce a distinct event class. First, symmetry-invariance certificates identify families whose mappings all produce equivalent events, and reachable-image bounds exclude families outside a requested event window. Before constraint encoding, adjacent nested action groups are absorbed: if $H\leq G$, then $HG=GH=G$. Exact generator-membership tests remove these redundant choices without changing the final preservation constraints. Remaining families are encoded symbolically in Z3~\citep{demoura2008}. Each satisfying assignment yields a concrete mapping and its event pattern. A constraint then excludes that entire event-equivalence class, and the process repeats. This projects directly onto event classes rather than explicitly enumerating full mappings or permutation groups.
+
+For a window $E\leq K$, decoding is complete when every retained family is certified exhausted or excluded. A timeout leaves completeness unresolved. This certificate concerns the saved search output within the window; it does not establish exhaustive exploration of all chemically possible mappings. The default deduplication preserves families that contain different event counts, as illustrated in the heavy-atom projection in \Cref{fig:algorithm}c.
+
+\FloatBarrier
+\section{Evaluation}
+
+\subsection{Datasets and configurations}
+
+We evaluate annotated mapping recovery on all 1,851 Golden records~\citep{lin2022} and event alternatives on 140 native coordinate/WBO endpoint pairs. Golden inputs use formal bond orders and explicit-H expansion. Reference labels are removed before search. Correctness compares the annotated heavy-atom correspondence, including unmatched atoms, modulo endpoint chemical automorphisms preserving charge, isotope, hydrogen count, and stereochemistry. A recovery requires a verified reference witness among the returned alternatives. Unresolved cases remain in the denominator.
+
+We use two explicit prior-method baselines. LocalMapper is a prior accuracy state-of-the-art method as reported by \citet{chen2024}; it is also the strongest single-output mapper in our strict Golden re-evaluation (1,605/1,851, 86.71\%). Its published Golden accuracy was 89.8\% on 1,758 retained reactions with manual calibration, so we keep the literature result separate from our rescored result.
+
+The original SLAP paper reports 86.9\% Golden accuracy on the 1,758-reaction version distributed with LocalMapper, counting reference inclusion among returned solutions~\citep{koda2025}. In our strict 1,851-reaction re-evaluation, default binary SLAP recovers 1,591 references (85.95\%). We additionally apply the cut-sweep strategy introduced in this work to SLAP and combine both search directions and binary/weighted modes. This extended configuration recovers 1,796 references (97.03\%), making it our strongest evaluated prior-method baseline for alternative recovery and the paired comparator for directional recovery and same-host search timing. Throughout, ``SLAP sweep'' denotes SLAP augmented with our strategy, not the original SLAP algorithm or its published score. The sweep's effect is measured against a paired uncut union with the same directions and modes (\Cref{tab:seeds}); differences from the literature score cannot be attributed to the sweep alone. Runtime baselines are identified within each recorded hardware and output scope rather than assigning one method a universal speed ranking.
+
+The coordinate collection contains balanced endpoint pairs with 18--137 explicit atoms, including organometallic and multicomponent structures. It has no annotated mappings and was inspected during method development. This is a bond-event comparison, not a mapping-accuracy benchmark: the mappings are unverified. We compare the minimum signed-event count reached by each method and the alternative event patterns at that count. These are minima within the returned candidate sets, not proven global optima or validated mechanisms. SLAP outputs are rescored on the same original WBO matrices using \Cref{eq:events}. Each returned heavy-atom assignment is completed by symbolic hydrogen refinement. The comparator classes are those observed among these returned witnesses; its hydrogen label families are not exhaustively decoded.
+
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{Evaluation configurations.} Both use $b=0.2$, $\tau_{\mathrm{iso}}=1$, explicit H, and uncut plus single-edge searches. Default GRAFT uses one seed per cut, the sweep. Golden measures the sweep-search stage ; no-sweep controls retain only the uncut graph. A seed setting counts source-atom orderings per cut.}
+\label{tab:protocol}
+\begin{tabular}{lcc}\toprule
+Setting & Golden & Coordinate/WBO\\\midrule
+Reactions & 1,851 & 140\\
+Search directions & Both, unioned & Reactant to product\\
+Seed orderings & 1 (default), 2, 3, 10 & 1 (default)\\
+Branch cap & 100 (default) & 100 (default), 2,000\\
+Evaluation & Reference-family recovery & Signed event-class coverage\\\bottomrule
+\end{tabular}
+\end{table}
+
+\Cref{tab:protocol} separates the settings actually evaluated. Golden measures reference recovery from search; the 140-case evaluation additionally decodes bond-event patterns. Comparator mappings are not used to propose or accept search branches. A two-order run of the final coordinate pipeline was not performed. Full configurations and reproduction scripts are linked in the code repository (\Cref{sec:reproducibility}).
+
+\subsection{Golden mapping recovery}
+
+With one ordering per cut (default), the bidirectional GRAFT sweep-search stage recovers \GoldenOneRecovered/1,851 annotated mappings (\GoldenOnePercent\%). Three orderings recover \GoldenThreeRecovered{} (\GoldenThreePercent\%; \Cref{tab:seeds}), and ten recover \GoldenTenRecovered{} (\GoldenTenPercent\%), with all reference-recovery verdicts resolved. Two orderings also recover \GoldenOneRecovered{} (\GoldenOnePercent\%), with all reference-recovery verdicts resolved at these settings as well.
+
+A separate same-CPU ablation repeats all 1,851 reactions at caps 100 and 2,000 (\Cref{tab:golden-caps}). With the sweep, cap 2,000 gives the same confirmed recovery at one, two, and three orderings, while mean search CPU on the common completed cohort increases by 4.5--5.4 times. Ten orderings at cap 2,000 confirm 1,835 recoveries and leave 12 cases unresolved; five of those were recovered at cap 100, so the lower confirmed count does not establish a loss of representable solutions. No swept setting gains or loses a recovery among reactions resolved at both caps. Without the sweep, the larger cap adds 19 confirmed recoveries, from 1,489 to 1,508. The appendix reports accuracy, unresolved outcomes, and CPU costs for every configuration together with the paired SLAP baselines.
+
+At one seed ordering, smaller-first search recovers 1,803/1,851 references (97.41\%), larger-first search recovers 1,779 (96.11\%), and their union recovers 1,834 (99.08\%; \Cref{tab:directions}). Size counts all explicit atoms, including H. On equal-size endpoints, smaller-first retains the original input orientation and larger-first reverses it. The union adds 31 recoveries over smaller-first alone. Among the 1,084 strictly unequal-size pairs, the corresponding counts are 1,055, 1,043, and 1,072; among 767 equal-size pairs, they are 748, 736, and 762. Thus the bidirectional gain includes both size regimes.
+
+These are family-recovery measurements: they quantify whether a reference correspondence is retained, rather than whether it is ranked first. Verification processes saved cuts independently, retaining one cut in memory at a time. A reference is absent from the saved union only when every scheduled cut has been checked and excludes it; missing cuts or inconclusive checks remain unresolved.
+
+
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{Golden recovery with and without the sweep.} GRAFT results cover sweep search . Recovery uses all 1,851 records. CPU averages use the same \CommonCases{} completed reactions on the Mac, including both directions and the respective sweeps; reference verification is excluded. Dashes mark costs outside this Mac timing cohort; the same-CPU cap ablation reports all seed and no-sweep costs in \Cref{tab:golden-caps}. The SLAP no-sweep time uses only the saved uncut calls. SLAP unions binary and weighted modes in both directions; GRAFT uses both directions. ``Absent'' means excluded from saved families; ``unknown'' denotes unresolved verification.}
+\label{tab:seeds}
+\input{includes/generated-seed-table}
+\end{table}
+
+In the no-sweep ablation, one-seed GRAFT recovers 1,489/1,851 references (80.44\%), with no unresolved cases. Uncut SLAP, unioned over both directions and binary/weighted modes, recovers 1,661 (89.74\%), with one unresolved case. Our cut sweep raises GRAFT recovery from 80.44\% to 99.08\% (345 additional references) and SLAP recovery from 89.74\% to 97.03\% (135 additional references). These paired gains demonstrate the strategy's benefit for both methods under the evaluated protocol. Thus, GRAFT's higher recovery in the swept comparison depends on the broader search: its one-seed uncut control has lower coverage than the uncut SLAP union. The controls use saved uncut outputs from the same final campaign.
+
+The gain is consistent with GRAFT's greedy fragment growth. Once an extension is accepted, placements incompatible with that larger fragment are discarded; branching over the surviving placements cannot recover them. For example, growing fragment A across an edge $(u,v)$ can exclude a placement that would permit a different neighboring fragment B. Omitting $(u,v)$ in a sweep run removes that adjacency from both growth and fragment-preservation tests, potentially changing where growth stops and which placements survive. The union of these runs therefore explores alternative fragment boundaries while retaining the uncut result. Each run remains greedy, and a single-edge sweep cannot explore every possible partition. Cut-specific seed orderings also contribute trajectory diversity, so the measured gain reflects the complete sweep schedule. Final bond events are always evaluated on the original, uncut endpoint matrices.
+
+SLAP augmented with our single-edge sweep recovers \SlapRecovered/1,851 references (\SlapPercent\%) using both directions and binary and weighted modes. Relative to this strongest evaluated prior-method baseline, one-order GRAFT has a higher verified recovery rate by \RecoveryDifference{} percentage points. The paired comparison contains \AamOnly{} references verified only by one-order GRAFT and \SlapOnly{} verified only by SLAP. This compares recovery among alternatives under the stated configurations; it is not a comparison of single-answer accuracy or equal-size candidate sets.
+
+On the same-Mac subset of \CommonCases{} completed reactions, the one-seed GRAFT sweep-search stage uses a mean 1.14 CPU seconds for smaller-first search, 1.38 for larger-first, and 2.52 for the bidirectional union, compared with 3.33, 1.49, and 4.82 for the corresponding SLAP sweeps (\Cref{tab:directions,fig:golden}). Two-seed GRAFT costs 2.23, 2.72, and 4.95 CPU seconds. Thus, orientation and seed count both affect the recovery--cost tradeoff. Its bidirectional median is 0.72 seconds versus SLAP's 0.88, but its 95th percentile is higher: 12.91 versus 11.05 seconds. The one-seed bidirectional mean is 0.52 times the SLAP-sweep baseline (47.7\% lower), whereas two-seed GRAFT costs 1.03 times that baseline. Lower means and medians do not imply uniformly lower runtime.
+
+The comparison excludes reference verification. GRAFT includes checkpoint I/O and symmetry finalization; SLAP includes graph construction, mapping, and export but excludes I/O. Bidirectional CPU is the sum of the two direction costs. SLAP's paired no-sweep union costs 0.067 CPU seconds on the same cohort; GRAFT's no-sweep search cost was not separately recorded. Three- and ten-seed searches were not all measured on the comparison CPU, so their times are not pooled into this comparison. Archived default-mapper call times, including RXNMapper, LocalMapper, and RDT, are reported separately in \Cref{tab:default-times}, with their narrower call scope and CPU-comparability limit stated.
+
+\begin{figure}[tb]
+\centering\includegraphics[width=\linewidth]{figs/fig2_golden.pdf}
+\caption{\textbf{Reference recovery and search cost.} GRAFT measurements cover sweep search . (a) Golden recovery for GRAFT and SLAP with our cut-sweep strategy, with LocalMapper as the prior accuracy-SOTA baseline (2024). LocalMapper returns one mapping; the other bars measure coverage among alternatives. All values use our evaluator, not literature-reported accuracies. Unswept controls are reported in \Cref{tab:seeds}. Every percentage uses all 1,851 records. (b) Mean CPU for smaller-first, larger-first, and bidirectional search on the same \CommonCases{} completed reactions on the Mac. Reference verification is excluded; the procedures have different search objectives, output cardinalities, and I/O timing scopes.}
+\label{fig:golden}
+\end{figure}
+
+\subsection{Comparison with released mapping implementations}
+
+We also evaluate default released implementations of RXNMapper~\citep{schwaller2021}, LocalMapper~\citep{chen2024}, Chython~\citep{chython}, Indigo~\citep{indigo}, and the Reaction Decoder Tool (RDT)~\citep{rahman2016}, together with default binary and weighted SLAP. Each receives all 1,851 label-free Golden records. Saved predictions are rescored with the same strict heavy-atom relation criterion, retaining unmatched atoms and checking endpoint chemistry. No reference-guided reranking, balancing, or prediction repair is applied.
+
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{GRAFT and benchmarked mapping implementations on Golden.} GRAFT measurements cover sweep search . Reference recovery uses all 1,851 reactions, including failed and unresolved cases. GRAFT is evaluated over its compressed families; SLAP over its returned explicit candidates, without a ranking or exhaustive decoding of its label families; the remaining methods return single mappings. GRAFT uses both directions; SLAP ``union'' combines both directions and binary/weighted modes. Search budgets and output sizes differ, so this is coverage of returned alternatives, not top-one accuracy. $\dagger$: LocalMapper, prior accuracy SOTA reported in 2024; $\ddagger$: SLAP augmented with our cut sweep, strongest evaluated prior-method alternative-coverage baseline. The comparator protocol is described in \Cref{sec:default-comparators}.}
+\label{tab:competitors}
+\input{includes/generated-competitor-table}
+\end{table}
+
+\begin{table}[tb]
+\centering\small
+\caption{\textbf{Recovery and runtime by endpoint-size orientation.} All rows use the sweep. Recovery uses all 1,851 Golden records; mean, median, and 95th-percentile CPU seconds per reaction use the same \CommonCases{} completed Mac reactions. SLAP is the prior-method baseline and unions binary and weighted modes within each direction. CPU/SLAP divides each mean by the SLAP mean for that same orientation; values below one indicate lower mean cost. Size counts explicit atoms; equal-size ties use stored order for smaller-first and its reverse for larger-first. Bidirectional cost sums both searches, not parallel wall latency. GRAFT includes checkpoint I/O and symmetry finalization; SLAP includes graph construction, mapping, and export but excludes I/O. Reference verification is excluded.}
+\label{tab:directions}
+\input{includes/generated-direction-table}
+\end{table}
+
+
+\Cref{tab:competitors} compares GRAFT with every benchmarked implementation using reference recovery over the evaluated output. GRAFT ranges from 1,489 recoveries without the sweep to \GoldenOneRecovered{} with a one-seed sweep and \GoldenTenRecovered{} with ten seeds. LocalMapper recovers the strict reference relation in 1,605 reactions, RXNMapper in 1,547, and Chython in 1,561. Default binary SLAP recovers 1,591 among its explicit candidates, compared with \SlapRecovered{} for the broader bidirectional sweep evaluated above. These default calls use different search budgets from GRAFT; GRAFT's family recovery is not a top-one accuracy measurement.
+
+RDT recovers 1,030 references under this relation-based criterion, which differs from its chemical-change scoring. Indigo's 692 recoveries require particular care: 503 outputs contain duplicate heavy-atom map labels, seven alter endpoint chemistry, and 133 calls fail. Chython changes endpoint chemistry in 29 outputs, and three RDT outputs fail validation. These results characterize the pinned implementations and input/output protocol rather than establish universal rankings of the methods. Exact versions and reproduction settings are recorded in the repository.
+
+\FloatBarrier
+\clearpage
+\subsection{Minimum bond-event comparison on 140 coordinate reactions}
+
+We compare the fewest bond events found for each reaction and the different bond-change patterns that achieve that count. An event count tells us how many atom pairs change; a pattern specifies which pairs gain or lose bond order. We score all mappings on the same original WBO matrices using the thresholds in \Cref{eq:events}. GRAFT uses the default pipeline: one-seed sweep, with branch cap 100 by default and 2,000 as a larger-budget comparison. We compare it with released SLAP (native SLAP) and SLAP augmented with our cut sweep (SLAP sweep). These reactions have no verified atom mappings, so this measures agreement and differences in bond events, not mapping accuracy. Throughout this section, a minimum is the lowest count found by a method, not a proven global optimum.
+
+The coordinate comparison uses cap 2,000, which returns complete mappings for all 140 reactions. The archived paired search control at cap 100 returns complete mappings for 138 reactions; cases 123 and 125 return no complete mapping. These are search-budget failures. Their cap-2,000 outputs contain three- and four-event solutions, respectively. The library default remains cap 100; the detailed coordinate results below explicitly use the larger cap. Golden includes a separate cap ablation in \Cref{sec:cap-ablation}.
+
+At cap 2,000, GRAFT reaches the same minimum count as SLAP sweep in 136 reactions and one fewer event in the remaining four. Against native SLAP, it reaches the same count in 125 reactions and fewer events in 15 (\Cref{tab:coordinate-minima,fig:coordinate}). Thus, GRAFT matches or lowers the event count in every reaction under both comparisons. A lower count alone does not establish a more plausible chemical transformation.
+
+Equal counts can still describe different bond changes. Among the 136 reactions where GRAFT and SLAP sweep have equal minima, SLAP sweep returns 164 minimum-event patterns; GRAFT recovers 158. The six missing patterns occur in four reactions: one each in cases 6, 11 and 101, and three in case 64. For the 125 reactions where GRAFT and native SLAP have equal minima, GRAFT recovers 138 of 140 native-SLAP patterns. Across all 140 reactions, the number of patterns at each method's own minima is 166 for GRAFT, 168 for SLAP sweep, and 160 for native SLAP. These totals count patterns, not reactions.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Minimum bond-event counts and patterns on 140 reactions at cap 2,000.} The first three numerical columns count reactions where GRAFT finds fewer, equal, or more events than the comparator. The final column counts comparator patterns recovered by GRAFT, restricted to reactions with equal minima. For example, 158/164 refers to patterns across the 136 reactions in the preceding column. Settings are given in the text.}
+\label{tab:coordinate-minima}
+\input{includes/generated-coordinate-minima-table}
+\end{table}
+
+We also check whether GRAFT retains SLAP's minimum-event patterns when GRAFT finds a lower count of its own. For each reaction, we decode GRAFT candidates up to one event above the higher of the two SLAP minima. Within this range, GRAFT recovers 162 of 168 SLAP-sweep patterns and 151 of 160 native-SLAP patterns. Its output contains 300 distinct patterns: 166 at GRAFT's minima and 134 with higher counts. Decoding is complete within this range for the saved families; the fragment search itself is not exhaustive.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{CPU time per reaction for the cap-2,000, 140-case comparison.} All stages were measured on the Mac. The GRAFT row measures sweep search; separate event decoding is not timed here. SLAP refinement covers its returned witnesses. These are stage costs, not directly comparable end-to-end runtimes. GRAFT search includes checkpoint I/O. SLAP mapping excludes input preparation and export, while its refinement includes I/O. Final shared event rescoring and failed or replaced attempts are excluded.}
+\label{tab:coordinate-time}
+\input{includes/generated-coordinate-time-table}
+\end{table}
+
+Sweep search takes a mean 1.05 CPU seconds per reaction. SLAP sweep takes 1.34 CPU seconds for mapping and 0.053 for hydrogen refinement and initial scoring. GRAFT's separate decoder reports all retained event classes in the specified windows, whereas SLAP refinement covers its returned witnesses; these timings therefore do not imply an end-to-end speed ranking. We did not separately time native SLAP or minimum-only GRAFT decoding.
+
+\subsection{Final representation and complete window decoding}
+
+Unordered grouping collects histories with the same matched fragment pairs while retaining their constrained mapping families. Every saved baseline family is decoded or certified within its specified event window. The resulting 300 reaction-specific classes each have a mapping witness. This certifies the saved output within the window, not exhaustive structural search. Counts and per-family certificates are provided with the code.
+
+\begin{figure}[tb]
+\centering\includegraphics[width=\linewidth]{figs/fig3_coordinate.pdf}
+\caption{\textbf{Bond-event counts, alternative patterns, and runtime on 140 coordinate reactions.} GRAFT uses one seed and the sweep at cap 2,000. (a) Reactions where GRAFT finds fewer or equal events than each SLAP baseline; none has a higher GRAFT minimum. (b) Comparator minimum-event patterns recovered by GRAFT, counting only reactions where both methods reach the same minimum. The six missing SLAP-sweep patterns span four reactions. (c) Distribution of the minimum event count across reactions for each method. (d) Mean CPU seconds per reaction for the recorded stages. The timing panel reports search and SLAP refinement; it excludes GRAFT event decoding. See \Cref{tab:coordinate-time} for timing scope. The mappings are unverified, so this figure compares bond events rather than mapping accuracy.}
+\label{fig:coordinate}
+\end{figure}
+
+\FloatBarrier
+\section{Discussion}
+
+GRAFT separates structural search, symmetry representation, and interpretation of bond changes. Continuous growth accumulates context while preserving multiple placements; the cut sweep varies the constraints that determine fragment boundaries. Final grouping removes irrelevant growth order, while the flat family representation retains constraints and correlated permutations that can affect the output. Symbolic projection then exposes distinct bond-event hypotheses without expanding every mapping.
+
+\subsection{What a single correspondence leaves out}
+
+One correspondence is sufficient when atom identities are established and the downstream quantity is invariant over the remaining alternatives. Otherwise, selecting one witness discards two kinds of information: different assignments can produce different bond-event patterns, and a chosen pattern can still admit joint atom shuffles. Formally, if $\mathcal{F}$ is the retained mapping set and $e(m)$ its event-class projection, a witness $m_0$ supplies $e(m_0)$ but cannot reconstruct $\{e(m):m\in\mathcal{F}\}$ whenever that set has more than one member. Event counts alone are also insufficient: distinct signed patterns can have equal counts. GRAFT therefore returns an event-class representative together with access to its supporting families and conditional shuffle queries.
+
+Golden case 9 illustrates why retaining alternatives matters (\Cref{fig:alternatives}). GRAFT recovers the annotated heavy-atom correspondence: the alcohol oxygen O$_{15}$ enters the product ring, while the ketone oxygen O$_3$ leaves in water (A). A second recovered mapping exchanges these oxygen origins (B), and a third additionally exchanges the correspondence of C$_{13}$ and C$_{14}$ (C). The three displayed witnesses have five, six, and seven heavy-atom changes, respectively; including H gives nine, eight, and nine signed events. Each witness attains the minimum number of H-involving changes for its fixed heavy-atom correspondence, as verified from the attached-H counts. Thus a lower total event count can favor a nonreference mapping, while equal counts (A and C) do not establish equal correspondences. Golden annotates heavy atoms, not H identities or a validated pathway. These are selected recovered witnesses, not an exhaustive decoding of this reaction.
+
+The output distinction is specific to the interfaces evaluated here. RXNMapper, LocalMapper, Indigo, Chython, and RDT returned at most one explicit candidate record per reaction in the archived runs; SLAP exposed multiple records and compressed labeled-graph information, while GRAFT exposes conditional mapping families. This does not establish that only SLAP and GRAFT can return alternatives. For example, Ali et al. enumerate optimal mappings with an Ising-computing approach and reduce them by molecular symmetry~\cite{ali2025}. Nor does high reference recovery establish near-complete coverage of all mappings: GRAFT's structural search is bounded, and complete decoding certifies only the saved families within the requested event window.
+
+\begin{figure}[t]
+\centering\includegraphics[width=\linewidth]{figs/fig4_alternatives.pdf}
+\caption{\textbf{Golden reference and recovered GRAFT alternatives for case 9.} A matches all 15 annotated heavy-atom pairs exactly. B exchanges the oxygen origins; C also exchanges C$_{13}$/C$_{14}$. The GRAFT sweep-search stage uses one seed (default), a 2,000-branch cap, and $\tau_{\mathrm{iso}}=1$; reference labels are removed before search. Pastel colors identify saved fragment groups, consistently across each row's endpoints; partitions can differ between rows. Solid black lines retain the endpoint bonds. Red $\times$ marks indicate cleavage or weakening, and paired green arrows pointing inward indicate formation or strengthening. The marks sit directly on the affected bonds; fragment colors remain visible. Events use formal bond orders at threshold 0.5. Numbers are the original Golden atom labels. H atoms are implicit; the figure separates heavy-atom changes from totals including H. ``Ground truth'' denotes the dataset's heavy-atom annotation, not a verified pathway. Only three selected witnesses are shown.}
+\label{fig:alternatives}
+\end{figure}
+
+\subsection{Implications for pathway and transition-state analysis}
+
+Different bond-event patterns can suggest different reaction centers and alternative transition-state starting guesses. They do not identify pathways uniquely: a single net atom mapping can be compatible with several intermediate sequences, and an alternative mapping can be chemically implausible. Energies, reaction conditions, stereochemistry, and isotope tracing can distinguish possibilities that endpoint connectivity alone cannot. Prior work on reaction-pathway search also identifies atomic-index assignment as a practical obstacle and addresses the factorial number of index assignments without enumerating them~\cite{de2019}.
+
+For a transition-state pipeline, the relevant choices are the event-class candidate and the allowed atom assignments around its reaction core. Define the core as the atoms incident to the candidate's signed bond events. Alternative assignments of those atoms can be queried jointly against the saved family constraints, retaining only assignments that extend to a complete mapping and satisfy the chosen event-class restriction. Required correlated movements of other atom assignments must be included in that completion. The completed mapping determines the product atom ordering supplied to the interpolation step.
+
+Different completed mappings can then give different interpolations between the same endpoint structures. For illustration, in a common coordinate frame, a Cartesian interpolation for mapping $m$ is
+\begin{equation}
+ \mathbf x_i^{(m)}(t)=(1-t)\mathbf x_i^R+t\mathbf x_{m(i)}^P,\qquad 0\leq t\leq1.
+\end{equation}
+Changing $m(i)$ changes the product coordinate assigned to reactant atom $i$, and hence generally changes its interpolated trajectory. Retaining multiple event classes and their allowed core assignments therefore lets a downstream pipeline construct and assess several initial paths instead of committing to one correspondence before interpolation. Equivalent relabelings applied consistently to an entire calculation do not create new physical pathways; the issue is the relative correspondence between fixed endpoints. These examples motivate retaining alternatives and accessible symmetry information; transition-state search performance is not evaluated here.
+
+\FloatBarrier
+\subsection{Coverage and remaining search limitations}
+
+The Golden results support broad reference coverage by the fragment-search stage, and the coordinate comparison shows that GRAFT reaches equal or lower event counts than the returned SLAP-sweep candidates while retaining most patterns at shared minima. These are complementary measurements. The coordinate collection has no mapping annotations, and event minimization is not an energy model or a proof of mechanistic plausibility. The coordinate collection was inspected during development, so independent validation is needed to establish generalization.
+
+An audit of all eleven ten-order Golden misses separates unmatched-atom decisions from fragment-placement failures (\Cref{tab:golden-misses}). In four reactions, every retained family maps exactly one more heavy-atom pair than the reference. Such a family cannot reproduce the reference's unmatched-atom pattern through symmetry shuffling: permutations preserve the number of assigned pairs. The remaining seven lack the required correspondence within their saved families. Re-ranking or expanding those families into explicit bijections cannot supply a missing structural alternative.
+
+Two traced examples show how greedy extension excludes a representable reference. One reference exchanges adjacent labels in an otherwise unchanged pyridine ring; another exchanges the carbonyl-oxygen attachments of oxalic acid across its retained carbons. Ordinary growth preserves bonds that these correspondences require separating. Uncapped trajectories still miss both references, while reference-constrained fragment choices establish their representability. In the oxalic-acid example, a reference-selected three-edge relaxation also exposes the reference to ordinary matching; the single-edge sweep does not contain that cut set. These are feasibility diagnostics, not additional benchmark recoveries. For the other five correspondence misses, the audit does not isolate cap truncation from unsampled growth choices. They motivate selective alternatives to successful growth extensions and explicit choices about leaving atoms unmatched, rather than treating larger caps or more symmetry expansion as sufficient remedies.
+
+Only one of the eleven misses is recovered by any tested comparator configuration, including the SLAP sweep. The shared failures warrant inspection of the supplied correspondences as well as search improvements; they do not establish annotation errors. All eleven remain in the reported denominator. A complete event-window certificate likewise applies only to the saved families, whose matching-preserving automorphisms can still change finer-threshold events.

@@ -3,7 +3,8 @@ import pytest
 import rxn_core
 
 from rxn_core.aam import search_aam
-from rxn_core.analytical import compile_mapping_families
+from rxn_core.analytical import compile_mechanism_families
+from rxn_core.mechanisms import group_mechanisms
 from rxn_core.rp import select_rp_mappings
 from rxn_core.ts import analyze_transition_state
 from rxn_core.domain import (
@@ -42,7 +43,7 @@ def test_package_root_exposes_only_typed_workflows():
     assert not hasattr(rxn_core, "cut_sweep")
 
 
-def test_aam_problem_rejects_composition_mismatch():
+def test_aam_problem_accepts_composition_mismatch():
     reactant = _endpoint("R")
     product = MolecularEndpoint(
         elements=("H", "C"),
@@ -50,8 +51,109 @@ def test_aam_problem_rejects_composition_mismatch():
         wbo=np.zeros((2, 2)),
         label="P")
 
-    with pytest.raises(ValueError, match="compositions"):
-        AAMProblem(reactant, product)
+    problem = AAMProblem(reactant, product)
+    assert not problem.balanced
+    result = search_aam(problem, AAMSearchConfig(seed_count=1))
+    assert result.graph.terminals
+    assert max(len(result.graph.states[t].mapping) for t in result.graph.terminals) == 1
+
+
+def test_partial_aam_keeps_unmatched_atoms_and_roundtrips(tmp_path):
+    import json
+    from rxn_core.artifacts import aam_record, aam_from_record
+    source = MolecularEndpoint(('C','Cl'), np.zeros((2,3)), [[0,1],[1,0]])
+    target = MolecularEndpoint(('C',), np.zeros((1,3)), [[0]])
+    result = search_aam(AAMProblem(source,target), AAMSearchConfig(seed_count=1),intermediate_dir=tmp_path)
+    restored = aam_from_record(aam_record(result))
+    assert restored.problem.source_atom_count == 2
+    assert restored.problem.target_atom_count == 1
+    assert restored.graph == result.graph
+    saved = aam_from_record(json.loads((tmp_path/'aam.json').read_text()))
+    assert json.dumps(saved.graph.to_record(),sort_keys=True) == json.dumps(restored.graph.to_record(),sort_keys=True)
+    assert not list(tmp_path.glob('*.tmp'))
+    assert all(dict(result.graph.states[t].mapping) == {0:0} for t in result.graph.terminals)
+    reverse = search_aam(AAMProblem(target, source), AAMSearchConfig(seed_count=1))
+    assert reverse.graph.terminals
+    assert any(dict(reverse.graph.states[t].mapping) == {0:0} for t in reverse.graph.terminals)
+
+
+def test_resume_reuses_completed_cuts_and_rejects_different_config(tmp_path, monkeypatch):
+    import importlib,json
+    module=importlib.import_module('rxn_core.aam')
+    problem=AAMProblem(_endpoint('R'),_endpoint('P'))
+    config=AAMSearchConfig(seed_count=1)
+    original=search_aam(problem,config,intermediate_dir=tmp_path)
+    expected=json.dumps(original.graph.to_record(),sort_keys=True)
+    assert expected==json.dumps(original.graph.to_record(copy=False),sort_keys=True)
+    calls=[];search_cut=module._search_cut
+    def tracked(cut):
+        calls.append(cut);return search_cut(cut)
+    monkeypatch.setattr(module,'_search_cut',tracked)
+    resumed=search_aam(problem,config,intermediate_dir=tmp_path,resume=True)
+    assert not calls
+    assert json.dumps(resumed.graph.to_record(),sort_keys=True)==expected
+    (tmp_path/'cut_00000.json').unlink()
+    resumed=search_aam(problem,config,intermediate_dir=tmp_path,resume=True)
+    assert len(calls)==1
+    assert json.dumps(resumed.graph.to_record(),sort_keys=True)==expected
+    with pytest.raises(ValueError,match='differs'):
+        search_aam(problem,AAMSearchConfig(seed_count=2),intermediate_dir=tmp_path,resume=True)
+
+
+@pytest.mark.parametrize('molecule', ['hydrogen', 'ethane'])
+def test_parallel_finalization_preserves_graph_and_reuses_checkpoints(tmp_path,molecule):
+    import json
+    if molecule=='hydrogen':
+        problem=AAMProblem(_endpoint('R'),_endpoint('P'))
+    else:
+        elements=('C','C','H','H','H','H','H','H')
+        wbo=np.zeros((8,8))
+        for left,right in [(0,1),(0,2),(0,3),(0,4),(1,5),(1,6),(1,7)]:
+            wbo[left,right]=wbo[right,left]=1
+        order=[5,1,2,0,7,3,6,4]
+        problem=AAMProblem(MolecularEndpoint(elements,np.zeros((8,3)),wbo),
+            MolecularEndpoint(tuple(elements[i] for i in order),np.zeros((8,3)),
+                              wbo[np.ix_(order,order)]))
+    config=AAMSearchConfig(seed_count=3)
+    serial=search_aam(problem,config)
+    parallel=search_aam(problem,config,workers=2,intermediate_dir=tmp_path)
+    normalize=lambda result:json.dumps(result.graph.to_record(),sort_keys=True)
+    assert normalize(parallel)==normalize(serial)
+    checkpoints=list(tmp_path.glob('*.finalized.pkl.gz'))
+    assert len(checkpoints)==len(list(tmp_path.glob('cut_*.json')))
+    stamps={p:p.stat().st_mtime_ns for p in checkpoints}
+    resumed=search_aam(problem,config,workers=2,intermediate_dir=tmp_path,resume=True)
+    assert normalize(resumed)==normalize(serial)
+    assert stamps=={p:p.stat().st_mtime_ns for p in checkpoints}
+
+
+def test_compressed_checkpoint_preserves_typed_graph_and_json_content(tmp_path):
+    import json
+    from rxn_core.artifacts import aam_record,read_aam_checkpoint
+    result=search_aam(AAMProblem(_endpoint('R'),_endpoint('P')),AAMSearchConfig(seed_count=1),
+        intermediate_dir=tmp_path,archive_format='checkpoint')
+    restored=read_aam_checkpoint(tmp_path/'aam.pkl.gz')
+    assert json.dumps(aam_record(restored),sort_keys=True)==json.dumps(aam_record(result),sort_keys=True)
+    assert restored.graph.fragment_placement(0)==result.graph.fragment_placement(0)
+    assert not list(tmp_path.glob('*.tmp'))
+    assert list(tmp_path.glob('cut_*.raw.pkl.gz'))
+    assert not list(tmp_path.glob('cut_*.json'))
+
+
+def test_checkpoint_resume_accepts_explicit_mixed_cut_formats(tmp_path,monkeypatch):
+    from rxn_core import aam
+    from rxn_core.artifacts import raw_cut_paths,read_raw_cut,write_raw_cut
+    problem=AAMProblem(_endpoint('R'),_endpoint('P'))
+    config=AAMSearchConfig(seed_count=1)
+    original=search_aam(problem,config,intermediate_dir=tmp_path)
+    raw=raw_cut_paths(tmp_path)[0]
+    write_raw_cut(read_raw_cut(raw),raw.with_name(raw.stem+'.raw.pkl.gz'))
+    raw.unlink()
+    def forbidden(cut):raise AssertionError('Completed cut was searched again')
+    monkeypatch.setattr(aam,'_search_cut',forbidden)
+    resumed=search_aam(problem,config,intermediate_dir=tmp_path,resume=True,
+                       workers=2,archive_format='checkpoint')
+    assert resumed.graph.to_record()==original.graph.to_record()
 
 
 def test_search_aam_returns_complete_typed_hierarchy():
@@ -63,9 +165,11 @@ def test_search_aam_returns_complete_typed_hierarchy():
         workers=1)
 
     assert result.problem is problem
-    assert result.mechanisms
-    assert result.minimum_event_mechanisms()
-    mechanism = result.minimum_event_mechanisms()[0]
+    assert result.graph.transitions
+    assert result.branches
+    grouped = group_mechanisms(result)
+    assert grouped.minimum_event_mechanisms()
+    mechanism = grouped.minimum_event_mechanisms()[0]
     assert mechanism.representative.degree == 2
     assert mechanism.branches
     assert mechanism.encounter_count >= 1
@@ -76,11 +180,10 @@ def test_search_aam_returns_complete_typed_hierarchy():
     assert mechanism.branches[0].hierarchy.has_complete_exact_target_groups
     assert result.metrics.completed_group_requests >= 1
     assert result.metrics.completed_group_calculations >= 1
-    assert result.metrics.retained_branch_count == sum(
-        len(item.branches) for item in result.mechanisms)
+    assert result.metrics.retained_branch_count == len(result.graph.terminals)
 
-    analytical = compile_mapping_families(
-        result, workers=1, minimum_events_only=True)
+    analytical = compile_mechanism_families(
+        grouped, workers=1, minimum_events_only=True)
     assert analytical.mechanisms
     family = analytical.mechanisms[0].branches[0]
     assert family.family.contains(family.representative.as_dict())
@@ -118,8 +221,8 @@ def test_nonempty_ts_processing_uses_exact_endpoint_consensus():
                (0, 2, 0.5), (1, 3, 0.5))), label="TS")
     config = AAMSearchConfig(
         seed_count=1, branch_limit=100, symmetry_repair=False)
-    rp = select_rp_mappings(compile_mapping_families(
-        search_aam(AAMProblem(reactant, product), config),
+    rp = select_rp_mappings(compile_mechanism_families(
+        group_mechanisms(search_aam(AAMProblem(reactant, product), config)),
         minimum_events_only=True))
     modes = np.zeros((1, 4, 3))
     modes[0, :, 0] = (1.0, -1.0, -1.0, 1.0)
@@ -142,8 +245,8 @@ def test_no_event_mechanism_has_explicit_unscorable_ts_status():
     problem = AAMProblem(_endpoint("R"), _endpoint("P"), name="no_event")
     config = AAMSearchConfig(
         seed_count=1, branch_limit=100, symmetry_repair=False)
-    rp = select_rp_mappings(compile_mapping_families(
-        search_aam(problem, config), minimum_events_only=True))
+    rp = select_rp_mappings(compile_mechanism_families(
+        group_mechanisms(search_aam(problem, config)), minimum_events_only=True))
     modes = np.zeros((1, 2, 3))
     target = TransitionStateTarget(
         _endpoint("TS"), VibrationalModes(np.array([-100.0]), modes))

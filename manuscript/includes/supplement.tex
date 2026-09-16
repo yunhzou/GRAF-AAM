@@ -1,0 +1,70 @@
+\section{Evaluation details}
+\label{sec:reproducibility}
+\setcounter{table}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+
+\subsection{Reproducibility and comparison scope}
+
+The repository's \texttt{manuscript/REPRODUCIBILITY.md} links the benchmark scripts, pinned software and input versions, full configurations, and per-case records. \Cref{tab:protocol} gives the settings needed to interpret the comparisons. The notebook \texttt{docs/AAM\_SIMPLE.ipynb} demonstrates matching, unique event candidates, and conditional symmetry queries through the Python API.
+
+For the coordinate comparison, GRAFT uses supplied WBO matrices and SLAP uses the original XYZ-derived binary graphs. SLAP's returned heavy-atom assignments receive hydrogen refinement under its original bond-change objective, then are rescored on the WBO matrices. Thus, the comparison uses a common event score but different input representations. It covers the returned SLAP witnesses, not an exhaustive expansion of its hydrogen label families. The WBO-generation method is not recorded in the available metadata, so regeneration of these matrices from molecular structures is not established.
+
+The paired search timings use the Apple M4 Pro CPU and one numerical-library thread. Averages use \CommonCases{} common completed reactions. Reference verification and interrupted work are excluded. GRAFT includes checkpoint I/O; SLAP excludes I/O. Higher-seed runs measured on different CPUs are excluded from this paired comparison. Stage-specific timing scopes are given with the corresponding tables.
+
+\subsection{Default comparator protocol}
+\label{sec:default-comparators}
+
+Released comparators receive the same label-free Golden inputs, without prediction repair or reference-guided ranking. Invalid outputs and failures remain in the denominator. SLAP is evaluated over all returned candidates, with binary and weighted modes reported separately. The repository records the released models, versions, and adapter settings.
+
+\subsection{Decoding scope}
+
+For each coordinate reaction, the decoding limit is one event above the larger of the native-SLAP and SLAP-sweep minima. All \FlatFamilies{} retained families are exhausted within these limits, without a class-count cap. Higher-event patterns are outside this completeness claim. An event class records the signed atom-pair changes, modulo source permutations preserving every thresholded bond-change test against the opposite endpoint. Each class has a concrete mapping witness.
+
+\begin{table}[H]
+\centering\small
+\caption{\textbf{Complete final decoding on all 140 reactions.} Every retained family is certified within the listed per-case event limit.}
+\input{includes/generated-decoder-table}
+\end{table}
+
+\subsection{Why flattening preserves the saved mappings}
+
+Flattening retains each terminal representative, its required fragment constraints, and its allowed action sequence after applying prefix locks. Disjoint actions commute. Adjacent nested groups satisfy $HG=GH=G$ when $H\leq G$, with containment checked by exact generator membership. Other overlapping actions retain their order. Identical records are shared; branches with the same unordered fragment pairs retain the union of their family records. The admissible mapping union is therefore unchanged. A shared fragment partition or automorphism group alone does not establish family equality.
+
+The decoder certifies a family through event invariance, a valid lower bound excluding the requested window, or unsatisfiability after excluding all discovered event classes. An exhausted budget remains incomplete. This separates lossless representation, complete decoding within a window, and exhaustive structural search.
+
+\subsection{Golden nonrecoveries}
+
+\begin{table}[ht]
+\centering\small
+\caption{\textbf{The eleven Golden nonrecoveries.} Case indices are zero-based. Retained pair counts cover every terminal in both directions and every saved cut at ten seed orderings and cap 100. The four cardinality mismatches concern exact reference relations, including unmatched atoms.}
+\label{tab:golden-misses}
+\input{includes/generated-miss-table}
+\end{table}
+
+Independent reconstruction agrees with the supplied references in all eleven cases. Four require a different number of matched pairs; seven require correspondences absent from the retained families. All have at least one capped direction, but this does not identify the cap as the cause. The uncapped traces discussed in the main text demonstrate greedy-growth exclusions in two cases. Reference-directed feasibility checks are diagnostic and do not contribute to benchmark recovery. Per-case certificates and traces are linked in the repository.
+
+\subsection{Default-comparator call times}
+
+\begin{table}[ht]
+\centering\small
+\caption{\textbf{Archived default-mapper CPU call times.} Calls include completed outputs later judged invalid; exceptions are excluded from time averages. Recovery retains all 1,851 reactions. $\dagger$ marks LocalMapper, the prior accuracy-SOTA baseline (2024). These default calls use no sweep and exclude startup/model loading, evaluation, and saving. The CPU model was not retained, so they do not support comparison with the paired GRAFT timing cohort.}
+\label{tab:default-times}
+\input{includes/generated-comparator-timing-table}
+\end{table}
+
+These default call times cover different outputs from GRAFT's sweep and compressed families. GRAFT's unswept search cost was not separately recorded in that earlier study; the controlled ablation in \Cref{tab:golden-caps} supplies the paired no-sweep timing.
+
+
+\subsection{Branch-cap and CPU-time ablation on Golden}
+\label{sec:cap-ablation}
+
+We reran the twelve configurations in \Cref{tab:golden-caps} on all 1,851 Golden reactions using one CPU thread on an AMD EPYC 9J14 processor. Both search directions are unioned. SLAP unions its binary and weighted modes. Search and reference verification have separate fixed resource budgets. The recorded cap-100 recovery counts reproduce the main evaluation. At cap 2,000, unresolved counts increase with seed count. Among reactions resolved at both caps, no swept configuration gains or loses a reference recovery.
+
+\begin{table}[htbp]
+\centering\footnotesize
+\caption{\textbf{Golden branch-cap ablation with paired SLAP baselines.} Recovery counts confirmed reference inclusion over all 1,851 records; unknown cases remain in the denominator. CPU values are seconds per reaction. Paired CPU uses the same 1,403 reactions whose searches finish under every configuration. Spent CPU averages recorded search cost over all 1,851 selected attempts, including interrupted calls; it is not completed-search latency. Both timings exclude reference verification and initial imports. Superseded attempts are excluded. Cap 100 with a one-seed sweep is the default.}
+\label{tab:golden-caps}
+\input{includes/generated-cap-ablation-table}
+\end{table}
+
+The ten-seed cap-2,000 run leaves five references recovered at cap 100 unresolved, accounting for its lower confirmed count. The bounded SLAP sweep confirms 1,794 references here, compared with 1,796 in the main evaluation: two previously recovered cases are unresolved under this study's limits. These outcomes are reported separately from verified exclusions. The paired timing cohort excludes 448 reactions because at least one configuration does not finish; the all-attempt cost column exposes the additional computational cost on those difficult reactions. Source pins, individual outcomes, directional costs, and reproduction scripts are provided with the code.

@@ -1,0 +1,1 @@
+{"status": "passed", "cases": [9, 1001], "configurations": 12, "directions": 2, "cap100_prior_verdict_parity": true, "no_sweep_expected_cut_verified": true, "host": "cpu-0011", "python": "3.12.14 (main, Sep  1 2026, 14:16:52) [Clang 22.1.3 ]", "source_manifest_sha256": "b93a881cb616721f37380eae0f7f8bc5cfd2c637e7cace3025b48a7500725fbc"}

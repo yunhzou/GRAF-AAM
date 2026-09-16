@@ -1,12 +1,8 @@
-"""Typed mechanism-group model for post-AAM selection.
-
-AAM search produces a deduplicated mechanism and a hierarchical symmetry
-description.  Post-processing acts on the resulting group orbit; concrete
-branch witnesses are provenance and are deliberately absent from this model.
-"""
+"""Typed symmetry objects shared by AAM and optional mechanism post-processing."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from functools import cached_property
 from typing import Mapping, Protocol, Sequence
 
 import numpy as np
@@ -236,8 +232,57 @@ class FragmentMatch:
 class AAMHierarchy:
     fragments: tuple[FragmentMatch, ...]
 
+    @property
+    def segments(self):
+        """Shared base fragments and their correlated coordinate transforms."""
+        return ((self, ()),)
+
+    def relabel_target(self, action):
+        """Keep a correlated transform as a shared view until inspected."""
+        action = tuple(sorted(dict(action).items()))
+        return AAMHierarchyView(self, action) if action else self
+
+    def _materialize_target(self, action):
+        """Transport a hierarchy by one correlated target permutation.
+
+        Unmentioned atoms (including augmentation copies) are fixed. Exact
+        generators are conjugated, not copied into the old target frame.
+        """
+        from dataclasses import replace
+        from .._group_ops import conjugate_generators
+        action = dict(action)
+        extent = max(max(action, default=-1), max(action.values(), default=-1)) + 1
+        generators = tuple(g for f in self.fragments for g in (f.target_generators or ()))
+        if all(a == b for a, b in action.items()) and all(g.degree >= extent for g in generators):
+            return self
+        unique = {g.images: g for g in generators}
+        transformed = conjugate_generators(tuple(unique), tuple(action.get(a, a) for a in range(extent)))
+        transported = {old: unique[old] if old == moved else AtomPermutation(moved)
+                       for old, moved in zip(unique, transformed, strict=True)}
+        def image(atom):
+            return int(action.get(atom, atom))
+        def domain(item):
+            return replace(item, p_atoms=tuple(image(a) for a in item.p_atoms))
+        def generator(item):
+            return transported[item.images]
+        return AAMHierarchy(tuple(replace(fragment,
+            representative_assignments=tuple((a, image(b)) for a, b in
+                                               fragment.representative_assignments),
+            symmetry_domains=tuple(domain(d) for d in fragment.symmetry_domains),
+            automorph_domains=tuple(domain(d) for d in fragment.automorph_domains),
+            target_generators=(None if fragment.target_generators is None else
+                               tuple(generator(g) for g in fragment.target_generators)))
+            for fragment in self.fragments))
+
     @classmethod
-    def from_record(cls, branch_symmetry):
+    def from_record(cls, branch_symmetry, *, generator_pool=None):
+        # The owner controls the pool lifetime; never retain graphs globally.
+        generator_pool = {} if generator_pool is None else generator_pool
+        def permutation(raw):
+            images = tuple(map(int, raw))
+            if images not in generator_pool:
+                generator_pool[images] = AtomPermutation(images)
+            return generator_pool[images]
         fragments = []
         for position, raw in enumerate(
                 dict(branch_symmetry or {}).get("fragments") or ()):
@@ -274,7 +319,7 @@ class AAMHierarchy:
                 automorph_domains=automorph_domains,
                 target_generators=(
                     None if raw_generators is None else tuple(
-                        AtomPermutation(tuple(map(int, generator)))
+                        permutation(generator)
                         for generator in raw_generators))))
         return cls(tuple(fragments))
 
@@ -282,6 +327,116 @@ class AAMHierarchy:
     def has_complete_exact_target_groups(self):
         return bool(self.fragments) and all(
             fragment.has_exact_target_group for fragment in self.fragments)
+
+    def to_record(self):
+        def domain_record(domain):
+            return {
+                "r_atoms": list(domain.r_atoms),
+                "p_atoms": list(domain.p_atoms),
+                "source": domain.source,
+                "extendable": bool(domain.extendable),
+            }
+
+        fragments = []
+        for fragment in self.fragments:
+            symmetry = {
+                "witness": dict(fragment.representative_assignments),
+                "blocks": [
+                    domain_record(domain)
+                    for domain in fragment.symmetry_domains
+                ],
+                "exact_fixed": list(fragment.exact_fixed),
+                "multiplicity": int(fragment.multiplicity),
+                "automorph_blocks": [
+                    domain_record(domain)
+                    for domain in fragment.automorph_domains
+                ],
+            }
+            if fragment.target_generators is not None:
+                symmetry["automorph_generators"] = [
+                    list(generator.images)
+                    for generator in fragment.target_generators
+                ]
+            fragments.append({
+                "fragment_index": int(fragment.fragment_index),
+                "island_idx": int(fragment.island_index),
+                "fragment": list(fragment.r_atoms),
+                "deferred_edges": [
+                    list(edge) for edge in fragment.deferred_edges],
+                "symmetry": symmetry,
+            })
+        return {
+            "rule": "typed_aam_hierarchy",
+            "fragments": fragments,
+            "blocks": [],
+        }
+
+
+@dataclass(frozen=True)
+class AAMHierarchyView:
+    """A base hierarchy plus one coordinate transform, without copied groups."""
+
+    base: AAMHierarchy
+    target_action: tuple[tuple[int, int], ...]
+
+    @property
+    def segments(self):
+        return ((self.base, self.target_action),)
+
+    @cached_property
+    def materialized(self):
+        return self.base._materialize_target(dict(self.target_action))
+
+    @property
+    def fragments(self):
+        return self.materialized.fragments
+
+    @property
+    def has_complete_exact_target_groups(self):
+        return self.base.has_complete_exact_target_groups
+
+    def relabel_target(self, action):
+        action, prior = dict(action), dict(self.target_action)
+        if not action:
+            return self
+        combined = tuple(sorted((a, action.get(prior.get(a, a), prior.get(a, a)))
+                                for a in set(prior) | set(action)))
+        return AAMHierarchyView(self.base, combined)
+
+    def to_record(self):
+        """Explicitly requested, fully materialized legacy hierarchy record."""
+        return self.materialized.to_record()
+
+
+@dataclass(frozen=True)
+class AAMHierarchyChain:
+    """Concatenated fragment chains, each retaining its own coordinate frame.
+
+    In particular, an augmented residual action must not transform the locked
+    initial fragment. Composition preserves those independent frames without
+    copying the fragment objects or conjugating their generators eagerly.
+    """
+
+    parts: tuple[AAMHierarchy | AAMHierarchyView, ...]
+
+    @property
+    def segments(self):
+        return tuple(segment for part in self.parts for segment in part.segments)
+
+    @cached_property
+    def fragments(self):
+        """Materialize only when a consumer explicitly requests full fragments."""
+        return tuple(fragment for part in self.parts for fragment in part.fragments)
+
+    @property
+    def has_complete_exact_target_groups(self):
+        return bool(self.parts) and all(part.has_complete_exact_target_groups for part in self.parts)
+
+    def relabel_target(self, action):
+        return AAMHierarchyChain(tuple(part.relabel_target(action) for part in self.parts))
+
+    def to_record(self):
+        return AAMHierarchy(self.fragments).to_record()
 
 
 @dataclass(frozen=True)

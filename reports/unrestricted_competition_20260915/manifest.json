@@ -1,0 +1,68 @@
+{
+  "source_commit": "ea1b3d5000971d44ec1f57fe471f5245da60bf6c",
+  "cases": [
+    6,
+    11,
+    59,
+    64,
+    101
+  ],
+  "seeds": 1,
+  "cap": 2000,
+  "proposal_modes": [
+    "local",
+    "anchored",
+    "free",
+    "extended"
+  ],
+  "workers": 2,
+  "seconds_per_stage": 300,
+  "iso_tolerance": 1,
+  "competition_budget": 128,
+  "parents": 8,
+  "depth": 2,
+  "scope": "Known failure-case development experiment; both directions of SLAP are evaluated only after GRAFT proposals. No global completeness claim.",
+  "original_competition_sha256": "9e5f7dbc620b23bbf5beff7d76135fc698da14a40ebfe4696fd173dab28a11d7",
+  "experimental_competition_sha256": "86df27b12c8574855a6f6b1c36e46f04c85b06d13f19fa73cf86e253c32061cc",
+  "event_tolerances": {
+    "default": 0.5,
+    "metal": 0.3
+  },
+  "graph_floor": 0.2,
+  "decode_windows": {
+    "6": 5,
+    "11": 5,
+    "59": 5,
+    "64": 8,
+    "101": 5
+  },
+  "extended_additional_expansion_budget": 128,
+  "all_final_search_jobs_passed": true,
+  "all_25_decode_jobs_complete": true,
+  "inputs": {
+    "case59.pkl.gz": "76d1fcf6147069a795b0b077c947cb365bd39f97b8a329344c50a704df800eb7",
+    "case101.pkl.gz": "cf077fe1f52377129864e3c12530352954a793c90d9c49336b4813c62e0d33de",
+    "case64.pkl.gz": "cf00f20536d19790b79c4f00467c6664be7862c4d6384d0b62c9f3fe3ba49661",
+    "case6.pkl.gz": "97ef37fbbe498653b6f77367d5a43d3365df96dbb92fd33d3937941acf849661",
+    "case11.pkl.gz": "12b1773f97316be47e474dd4d79cc7c08c6e8e1b0a0e4f33d32414035ac42ff2"
+  },
+  "control": "Original and experimental local policy exactly agree on case64: counts, offers, pending queue and every repair graph.",
+  "implementation_audit": "An initial extended case64 attempt assumed all fixed anchors were revisited in the returned connected fragment. It failed an assertion. The generator now retains the initial anchor union, checks consistency and injectivity, and the rerun passed. Other four extended runs already contained all anchors; their accepted proposals are unchanged by this correction.",
+  "environment": {
+    "python": "3.12.14",
+    "platform": "macOS-26.6.2-arm64-arm-64bit",
+    "cpu": "Same local Mac for all modes; model unavailable in sandbox",
+    "packages": {
+      "numpy": "2.3.5",
+      "networkx": "3.6.1",
+      "sympy": "1.14.0",
+      "pynauty": "2.8.8.1",
+      "z3-solver": "5.1.0.0",
+      "psutil": "7.2.2"
+    }
+  },
+  "native_sources": {
+    "src/rxn_core/native/paired_mapping.cpp": "794a7670bac84a61b26af4598f11ed4dab6e2167fa03c1c76975bd8b3de2ddb5",
+    "src/rxn_core/native/group_ops.cpp": "b1d019784aabc5f9e36b7709d6958c8ca99b04f19918a95dd8e1776dceb9d117"
+  }
+}

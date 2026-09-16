@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "pages": 20,
+  "manuscript_sha256": "2a7c3479764b5b08cc7c52456806646e736459c018391b8799f50fd682339945",
+  "review": "All 20 pages rendered and compared against the reviewed previous version. Changed pages 12\u201315 inspected individually. Figure 4 rigid-motion panel removed; allowed spectator-H symmetry panel retained and labeled. Discussion uses an illustrative mapping-dependent Cartesian interpolation and jointly extendible core assignments as downstream motivation. No clipping or overfull boxes; numerical and reference validation passed."
+}

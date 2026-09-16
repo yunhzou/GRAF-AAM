@@ -40,8 +40,6 @@ EdgeKey = tuple[Node, Node]
 TargetEntry = tuple[Node, Support, bool]
 
 
-
-
 def _extend_sym_cands(
     cands: Iterable[SymCandidate],
     fragment_old: set[Node],
@@ -117,7 +115,6 @@ def _extend_sym_cands(
     defer_boundary_dedupe
         Diagnostic mode that postpones automorphism quotienting until fragment
         saturation. Exact duplicate states are still combined.
-
     Returns
     -------
     list[_SymCand]
@@ -159,6 +156,7 @@ class _ExtensionContext:
     g_P: Any
     mapping: Mapping[Node, Node]
     locked_p_atoms: frozenset[Node]
+    compatible_p_atoms: tuple[Node, ...]
     iso_tol: float
     islands_R: Mapping[Node, int] | None
     p_orbits: OrbitMap
@@ -268,6 +266,11 @@ def _make_extension_context(
     if not bonded_in_frag:
         return None
     locked_p_atoms = frozenset(mapping.values())
+    compatible_p_atoms = tuple(
+        v for v in g_P.nodes()
+        if v not in locked_p_atoms
+        and node_policy.compatible(g_R, n, g_P, v)
+    )
     return _ExtensionContext(
         fragment_old=frozenset(fragment_old),
         n=n,
@@ -276,6 +279,7 @@ def _make_extension_context(
         g_P=g_P,
         mapping=mapping,
         locked_p_atoms=locked_p_atoms,
+        compatible_p_atoms=compatible_p_atoms,
         iso_tol=iso_tol,
         islands_R=islands_R,
         p_orbits=p_orbits,
@@ -304,6 +308,7 @@ def _supported_value(
     ctx: _ExtensionContext,
     v: Node,
     join_block_idx: int | None,
+    block_indexes=None,
 ) -> Support | None:
     """Return support assignments proving ``ctx.n -> v`` is valid.
 
@@ -321,6 +326,7 @@ def _supported_value(
         ctx.g_P,
         ctx.iso_tol,
         join_block_idx=join_block_idx,
+        block_indexes=block_indexes,
         strict_r_wbos=ctx.strict_r_wbos,
     )
 
@@ -405,6 +411,7 @@ def _target_join_info(
     cand: _SymCand,
     ctx: _ExtensionContext,
     v: Node,
+    p_to_block=None,
 ) -> tuple[int | None, bool]:
     """Return the open block containing ``v`` and whether it can grow freely.
 
@@ -413,7 +420,8 @@ def _target_join_info(
     valid.  In that case the child must refine/fix the assignment instead of
     enlarging the block as a symmetric set-to-set choice.
     """
-    _, p_to_block = _sym_block_indexes(cand)
+    if p_to_block is None:
+        _, p_to_block = _sym_block_indexes(cand)
     join_idx = p_to_block.get(v)
     if join_idx is None:
         return None, False
@@ -443,13 +451,13 @@ def _collect_free_target_entries(
     """
     block_join: dict[int, list[TargetEntry]] = defaultdict(list)
     by_group: dict[Any, list[TargetEntry]] = defaultdict(list)
-    for v in ctx.g_P.nodes():
-        if v in ctx.locked_p_atoms:
-            continue
-        if not ctx.node_policy.compatible(ctx.g_R, ctx.n, ctx.g_P, v):
-            continue
-        join_idx, can_extend = _target_join_info(cand, ctx, v)
-        support = _supported_value(cand, ctx, v, join_idx)
+    block_indexes = _sym_block_indexes(cand)
+    _, p_to_block = block_indexes
+    for v in ctx.compatible_p_atoms:
+        join_idx, can_extend = _target_join_info(
+            cand, ctx, v, p_to_block=p_to_block)
+        support = _supported_value(
+            cand, ctx, v, join_idx, block_indexes=block_indexes)
         if support is None:
             continue
         if join_idx is not None:

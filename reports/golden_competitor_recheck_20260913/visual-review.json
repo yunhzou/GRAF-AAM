@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "pages": 12,
+  "reviewed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "render": "Poppler, 1450-pixel maximum dimension",
+  "checks": [
+    "All 12 pages visually inspected",
+    "Comparator table fits and labels are readable",
+    "Molecular branching figure preserved",
+    "No clipping, overlap, or unresolved references"
+  ],
+  "manuscript_sha256": "4cb3158d54098e5e4602ecd26970a6660b1f7127c91f65dadd844dc57e244e84"
+}

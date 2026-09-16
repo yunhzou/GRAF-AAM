@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "test": "tests/test_golden_checkpoint_evaluation.py",
+  "passed": 16,
+  "seconds": 6.52,
+  "scope": "Checkpoint verifier including complete negative no-sweep coverage; missing-cut and zero-budget cases remain unknown. No changes to search or matching algorithms.",
+  "patched_verifier_sha256": "4e72fd5aae738a4bc447521800ce40125f0b9e61aceecced2dc56bac0b60e4b0"
+}

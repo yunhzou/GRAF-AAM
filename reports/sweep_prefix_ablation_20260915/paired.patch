@@ -1,0 +1,15 @@
+--- a/src/rxn_core/paired_competition.py
++++ b/src/rxn_core/paired_competition.py
+@@ -96 +96 @@
+-def compete_fragments(a, config=None):
++def compete_fragments(a, config=None, *, trial):
+@@ -164,0 +165 @@
++    selected = [trial["parent"]]
+@@ -256,0 +258,2 @@
++        tasks = [task for task in tasks if task[2] == trial["seed"] and task[3] == trial["contact"] and set(task[1]) == set(trial["B_atoms"])]
++        assert len(tasks) == 1
+@@ -293,0 +297,4 @@
++            from dataclasses import replace
++            matches = tuple(m for m in result.matches if dict(m) == dict(trial["initial"]))
++            assert len(matches) == 1
++            result = replace(result, matches=matches)

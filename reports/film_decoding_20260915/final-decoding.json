@@ -1,0 +1,5818 @@
+{
+  "case": 101,
+  "complete": true,
+  "window": 5,
+  "paths": 889,
+  "branches": 411,
+  "families": 874,
+  "patterns": {
+    "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf": {
+      "id": "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf",
+      "mapping": [
+        8,
+        15,
+        18,
+        2,
+        16,
+        17,
+        13,
+        3,
+        14,
+        4,
+        5,
+        0,
+        1,
+        6,
+        7,
+        19,
+        20,
+        21,
+        10,
+        11,
+        12,
+        9,
+        27,
+        22,
+        26,
+        25,
+        23,
+        24
+      ],
+      "events": {
+        "broken": [
+          [
+            0,
+            1
+          ],
+          [
+            21,
+            22
+          ]
+        ],
+        "formed": [
+          [
+            0,
+            21
+          ],
+          [
+            1,
+            22
+          ]
+        ]
+      },
+      "counts": {
+        "broken": 2,
+        "formed": 2
+      },
+      "total": 4,
+      "policy": {
+        "schema": "rxn_core.signed_events/v1",
+        "threshold": 0.5,
+        "metal_threshold": 0.3,
+        "includes_hydrogens": true
+      },
+      "actions": [],
+      "family": 0,
+      "groups": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 1,
+        "19": 1,
+        "20": 1,
+        "21": 1,
+        "23": 1,
+        "24": 1,
+        "25": 1,
+        "26": 1,
+        "27": 1,
+        "22": 2
+      }
+    },
+    "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c": {
+      "id": "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c",
+      "mapping": [
+        8,
+        9,
+        18,
+        2,
+        16,
+        17,
+        13,
+        3,
+        14,
+        4,
+        5,
+        0,
+        1,
+        6,
+        7,
+        19,
+        20,
+        21,
+        11,
+        10,
+        15,
+        12,
+        22,
+        27,
+        24,
+        23,
+        25,
+        26
+      ],
+      "events": {
+        "broken": [
+          [
+            0,
+            1
+          ],
+          [
+            19,
+            20
+          ]
+        ],
+        "formed": [
+          [
+            0,
+            20
+          ],
+          [
+            1,
+            19
+          ]
+        ]
+      },
+      "counts": {
+        "broken": 2,
+        "formed": 2
+      },
+      "total": 4,
+      "policy": {
+        "schema": "rxn_core.signed_events/v1",
+        "threshold": 0.5,
+        "metal_threshold": 0.3,
+        "includes_hydrogens": true
+      },
+      "actions": [],
+      "family": 87,
+      "groups": {
+        "0": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "1": 1,
+        "18": 2,
+        "19": 2,
+        "21": 2,
+        "22": 2,
+        "24": 2,
+        "25": 2,
+        "26": 2,
+        "27": 2,
+        "20": 3,
+        "23": 3
+      }
+    }
+  },
+  "certificates": [
+    {
+      "family": 0,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 1,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 2,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 3,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 4,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 5,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 6,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 7,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 8,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 9,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 10,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 11,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 12,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 13,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 14,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 15,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 16,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 17,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 18,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 19,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 20,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 21,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 22,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 23,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 24,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 25,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 26,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 27,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 28,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 29,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 30,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 31,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 32,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 33,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 34,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 35,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 36,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 37,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 38,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 39,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 40,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 41,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 42,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 43,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 44,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 45,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 46,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 47,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 48,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 49,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 50,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 51,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 52,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 53,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 54,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 55,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 56,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 57,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 58,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 59,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 60,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 61,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 62,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 63,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 64,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 65,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 66,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 67,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 68,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 69,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 70,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 71,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 72,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 73,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 74,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 75,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 76,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 77,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 78,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 79,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 80,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 81,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 82,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 83,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 84,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 85,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 86,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 87,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 88,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 89,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 90,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 91,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 92,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 93,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 94,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 95,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 96,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 97,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 98,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 99,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 100,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 101,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 102,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 103,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 104,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 105,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 106,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 107,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 108,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 109,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 110,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 111,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 112,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 113,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 114,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 115,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 116,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 117,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 118,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 119,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 120,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 121,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 122,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 123,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 124,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 125,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 126,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 127,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 128,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 129,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 130,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 131,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 132,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 133,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 134,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 135,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 136,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 137,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 138,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 139,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 140,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 141,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 142,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 143,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 144,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 145,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 146,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 147,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 148,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 149,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 150,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 151,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 152,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 153,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 154,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 155,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 156,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 157,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 158,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 159,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 160,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 161,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 162,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 163,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 164,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 165,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 166,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 167,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 168,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 169,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 170,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 171,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 172,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 173,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 174,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 175,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 176,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 177,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 178,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 179,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 180,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 181,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 182,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 183,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 184,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 185,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 186,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 187,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 188,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 189,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 190,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 191,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 192,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 193,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 194,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 195,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 196,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 197,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 198,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 199,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 200,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 201,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 202,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 203,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 204,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 205,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 206,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 207,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 208,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 209,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 210,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 211,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 212,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 213,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 214,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 215,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 216,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 217,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 218,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 219,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 220,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 221,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 222,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 223,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 224,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 225,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 226,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 227,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 228,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 229,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 230,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 231,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 232,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 233,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 234,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 235,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 236,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 237,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 238,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 239,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 240,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 241,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 242,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 243,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 244,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 245,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 246,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 247,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 248,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 249,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 250,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 251,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 252,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 253,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 254,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 255,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 256,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 257,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 258,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 259,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 260,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 261,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 262,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 263,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 264,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 265,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 266,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 267,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 268,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 269,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 270,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 271,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 272,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 273,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 274,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 275,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 276,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 277,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 278,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 279,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 280,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 281,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 282,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 283,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 284,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 285,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 286,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 287,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 288,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 289,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 290,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 291,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 292,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 293,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 294,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 295,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 296,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 297,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 298,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 299,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 300,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 301,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 302,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 303,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 304,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 305,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 306,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 307,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 308,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 309,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 310,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 311,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 312,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 313,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 314,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 315,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 316,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 317,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 318,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 319,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 320,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 321,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 322,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 323,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 324,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 325,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 326,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 327,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 328,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 329,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 330,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 331,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 332,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 333,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 334,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 335,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 336,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 337,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 338,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 339,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 340,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 341,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 342,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 343,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 344,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 345,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 346,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 347,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 348,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 349,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 350,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 351,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 352,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 353,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 354,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 355,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 356,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 357,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 358,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 359,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 360,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 361,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 362,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 363,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 364,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 365,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 366,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 367,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 368,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 369,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 370,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 371,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 372,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 373,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 374,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 375,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 376,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 377,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 378,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 379,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 380,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 381,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 382,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 383,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 384,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 385,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 386,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 387,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 388,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 389,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 390,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 391,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 392,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 393,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 394,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 395,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 396,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 397,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 398,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 399,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 400,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 401,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 402,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 403,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 404,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 405,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 406,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 407,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 408,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 409,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 410,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 411,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 412,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 413,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 414,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 415,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 416,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 417,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 418,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 419,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 420,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 421,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 422,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 423,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 424,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 425,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 426,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 427,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 428,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 429,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 430,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 431,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 432,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 433,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 434,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 435,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 436,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 437,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 438,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 439,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 440,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 441,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 442,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 443,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 444,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 445,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 446,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 447,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 448,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 449,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 450,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 451,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 452,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 453,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 454,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 455,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 456,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 457,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 458,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 459,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 460,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 461,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 462,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 463,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 464,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 465,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 466,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 467,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 468,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 469,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 470,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 471,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 472,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 473,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 474,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 475,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 476,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 477,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 478,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 479,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 480,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 481,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 482,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 483,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 484,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 485,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 486,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 487,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 488,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 489,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 490,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 491,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 492,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 493,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 494,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 495,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 496,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 497,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 498,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 499,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 500,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 501,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 502,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 503,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 504,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 505,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 506,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 507,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 508,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 509,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 510,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 511,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 512,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 513,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 514,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 515,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 516,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 517,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 518,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 519,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 520,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 521,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 522,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 523,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 524,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 525,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 526,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 527,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 528,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 529,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 530,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 531,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 532,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 533,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 534,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 535,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 536,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 537,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 538,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 539,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 540,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 541,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 542,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 543,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 544,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 545,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 546,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 547,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 548,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 549,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 550,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 551,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 552,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 553,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 554,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 555,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 556,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 557,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 558,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 559,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 560,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 561,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 562,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 563,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 564,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 565,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 566,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 567,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 568,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 569,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 570,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 571,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 572,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 573,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 574,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 575,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 576,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 577,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 578,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 579,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 580,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 581,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 582,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 583,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 584,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 585,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 586,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 587,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 588,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 589,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 590,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 591,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 592,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 593,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 594,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 595,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 596,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 597,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 598,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 599,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 600,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 601,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 602,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 603,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 604,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 605,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 606,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 607,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 608,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 609,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 610,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 611,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 612,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 613,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 614,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 615,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 616,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 617,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 618,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 619,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 620,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 621,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 622,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 623,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 624,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 625,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 626,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 627,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 628,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 629,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 630,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 631,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 632,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 633,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 634,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 635,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 636,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 637,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 638,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 639,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 640,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 641,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 642,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 643,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 644,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 645,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 646,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 647,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 648,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 649,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 650,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 651,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 652,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 653,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 654,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 655,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 656,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 657,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 658,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 659,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 660,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 661,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 662,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 663,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 664,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 665,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 666,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 667,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 668,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 669,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 670,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 671,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 672,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 673,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 674,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 675,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 676,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 677,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 678,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 679,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 680,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 681,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 682,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 683,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 684,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 685,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 686,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 687,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 688,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 689,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 690,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 691,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 692,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 693,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 694,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 695,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 696,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 697,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 698,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 699,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 700,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 701,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 702,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 703,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 704,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 705,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 706,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 707,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 708,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 709,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 710,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 711,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 712,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 713,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 714,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 715,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 716,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 717,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 718,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 719,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 720,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 721,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 722,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 723,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 724,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 725,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 726,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 727,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 728,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 729,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 730,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 731,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 732,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 733,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 734,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 735,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 736,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 737,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 738,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 739,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 740,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 741,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 742,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 743,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 744,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 745,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 746,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 747,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 748,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 749,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 750,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 751,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 752,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 753,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 754,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 755,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 756,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 757,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 758,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 759,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 760,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 761,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 762,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 763,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 764,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 765,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 766,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 767,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 768,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 769,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 770,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 771,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 772,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 773,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 774,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 775,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 776,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 777,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 778,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 779,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 780,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 781,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 782,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 783,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 784,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 785,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 786,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 787,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 788,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 789,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 790,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 791,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 792,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 793,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 794,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 795,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 796,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 797,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 798,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 799,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 800,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 801,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 802,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 803,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 804,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 805,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 806,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 807,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 808,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 809,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 810,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 811,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 812,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 813,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 814,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 815,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 816,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 817,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 818,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 819,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 820,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 821,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 822,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 823,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 824,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 825,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 826,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 827,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 828,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 829,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 830,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 831,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 832,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 833,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 834,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 835,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 836,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 837,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 838,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 839,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 840,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 841,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 842,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 843,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 844,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 845,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 846,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 847,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 848,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 849,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 850,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 851,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 852,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 853,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 854,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 855,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 856,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 857,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 858,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 859,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:18688fddf46009e87efa24f04b75d2acbe90e5c1ebbe1682a94d4ff410e86faf"
+      ]
+    },
+    {
+      "family": 860,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 861,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 862,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 863,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 864,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 865,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": [
+        "rxn_core.signed_events/v1:439b7b8c0fd28a278628b814a314c3e073fdbb5cda67ca2ffe200fcc2d4cee3c"
+      ]
+    },
+    {
+      "family": 866,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 867,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 868,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 869,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 870,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 871,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 872,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    },
+    {
+      "family": 873,
+      "complete": true,
+      "reason": "signed_event_invariance",
+      "ids": []
+    }
+  ],
+  "event_policy": {
+    "schema": "rxn_core.signed_events/v1",
+    "threshold": 0.5,
+    "metal_threshold": 0.3,
+    "includes_hydrogens": true
+  },
+  "archive_sha256": {
+    "baseline": "cf077fe1f52377129864e3c12530352954a793c90d9c49336b4813c62e0d33de",
+    "takeover1.pkl.gz": "96afdb2e6c927b8bb92521d245b83376e948f9b8e9cbd065d8af8a63297e8180",
+    "takeover10.pkl.gz": "8158da88dd1131aa8d6c9ceb12fb466e6dd67d70d3bd5830b50149abf2c52196",
+    "takeover100.pkl.gz": "966cceccda52d890cd5d9121e31c1b5b116258d948b4cec24094ddf4db80b511",
+    "takeover101.pkl.gz": "06d1b630a015552decba8c31675cc7900c4ca2fa4b4a7dcc2e1e5f0fdb072c29",
+    "takeover102.pkl.gz": "46704c961f2bd6e1d2e28088042f8786363c072e7fcd2a1a819124e63c9f65e8",
+    "takeover103.pkl.gz": "5b74c6da3c038bdf3d483e33d967060a18340f9485c03bb0774b1520e56c7f2b",
+    "takeover104.pkl.gz": "1df3e63ce8278f0a839c41f31870ca479ba7a4a794d77f48824e345570a231d1",
+    "takeover105.pkl.gz": "a542281e5505e78bdfc3d44e742e378f821eb1c6c26a2a00de2345ad340af9e3",
+    "takeover106.pkl.gz": "9009e8d9387e2c26994e1595483e8e85d8fa47fad0348fb6dc9f746919616e34",
+    "takeover107.pkl.gz": "9f8ebaddc8356bc655ab98211a02cc2aecdfa98484b2147624a04251ce9d67bf",
+    "takeover108.pkl.gz": "2e765d18cd22dee2d865d71140e40c8878606d651654f0fb85f52a006a7f02f0",
+    "takeover109.pkl.gz": "14dbe3fb2386ca778250620a8c3d0c5cdd9e563b77f7fc297730ebb504acc763",
+    "takeover11.pkl.gz": "20ab79faf8eb3590bb4ec8915aa742dc4a8247b890a3504592f88a719a32c509",
+    "takeover110.pkl.gz": "345da34c73a102260d49ded2970373015cadd7e9847a2f238c93e4e4943b3c16",
+    "takeover111.pkl.gz": "197d98275c498cdf9b3222749ecb5cd441987fbd6abb9c00b03c9683570966a6",
+    "takeover112.pkl.gz": "a6f7fd4d5c7cafb66bcadd595d632698dda71ab59eacecf728078ea749e051b2",
+    "takeover113.pkl.gz": "1b99c4648e853004f498da51572ac04d9a75160845fd713ca45cf1d287d1a394",
+    "takeover114.pkl.gz": "7800b430099fae8895279b9601796e6d6742965fb30bb67f213382541adece80",
+    "takeover115.pkl.gz": "8d2e7ddf103c92638a807086f097a947c81bb2e7fce338a7bd14999e8aca8c57",
+    "takeover116.pkl.gz": "b5fb3b9d58863eb055b0604900898414953709c9ffd2dfde36a56720e65eb43b",
+    "takeover117.pkl.gz": "639779fe414161dcb0a8b068f01b6424b10de9959d414375d281f2968615ee18",
+    "takeover118.pkl.gz": "f7d5be35d90f19f0b386feca556cd4cc49cf214d526a5c2a752fef2fd701b7b5",
+    "takeover119.pkl.gz": "b65fb8d202f3741ab2b05b29c805d5dd747f96c7a0d2bc832f054f1059680ed7",
+    "takeover12.pkl.gz": "feedc968db082b2918f3ed26fdd2b0e72059c43b0638df5f48341b4055c733c8",
+    "takeover120.pkl.gz": "07e99d4ae990c2af70580498faa992b6715949dc38522a6f68cf23255b596967",
+    "takeover121.pkl.gz": "a38569526114cb9a8b0f40ff3f8ec795ba79a77f2d9bfa00bd5d77cebe3e505e",
+    "takeover122.pkl.gz": "f9cf9787c6defa68c9228d552dcc143ca2a8b7fa72a5b2012c4e51fd19a9da6e",
+    "takeover123.pkl.gz": "10edd813f14e6e34a6997182f2835caef2d299d3d2d6cc19ebd194db1d92e009",
+    "takeover124.pkl.gz": "a9d6dedc1c4ebb3d80a5d589b31df6e8d2c81611b21e0afc031dce45587ef48d",
+    "takeover125.pkl.gz": "7ebde8dda18c58de4f5022db5f270395b18d053ed0c00333bb8a941afe44c961",
+    "takeover126.pkl.gz": "265a33548c6114f04d6f151feead6b41ce5266310646dd27939d6d391b11b35c",
+    "takeover127.pkl.gz": "e5df86e361ac629f26b366a7d1f540cb661178a799e88d60f1a376bf3bc28379",
+    "takeover128.pkl.gz": "bd367202519595768fd830de8779d615c3ab45999a806f05b256fc8e1f6cf5d7",
+    "takeover13.pkl.gz": "13298aca7e8924157877706dde850a4c5008d429a3586f2ec200e2ff3ee67ca5",
+    "takeover14.pkl.gz": "196b8b29e8153b61e484e84ccfcf3ffd72925b3efcb17523ec429e6048c12872",
+    "takeover15.pkl.gz": "0a6911346ccf824176020b4808098f4022a7f704ff15c1401eec34403b87aaad",
+    "takeover16.pkl.gz": "ff1dcf5c3e9e197dba45d659e7562dc118f78b05e21d0f9601285c363aa7f454",
+    "takeover17.pkl.gz": "88e6bdb602afc6ed703fd3d3ff6b3530d7dc46275570a8e2e50af4bb886b74f8",
+    "takeover18.pkl.gz": "b253aa096f95b39fffa333ea3c14e21caa352fb3246835acc09e19df25804b88",
+    "takeover19.pkl.gz": "5402eb82332ef6dbd062b736f7f3bfac09c21e0a2e3c13ff6258a3b1b6f9bd23",
+    "takeover2.pkl.gz": "65ecffdc38bf32484908c1242804daab2fb506039e690a8f5ccd638ab768323d",
+    "takeover20.pkl.gz": "e4c70142ea31c35d42406168415d180b35659b800fa5f70cd710c637d53f0cf6",
+    "takeover21.pkl.gz": "451b0d0efe1719ae8594792a90a05771e041c2cc393e9240c443bf40e77afde6",
+    "takeover22.pkl.gz": "45e33e27b6ebe1c2d46cc5383b285678eff6b585658bc920059ab0bf500c2fbd",
+    "takeover23.pkl.gz": "f911673e98672fe13cae98241d95741fd0133683eefe8b2c1b9d1d509058c668",
+    "takeover24.pkl.gz": "69bf419d3f3405c79403e58e28342ae9d6051d3c34f5066961a4e91b87b3a9b0",
+    "takeover25.pkl.gz": "3a924761ead5d3bee35db6b96a789bd22271553374f6acc8bae6790221a678ee",
+    "takeover26.pkl.gz": "9b65b554091ade3b3d610e67dff76a04d65c5b5fe116217f7c7694c54279e815",
+    "takeover27.pkl.gz": "55afe306e59b9d06987b1bbe1a0a830675266699892223a35992669ba0cd090f",
+    "takeover28.pkl.gz": "55e929d6a02dcc0c175db6a201c3e59f067f9d59467c7818432002a09e9a91d1",
+    "takeover29.pkl.gz": "4e91177561d4da095c6a4e12beca51c14dd9c4ad9d5a6efd675a4a88e34f79ef",
+    "takeover3.pkl.gz": "f59ddb18899dd69a7abb70f3188a8045cc6184c1327f1ce169449f643500b4e6",
+    "takeover30.pkl.gz": "4a877c3a1eafbdbfe005555bffc1f41aa322ee62397c0c99ce9c02ceca4e1fc9",
+    "takeover31.pkl.gz": "bf2e8823dcf5dffba892dc8ccf26137259ec71d1e0aa75852bd45daa6345bd28",
+    "takeover32.pkl.gz": "5e2a8ddf4f1754f869dbfab92a209cc4fef7abe5475ce35603ee24fbbbea6137",
+    "takeover33.pkl.gz": "f0dfb3a6a37b3a2b405e15c23920e33cf7eca7e0a981115dba8b555ddf5c9132",
+    "takeover34.pkl.gz": "27770b1b5cf1509b0d288bb8477c65d657194b6780a47f5eb790a15d9e85d27a",
+    "takeover35.pkl.gz": "3b50e86c846eeb2dbd98710932aaf503984963c6e69240b925ab2a7152d1aa03",
+    "takeover36.pkl.gz": "9ab17f3f5fb96940664301209ee5bd0134d84a38f786ebef4605aea9ff12ac10",
+    "takeover37.pkl.gz": "375ca952af3e599c7728cf018cb4edb79ac933a2ca6c93529acc70615c18596b",
+    "takeover38.pkl.gz": "3b88d239b50fe66af1a8e4f700951fdabaf0163c00b3b06887c8cd53003b462e",
+    "takeover39.pkl.gz": "78f17f221c1cbeb4c4ebfadeb4e09ea3eb8dab1368c34d9c90396fa68f21cd9c",
+    "takeover4.pkl.gz": "801ea0fa25a1fe5cb2307626221bd9b137dc606a8291b105730d5b2f6116bc8a",
+    "takeover40.pkl.gz": "434573b8b71ad7b997cffc601f7dd9d1c710a0b5f2a943f0da1a48c0ac8c44ae",
+    "takeover41.pkl.gz": "40110c5daff59ef0956e7d358eff4bba0f6cd847f8226097cdf404d4355b0fe3",
+    "takeover42.pkl.gz": "279e41938e264a09ed8cab04c6be9f2fdc781e48b6c193d1a946dddcb3a23be9",
+    "takeover43.pkl.gz": "a93d8c19ac014a3fec4bff33a749901eb0e947971c330b0f580720df0d7001b0",
+    "takeover44.pkl.gz": "2490dfa81b75f9ff6d109242896a80e57ed89c7ace402dbf01360bfbca9b3a7e",
+    "takeover45.pkl.gz": "f85dcb4dbfdb240ef9ca69e67ec1fbd11a4d4602827f05c515b7cf6be42a56e0",
+    "takeover46.pkl.gz": "0b2f6395f654d1ec4a653946d278c41da437f98213c8a2c89f93fe5314772c4c",
+    "takeover47.pkl.gz": "37650fd8dcebbd1711be0f7fc47c712c91a619f431c513aea6bef8d92543c97e",
+    "takeover48.pkl.gz": "de428378e18c05cd9455a8d1812a5f25f0ae21de30304f7b20bcf1351cecac95",
+    "takeover49.pkl.gz": "0fb4d185891a2eff5a4fb97469410d20d6c1acbb0c286f3e4cba1ae5b40c7110",
+    "takeover5.pkl.gz": "951b86cd7545df5605e5b8450b6082093d6d92f146083a492387130e5eed49cb",
+    "takeover50.pkl.gz": "d5d2af5e5bfaaac0e3a77c826d2104bc41660bf94b311bca8ec88f2d3e2fdd90",
+    "takeover51.pkl.gz": "0bf988692dad69c8c1fc5094108779f1e8116e2998c947a2c0693d6501737936",
+    "takeover52.pkl.gz": "40e62b5a912eb87ce701918821ae06aaf4b9f0b8af65919e7bb8923df384a6a7",
+    "takeover53.pkl.gz": "bd42959503173289ff78d963c7a841b29e12d723d722d0fb86c6725c4ee7b379",
+    "takeover54.pkl.gz": "859df2fb349f45912589ace35bdb8ab023590a6e99af311a95947f03595b760b",
+    "takeover55.pkl.gz": "c789352c1a0ff2ac88853abc7870dd00693ab5e250aee0cd0aba59e838e66301",
+    "takeover56.pkl.gz": "468ce4a7c9c9eaef6be67ccac32713277c7b2ecb552d3ce4ebaa7987700d53a0",
+    "takeover57.pkl.gz": "a6f40f02a0995e3bfb2c91e38b8efe50b24ddd871603eab3263295f1a59f7d0b",
+    "takeover58.pkl.gz": "8fb1da8343f10165c27310556efbefeffa28b397ec9fc73fa54fe2d3c18f15ba",
+    "takeover59.pkl.gz": "ffab30df28d5f7fd4a121ef8754bb5aef50b195c7fe2fee9c3f13c7d8dbe335a",
+    "takeover6.pkl.gz": "e89f4592d5ed2dbd3a257a879e16d92fa3cb671de06161854ea990fa43d1af51",
+    "takeover60.pkl.gz": "e326256bae2ac5dbe1670a4134b199c504fffb5654b17202da321207137c7e99",
+    "takeover61.pkl.gz": "edb9ca4f4dc03783f5e546b35beb149580944e7be7bdf0d2654088b1ddecfb48",
+    "takeover62.pkl.gz": "2bcbeb78c21beb35f1ef5999be4fc4b0bc2e3cc76c0261830da08d40fa534cac",
+    "takeover63.pkl.gz": "637604f426a7889a5d68e271d9af929c252a11a31759ca2ddbda28087ab142c4",
+    "takeover64.pkl.gz": "b3f5e4bec924e3385d468d39d43d2f99c29451ec3ca0e807cf5b323db43488c4",
+    "takeover65.pkl.gz": "e4681da587d72be5df55f1f6d20c5678b62453559e9f3fe30c7b23e8158bc2fe",
+    "takeover66.pkl.gz": "776d6f97e66134842e534b04d4a5b32a93a183d8376a52ed58e2926ae5d1153a",
+    "takeover67.pkl.gz": "f7e0923b890a558a2fbdc10a7d7c1ed5742ce1bd33dc3291c112d7621386a8b1",
+    "takeover68.pkl.gz": "f6c92db5a5d6110fb5564dcb7133e1b5332007d8fe72fed2316a24947e44aa7f",
+    "takeover69.pkl.gz": "c1202a50c03a15783a9105a4430b185aae64dc190ed79f35e2bbe2b927f26796",
+    "takeover7.pkl.gz": "1db7d70a5a8ff4069979d3013d0e29f32215ccd1f8a6dfc1e65d3a00a4be2dbf",
+    "takeover70.pkl.gz": "cb9ccc98c6f8137374cbda69f996c24a887a252a299b59e92a67b9cfa6eb84f8",
+    "takeover71.pkl.gz": "8562fb1e458c877a48bab208d935ffb3766d6b48e296d14eea248bb1862f53a6",
+    "takeover72.pkl.gz": "fb81b3474f2c755b1823b6098583ce9814d0f6b9d63ebf94f3990b114a30207f",
+    "takeover73.pkl.gz": "a802568900b88fa69b12dc1383c95bb38da88ae94277345f334c3e5e10fc98a4",
+    "takeover74.pkl.gz": "86c61c19d46c955faa7d0bfdd2678f5eccc57f7f83d311790e23b9f474f4d997",
+    "takeover75.pkl.gz": "f224a4e1848cfe0b094c0e1c985319b328ac92c7bfa21f78ca293782c0f0292a",
+    "takeover76.pkl.gz": "e24f58237533bca9eca4273038d21dc7ab5a3d6918cd7bd9a62c060ad7419539",
+    "takeover77.pkl.gz": "367c5f6832a91a096756250b47edb1ad546a2a8fc251a78d04275b57825f63fc",
+    "takeover78.pkl.gz": "bc63472ca60fb57ef344c732bb5ac52403caa978531160e269e9de62e01502d0",
+    "takeover79.pkl.gz": "421ef3e631ddc5775d4a16b6ec8a4096bb70303b2f229816cff6dd1bb0e94319",
+    "takeover8.pkl.gz": "9bb4604afc7c850ca734ad2d11c02c02832109c0df8482f34363e89656af5213",
+    "takeover80.pkl.gz": "bd1a2e9d4d8dc69ac4e749caaea2e0749f3d5d001e46bb484d37b2294258d142",
+    "takeover81.pkl.gz": "a64dbd162cabc9b861588bdd954d4d50eeece4efc3edbea7da7d132896ae558e",
+    "takeover82.pkl.gz": "adebe7a18f6149f8f9cac795658b2d1792eb1e50ff6d5a5f12b4c03a9b106732",
+    "takeover83.pkl.gz": "1d287f99a5641f9b5f8435244a13a294294147cced8f065fb1bd401d74fe7ea3",
+    "takeover84.pkl.gz": "8a0b2cbd987d7f0c3da7f49ba0c313510226f38e204a1ba3a8bce4573ead9828",
+    "takeover85.pkl.gz": "ec83c478694991d2c88aed7c700e1927a849ff1fd4b0e413fdf9e07652ac80e0",
+    "takeover86.pkl.gz": "96b1fc4de0bfdbc8ddba5107e879b910a738eb7976e571dacdd4bade24c8530b",
+    "takeover87.pkl.gz": "5f6a518dfe46a6e9eecafd461e17f9c45d15d78de64c594410385a0eda3d94a7",
+    "takeover88.pkl.gz": "9f736161560bf000f892e4855f862f914f95c022417e895906dcf23645ec174a",
+    "takeover89.pkl.gz": "4f608830416ad3eeec43ae447342d34f255e8ab3e8ababb9cfd009285710e6d1",
+    "takeover9.pkl.gz": "009baa82df47230440c4f1e1aaf94b088bf5ef0db419920c309b2f2375d35018",
+    "takeover90.pkl.gz": "8523df50e4c26d2deced618bec664c8125686f5941ac4128657023c59989a2e7",
+    "takeover91.pkl.gz": "b2786a00a09d613a78ff9c49406d6e284e31fa71cae43f3482e9672c9df6d1e9",
+    "takeover92.pkl.gz": "78b499d7c1801efc97ac3c1f9291c4afd7e3bb4ebacf439ea815ae11232a736e",
+    "takeover93.pkl.gz": "283cd896df248918416cac9927b5d715f2c08ff861d0c446321292662950b7da",
+    "takeover94.pkl.gz": "dfcf81a363df8982d671cf6ed4921158feacca0c1d27b268eeb5ddf5cfebd381",
+    "takeover95.pkl.gz": "3c062d7c2c6b83b690191dab378325ab25b33d155c3fa3055592b586a18e077a",
+    "takeover96.pkl.gz": "7045f87524250d79b70025061d1a5b1937cbc525d7b72cdae684adc295dadae0",
+    "takeover97.pkl.gz": "13badd2c0c0a03b009045bb1773ac3ae7292979486865aba2e5dd9b4b16e3e42",
+    "takeover98.pkl.gz": "c36235f3dc38ff0cc2748fdfce1f075d4dd6dbb57767cc86b752aa78d7baa34a",
+    "takeover99.pkl.gz": "6210eef4c08e071b1380b7e5d135c53863ad9935e7fcafc6088fb3a2f46debe2"
+  },
+  "catalogue_sha256": "1bc3e09080350adc5fb5a096e21c1b09f7cf3f45e36aefc5dce725f39894e618",
+  "cpu_seconds": 0.6345209999999999,
+  "scope": "Fresh symbolic decoding of the deduplicated cap-2000, one-seed sweep plus competition catalogue. Complete within 0..5 events. No explicit mapping or group enumeration. The displayed historical tree is a separate recorded growth illustration for the same endpoints."
+}

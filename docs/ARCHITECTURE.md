@@ -4,19 +4,49 @@ This document describes the module boundaries for the WBO graph alignment
 implementation. The main rule is that each layer owns one concept and exports
 only the abstraction needed by the layer above it.
 
+Implemented interface: [AAM search graph API](AAM_SEARCH_GRAPH_API.md).
+The [original design analysis](AAM_SEARCH_GRAPH_DESIGN.md) records the rationale.
+The [retro detection and assembly contract](RETRO_ASSEMBLY.md) describes the
+separate matching, occupation, exact assembly, ranking, and viewer layers.
+
 ## Public Surface
 
 `rxn_core.__init__` is the convenience API used by scripts and the pipeline.
 It re-exports stable entry points such as:
 
-- `align_from_arrays`
-- `match_wbo_graphs`
-- `find_islands`
+- `match_fragment`
+- `search_aam`
+- `group_mechanisms`
+- `compile_mapping_families` / `compile_mechanism_families`
+- `align_reaction`
 - `build_graph`
 - `classify_bonds`
 
 Code outside the package should prefer these top-level imports unless it is
 debugging internals.
+
+## Typed AAM API and C++ execution boundary
+
+`aam.search_aam(problem: AAMProblem, config: AAMSearchConfig) -> AAMResult`
+is the typed Python AAM interface. `domain.py` defines the input, configuration,
+mechanism, result, and metrics objects. `search_graph.py` owns states, fragment
+transitions, paths, and stops. A live `_Branch` owns only cumulative frontier
+state and a graph-node reference, not copied histories. Its ancestry is a DAG.
+Optional mechanisms retain Python `AAMBranch` projections with an `AAMHierarchy`.
+
+The C++ backend replaces computation inside `growth.island.grow_island`:
+`growth/native.py` prepares native graph views, calls `_engine.grow_island`,
+restores original atom indices, and returns Python `_IsoResult` objects.
+The kernel owns its internal candidate state, growth loop, extension, and
+deduplication; Python owns cut/seed orchestration and completed AAM objects.
+The Python growth implementation remains available as the reference engine.
+
+`fragment.match_fragment` is the common Python contract above this boundary;
+both the AAM scheduler and fragment detection use it. Its separate
+`_native.paired_mapping_invariant` kernel accelerates occupation-family
+grouping. Augmentation, assembly, ranking, and visualization remain Python.
+See [the native backend guide](../native/README.md) for pseudocode, build
+instructions, and the distinction between active and currently unused kernels.
 
 ## Molecule Alignment: `rxn_core.alignment`
 

@@ -3,6 +3,9 @@ from __future__ import annotations
 
 import html
 import json
+import gc
+import gzip
+import pickle
 from pathlib import Path
 
 import numpy as np
@@ -10,9 +13,164 @@ import numpy as np
 from .chemistry_computations import write_xyz_str
 from .alignment.post_aam import AtomBijection
 from .domain import (
-    AAMProblem, AAMSearchConfig, RPResult, ReactionContext,
+    AAMProblem, AAMSearchConfig, AAMResult, AAMSearchMetrics, MolecularEndpoint, RPResult, ReactionContext,
     ResolvedMechanism, TSResult,
 )
+from .search_graph import AAMSearchGraph
+
+
+def _aam_header(result):
+    from dataclasses import asdict
+    def endpoint(molecule):
+        return {'elements': molecule.elements, 'coordinates': molecule.coordinates.tolist(),
+                'wbo': molecule.wbo.tolist(), 'label': molecule.label,
+                'energy': molecule.energy, 'metadata': dict(molecule.metadata)}
+    return {'schema': 'rxn_core.aam/v1', 'name': result.problem.name,
+            'reactant': endpoint(result.problem.reactant),
+            'product': endpoint(result.problem.product),
+            'config': asdict(result.config), 'metrics': asdict(result.metrics)}
+
+
+def aam_record(result: AAMResult, *, copy_graph=True):
+    """Persist the search graph before selecting mechanisms or representatives."""
+    return {**_aam_header(result),'graph': result.graph.to_record(copy=copy_graph)}
+
+
+def aam_from_record(record, *, copy_graph=True):
+    if record['schema'] != 'rxn_core.aam/v1':
+        raise ValueError('unsupported AAM result schema')
+    return _aam_result(record,AAMSearchGraph.from_record(record['graph'],copy=copy_graph))
+
+
+def _aam_result(record,graph):
+    def endpoint(raw):
+        return MolecularEndpoint(tuple(raw['elements']), raw['coordinates'], raw['wbo'], raw['label'],
+                                  energy=raw.get('energy'), metadata=raw.get('metadata', {}))
+    return AAMResult(AAMProblem(endpoint(record['reactant']), endpoint(record['product']), record['name']),
+                     AAMSearchConfig(**record['config']), graph,
+                     AAMSearchMetrics(**record['metrics']))
+
+
+def write_aam_checkpoint(result,path):
+    """Trusted internal snapshot preserving shared Python graph objects.
+
+    Keep the producing engine with this file. JSON remains the interchange
+    format; this pickle-based checkpoint must never be loaded from strangers.
+    """
+    path=Path(path);temporary=path.with_suffix(path.suffix+'.tmp')
+    record={**_aam_header(result),'schema':'rxn_core.aam_checkpoint/v1','graph':result.graph}
+    enabled=gc.isenabled()
+    try:
+        gc.disable()
+        with gzip.open(temporary,'wb',compresslevel=1) as stream:
+            pickle.dump(record,stream,protocol=5)
+        temporary.replace(path)
+    finally:
+        if enabled:gc.enable()
+
+
+def read_aam_checkpoint(path):
+    """Read only trusted internally produced snapshots, never untrusted pickle."""
+    enabled=gc.isenabled()
+    try:
+        gc.disable()
+        with gzip.open(path,'rb') as stream:record=pickle.load(stream)
+        if record['schema']!='rxn_core.aam_checkpoint/v1':
+            raise ValueError('Unsupported AAM checkpoint schema')
+        return _aam_result(record,record['graph'])
+    finally:
+        if enabled:gc.enable()
+
+
+def write_graph_checkpoint(graph,path):
+    """Save a trusted, finalized cut graph without expanding shared values."""
+    _write_graph_checkpoint(graph,path,'rxn_core.finalized_cut/v1')
+
+
+def _write_graph_checkpoint(graph,path,schema):
+    path=Path(path);temporary=path.with_suffix(path.suffix+'.tmp')
+    with gzip.open(temporary,'wb',compresslevel=1) as stream:
+        pickle.dump((schema,graph),stream,protocol=5)
+    temporary.replace(path)
+
+
+def read_graph_checkpoint(path):
+    """Load only internally produced finalized-cut checkpoints."""
+    with gzip.open(path,'rb') as stream:schema,graph=pickle.load(stream)
+    if schema!='rxn_core.finalized_cut/v1':raise ValueError('Unsupported cut checkpoint schema')
+    return graph
+
+
+def read_aam(stream):
+    """Load owned, acyclic JSON directly into the typed graph."""
+    enabled=gc.isenabled()
+    try:
+        gc.disable()
+        return aam_from_record(json.load(stream),copy_graph=False)
+    finally:
+        if enabled:gc.enable()
+
+
+def raw_cut_paths(directory):
+    """Completed raw cuts in either supported format, in canonical cut order."""
+    directory=Path(directory);paths={}
+    for path in (*directory.glob('cut_*.json'), *directory.glob('cut_*.raw.pkl.gz')):
+        index=int(path.name.split('_')[1].split('.')[0])
+        if index in paths:raise ValueError(f'Duplicate raw cut checkpoint {index}')
+        paths[index]=path
+    return [paths[index] for index in sorted(paths)]
+
+
+def write_raw_cut(graph,path):
+    """Persist the requested raw-cut format atomically; binary is trusted-only."""
+    path=Path(path)
+    if path.name.endswith('.raw.pkl.gz'):
+        _write_graph_checkpoint(graph,path,'rxn_core.raw_cut/v1')
+    elif path.suffix=='.json':
+        temporary=path.with_suffix('.json.tmp')
+        # Interchange JSON uses the fast C encoder. Large persistent searches
+        # select compact checkpoints to avoid expanding shared graph payloads.
+        temporary.write_text(json.dumps(graph.to_record(copy=False)))
+        temporary.replace(path)
+    else:raise ValueError(f'Unsupported raw cut format: {path}')
+
+
+def read_raw_cut(path, *, tuple_pool=None):
+    """Read only trusted internal binary cuts; JSON remains interchange-safe."""
+    path=Path(path)
+    if path.name.endswith('.raw.pkl.gz'):
+        with gzip.open(path,'rb') as stream:schema,graph=pickle.load(stream)
+        if schema!='rxn_core.raw_cut/v1':raise ValueError('Unsupported raw cut checkpoint schema')
+        return graph
+    if path.suffix=='.json':
+        return AAMSearchGraph.from_record(json.loads(path.read_bytes()),copy=False,tuple_pool=tuple_pool)
+    raise ValueError(f'Unsupported raw cut format: {path}')
+
+
+def aam_json(result):
+    """Encode the complete record while borrowing its immutable graph data."""
+    enabled=gc.isenabled()
+    try:
+        gc.disable()
+        return json.dumps(aam_record(result,copy_graph=False))+'\n'
+    finally:
+        if enabled:gc.enable()
+
+
+def write_aam_bundle(result: AAMResult, output_directory):
+    """Save raw AAM and an offline graph/path viewer; never rerun matching."""
+    output = Path(output_directory)
+    output.mkdir(parents=True, exist_ok=True)
+    serialized = aam_json(result)
+    (output / 'aam.json').write_text(serialized)
+    assets = Path(__file__).parent / 'static'
+    page = (assets / 'aam_search.html').read_text()
+    from .viewers import style_document
+    page = style_document(page, layout='search_graph')
+    page = page.replace('__LIBRARY__', (assets / '3Dmol-min.js').read_text())
+    page = page.replace('__DATA__', serialized.replace('<', '\\u003c'))
+    (output / 'search.html').write_text(page)
+    return output
 
 
 def _mapping_record(mapping):
@@ -25,6 +183,7 @@ def rp_record(result: RPResult):
     problem = result.analytical.aam.problem
     return {
         "schema": "rxn_core.rp/v2",
+        "aam": aam_record(result.analytical.aam),
         "name": problem.name,
         "atom_count": problem.atom_count,
         "timing": {
@@ -126,41 +285,27 @@ def _json_dump(path, value):
 
 
 def _viewer_html(result: RPResult):
+    from .viewers import comparison_document, reaction_html
     problem = result.analytical.aam.problem
-    reactant = write_xyz_str(
-        problem.reactant.elements, problem.reactant.coordinates, "Reactant")
-    mechanisms = []
+    endpoints = [dict(elements=e.elements, coordinates=e.coordinates.tolist(), wbo=e.wbo.tolist())
+                 for e in (problem.reactant, problem.product)]
+    records = []
     for index, mechanism in enumerate(result.mechanisms, 1):
-        product = mechanism.mapping.product_in_reactant_order(
-            problem.product.coordinates)
-        mechanisms.append({
-            "id": index,
-            "product": write_xyz_str(
-                problem.reactant.elements, product, f"Mechanism {index} product"),
-            "broken": mechanism.broken_bonds,
-            "formed": mechanism.formed_bonds,
-            "rmsd": mechanism.fixed_mapping_rmsd,
-        })
-    library = (Path(__file__).parent / "static" / "3Dmol-min.js").read_text()
-    payload = json.dumps({"reactant": reactant, "mechanisms": mechanisms})
-    title = html.escape(problem.name or "R/P alignment")
-    return f"""<!doctype html><html><head><meta charset=\"utf-8\">
-<title>{title}</title><style>
-body{{font:14px system-ui;margin:0;background:#111;color:#eee}}
-header{{padding:12px 18px;background:#222}} select{{margin-left:8px}}
-#grid{{display:grid;grid-template-columns:1fr 1fr;height:calc(100vh - 52px)}}
-.panel{{position:relative;border-top:1px solid #444}} .label{{position:absolute;z-index:2;padding:8px}}
-.view{{position:absolute;inset:0}}</style><script>{library}</script></head>
-<body><header>{title}<select id=\"mechanism\"></select><span id=\"meta\"></span></header>
-<div id=\"grid\"><div class=\"panel\"><b class=\"label\">R</b><div id=\"r\" class=\"view\"></div></div>
-<div class=\"panel\"><b class=\"label\">P aligned</b><div id=\"p\" class=\"view\"></div></div></div>
-<script>const data={payload};
-const rv=$3Dmol.createViewer('r',{{backgroundColor:'#111'}}),pv=$3Dmol.createViewer('p',{{backgroundColor:'#111'}});
-function draw(v,xyz){{v.removeAllModels();v.addModel(xyz,'xyz');v.setStyle({{}},{{stick:{{radius:.15}},sphere:{{scale:.28}}}});v.zoomTo();v.render();}}
-draw(rv,data.reactant);const sel=document.getElementById('mechanism');
-data.mechanisms.forEach(m=>{{const o=document.createElement('option');o.value=m.id;o.textContent=' mechanism '+m.id;sel.appendChild(o);}});
-function update(){{const m=data.mechanisms.find(x=>x.id==sel.value)||data.mechanisms[0];if(!m)return;draw(pv,m.product);document.getElementById('meta').textContent=' RMSD '+m.rmsd.toFixed(4)+' Å';}}
-sel.onchange=update;update();window.onresize=()=>{{rv.resize();pv.resize();}};</script></body></html>"""
+        mapping = _mapping_record(mechanism.mapping)
+        pairs = sorted((int(a), int(b)) for a, b in mapping.items())
+        m = dict(pairs)
+        events = []
+        for kind, bonds in [('broken', mechanism.broken_bonds), ('formed', mechanism.formed_bonds)]:
+            for a, b in bonds:
+                events.append(dict(kind=kind, r=[a,b], p=[m[a],m[b]],
+                                   wbo=[float(problem.reactant.wbo[a,b]),float(problem.product.wbo[m[a],m[b]])]))
+        records.append(dict(name=f'Mechanism {index} · RMSD {mechanism.fixed_mapping_rmsd:.4f} Å',
+                            mapping=pairs, events=events, provenance=dict(selected_branch=mechanism.selected_branch_index)))
+    if not records:
+        return '<!doctype html><p>No selected R/P mechanism.</p>'
+    document = comparison_document(dict(index=0, name=problem.name or 'R/P alignment',
+                                        endpoints=endpoints, records=records))
+    return reaction_html(document)
 
 
 def write_rp_bundle(result: RPResult, output_directory):

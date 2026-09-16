@@ -1,0 +1,25 @@
+{
+  "created": 1789256749.4041405,
+  "setup_job": "6771902",
+  "build_job": "6772186",
+  "array_job": "6772300",
+  "summary_job": "6772301",
+  "partition": "cpu_short",
+  "array_slots": 300,
+  "cpus_per_slot": 1,
+  "max_concurrent_cpus": 300,
+  "memory_per_slot_gib": 8,
+  "state": "released",
+  "drivers": {
+    "hpc/worker.py": "f6491514da07b4843f738e88175087dd2256de9745a8e2dfd5bb0777b7af41e9",
+    "hpc/aggregate.py": "9416faf8b151c86ff21f6ef86724871a4611777c5c1167ce41c78fec424c3d65",
+    "hpc/smoke.py": "7b7af8641f9e3422be1ce4cae384be7f9b94df3759801907c76269c9613edd24",
+    "hpc/build_proof.py": "965cb472cebda1833f056e1e8984bd54ad55d99fba7d5e4557f0e1d75c6a10ec"
+  },
+  "requeue": false,
+  "released": 1789257372.7800064,
+  "smoke_job": "6773092",
+  "max_concurrent_workers": 150,
+  "allocated_cpus_per_worker": 2,
+  "scheduler_allocation_correction": true
+}

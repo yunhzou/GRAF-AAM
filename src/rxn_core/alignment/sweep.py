@@ -8,8 +8,11 @@ broken/formed-event certificates.
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import multiprocessing as mp
+import pickle
+import tempfile
 import time
 from collections import deque
 from pathlib import Path
@@ -24,6 +27,7 @@ from ..matcher import (
     _sym_block_assignment_expr,
 )
 from ..matcher.canonical import _CandidateAutomorphismCanonicalizer
+from ..matcher.state import candidate_from_record
 from ..matcher.orbits import _nauty_colored_wbo_graph
 from .branch import (
     BranchLimitExceeded,
@@ -253,7 +257,10 @@ def _branch_symmetry_record(branch, symmetry_fragments=None):
         for r, p in getattr(branch, 'mapping', {}).items()
     }
     if symmetry_fragments is None:
-        symmetry_fragments = getattr(branch, 'symmetry_fragments', ())
+        paths = branch.symmetry_paths
+        if len(paths) != 1:
+            raise ValueError("select an explicit search path before projecting its hierarchy")
+        symmetry_fragments = paths[0]
     for frag_index, fragment in enumerate(symmetry_fragments):
         record = {
             'fragment_index': int(frag_index),
@@ -308,9 +315,7 @@ def _branch_symmetry_record(branch, symmetry_fragments=None):
 
 
 def _branch_analytical_derivations(branch, mapping):
-    paths = getattr(branch, 'symmetry_paths', None)
-    if not paths:
-        return [(dict(mapping), _branch_symmetry_record(branch))]
+    paths = branch.symmetry_paths
     derivations = []
     for path in paths:
         symmetry = _branch_symmetry_record(
@@ -756,6 +761,7 @@ def _merge_analytical_branch(branches, incoming, key_index=None):
             for cut in incoming.get('cuts', ())
         }
         branch['cuts'] = _cut_record(cuts)
+        branch.setdefault('path_provenance', []).extend(incoming.get('path_provenance', ()))
         return False
     branches.append(incoming)
     if key_index is not None:
@@ -794,10 +800,12 @@ def _refresh_entry_branch_symmetry(entry):
     entry['branch_symmetry'] = hierarchy
 
 
-def _pool_add(pool, sig, mapping, cuts, branch_symmetry=None):
+def _pool_add(pool, sig, mapping, cuts, branch_symmetry=None, *, provenance=None):
     cuts = frozenset(cuts)
     no_cut = not cuts
     branch = _analytical_branch(mapping, cuts, branch_symmetry)
+    if provenance is not None:
+        branch['path_provenance'] = [provenance]
     entry = pool.get(sig)
     if entry is None:
         pool[sig] = {
@@ -838,72 +846,71 @@ def _public_pool(pool):
     return pool
 
 
-def _merge_compressed_pool(target, incoming):
+def _merge_compressed_entry(target, sig, raw_entry, *, take_ownership=False,
+                            refresh=True):
+    """Merge one compressed entry, optionally consuming the incoming value."""
+    entry = target.get(sig)
+    if entry is None:
+        entry = raw_entry if take_ownership else copy.deepcopy(raw_entry)
+        branches = entry.setdefault('branches', [])
+        entry['_branch_key_index'] = {
+            _analytical_branch_key(branch): branch
+            for branch in branches
+        }
+        target[sig] = entry
+        return
+
+    representative_changed = bool(
+        raw_entry.get('has_no_cut', False)
+        and not entry.get('has_no_cut', False))
+    if representative_changed:
+        entry['mapping'] = dict(raw_entry['mapping'])
+    entry['has_no_cut'] = bool(
+        entry.get('has_no_cut', False)
+        or raw_entry.get('has_no_cut', False))
+    entry['cuts'] = (
+        frozenset(entry.get('cuts', ()))
+        | frozenset(raw_entry.get('cuts', ())))
+    entry['dedup_count'] = (
+        int(entry.get('dedup_count', 1))
+        + int(raw_entry.get('dedup_count', 1)))
+    branches = entry.setdefault('branches', [])
+    key_index = entry.get('_branch_key_index')
+    if key_index is None:
+        key_index = {
+            _analytical_branch_key(branch): branch
+            for branch in branches
+        }
+        entry['_branch_key_index'] = key_index
+    changed = representative_changed
+    for raw_branch in raw_entry.get('branches') or ():
+        incoming_branch = (
+            raw_branch if take_ownership else copy.deepcopy(raw_branch))
+        changed = (_merge_analytical_branch(
+            branches, incoming_branch, key_index=key_index) or changed)
+    if changed:
+        if refresh:
+            _refresh_entry_branch_symmetry(entry)
+        else:
+            entry['_branch_symmetry_dirty'] = True
+
+
+def _finalize_compressed_pool(pool):
+    """Refresh each changed mechanism once after a bulk reduction."""
+    for entry in pool.values():
+        if entry.pop('_branch_symmetry_dirty', False):
+            _refresh_entry_branch_symmetry(entry)
+    return _public_pool(pool)
+
+
+def _merge_compressed_pool(target, incoming, *, take_ownership=False,
+                           refresh=True):
     """Merge an already deduplicated partial pool without losing counts."""
     for sig, raw_entry in dict(incoming or {}).items():
-        entry = target.get(sig)
-        if entry is None:
-            entry = copy.deepcopy(raw_entry)
-            branches = entry.setdefault('branches', [])
-            entry['_branch_key_index'] = {
-                _analytical_branch_key(branch): branch
-                for branch in branches
-            }
-            target[sig] = entry
-            continue
-        representative_changed = bool(
-            raw_entry.get('has_no_cut', False)
-            and not entry.get('has_no_cut', False))
-        if representative_changed:
-            entry['mapping'] = dict(raw_entry['mapping'])
-        entry['has_no_cut'] = bool(
-            entry.get('has_no_cut', False)
-            or raw_entry.get('has_no_cut', False))
-        entry['cuts'] = (
-            frozenset(entry.get('cuts', ()))
-            | frozenset(raw_entry.get('cuts', ())))
-        entry['dedup_count'] = (
-            int(entry.get('dedup_count', 1))
-            + int(raw_entry.get('dedup_count', 1)))
-        branches = entry.setdefault('branches', [])
-        key_index = entry.get('_branch_key_index')
-        if key_index is None:
-            key_index = {
-                _analytical_branch_key(branch): branch
-                for branch in branches
-            }
-            entry['_branch_key_index'] = key_index
-        changed = representative_changed
-        for raw_branch in raw_entry.get('branches') or ():
-            changed = (_merge_analytical_branch(
-                branches, copy.deepcopy(raw_branch),
-                key_index=key_index) or changed)
-        if changed:
-            _refresh_entry_branch_symmetry(entry)
+        _merge_compressed_entry(
+            target, sig, raw_entry,
+            take_ownership=take_ownership, refresh=refresh)
     return target
-
-
-def _candidate_from_symmetry_state(state):
-    """Reconstruct one completed compressed candidate from its AAM record."""
-    state = dict(state or {})
-    witness = {int(r): int(p)
-               for r, p in dict(state.get('witness') or {}).items()}
-    automorph_blocks = tuple(_SymBlock(
-        tuple(map(int, block.get('r_atoms') or ())),
-        tuple(map(int, block.get('p_atoms') or ())),
-        extendable=False)
-        for block in state.get('automorph_blocks') or ())
-    blocks = tuple(_SymBlock(
-        tuple(map(int, block.get('r_atoms') or ())),
-        tuple(map(int, block.get('p_atoms') or ())),
-        extendable=bool(block.get('extendable', False)))
-        for block in state.get('blocks') or ()
-        if str(block.get('source') or '') != 'exact_automorph_group')
-    return _SymCand(
-        witness, blocks,
-        exact_fixed=tuple(map(int, state.get('exact_fixed') or ())),
-        multiplicity=int(state.get('multiplicity', 1)),
-        automorph_blocks=automorph_blocks)
 
 
 def attach_completed_candidate_groups(branches, g_P, *, wbo_tol,
@@ -928,7 +935,7 @@ def attach_completed_candidate_groups(branches, g_P, *, wbo_tol,
         for fragment in hierarchy.get('fragments') or ():
             metrics['completed_candidate_group_requests'] += 1
             state = fragment.get('symmetry') or {}
-            candidate = _candidate_from_symmetry_state(state)
+            candidate = candidate_from_record(state)
             key = (tuple(sorted(locked.items())),
                    _freeze_analytical(state))
             generators = cache.get(key)
@@ -969,7 +976,7 @@ def _run_find_islands_limited(g_R, g_P, order, core_R, cfg, *,
                               p_orbits=None, r_orbits=None,
                               profile=None):
     stop_on_core = bool(core_R)
-    return find_islands(
+    graph = find_islands(
         g_R, g_P, list(order),
         iso_tol=float(cfg['iso_tol']),
         max_branches=int(cfg['max_branches']),
@@ -983,6 +990,7 @@ def _run_find_islands_limited(g_R, g_P, order, core_R, cfg, *,
         profile=profile,
         anchor_map=cfg.get('anchor_map'),
     )
+    return tuple(graph.paths())
 
 
 def _score_branch_mapping(mapping, g_R, g_P, wboR, wboT,
@@ -1143,7 +1151,7 @@ def _run_cut_work(elR, wboR, elT, wboT, cfg, cut, orders, core_R,
                   *, return_trace=False, collect_metrics=False):
     cut = tuple(tuple(int(v) for v in pair) for pair in cut)
     events = []
-    out = []
+    out = {}
     cut_t0 = time.perf_counter()
 
     graph_t0 = time.perf_counter()
@@ -1310,12 +1318,7 @@ def _run_cut_work(elR, wboR, elT, wboT, cfg, cut, orders, core_R,
                     for derived_mapping, hierarchy in (
                             _branch_analytical_derivations(
                                 branch, accepted_mapping)):
-                        out.append((
-                            sig,
-                            tuple(sorted(derived_mapping.items())),
-                            cut,
-                            hierarchy,
-                        ))
+                        _pool_add(out, sig, derived_mapping, cut, hierarchy)
                         seed_accepted += 1
                 repair_stats = scored_items[0][2] if scored_items else None
                 repair_summary = _repair_trace_stats(repair_stats)
@@ -1373,7 +1376,7 @@ def _run_cut_work(elR, wboR, elT, wboT, cfg, cut, orders, core_R,
         raise
 
     elapsed = time.perf_counter() - cut_t0
-    compact_metrics['raw_result_count'] = len(out)
+    compact_metrics['raw_result_count'] = total_accepted
     if return_trace:
         events.append({
             'event': 'cut_end',
@@ -1426,13 +1429,7 @@ def _cs_wrun(args):
         _WORKER['g_P'], _WORKER['g_R_full'],
         _WORKER['p_orbits'], _WORKER['r_orbits'],
         return_trace=trace_enabled, collect_metrics=metrics_enabled)
-    local_pool = {}
-    for result in out:
-        sig, mapping_items, cut = result[:3]
-        branch_symmetry = result[3] if len(result) > 3 else None
-        _pool_add(
-            local_pool, sig, dict(mapping_items), cut, branch_symmetry)
-    local_pool = _public_pool(local_pool)
+    local_pool = _public_pool(out)
     metrics['worker_returned_branch_count'] = sum(
         len(entry.get('branches') or ())
         for entry in local_pool.values())
@@ -1468,13 +1465,127 @@ def _new_sweep_metrics(max_branches):
         'raw_result_count': 0,
         'worker_returned_branch_count': 0,
         'parent_merge_seconds': 0.0,
+        'parent_route_seconds': 0.0,
+        'parallel_reduce_seconds': 0.0,
+        'parent_load_seconds': 0.0,
+        'worker_stream_seconds': 0.0,
     }
 
 
-def cut_sweep_items(wboR, cut_floor=0.2):
-    """Return the independent no-cut plus one-edge cut work items."""
-    return [()] + [((int(i), int(j)),) for i, j in _strong_edges(
-        wboR, float(cut_floor))]
+def _signature_bucket(signature, bucket_count):
+    payload = pickle.dumps(signature, protocol=pickle.HIGHEST_PROTOCOL)
+    digest = hashlib.blake2b(payload, digest_size=8).digest()
+    return int.from_bytes(digest, 'little') % int(bucket_count)
+
+
+def _reduce_pool_bucket(task):
+    """Merge one disjoint signature bucket and persist its reduced pool."""
+    raw_path, reduced_path = map(Path, task)
+    pool = {}
+    with raw_path.open('rb') as handle:
+        while True:
+            try:
+                sig, entry = pickle.load(handle)
+            except EOFError:
+                break
+            _merge_compressed_entry(
+                pool, sig, entry, take_ownership=True, refresh=False)
+    _finalize_compressed_pool(pool)
+    with reduced_path.open('xb') as handle:
+        pickle.dump(pool, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    return str(reduced_path), len(pool)
+
+
+def _parallel_bucket_reduce(payloads, *, n_workers, directory, metrics,
+                            persistent=False, before_reduce=None):
+    """Route ordered worker pools to persistent shards, then reduce in parallel."""
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    bucket_count = max(1, int(n_workers))
+    raw_paths = [
+        directory / f'raw_bucket_{index:03d}.pkl'
+        for index in range(bucket_count)
+    ]
+    handles = [path.open('xb') for path in raw_paths]
+    entry_count = 0
+    stream_started = time.perf_counter()
+    route_seconds = 0.0
+    try:
+        for payload in payloads:
+            if metrics is not None:
+                _merge_sweep_metrics(metrics, payload.get('metrics') or {})
+            route_started = time.perf_counter()
+            for sig, entry in (payload.get('pool') or {}).items():
+                bucket = _signature_bucket(sig, bucket_count)
+                pickle.dump(
+                    (sig, entry), handles[bucket],
+                    protocol=pickle.HIGHEST_PROTOCOL)
+                entry_count += 1
+            route_seconds += time.perf_counter() - route_started
+    finally:
+        for handle in handles:
+            handle.close()
+    stream_elapsed = time.perf_counter() - stream_started
+    metrics['parent_route_seconds'] += route_seconds
+    metrics['worker_stream_seconds'] += max(0.0, stream_elapsed - route_seconds)
+
+    tasks = []
+    for index, raw_path in enumerate(raw_paths):
+        if raw_path.stat().st_size:
+            tasks.append((raw_path, directory / f'reduced_bucket_{index:03d}.pkl'))
+    if before_reduce is not None:
+        before_reduce()
+    reduce_started = time.perf_counter()
+    if len(tasks) > 1:
+        with mp.Pool(min(int(n_workers), len(tasks))) as reduce_pool:
+            reduced = reduce_pool.map(_reduce_pool_bucket, tasks, chunksize=1)
+    else:
+        reduced = [_reduce_pool_bucket(task) for task in tasks]
+    metrics['parallel_reduce_seconds'] += time.perf_counter() - reduce_started
+
+    load_started = time.perf_counter()
+    pool = {}
+    for reduced_path, _count in reduced:
+        with Path(reduced_path).open('rb') as handle:
+            # Buckets are disjoint by construction; no analytical merge remains.
+            pool.update(pickle.load(handle))
+    metrics['parent_load_seconds'] += time.perf_counter() - load_started
+    metrics['parent_merge_seconds'] = (
+        metrics['parent_route_seconds']
+        + metrics['parallel_reduce_seconds']
+        + metrics['parent_load_seconds'])
+
+    if persistent:
+        manifest = {
+            'schema': 'rxn_core.cut_sweep_intermediate/v1',
+            'bucket_count': bucket_count,
+            'worker_pool_entries': entry_count,
+            'mechanism_count': len(pool),
+            'raw_buckets': [path.name for path in raw_paths],
+            'reduced_buckets': [Path(path).name for path, _ in reduced],
+            'metrics': dict(metrics),
+        }
+        (directory / 'manifest.json').write_text(
+            json.dumps(manifest, indent=2) + '\n')
+    return pool
+
+
+def cut_sweep_items(wboR, cut_floor=0.2, *, elements=None,
+                    heavy_only=False):
+    """Return independent no-cut plus one-edge cut work items.
+
+    ``heavy_only`` keeps explicit hydrogens in AAM mapping and final scoring;
+    it only avoids using X-H bonds as artificial graph-search cuts.
+    """
+    edges = _strong_edges(wboR, float(cut_floor))
+    if heavy_only:
+        if elements is None:
+            raise ValueError("elements are required for heavy-only cut sweep")
+        edges = [
+            (i, j) for i, j in edges
+            if str(elements[i]) != 'H' and str(elements[j]) != 'H'
+        ]
+    return [()] + [((int(i), int(j)),) for i, j in edges]
 
 
 def _cut_sweep_cfg(*, cut_floor=0.2, graph_floor=0.2, iso_tol=1.0,
@@ -1533,11 +1644,7 @@ def _cut_sweep_chunk_serial(elR, wboR, elT, wboT, cfg, core_R, cuts,
         if collect_metrics:
             _merge_sweep_metrics(metrics, cut_metrics)
         _emit_trace(trace_path, events)
-        for result in results:
-            sig, mapping_items, _cut = result[:3]
-            branch_symmetry = result[3] if len(result) > 3 else None
-            mapping = dict(mapping_items)
-            _pool_add(pool, sig, mapping, _cut, branch_symmetry)
+        _merge_compressed_pool(pool, results, take_ownership=True)
     return pool, metrics
 
 
@@ -1545,65 +1652,113 @@ def _cut_sweep_serial(elR, wboR, elT, wboT, cfg, core_R,
                       collect_metrics=False):
     pool, metrics = _cut_sweep_chunk_serial(
         elR, wboR, elT, wboT, cfg, core_R,
-        cut_sweep_items(wboR, cfg['cut_floor']),
+        cut_sweep_items(
+            wboR, cfg['cut_floor'], elements=elR,
+            heavy_only=cfg.get('heavy_cuts_only', False)),
         collect_metrics=collect_metrics)
     public = _public_pool(pool)
     return (public, metrics) if collect_metrics else public
 
 
 def _cut_sweep_parallel(elR, wboR, elT, wboT, cfg, n_workers, core_R,
-                        collect_metrics=False):
-    cuts = cut_sweep_items(wboR, cfg['cut_floor'])
+                        collect_metrics=False, intermediate_dir=None):
+    cuts = cut_sweep_items(
+        wboR, cfg['cut_floor'], elements=elR,
+        heavy_only=cfg.get('heavy_cuts_only', False))
     work = [
         (cut, seed_index, core_R, False, collect_metrics)
         for cut in cuts
         for seed_index in range(int(cfg['n_seeds']))
     ]
-    pool = {}
     metrics = _new_sweep_metrics(cfg['max_branches'])
-    with mp.Pool(n_workers, initializer=_cs_winit,
-                 initargs=(elR, wboR, elT, wboT, cfg)) as proc_pool:
+    temporary = None
+    if intermediate_dir is None:
+        temporary = tempfile.TemporaryDirectory(prefix='rxn_core_sweep_')
+        intermediate_dir = temporary.name
+    proc_pool = mp.Pool(n_workers, initializer=_cs_winit,
+                        initargs=(elR, wboR, elT, wboT, cfg))
+    pool_closed = False
+
+    def finish_search_pool():
+        nonlocal pool_closed
+        if not pool_closed:
+            proc_pool.__exit__(None, None, None)
+            pool_closed = True
+
+    try:
         # Workers may finish in any order, but pool insertion order determines
         # the representative retained for analytically equivalent families.
         # Consume results in the explicit cut/seed work order so parallel
         # scheduling cannot change downstream chirality/RMSD representatives.
-        for payload in proc_pool.imap(
-                _cs_wrun, work, chunksize=max(1, int(cfg['chunksize']))):
-            if collect_metrics:
-                _merge_sweep_metrics(metrics, payload['metrics'])
-            merge_started = time.perf_counter()
-            _merge_compressed_pool(pool, payload['pool'])
-            metrics['parent_merge_seconds'] += (
-                time.perf_counter() - merge_started)
+        payloads = proc_pool.imap(
+            _cs_wrun, work, chunksize=max(1, int(cfg['chunksize'])))
+        pool = _parallel_bucket_reduce(
+            payloads, n_workers=n_workers, directory=intermediate_dir,
+            metrics=metrics, persistent=temporary is None,
+            before_reduce=finish_search_pool)
+    finally:
+        finish_search_pool()
+        if temporary is not None:
+            temporary.cleanup()
     metrics['cuts'] = len(cuts)
     public = _public_pool(pool)
     return (public, metrics) if collect_metrics else public
 
 
 def _cut_sweep_chunk_parallel(elR, wboR, elT, wboT, cfg, n_workers, core_R,
-                              cuts, trace_path=None):
+                              cuts, trace_path=None, intermediate_dir=None,
+                              collect_metrics=False):
     work = [
-        (cut, seed_index, core_R, bool(trace_path), False)
+        (cut, seed_index, core_R, bool(trace_path), collect_metrics)
         for cut in cuts
         for seed_index in range(int(cfg['n_seeds']))
     ]
-    pool = {}
-    with mp.Pool(n_workers, initializer=_cs_winit,
-                 initargs=(elR, wboR, elT, wboT, cfg)) as proc_pool:
+    metrics = _new_sweep_metrics(cfg['max_branches'])
+    temporary = None
+    if intermediate_dir is None:
+        temporary = tempfile.TemporaryDirectory(prefix='rxn_core_sweep_')
+        intermediate_dir = temporary.name
+    proc_pool = mp.Pool(n_workers, initializer=_cs_winit,
+                        initargs=(elR, wboR, elT, wboT, cfg))
+    pool_closed = False
+
+    def finish_search_pool():
+        nonlocal pool_closed
+        if not pool_closed:
+            proc_pool.__exit__(None, None, None)
+            pool_closed = True
+
+    try:
         # Preserve the same logical cut/seed order as serial execution.  The
         # work remains parallel; only parent-side result consumption is
         # deterministic.
-        for payload in proc_pool.imap(
-                _cs_wrun, work, chunksize=max(1, int(cfg['chunksize']))):
-            _emit_trace(trace_path, payload.get('events', []))
-            _merge_compressed_pool(pool, payload['pool'])
-    return _public_pool(pool)
+        def payloads():
+            for payload in proc_pool.imap(
+                    _cs_wrun, work,
+                    chunksize=max(1, int(cfg['chunksize']))):
+                _emit_trace(trace_path, payload.get('events', []))
+                yield payload
+
+        pool = _parallel_bucket_reduce(
+            payloads(), n_workers=n_workers, directory=intermediate_dir,
+            metrics=metrics, persistent=temporary is None,
+            before_reduce=finish_search_pool)
+    finally:
+        finish_search_pool()
+        if temporary is not None:
+            temporary.cleanup()
+    metrics['cuts'] = len(cuts)
+    metrics['seed_orders'] = len(work)
+    public = _public_pool(pool)
+    return (public, metrics) if collect_metrics else public
 
 
 def run_cut_sweep_chunk(elR, wboR, elT, wboT, cuts, *,
                         core_R=None,
                         n_workers=None,
                         trace_path=None,
+                        intermediate_dir=None,
+                        return_metrics=False,
                         cut_floor=0.2, graph_floor=0.2, iso_tol=1.0,
                         dwbo_threshold=0.5, metal_dwbo_threshold=0.3,
                         symmetry_wbo_tol=0.2,
@@ -1639,15 +1794,19 @@ def run_cut_sweep_chunk(elR, wboR, elT, wboT, cuts, *,
         tuple(tuple(int(v) for v in pair) for pair in cut)
         for cut in cuts
     ]
-    if n_workers and int(n_workers) > 1 and len(normalized_cuts) > 1:
+    work_count = len(normalized_cuts) * int(cfg['n_seeds'])
+    if n_workers and int(n_workers) > 1 and work_count > 1:
         return _cut_sweep_chunk_parallel(
             elR, wboR, elT, wboT, cfg,
-            min(int(n_workers), len(normalized_cuts)),
-            core_R, normalized_cuts, trace_path=trace_path)
-    pool, _metrics = _cut_sweep_chunk_serial(
+            min(int(n_workers), work_count),
+            core_R, normalized_cuts, trace_path=trace_path,
+            intermediate_dir=intermediate_dir,
+            collect_metrics=bool(return_metrics))
+    pool, metrics = _cut_sweep_chunk_serial(
         elR, wboR, elT, wboT, cfg, core_R, normalized_cuts,
-        trace_path=trace_path)
-    return _public_pool(pool)
+        trace_path=trace_path, collect_metrics=bool(return_metrics))
+    public = _public_pool(pool)
+    return (public, metrics) if return_metrics else public
 
 
 def merge_cut_sweep_pools(pools):
@@ -1665,6 +1824,8 @@ def merge_cut_sweep_pools(pools):
 
 def cut_sweep(elR, wboR, elT, wboT, *,
               n_workers=None, core_R=None,
+              intermediate_dir=None,
+              heavy_cuts_only=False,
               cut_floor=0.2, graph_floor=0.2, iso_tol=1.0,
               dwbo_threshold=0.5, metal_dwbo_threshold=0.3,
               symmetry_wbo_tol=0.2,
@@ -1704,6 +1865,7 @@ def cut_sweep(elR, wboR, elT, wboT, *,
         n_atoms=len(elR),
         anchor_map=anchor_map,
     )
+    cfg['heavy_cuts_only'] = bool(heavy_cuts_only)
     core_R = tuple(sorted(set(core_R or ())))
     if not n_workers or n_workers <= 1:
         return _cut_sweep_serial(
@@ -1711,7 +1873,8 @@ def cut_sweep(elR, wboR, elT, wboT, *,
             collect_metrics=bool(return_metrics))
     return _cut_sweep_parallel(elR, wboR, elT, wboT, cfg,
                                int(n_workers), core_R,
-                               collect_metrics=bool(return_metrics))
+                               collect_metrics=bool(return_metrics),
+                               intermediate_dir=intermediate_dir)
 
 
 def select_min_mechanisms(pool):

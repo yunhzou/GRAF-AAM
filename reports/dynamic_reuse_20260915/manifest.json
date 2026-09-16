@@ -1,0 +1,26 @@
+{
+  "source_commit": "807d36f",
+  "cases": [
+    6,
+    11,
+    59,
+    64,
+    101
+  ],
+  "experimental_source_hashes": {
+    "src/rxn_core/competition.py": {
+      "before": "6831ef39f0795343f4341f7fa2be573953f7a64bbeaa67c8b94aec4b119742de",
+      "after": "5136c673e7747eca7a995d2e927e7f371d114edd24ed2892db6803bdf1752784"
+    },
+    "src/rxn_core/event_patterns.py": {
+      "before": "ed7755224f9a805b881b35728e7abc9b299be6b181fd4eea6c6e907d6109d1c1",
+      "after": "c19ba6963560f84d68694b6f48b3ef10c72b060a40fa505322a6f40ebd41e3ff"
+    },
+    "src/rxn_core/search_validation.py": {
+      "before": null,
+      "after": "e8dd15e7db9e3bb5df102f414e1f4f1f28367a55ce081213a27974fadb7a93b7"
+    }
+  },
+  "scope": "Exact calculation reuse; no proposal or family-merging policy change",
+  "production_note": "Production uses flat numeric reuse counters; benchmark retains nested diagnostic counters. Validation module differs only by formatting."
+}

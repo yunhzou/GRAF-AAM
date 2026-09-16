@@ -16,6 +16,7 @@ from ..matcher import (
     _symmetry_state,
 )
 from ..matcher.policy import as_node_match_policy
+from . import native
 from .frontier import _frontier_boundary_edges, _push_edges_from, _set_unique
 from .result import IslandBranchLimitExceeded, _IsoResult
 from .trace import (
@@ -43,7 +44,7 @@ def grow_island(g_R, g_P, seed, mapping,
                 node_policy=None,
                 allow_mapped_seed=False,
                 profile=None,
-                profile_context=None):
+                profile_context=None, replay=None):
     """
     Grow a fragment from `seed` using priority-queue propagation.
 
@@ -57,6 +58,18 @@ def grow_island(g_R, g_P, seed, mapping,
     existing trace_run.HTML viewer.
     """
     node_policy = as_node_match_policy(node_policy)
+    if replay is not None and not native.applicable(g_R, g_P, p_orbits, node_policy, events):
+        raise ValueError("cut replay requires the native element-policy matcher without trace events")
+    if native.applicable(g_R, g_P, p_orbits, node_policy, events):
+        out = native.grow_island(
+            g_R, g_P, seed, mapping, graph_floor=graph_floor, iso_tol=iso_tol,
+            min_lock_size=min_lock_size, max_branches=max_branches,
+            islands_R=islands_R, p_orbits=p_orbits,
+            prior_deferred_edges=prior_deferred_edges,
+            allow_mapped_seed=allow_mapped_seed, profile=profile,
+            profile_context=profile_context, replay=replay)
+        if out is not None:
+            return out
     record = events is not None
     prof = None
     profile_t0 = None
@@ -165,6 +178,20 @@ def grow_island(g_R, g_P, seed, mapping,
             'cand_patterns': cands_pattern_sample(cands, 5),
         })
 
+    if len(cands) > max_branches:
+        _finish_profile('live_branch_cap', len(cands), fragment, len(cands))
+        if record:
+            events.append({
+                'type': 'seed_end',
+                'result': 'live_branch_cap',
+                'final_cands': len(cands),
+                'max_branches': int(max_branches),
+                'fragment': sorted(int(x) for x in fragment),
+                'iso': None,
+            })
+        raise IslandBranchLimitExceeded(
+            len(cands), max_branches, seed=int(seed))
+
     while heap:
         neg_w, u, n = heapq.heappop(heap)
         if prof is not None:
@@ -244,6 +271,21 @@ def grow_island(g_R, g_P, seed, mapping,
             iso_tol, islands_R, p_orbits=p_orbits, r_orbits=r_orbits,
             deferred_edges=deferred_edges, anchor_u=u, anchor_wbo=wbo,
             dedupe_edges=dedupe_edges, node_policy=node_policy)
+        if len(new_cands) > max_branches:
+            _finish_profile(
+                'live_branch_cap', len(new_cands), candidate_fragment,
+                len(new_cands))
+            if record:
+                events.append({
+                    'type': 'seed_end',
+                    'result': 'live_branch_cap',
+                    'final_cands': len(new_cands),
+                    'max_branches': int(max_branches),
+                    'fragment': sorted(int(x) for x in candidate_fragment),
+                    'iso': None,
+                })
+            raise IslandBranchLimitExceeded(
+                len(new_cands), max_branches, seed=int(seed))
         if prof is not None:
             extend_elapsed = time.perf_counter() - extend_t0
             prof['extend_elapsed_sec'] += extend_elapsed

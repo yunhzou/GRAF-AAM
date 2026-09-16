@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "mp4_sha256": "4623d57a1770b6493a4407d946900c5190188cde43fa0a9c6d6c892af9f59099",
+  "mp4_metadata": {
+    "ffmpeg_version": "7.1 built with Apple clang version 13.1.6 (clang-1316.0.21.2.5)",
+    "codec": "h264",
+    "pix_fmt": "yuv420p(progressive)",
+    "fps": 24.0,
+    "source_size": [
+      1440,
+      900
+    ],
+    "size": [
+      1440,
+      900
+    ],
+    "rotate": 0,
+    "duration": 22.0
+  },
+  "decoded_video_frames": 528,
+  "gif": {
+    "sha256": "32605d68d65259e61157e18e04e6babaacdfa588fee25c60fdcb2b7c3564fbdc",
+    "frames": 264,
+    "duration_ms": 22000,
+    "size": [
+      960,
+      600
+    ],
+    "loop": 0
+  },
+  "visual_review": "Baseline-only branch highlights inspected; final A and B witnesses project to two distinct event classes, with no third branch or takeover segment. Fragment colors and red/green bond markers retained."
+}

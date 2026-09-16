@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "seconds": 1.7704729998949915,
+  "installed_package": true,
+  "optional_native_engine": false,
+  "workers": 1,
+  "code_cells": 8,
+  "py3dmol_outputs": 2
+}

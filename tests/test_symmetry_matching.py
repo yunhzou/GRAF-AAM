@@ -1,3 +1,4 @@
+import json
 import math
 
 import numpy as np
@@ -26,6 +27,7 @@ from rxn_core.alignment.sweep import (
 )
 import rxn_core.alignment.branch as branch_mod
 from rxn_core.matcher import (
+    _PartialMappingCanonicalizer,
     _SymBlock,
     _SymCand,
     _cand_map,
@@ -86,6 +88,53 @@ def test_fragment_branch_cap_is_loud_and_allows_exact_limit():
     assert exc_info.value.limit == 2
 
 
+def test_incremental_extension_enforces_cap_after_symmetry_deduplication():
+    g_r = build_graph(
+        ["Si", "N"], np.array([[0.0, 1.0], [1.0, 0.0]]), bond_cut=0.2)
+    wbo = np.zeros((9, 9))
+    for nitrogen, marker in ((1, 5), (2, 6), (3, 7), (4, 8)):
+        wbo[0, nitrogen] = wbo[nitrogen, 0] = 1.0
+        wbo[nitrogen, marker] = wbo[marker, nitrogen] = 1.0
+    g_p = build_graph(
+        ["Si", "N", "N", "N", "N", "O", "F", "Cl", "Br"],
+        wbo,
+        bond_cut=0.2,
+    )
+
+    with pytest.raises(IslandBranchLimitExceeded) as exc_info:
+        grow_island(
+            g_r,
+            g_p,
+            0,
+            {},
+            max_branches=2,
+            r_orbits=_nauty_orbits(g_r),
+            p_orbits=_nauty_orbits(g_p),
+        )
+
+    assert exc_info.value.count == 4
+    assert exc_info.value.limit == 2
+
+
+def test_partial_mapping_certificate_requires_exact_endpoint_transporter():
+    source = build_graph(["C"], np.zeros((1, 1)), bond_cut=0.2)
+    target_wbo = np.zeros((3, 3))
+    target_wbo[0, 1] = target_wbo[1, 0] = 1.0
+    target_wbo[1, 2] = target_wbo[2, 1] = 1.0
+    target = build_graph(["C", "C", "C"], target_wbo, bond_cut=0.2)
+    canonicalizer = _PartialMappingCanonicalizer(
+        source, target, wbo_tol=0.5)
+
+    left_end = canonicalizer.certificate({0: 0})
+    right_end = canonicalizer.certificate({0: 2})
+    center = canonicalizer.certificate({0: 1})
+
+    assert left_end == right_end
+    assert left_end != center
+    assert canonicalizer.equivalent({0: 0}, {0: 2})
+    assert not canonicalizer.equivalent({0: 0}, {0: 1})
+
+
 def test_cut_sweep_compact_metrics_are_opt_in_and_respect_branch_cap():
     elements = ["C", "C"]
     wbo = np.zeros((2, 2))
@@ -120,6 +169,18 @@ def test_cut_sweep_compact_metrics_are_opt_in_and_respect_branch_cap():
     assert parallel_metrics["max_live_branches"] <= 2
 
 
+def test_heavy_only_cut_items_keep_hydrogens_but_do_not_cut_xh_edges():
+    from rxn_core.alignment.sweep import cut_sweep_items
+
+    elements = ["C", "C", "H", "H"]
+    wbo = np.zeros((4, 4))
+    for left, right in ((0, 1), (0, 2), (1, 3)):
+        wbo[left, right] = wbo[right, left] = 1.0
+
+    assert cut_sweep_items(
+        wbo, elements=elements, heavy_only=True) == [(), ((0, 1),)]
+
+
 def test_worker_local_cut_compression_is_exactly_serial_equivalent():
     elements = ["C", "O", "N"]
     wbo = np.zeros((3, 3))
@@ -137,6 +198,62 @@ def test_worker_local_cut_compression_is_exactly_serial_equivalent():
         elements, wbo, elements, wbo, n_workers=2, **kwargs)
 
     assert compressed_parallel == serial
+
+
+def test_parallel_cut_sweep_persists_disjoint_reduction_buckets(tmp_path):
+    elements = ["C", "O", "N"]
+    wbo = np.zeros((3, 3))
+    wbo[0, 1] = wbo[1, 0] = 1.0
+    wbo[1, 2] = wbo[2, 1] = 1.0
+    kwargs = {
+        "n_seeds": 2,
+        "max_branches": 100,
+        "symmetry_repair": False,
+    }
+
+    serial = cut_sweep(
+        elements, wbo, elements, wbo, n_workers=0, **kwargs)
+    parallel = cut_sweep(
+        elements, wbo, elements, wbo, n_workers=2,
+        intermediate_dir=tmp_path, **kwargs)
+
+    assert parallel == serial
+    manifest = json.loads((tmp_path / "manifest.json").read_text())
+    assert manifest["mechanism_count"] == len(serial)
+    assert manifest["worker_pool_entries"] >= len(serial)
+    assert list(tmp_path.glob("raw_bucket_*.pkl"))
+    assert list(tmp_path.glob("reduced_bucket_*.pkl"))
+
+
+def test_one_cut_chunk_parallelizes_across_seed_orders(monkeypatch):
+    import rxn_core.alignment.sweep as sweep_module
+
+    observed = {}
+
+    def fake_parallel(_el_r, _wbo_r, _el_t, _wbo_t, cfg, workers,
+                      _core_r, cuts, **_kwargs):
+        observed["workers"] = workers
+        observed["seeds"] = cfg["n_seeds"]
+        observed["cuts"] = cuts
+        return {}
+
+    monkeypatch.setattr(
+        sweep_module, "_cut_sweep_chunk_parallel", fake_parallel)
+    elements = ["C", "C"]
+    wbo = np.zeros((2, 2))
+    wbo[0, 1] = wbo[1, 0] = 1.0
+
+    result = run_cut_sweep_chunk(
+        elements, wbo, elements, wbo, [((0, 1),)],
+        n_workers=10, n_seeds=3, max_branches=10,
+        symmetry_repair=False)
+
+    assert result == {}
+    assert observed == {
+        "workers": 3,
+        "seeds": 3,
+        "cuts": [((0, 1),)],
+    }
 
 
 def test_parallel_cut_sweep_consumes_results_in_cut_seed_order(monkeypatch):
@@ -203,7 +320,8 @@ def test_live_branch_cap_discards_only_overflowing_parent_subtree(monkeypatch):
             ]
         return [_IsoResult({1: 2}, fragment={1})]
 
-    monkeypatch.setattr(branch_mod, "grow_island", fake_grow)
+    import rxn_core.fragment as fragment_mod
+    monkeypatch.setattr(fragment_mod, "grow_island", fake_grow)
     monkeypatch.setattr(
         branch_mod, "_chemistry_orbit_signature",
         lambda mapping, *_args, **_kwargs: tuple(sorted(mapping.items())))
@@ -211,7 +329,7 @@ def test_live_branch_cap_discards_only_overflowing_parent_subtree(monkeypatch):
     branches = branch_mod.find_islands(
         g_r, g_p, [0, 1], orbit_dedup=False, max_branches=2)
 
-    assert [branch.mapping for branch in branches] == [{0: 1, 1: 2}]
+    assert [branch.mapping for branch in branches.paths()] == [{0: 1, 1: 2}]
 
 
 def test_symcand_reassigns_correlated_block_witness():
@@ -251,9 +369,10 @@ def test_mapping_variation_blocks_capture_branch_dedupe_pool():
 
 
 def test_branch_symmetry_record_closes_open_pool_with_mapping_owner():
+    from rxn_core.fragment import FragmentPlacement
     branch = branch_mod._Branch()
     branch.commit(
-        _IsoResult(
+        FragmentPlacement.from_match(_IsoResult(
             {27: 27},
             fragment={27},
             symmetry={
@@ -267,11 +386,10 @@ def test_branch_symmetry_record_closes_open_pool_with_mapping_owner():
                 }],
             },
         ),
-        build_graph(["H"] * 28, np.zeros((28, 28)), bond_cut=0.2),
+        build_graph(["H"] * 28, np.zeros((28, 28)), bond_cut=0.2)),
     )
     branch.mapping[22] = 26
     branch.islands_R[22] = 2
-    branch.islands_P[26] = 2
 
     record = _branch_symmetry_record(branch)
 
@@ -410,7 +528,7 @@ def test_core_alignment_expands_internal_branch_degeneracy():
 def test_core_mapping_variants_do_not_invent_global_orbit_swaps():
     class Branch:
         mapping = {0: 0, 1: 1}
-        symmetry_fragments = []
+        symmetry_paths = ((),)
 
     wbo = np.zeros((2, 2))
     g_p = build_graph(["H", "H"], wbo, bond_cut=0.2)
@@ -1171,7 +1289,8 @@ def test_core_atoms_do_not_reorder_seed_sequence(monkeypatch):
         seen.append(seed)
         return []
 
-    monkeypatch.setattr(branch_mod, "grow_island", fake_grow_island)
+    import rxn_core.fragment as fragment_mod
+    monkeypatch.setattr(fragment_mod, "grow_island", fake_grow_island)
 
     branch_mod.find_islands(
         g, g, [0, 1, 2],
@@ -1219,7 +1338,7 @@ def test_find_islands_reuses_precomputed_orbits(monkeypatch):
     )
 
     assert branches
-    assert branches[0].mapping == {0: 0, 1: 1}
+    assert next(branches.paths()).mapping == {0: 0, 1: 1}
 
 
 def test_partial_witness_mode_scores_use_full_mode_norm():
@@ -1347,6 +1466,6 @@ def test_anchored_noop_seed_does_not_keep_pass_loop_alive():
     )
 
     assert branches
-    assert all(branch.mapping[0] == 0 for branch in branches)
+    assert all(branch.mapping[0] == 0 for branch in branches.paths())
     assert [e["seed"] for e in events if e.get("type") == "seed_start"][:2] == [1, 0]
     assert sum(1 for e in events if e.get("type") == "pass_start") == 2
