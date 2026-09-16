@@ -1,0 +1,21 @@
+{
+  "source_sha256": "919c229dfb27035e07be6a390e9ddc1a0cdb2f6659c1f8a62e0c8e516e6f5786",
+  "attempts": 140,
+  "completed": 138,
+  "interrupted_cases": [
+    25,
+    31
+  ],
+  "sampled_process_cpu_seconds": 1519.5225562219998,
+  "sampled_process_cpu_minutes": 25.325375937033332,
+  "sampled_process_cpu_mean_seconds": 10.853732544442856,
+  "ten_costliest_share": 0.8057391895123182,
+  "completed_decode_bin_counts": {
+    "below_1s": 99,
+    "1_to_10s": 28,
+    "10_to_60s": 5,
+    "at_least_60s": 6
+  },
+  "completed_decode_cpu_share": 0.8644224009483727,
+  "distinction": "Observed spending includes censored attempts; it is not the cost of completing all 140 decodes."
+}
