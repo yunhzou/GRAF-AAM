@@ -95,7 +95,7 @@ In this gold-catalyzed rearrangement, GRAFT recovers two possible destinations f
 [3D film](manuscript/animations/gold_rearrangement/gold-oxygen-3d.mp4) · [Film viewer](manuscript/animations/gold_rearrangement/index.html) · [Full growth trajectory](manuscript/animations/gold_rearrangement/trajectory.html) · [Reproduce and inspect the witnesses](examples/gold_rearrangement/README.md)
 
 
-<details>
+<details open>
 <summary>View the original published pathway schemes for the gold example</summary>
 
 ### Published pathway reference
