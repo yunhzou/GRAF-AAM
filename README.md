@@ -28,6 +28,30 @@ Actual atom-by-atom growth through one recorded search tree in the 65-atom gold 
 
 [3D film](manuscript/animations/gold_rearrangement/gold-oxygen-3d.mp4) · [Film viewer](manuscript/animations/gold_rearrangement/index.html) · [Full growth trajectory](manuscript/animations/gold_rearrangement/trajectory.html) · [Reproduce and inspect the witnesses](examples/gold_rearrangement/README.md)
 
+
+### Published pathway reference
+
+Original **Scheme 2 (route a)** from [González Pérez et al., *J. Org. Chem.* 2009, DOI: 10.1021/jo802516k](https://pubs.acs.org/doi/10.1021/jo802516k). It is consistent with **Candidate 1** in the animation: the original epoxide oxygen becomes the ester-link oxygen.
+
+![Original published Scheme 2: gold-catalyzed rearrangement via route a](manuscript/animations/gold_rearrangement/pathway-reference/scheme-2-route-a.png)
+
+<details>
+<summary>Show the alternative published pathways: routes b and c</summary>
+
+**Scheme 4 — route b, initial 1,2-ester migration.**
+
+![Original published Scheme 4: route b](manuscript/animations/gold_rearrangement/pathway-reference/scheme-4-route-b.png)
+
+**Scheme 5 — route c, initial oxirane activation.**
+
+![Original published Scheme 5: route c](manuscript/animations/gold_rearrangement/pathway-reference/scheme-5-route-c.png)
+
+Both routes match **Candidate 2**: the original epoxide oxygen becomes the ketone oxygen. They converge at intermediate 14 and share the same endpoint oxygen pattern.
+
+</details>
+
+These original schemes use PH₃; the animation uses the supplied AuPPh₃ endpoint structures. The displayed energies belong to the source paper. [All three pathway pictures, interpretation and attribution](manuscript/animations/gold_rearrangement/pathway-reference/README.md).
+
 ## Current work and stable versions
 
 See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,

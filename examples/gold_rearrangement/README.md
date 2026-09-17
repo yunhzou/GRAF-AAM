@@ -4,6 +4,8 @@ This 65-atom example tests whether an endpoint-only GRAFT search retains oxygen 
 
 The endpoints are the supplied AuPPh₃ complexes **2 → 9**, including the catalyst and explicit hydrogens. They are not the catalyst-free structures 1 → 10. The 3D growth view shows all 65 atoms; the final candidate cards enlarge the organic heavy-atom core and follow the original epoxide oxygen, O*.
 
+See the [original published pathway pictures](../../manuscript/animations/gold_rearrangement/pathway-reference/README.md) alongside the two oxygen-pattern interpretations.
+
 ## Result
 
 The default search recovered both oxygen-fate patterns, without reference mappings, intermediate structures or anchors as input. Each displayed witness is a complete 65-atom bijection certified against a returned compressed family. Their canonical signed-event IDs differ.
@@ -43,6 +45,6 @@ OMP_NUM_THREADS=1 python examples/gold_rearrangement/recompute_wbo.py \
   examples/gold_rearrangement/data/2PPh3.xyz /tmp/reactant-wbo.json
 ```
 
-`selected-families.json` stores the two film families and full witness checks. Both film witnesses are siblings in cut context 21, with a shared 63-atom prefix. The standalone recovery script can select a different representative with the same event class. The film includes verified atom-level replay; the linked detailed trajectory viewer retains all four branches in this cut. `oxygen-provenance-audit.json` records the independent stationary-structure tracing; this was performed after the search and used only for interpretation. Intermediate geometry files are not required to reproduce GRAFT's recovery. The source PDF and full supplied archive are not redistributed.
+`selected-families.json` stores the two film families and full witness checks. Both film witnesses are siblings in cut context 21, with a shared 63-atom prefix. The standalone recovery script can select a different representative with the same event class. The film includes verified atom-level replay; the linked detailed trajectory viewer retains all four branches in this cut. `oxygen-provenance-audit.json` records the independent stationary-structure tracing; this was performed after the search and used only for interpretation. Intermediate geometry files are not required to reproduce GRAFT's recovery. Selected pathway schemes are reproduced on the linked reference page with attribution; the complete source PDF and full supplied archive are not redistributed.
 
 [Animations and offline viewer](../../manuscript/animations/gold_rearrangement/README.md)

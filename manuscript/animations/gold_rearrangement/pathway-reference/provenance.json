@@ -1,0 +1,55 @@
+{
+  "source_title": "Mechanism of the Gold-Catalyzed Rearrangement of (3-Acyloxyprop-1-ynyl)oxiranes: A Dual Role of the Catalyst",
+  "doi": "10.1021/jo802516k",
+  "source_pdf": "mechanism-of-the-gold-catalyzed-rearrangement-of-(3-acyloxyprop-1-ynyl)oxiranes-a-dual-role-of-the-catalyst.pdf",
+  "source_pdf_sha256": "c0b3ea9ca2d98a970cad436c1f2628d51075905679122e814d00103867708bcb",
+  "method": "Direct PDF-region rasterization; original drawings, titles, and footnotes retained.",
+  "page_render_pixels": [
+    2408,
+    3200
+  ],
+  "schemes": [
+    {
+      "file": "scheme-2-route-a.png",
+      "scheme": 2,
+      "route": "a",
+      "page": 4,
+      "journal_page": 2985,
+      "crop": [
+        164,
+        174,
+        2096,
+        962
+      ],
+      "sha256": "753fb7da560004d0d75b566d3d75a35de60e2bc366ea1efcccf6c19544820778"
+    },
+    {
+      "file": "scheme-4-route-b.png",
+      "scheme": 4,
+      "route": "b",
+      "page": 5,
+      "journal_page": 2986,
+      "crop": [
+        164,
+        1030,
+        2096,
+        940
+      ],
+      "sha256": "86fc0fea2c544cef54a92009064fbf20ef33f657bfc881d1c40e5d810ca1d36d"
+    },
+    {
+      "file": "scheme-5-route-c.png",
+      "scheme": 5,
+      "route": "c",
+      "page": 6,
+      "journal_page": 2987,
+      "crop": [
+        164,
+        1300,
+        2096,
+        962
+      ],
+      "sha256": "918e5b8a98eb2380fe2d8cfaa1583dd7a60016e32c38bff58995f7dfa6b3b3c1"
+    }
+  ]
+}
