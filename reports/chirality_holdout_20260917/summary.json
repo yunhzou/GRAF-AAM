@@ -1,0 +1,330 @@
+{
+  "expected_cases": 140,
+  "complete_cases": 140,
+  "incomplete_cases": [],
+  "processed_candidates": 166,
+  "paired": {
+    "candidates": 166,
+    "changed": 154,
+    "clear_before": 14,
+    "clear_after": 84,
+    "improved": 129,
+    "worsened": 10,
+    "unchanged_peak": 27,
+    "mean_chirality_cpu_seconds": 1.209924548192771,
+    "total_chirality_cpu_seconds": 200.84747499999997,
+    "total_interpolation_cpu_seconds": 406.057389
+  },
+  "minimum": {
+    "candidates": 166,
+    "changed": 154,
+    "clear_before": 14,
+    "clear_after": 84,
+    "improved": 129,
+    "worsened": 10,
+    "unchanged_peak": 27,
+    "mean_chirality_cpu_seconds": 1.209924548192771,
+    "total_chirality_cpu_seconds": 200.84747499999997,
+    "total_interpolation_cpu_seconds": 406.057389
+  },
+  "unresolved": [],
+  "regressions": [
+    {
+      "case": 7,
+      "candidate": 1,
+      "minimum": true,
+      "before": {
+        "max_clashes": 2,
+        "clashing_frames": 39,
+        "sum_frame_clashes": 47,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 11,
+        "minimum_radius_ratio": 0.07171192692551186
+      },
+      "after": {
+        "max_clashes": 3,
+        "clashing_frames": 47,
+        "sum_frame_clashes": 80,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 14,
+        "minimum_radius_ratio": 0.3855023937855188
+      }
+    },
+    {
+      "case": 7,
+      "candidate": 2,
+      "minimum": true,
+      "before": {
+        "max_clashes": 5,
+        "clashing_frames": 34,
+        "sum_frame_clashes": 90,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 51,
+        "minimum_radius_ratio": 0.07171192692551072
+      },
+      "after": {
+        "max_clashes": 6,
+        "clashing_frames": 10,
+        "sum_frame_clashes": 24,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 17,
+        "minimum_radius_ratio": 0.13866467109347297
+      }
+    },
+    {
+      "case": 9,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 5,
+        "clashing_frames": 31,
+        "sum_frame_clashes": 98,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 50,
+        "minimum_radius_ratio": 0.2552629703710208
+      },
+      "after": {
+        "max_clashes": 6,
+        "clashing_frames": 37,
+        "sum_frame_clashes": 105,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 57,
+        "minimum_radius_ratio": 0.09773402791599015
+      }
+    },
+    {
+      "case": 18,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 4,
+        "clashing_frames": 33,
+        "sum_frame_clashes": 86,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 45,
+        "minimum_radius_ratio": 0.042065287020300594
+      },
+      "after": {
+        "max_clashes": 7,
+        "clashing_frames": 42,
+        "sum_frame_clashes": 144,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 44,
+        "minimum_radius_ratio": 0.026401803475116958
+      }
+    },
+    {
+      "case": 28,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 7,
+        "clashing_frames": 46,
+        "sum_frame_clashes": 146,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 50,
+        "minimum_radius_ratio": 0.021921299717113128
+      },
+      "after": {
+        "max_clashes": 9,
+        "clashing_frames": 74,
+        "sum_frame_clashes": 275,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 65,
+        "minimum_radius_ratio": 0.13065925701275344
+      }
+    },
+    {
+      "case": 29,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 5,
+        "clashing_frames": 55,
+        "sum_frame_clashes": 128,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 50,
+        "minimum_radius_ratio": 0.06730697389651015
+      },
+      "after": {
+        "max_clashes": 11,
+        "clashing_frames": 33,
+        "sum_frame_clashes": 161,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 48,
+        "minimum_radius_ratio": 0.020723955572641506
+      }
+    },
+    {
+      "case": 30,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 5,
+        "clashing_frames": 55,
+        "sum_frame_clashes": 128,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 50,
+        "minimum_radius_ratio": 0.06730697389651015
+      },
+      "after": {
+        "max_clashes": 11,
+        "clashing_frames": 33,
+        "sum_frame_clashes": 161,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 48,
+        "minimum_radius_ratio": 0.020723955572641506
+      }
+    },
+    {
+      "case": 40,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 4,
+        "clashing_frames": 51,
+        "sum_frame_clashes": 101,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 58,
+        "minimum_radius_ratio": 0.11497939567305769
+      },
+      "after": {
+        "max_clashes": 5,
+        "clashing_frames": 54,
+        "sum_frame_clashes": 128,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 60,
+        "minimum_radius_ratio": 0.11497939567305604
+      }
+    },
+    {
+      "case": 41,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 1,
+        "clashing_frames": 27,
+        "sum_frame_clashes": 27,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 24,
+        "minimum_radius_ratio": 0.2663065676707817
+      },
+      "after": {
+        "max_clashes": 2,
+        "clashing_frames": 33,
+        "sum_frame_clashes": 39,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 60,
+        "minimum_radius_ratio": 0.4455339276684956
+      }
+    },
+    {
+      "case": 95,
+      "candidate": 0,
+      "minimum": true,
+      "before": {
+        "max_clashes": 6,
+        "clashing_frames": 39,
+        "sum_frame_clashes": 134,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 55,
+        "minimum_radius_ratio": 0.008341626698325773
+      },
+      "after": {
+        "max_clashes": 9,
+        "clashing_frames": 40,
+        "sum_frame_clashes": 142,
+        "endpoint_clashes": [
+          0,
+          0
+        ],
+        "peak_frame": 55,
+        "minimum_radius_ratio": 0.2716998513927261
+      }
+    }
+  ],
+  "interpolation": "existing graft.alignment.interpolation.internal_coordinate_interpolation, 101 frames",
+  "clash_threshold": 0.7,
+  "config": {
+    "chirality_mode": "mutable",
+    "high_coordinate": "maximal",
+    "high_coordinate_scope": "selected_family",
+    "graph_floor": 0.2,
+    "orientation_tolerance": 0.1,
+    "minimum_only": true
+  },
+  "sources": {
+    "src/graft/chirality.py": "ebb08780f1e61d247454597dac72ba5ea388ae1de84801dfb2353bd13ef6c9d6",
+    "src/graft/alignment/interpolation.py": "d99756808b87ff748d963632b6e6e4871017063dc8f19c0bf3fd410e9df46828",
+    "src/graft/static/reaction_viewer.html": "3caf0fbb5c8275d3c44468c1c56733cf3e3865f80a8fc7a5a23f69e07a578f1e"
+  },
+  "chirality_cpu_seconds": {
+    "total": 200.84747499999997,
+    "mean": 1.209924548192771,
+    "median": 0.49492300000000006,
+    "p95": 3.32024125,
+    "maximum": 25.371511
+  },
+  "verified_membership_and_concrete_events": 166,
+  "cases_with_any_peak_clash_increase": 9,
+  "cases_all_candidates_clash_free_before": 11,
+  "cases_all_candidates_clash_free_after": 68,
+  "tests_passed": 118
+}

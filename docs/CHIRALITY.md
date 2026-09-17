@@ -42,14 +42,20 @@ For structure verification, use `mode="all"` to reject every defined ordinary
 orientation reversal, including one at a center without assignment freedom.
 Neither mode establishes E/Z stereochemistry or isotopic/CIP identity.
 
-For higher coordination, ordinary hard constraints are installed first.
-Defined source triples and four-ligand simplices are considered in decreasing
+For higher coordination, ordinary hard constraints are installed first. The
+selector certifies a saved family containing the current witness. Within that
+family, source triples and four-ligand simplices are considered in decreasing
 endpoint geometric robustness. Retain a frame only if it can coexist with all
 previously retained frames and the ordinary constraints. Excluded frames are
-reported in `reconfigured_high_coordinate_frames`. This is a **maximal feasible
-basis**, not a maximum-cardinality optimum or evidence for a physical pathway.
-`high_coordinate="strict"` instead requires all these frames. Lost connections
-and undefined endpoint orientations make a frame inactive.
+reported in `reconfigured_high_coordinate_frames`.
+
+This is a **maximal feasible basis within the selected family**, not an optimum
+across the AAM union or evidence for a physical pathway. The selected family ID
+is reported. `high_coordinate_scope="union"` explicitly enables the more
+expensive union-wide basis search. `high_coordinate="strict"` always searches
+the union and requires all frames. Ordinary chirality selection and mutability
+checks retain their union-wide scope in every mode. Lost connections and
+undefined endpoint orientations make a frame inactive.
 
 The old solver grouped dependent frames into automorphism orbits of one
 analytical coset. The new saved relation can be an ordered product or a union
@@ -83,7 +89,9 @@ the realizing family ID and action sequence.
 
 ## Why this stays compact
 
-The existing symbolic family compiler keeps ordered and coupled choices intact.
+Single-atom reachable sets first reject impossible shuffle queries. They are
+rejection bounds only: no positive answer or mapping is inferred from independent
+orbits. The existing symbolic family compiler keeps ordered and coupled choices intact.
 The selector checks a proposed witness and, when needed, adds a local orientation
 constraint. One constraint covers all six orders of a three-ligand frame or all
 24 orders of a four-ligand frame: target geometry is computed for the unordered
@@ -107,6 +115,7 @@ polynomial-time guarantee.
 | `group_orientation_tolerance` | `0.0` | High-coordinate triple degeneracy, with numerical error protection |
 | `mode` | `"mutable"` | Historical shuffle-sensitive index orientation; `"all"` is stricter |
 | `high_coordinate` | `"maximal"` | Report a maximal feasible basis; `"strict"` requires all frames |
+| `high_coordinate_scope` | `"selected_family"` | Scope of maximal-basis refinement; `"union"` searches every saved family |
 | `seconds` | `None` | Optional soft time budget; no mapping-count or branch cap is added |
 
 Use an external process watchdog for a hard limit. A timeout returns `unknown`
@@ -118,3 +127,17 @@ RMSD calculation or ranking. The analytical `select_rp_mappings` API likewise
 selects the first feasible saved branch/event coset, retaining its source
 witness whenever feasible. Its fixed-correspondence rigid-fit diagnostic is
 computed only after selection and cannot change the mapping.
+
+## Holdout interpolation audit
+
+The experiment in `bench/experiments/chirality_holdout/run.py` reuses saved AAM
+checkpoints and decoded candidates. It independently checks family membership
+and concrete event equality, then calls the original
+`internal_coordinate_interpolation` routine for 101 frames before and after
+selection. No global RMSD ranking or geometry optimization is introduced.
+The original 3D viewer supplies playback, a frame slider, and clash highlighting.
+An endpoint-consistent assignment does not guarantee a collision-free path;
+posing, conformational motion, and the interpolation construction also matter.
+
+The [140-case audit and offline viewer](../reports/chirality_holdout_20260917/README.md)
+contain all 166 saved minimum-event candidates and their before/after animations.

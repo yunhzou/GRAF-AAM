@@ -229,3 +229,70 @@ def test_solver_unknown_is_not_a_chirality_conflict(monkeypatch):
     monkeypatch.setattr(module._Workspace,'check',unknown)
     result=select_chiral_witness(d,c)
     assert result.status=='unknown' and result.mapping is None
+
+
+def test_high_coordinate_scope_is_explicit_and_family_local_by_default():
+    rng=np.random.default_rng(51)
+    e=('Sc',)+('O',)*6
+    x=np.vstack([np.zeros(3),rng.normal(size=(6,3))])
+    w=np.zeros((7,7));w[0,1:]=.5;w[1:,0]=.5
+    p=x.copy();p[:,0]*=-1
+    identity=dict(enumerate(range(7)))
+    g=list(range(7));g[1],g[2]=2,1
+    extra=FinalFamily(tuple(enumerate(g)),tuple((0,a) for a in range(1,7)),(),(.2,1.0))
+    d=decoded_family(e,x,p,w,extra=(extra,));c=d.candidates[0]
+    c.mapping=identity;c.family_ids=[0,1]
+    local=select_chiral_witness(d,c)
+    union=select_chiral_witness(d,c,ChiralityConfig(high_coordinate_scope='union'))
+    assert local.status==union.status=='allowed'
+    assert local.mapping==identity and local.family_id==0
+    assert local.diagnostics['high_coordinate_family_id']==0
+    assert local.diagnostics['high_coordinate_scope']=='selected_family'
+    assert len(union.diagnostics['retained_high_coordinate_frames'])>len(local.diagnostics['retained_high_coordinate_frames'])
+    assert d.query(c,local.mapping).status==d.query(c,union.mapping).status=='allowed'
+    # Strict mode still searches the full union and requires every frame.
+    assert select_chiral_witness(d,c,ChiralityConfig(high_coordinate='strict')).status=='forbidden'
+
+
+def test_invalid_high_coordinate_scope_is_rejected():
+    with pytest.raises(ValueError,match='high_coordinate_scope'):
+        ChiralityConfig(high_coordinate_scope='first_n')
+
+
+def test_reachable_bounds_cover_correlated_ordered_action_products():
+    from graft.chirality import _program_domains
+    identity=tuple(range(4))
+    correlated=(1,0,3,2)
+    programs=[(('pool',(0,1)),('pool',(1,2))),
+              (('pool',(1,2)),('pool',(0,1))),
+              (('group',(correlated,)),('pool',(1,2)))]
+    for actions in programs:
+        witnesses={identity}
+        for kind,data in actions:
+            if kind=='pool':
+                factors=[]
+                for values in permutations(data):
+                    g=list(identity)
+                    for a,b in zip(data,values):g[a]=b
+                    factors.append(tuple(g))
+            else:
+                factors={identity};todo=[identity]
+                while todo:
+                    current=todo.pop()
+                    for g in data:
+                        image=tuple(g[a] for a in current)
+                        if image not in factors:factors.add(image);todo.append(image)
+            witnesses={tuple(g[a] for a in m) for m in witnesses for g in factors}
+        bounds=_program_domains(actions,4)
+        assert bounds==tuple(frozenset(m[a] for m in witnesses) for a in range(4))
+    assert _program_domains(programs[0],4)!=_program_domains(programs[1],4)
+
+
+def test_impossible_fixed_shuffle_needs_no_family_solver(monkeypatch):
+    import graft.chirality as module
+    e,x,w=tetra();d=decoded_family(e,x,swapped(x),w);c=d.candidates[0]
+    monkeypatch.setattr(module._Workspace,'compile',lambda *a:pytest.fail('unnecessary compilation'))
+    result=select_chiral_witness(d,c)
+    assert result.status=='allowed'
+    assert result.diagnostics['mutability_bound_rejections']==1
+    assert result.diagnostics['ordinary_frames'][0]['status']=='fixed_orientation_change'

@@ -6,6 +6,7 @@ changes remain authoritative. No atom bijections or group closures are expanded.
 """
 from dataclasses import dataclass, field
 from itertools import combinations
+from functools import lru_cache
 import math
 import time
 
@@ -23,6 +24,7 @@ class ChiralityConfig:
     group_orientation_tolerance: float = 0.0
     mode: str = 'mutable'  # historical index orientation; 'all' is stricter
     high_coordinate: str = 'maximal'  # maximal feasible basis, or strict
+    high_coordinate_scope: str = 'selected_family'  # or 'union' for a global basis
     seconds: float | None = None
 
     def __post_init__(self):
@@ -34,6 +36,8 @@ class ChiralityConfig:
             raise ValueError("mode must be 'mutable' or 'all'")
         if self.high_coordinate not in ('maximal', 'strict'):
             raise ValueError("high_coordinate must be 'maximal' or 'strict'")
+        if self.high_coordinate_scope not in ('selected_family', 'union'):
+            raise ValueError("high_coordinate_scope must be 'selected_family' or 'union'")
         if self.seconds is not None and (not math.isfinite(self.seconds) or self.seconds < 0):
             raise ValueError('seconds must be nonnegative or None')
 
@@ -49,6 +53,50 @@ class ChiralWitness:
 
 class _BudgetExpired(Exception):
     pass
+
+
+@lru_cache(maxsize=2048)
+def _action_orbits(action):
+    """Single-atom reachable sets; these are rejection bounds, never witnesses."""
+    kind, data = action
+    if kind == 'pool':
+        group = frozenset(data)
+        return {a: group for a in data}
+    # Connected components of generator edges are exactly single-atom orbits.
+    # This does not enumerate group elements or permit independent orbit swaps.
+    neighbors = {}
+    for generator in data:
+        for a, b in enumerate(generator):
+            if a != b:
+                neighbors.setdefault(a, set()).add(b)
+                neighbors.setdefault(b, set()).add(a)
+    result = {}
+    for atom in neighbors:
+        if atom in result:
+            continue
+        todo, component = [atom], {atom}
+        while todo:
+            for other in neighbors[todo.pop()]:
+                if other not in component:
+                    component.add(other)
+                    todo.append(other)
+        orbit = frozenset(component)
+        result.update((a, orbit) for a in component)
+    return result
+
+
+@lru_cache(maxsize=512)
+def _program_domains(actions, degree):
+    """Reachable single-atom images for an ordered product, ignoring coupling."""
+    images = [frozenset((p,)) for p in range(degree)]
+    for action in actions:
+        table = _action_orbits(action)
+        cache = {}
+        for a, domain in enumerate(images):
+            if domain not in cache:
+                cache[domain] = frozenset().union(*(table.get(p, (p,)) for p in domain))
+            images[a] = cache[domain]
+    return tuple(images)
 
 
 class _Workspace:
@@ -67,6 +115,7 @@ class _Workspace:
         self.pattern = decoded.index.describe([candidate.mapping[i] for i in range(decoded.index.n)])
         self.family_order = list(dict.fromkeys([*candidate.family_ids, *range(len(decoded.catalogue.families))]))
         self.compiled = {}
+        self.bound_rejections = 0
         self.measures, self.mutable = {}, {}
         self.hard_rules = set()
         self.checks = 0
@@ -143,6 +192,20 @@ class _Workspace:
             return self.mutable[key]
         self.mutability_queries += 1
         for fid in self.family_order:
+            self.budget()
+            family = self.decoded.catalogue.families[fid]
+            reachable = _program_domains(family.actions, len(family.mapping))
+            source = dict(family.mapping)
+            domains = {a: reachable[source[a]] for a in (center, *self.nr[center])}
+            target_set = frozenset(targets)
+            if (pc not in domains[center]
+                    or any(not (domains[a] & target_set) for a in neighbors)
+                    or any(not (domains[a] - self.np[pc]) for a in self.nr[center] if a not in neighbors)
+                    or all((domains[a] & target_set) <= {mapping[a]} for a in neighbors)):
+                # A necessary condition failed. Bounds can only reject;
+                # every positive answer still comes from the full solver.
+                self.bound_rejections += 1
+                continue
             c = self.compile(fid)
             scope = self.scope(c.values, center, neighbors, pc, targets, True)
             changed = self.z3.Or(*(c.values[a][0] != mapping[a] for a in neighbors))
@@ -233,7 +296,19 @@ class _Workspace:
                 rules.append(self.rule(center, shell, mapping, tol, False))
         return rules
 
-    def solve(self, frames, preferred=None):
+    def locate(self, result):
+        """Certify which saved family contains a geometrically valid witness."""
+        if result.get('family_id') is not None:
+            return result
+        for fid in self.family_order:
+            compiled = self.compile(fid)
+            realized = self.check(compiled, [compiled.values[a][0] == p
+                                           for a, p in dict(result['mapping']).items()])
+            if realized is not None:
+                return dict(realized, family_id=fid)
+        raise ValueError('candidate witness is not contained in its saved AAM families')
+
+    def solve(self, frames, preferred=None, family_ids=None):
         soft_rules = set()
         if preferred is not None:
             mapping = dict(preferred['mapping'])
@@ -244,7 +319,7 @@ class _Workspace:
             self.refinements += len(soft_rules)
             if not bad and not soft_rules:
                 return preferred
-        for fid in self.family_order:
+        for fid in self.family_order if family_ids is None else family_ids:
             compiled = self.compile(fid)
             while True:
                 rules = self.hard_rules | soft_rules
@@ -274,9 +349,11 @@ def select_chiral_witness(decoded, candidate, config=None):
     orientation changes are reported, not rejected: genuine reaction inversions
     are possible. ``mode='all'`` enforces every defined ordinary orientation.
 
-    Higher-coordinate frames use a robustness-ordered maximal feasible basis,
-    with every excluded frame reported; ``high_coordinate='strict'`` makes all
-    frames hard. This is a maximal basis, not a maximum-cardinality claim.
+    Higher-coordinate frames use a robustness-ordered maximal feasible basis
+    inside the selected saved family. ``high_coordinate_scope='union'`` instead
+    searches the whole union for each additional frame. Every excluded frame is
+    reported. ``high_coordinate='strict'`` requires all frames across the union.
+    A maximal basis is not a maximum-cardinality claim.
     Undefined/planar orientations and lost ligand connections are not constrained.
 
     No solution/count cap is added. ``seconds`` is an optional soft watchdog;
@@ -289,6 +366,7 @@ def select_chiral_witness(decoded, candidate, config=None):
     accepted, excluded = [], []
     diagnostics = dict(policy='saved_family_index_orientation', event_scope='concrete_signed_edges',
                        mode=config.mode, high_coordinate=config.high_coordinate,
+                       high_coordinate_scope=config.high_coordinate_scope,
                        graph_floor=config.graph_floor,
                        orientation_tolerance=config.orientation_tolerance,
                        group_orientation_tolerance=config.group_orientation_tolerance,
@@ -303,9 +381,14 @@ def select_chiral_witness(decoded, candidate, config=None):
                 result = w.solve(frames, result)
                 accepted = frames if result is not None else []
             else:
+                family_ids = None
+                if frames and config.high_coordinate_scope == 'selected_family':
+                    result = w.locate(result)
+                    family_ids = (result['family_id'],)
+                    diagnostics['high_coordinate_family_id'] = result['family_id']
                 for frame in frames:
                     w.budget()
-                    trial = w.solve([*accepted, frame], result)
+                    trial = w.solve([*accepted, frame], result, family_ids=family_ids)
                     if trial is None:
                         excluded.append(frame)
                     else:
@@ -326,6 +409,7 @@ def select_chiral_witness(decoded, candidate, config=None):
         diagnostics['reason'] = str(exc)
     diagnostics.update(seconds=time.perf_counter() - w.start, solver_checks=w.checks,
                        compiled_families=len(w.compiled), local_refinements=w.refinements,
+                       mutability_bound_rejections=w.bound_rejections,
                        local_geometry_evaluations=len(w.measures), mutability_queries=w.mutability_queries,
                        retained_high_coordinate_frames=accepted, reconfigured_high_coordinate_frames=excluded,
                        atom_bijections_enumerated=0)
