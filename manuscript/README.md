@@ -63,8 +63,8 @@ Final end-to-end timing is recorded in `evidence/end_to_end_timing.json` and Tab
 
 ## Authors
 
-Yunheng Zou; Olalla Nieto Faza; Shifa Hussain; **Varinia Bernales (PI)**;
-**Alán Aspuru-Guzik (PI)**. PI means principal investigator. Shifa Hussain is
+Yunheng Zou; Olalla Nieto Faza; Shifa Hussain; **Varinia Bernales**<sup>†</sup>;
+**Alán Aspuru-Guzik**<sup>†</sup>. † Principal investigators. Shifa Hussain is
 assigned to the Department of Biology, University of Toronto Mississauga.
 [Affiliation provenance](evidence/author-affiliations.md) records the supplied
 assignments and official institutional sources. `main` is the publication branch.

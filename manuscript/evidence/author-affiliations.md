@@ -23,7 +23,8 @@ confirms the department name and address (checked the same day). Affiliation 11:
 > Department of Biology, University of Toronto Mississauga, 1867 Inner Circle Rd., Mississauga, ON L5L 1C6, Canada
 
 The assignment comes from the author; the institutional name/address were
-independently checked. Varinia Bernales and Alán Aspuru-Guzik have explicit
-`(PI)` labels beside their names and a principal-investigator legend.
+independently checked. Varinia Bernales and Alán Aspuru-Guzik have a shared
+superscript dagger beside their affiliation numbers, defined once as
+“Principal investigators.”
 The corresponding-author designation remains open.
 No equal-contribution designation was supplied for this paper.
