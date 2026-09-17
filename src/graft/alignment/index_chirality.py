@@ -873,6 +873,9 @@ def _minimum_rmsd_group_action(canonical_mapping, raw_generators,
         visit(roots[factor_index])
 
     search_factor(0, fixed_covariance, ())
+    # Covariance norm subtraction loses precision near an exact fit.
+    # Re-evaluate the winning correspondence from coordinate residuals.
+    best_rmsd = fixed_mapping_aligned_rmsd(best_mapping, coords_R, coords_P)
     return best_mapping, best_rmsd, {
         'group_order': int(group_order),
         'evaluated_leaf_count': int(evaluated),

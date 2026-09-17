@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "focused_tests": 107,
+  "focused_test_seconds": 5.54,
+  "command": "python -m pytest -q tests/test_chirality_postprocessing.py tests/test_index_chirality.py tests/test_post_aam.py tests/test_python_workflow.py tests/test_family_query.py tests/test_event_patterns.py tests/test_event_certificates.py tests/test_typed_aam_api.py -p no:cacheprovider",
+  "public_example": "examples/chirality/example.py",
+  "public_example_status": "passed",
+  "baseline": "37/38 legacy chirality/post-AAM tests passed before changes; remaining test exposed cancellation in reported near-zero RMSD.",
+  "evidence": [
+    "Tiny exhaustive ordered-action and event-filtered oracles, including mutable and all-center policies.",
+    "Anchors and whole-arm/coupled action restrictions remain binding.",
+    "Rigid-coordinate and atom-relabeling invariance; planar and 4/5-coordinate cases.",
+    "High-coordinate retained basis satisfied; excluded frames cannot be added in a two-action exhaustive oracle.",
+    "Timeout/solver unknown remains unknown; search and decoded input remain unchanged.",
+    "Independent full-mapping family membership and exact signed-event equality checked after each of 24 timing trials."
+  ],
+  "source_sha256": {
+    "src/graft/chirality.py": "6a92fa0587903031f5289f233c73e636c8275d74a36a6423a5186cacc8c42d00",
+    "src/graft/alignment/index_chirality.py": "aed2cbcfa0408ee408957ae1aa2007eb8e27bd9ccdd7d3443e2dfa8214b1c1e5",
+    "tests/test_chirality_postprocessing.py": "3e615c08872cd4a88e06e33e9ffc093048c79c4c4433b9635bbbd1eca42a863d",
+    "bench/experiments/chirality_postprocessing/run.py": "8fee50903b1f2ed9fbe74eff0222e8ad0454bef530cefd9bbf87cc8fe26dd2dd",
+    "bench/experiments/chirality_postprocessing/verification-135.json.gz": "fae013ddc9208f635426710c4eec69a8fdde86f0fd3a22aec764440960f03da6"
+  }
+}
