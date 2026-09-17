@@ -43,18 +43,6 @@ The decoder certifies a family through event invariance, a valid lower bound exc
 
 Independent reconstruction agrees with the supplied references in all eleven cases. Four require a different number of matched pairs; seven require correspondences absent from the retained families. All have at least one capped direction, but this does not identify the cap as the cause. The uncapped traces discussed in the main text demonstrate greedy-growth exclusions in two cases. Reference-directed feasibility checks are diagnostic and do not contribute to benchmark recovery. Per-case certificates and traces are linked in the repository.
 
-\subsection{Default-comparator call times}
-
-\begin{table}[ht]
-\centering\small
-\caption{\textbf{Archived default-mapper CPU call times.} Calls include completed outputs later judged invalid; exceptions are excluded from time averages. Recovery retains all 1,851 reactions. $\dagger$ marks LocalMapper, the prior accuracy-SOTA baseline (2024). These default calls use no sweep and exclude startup/model loading, evaluation, and saving. The CPU model was not retained, so they do not support comparison with the paired GRAFT timing cohort.}
-\label{tab:default-times}
-\input{includes/generated-comparator-timing-table}
-\end{table}
-
-These default call times cover different outputs from GRAFT's sweep and compressed families. GRAFT's unswept search cost was not separately recorded in that earlier study; the controlled ablation in \Cref{tab:golden-caps} supplies the paired no-sweep timing.
-
-
 \subsection{Branch-cap and CPU-time ablation on Golden}
 \label{sec:cap-ablation}
 

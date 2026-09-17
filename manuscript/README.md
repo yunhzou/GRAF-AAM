@@ -43,9 +43,9 @@ pdftoppm -scale-to 1400 -png manuscript.pdf build/page
 
 Paired no-sweep controls are included in the main Golden results table. Evidence: `reports/golden_unswept_20260913/`; GRAFT 1,489/1,851, SLAP 1,661/1,851 (one unresolved). No new mapping searches were run. The molecular figure now checks alcohol-site matches including attached H and shows three conditional assignment levels.
 
-Runtime detail is in Table 3 (same-Mac mean/median/95th-percentile CPU by endpoint-size orientation, paired with recovery), Figure 2, and the archived default-comparator call-time table. `timing_comparison.json` retains per-case measurements and matched-cohort identities. Default-mapper timings are reported separately because their CPU model is not recorded in the archived summaries; no cross-CPU speed ranking is implied.
+Runtime detail is in Table 3 (same-Mac mean/median/95th-percentile CPU by endpoint-size orientation, paired with recovery), Figure 2, and the unified comparison in Table 2. `timing_comparison.json` retains per-case measurements and matched-cohort identities. Archived default-call CPU times are marked with a superscript in Table 2 because their CPU model is not recorded; no cross-CPU speed ranking is implied.
 
-The 140-reaction coordinate collection compares bond events under unverified mappings; it is not a mapping-accuracy benchmark. The cap control returns complete mappings for 138 reactions at cap 100 and all 140 at cap 2,000; cases 123 and 125 are the two search-completion losses. Table 4 reports the baseline-only bond-event comparison at cap 2,000, Table 5 reports archived stage costs, and Table A5 reports fresh full-pipeline timing. Against SLAP sweep and native SLAP, lower/equal/higher event counts are 4/136/0 and 15/125/0, respectively. Final event-pattern evidence is in `reports/published_baseline_20260915/`; older competition-enabled decoding reports are excluded.
+The 140-reaction coordinate collection compares bond events under unverified mappings; it is not a mapping-accuracy benchmark. The cap control returns complete mappings for 138 reactions at cap 100 and all 140 at cap 2,000; cases 123 and 125 are the two search-completion losses. Table 4 reports the baseline-only bond-event comparison at cap 2,000, Table 5 reports archived stage costs, and Table A4 reports fresh full-pipeline timing. Against SLAP sweep and native SLAP, lower/equal/higher event counts are 4/136/0 and 15/125/0, respectively. Final event-pattern evidence is in `reports/published_baseline_20260915/`; older competition-enabled decoding reports are excluded.
 
 Figure 4 uses Golden case 9: the recovered reference and two alternative mappings. Compact red × marks for losses and paired green inward arrows for gains sit on the affected bonds in Figures 1 and 4, retaining fragment colors and the original black bond lines. Golden labels concern heavy atoms; totals explicitly include unannotated H assignments. The three selected witnesses are not an exhaustive decoded set. Evidence: `golden_case9.json` and `golden_case9_verification.json`.
 
@@ -59,7 +59,7 @@ The completed same-CPU Golden cap ablation is in the appendix (`evidence/golden_
 
 The published method uses one-seed cut sweep followed by separate decoding. Competition is excluded. Golden results are unchanged. Baseline-only coordinate evidence and decoding checks are in [the publication report](../reports/published_baseline_20260915/). At cap 2,000, GRAFT recovers 162/168 SLAP-sweep patterns and 151/160 native-SLAP patterns within the fixed windows. At equal minima, the corresponding counts are 158/164 and 138/140. The output has 300 event patterns, including 166 at GRAFT's own minima.
 
-Final end-to-end timing is recorded in `evidence/end_to_end_timing.json` and Table A5: all 140 reactions complete within the five-minute watchdog, preserving all 300 archived event classes and all 120,052 saved families. Mean/median CPU seconds are 1.257/0.300 for search, 4.647/0.288 for decoding, and 6.073/0.812 end to end. These are per-reaction CPU times, not divided by the four workers. Golden timings retain their explicitly labeled search-only scope. The final paper results, evidence, and bundle are ready; no further run is pending for these reported claims.
+Final end-to-end timing is recorded in `evidence/end_to_end_timing.json` and Table A4: all 140 reactions complete within the five-minute watchdog, preserving all 300 archived event classes and all 120,052 saved families. Mean/median CPU seconds are 1.257/0.300 for search, 4.647/0.288 for decoding, and 6.073/0.812 end to end. These are per-reaction CPU times, not divided by the four workers. Golden timings retain their explicitly labeled search-only scope. The final paper results, evidence, and bundle are ready; no further run is pending for these reported claims.
 
 ## Authors
 
@@ -71,10 +71,13 @@ assignments and official institutional sources. `main` is the publication branch
 
 ## Unified Golden comparison
 
-Table 2 merges the former seed and competitor tables. Every method/configuration
-has a mean CPU time. Panel A uses the paired 1,403-reaction AMD EPYC 9J14 cohort
-for GRAFT 1/2/3/10 seeds, GRAFT no sweep, and both SLAP unions. Panel B reports
-archived default-call CPU times for SLAP binary/weighted, RXNMapper, LocalMapper,
-Chython, Indigo, and RDT. Its CPU model was not recorded; the panels do not
-support a cross-hardware speed ranking. Recovery counts remain those of the
-primary 1,851-reaction evaluation. No searches were rerun for this consolidation.
+Table 2 presents all Golden recovery results and mean CPU times in one continuous
+table, without separate default-mapper or timing panels. GRAFT 1/2/3/10 seeds,
+GRAFT no sweep, and bidirectional SLAP use the paired 1,403-reaction AMD EPYC 9J14
+timing cohort. Superscript `a` marks archived default-call times whose CPU model
+was not recorded; these cannot support a cross-hardware speed ranking. The
+default SLAP row uses binary, which had higher recovery than the weighted default.
+The bidirectional SLAP baseline still combines both directions and both modes,
+as stated in the caption. Single-output methods are labeled “One bijection.”
+Detailed archived call counts and wall-time distributions remain in
+`evidence/timing_comparison.json`; the duplicate appendix timing table is removed.

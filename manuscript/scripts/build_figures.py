@@ -111,13 +111,14 @@ controlled_rows={r['key']:r for r in controlled['rows']}
 call_times={r['key']:r for r in timing['default_comparators']}
 labels={'rxnmapper':'RXNMapper','localmapper':r'LocalMapper$^{\dagger}$','chython':'Chython',
         'slap_binary':'SLAP, binary','slap_weighted':'SLAP, weighted','indigo':'Indigo','rdt':'RDT'}
-rows=[r'\multicolumn{5}{@{}l}{\textit{A. Matched search timing: AMD EPYC 9J14; 1,403 reactions}}\\',r'\addlinespace[3pt]']
+rows=[]
 audit=[]
 def comparison_row(name,setting,output,n,cpu,key,timing_group):
  assert 0 <= n <= N and cpu >= 0
  audit.append(dict(method=name,setting=setting,output=output,recovered=n,denominator=N,
                    mean_cpu_seconds=cpu,timing_key=key,timing_group=timing_group))
- return f"{name} & {setting} & {output} & {n:,} ({100*n/N:.2f}\\%) & {cpu:.3f} " + r"\\"
+ marker=r"$^{a}$" if timing_group=='B' else ''
+ return f"{name} & {setting} & {output} & {n:,} ({100*n/N:.2f}\\%) & {cpu:.3f}{marker} " + r"\\"
 for k,nseed in zip(keys,[1,2,3,10]):
  tkey=f'graft_c100_s{nseed}_sweep';cost=controlled_rows[tkey]
  n=methods[k]['golden_outcomes']['recovered']
@@ -126,13 +127,12 @@ for k,nseed in zip(keys,[1,2,3,10]):
 tkey='graft_c100_s1_uncut'
 rows.append(comparison_row('GRAFT','1 seed, no sweep','Families',uncut['methods']['graft']['counts']['recovered'],controlled_rows[tkey]['paired_mean'],tkey,'A'))
 for key,setting,n in [('slap_uncut','No sweep',uncut['methods']['slap']['counts']['recovered']),('slap_sweep','Sweep',slap['sweep_union_recovered'])]:
- name=r'SLAP, union$^{\ddagger}$' if key=='slap_sweep' else 'SLAP, union'
+ name=r'SLAP, bidirectional$^{\ddagger}$' if key=='slap_sweep' else 'SLAP, bidirectional'
  rows.append(comparison_row(name,setting,'Candidates',n,controlled_rows[key]['paired_mean'],key,'A'))
-rows += [r'\midrule',r'\multicolumn{5}{@{}l}{\textit{B. Archived default calls: CPU model not recorded}}\\',r'\addlinespace[3pt]']
-for key in ['slap_binary','slap_weighted','rxnmapper','localmapper','chython','indigo','rdt']:
+for key in ['slap_binary','rxnmapper','localmapper','chython','indigo','rdt']:
  d=next(d for d in competitors['methods'] if d['method']==key)
  assert d['total']==N and len(d['any_correct_cases'])==d['any_correct']
- rows.append(comparison_row(labels[key],'Default, no sweep','Candidates' if key.startswith('slap') else 'Mapping',d['any_correct'],call_times[key]['mean_cpu_seconds'],key,'B'))
+ rows.append(comparison_row(labels[key],'Default, no sweep','Candidates' if key.startswith('slap') else 'One bijection',d['any_correct'],call_times[key]['mean_cpu_seconds'],key,'B'))
 (MAN/'includes/generated-competitor-table.tex').write_text(r"\begin{tabular}{@{}lllr r@{}}\toprule"+'\n'+r"Method & Search setting & Output & Reference recovered & Mean CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
 (MAN/'build/golden-comparison-table.json').write_text(json.dumps(dict(rows=audit,
  recovery_scope='Primary evaluation: all 1,851 records; failures and unknowns retained.',
@@ -158,14 +158,6 @@ for prefix,label in [('graft1','GRAFT, 1 seed (default)'),('graft2','GRAFT, 2 se
   row.append(f"{st['mean']/timing['methods']['slap_'+policy]['stats']['mean']:.2f}")
   rows.append(' & '.join(row)+r"\\")
 (MAN/'includes/generated-direction-table.tex').write_text(r"\begin{tabular}{@{}llrrrrr@{}}\toprule"+'\n'+r"Method & Orientation & Recovered & Mean & Median & 95th pct. & CPU/SLAP\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
-rows=[]
-for d in timing['default_comparators']:
- name=d['method'] + (r'$^{\dagger}$' if d['key']=='localmapper' else '')
- source=next(v for v in competitors['methods'] if v['method']==d['key'])
- row=[name,f"{100*source['any_correct']/N:.2f}\\%",str(d['calls'])]+[f'{d[k]:.3f}' for k in ['mean_wall_seconds','median_wall_seconds','mean_cpu_seconds']]
- rows.append(' & '.join(row)+r"\\")
-(MAN/'includes/generated-comparator-timing-table.tex').write_text(r"\begin{tabular}{@{}lrrrrr@{}}\toprule"+'\n'+r"Implementation & Recovery & Calls & Mean wall s & Median wall s & Mean CPU s\\\midrule"+'\n'+'\n'.join(rows)+'\n'+r"\bottomrule\end{tabular}"+'\n')
-
 # Minimum-event comparison is separate from mapping-accuracy evaluation.
 rows=[]
 for name,label in [('slap_sweep','SLAP sweep'),('native_slap','Native SLAP')]:
