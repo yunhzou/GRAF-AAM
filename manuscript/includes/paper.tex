@@ -118,7 +118,7 @@ During search, history and boundary conditions matter because they determine val
  \qquad P_i=m(R_i),
  \label{eq:branch}
 \end{equation}
-under a fixed matching policy. Sorting atoms within each set and then sorting the fragment pairs removes dependence on growth order and fragment labels. Growing $A$ before $B$ or $B$ before $A$ yields one branch when the final paired sets agree.
+under a fixed matching policy. Sorting atoms within each set and then sorting the fragment pairs removes dependence on growth order and fragment labels. Growing $A$ before $B$ or $B$ before $A$ yields one branch when the final paired sets agree. The colors within each candidate in \Cref{fig:alternatives} illustrate these matched fragment pairs.
 
 Each branch stores the union of its flat families. Identical normalized family records are shared, while distinct constraints or action programs remain available. This transformation preserves the represented mapping union: it changes its grouping, not its admissible assignments. Provenance links retain the discovering paths, but the original search hierarchy is unnecessary for decoding. This conservative deduplication does not assert that the remaining families are mutually disjoint.
 
@@ -135,14 +135,14 @@ For each complete mapping, define the signed change for an unordered source pair
  \end{cases}
  \label{eq:events}
 \end{equation}
-Positive events denote bond formation or strengthening; negative events denote cleavage or weakening. The event count is $E(m)=\sum_{u<v}\mathbf 1[s_{uv}(m)\ne0]$. The evaluation includes hydrogen atoms and all atom pairs. For the WBO collection, $\delta_{uv}=0.3$ for pairs involving a metal and $0.5$ otherwise. These thresholds are independent of $\tau_{\mathrm{iso}}$.
+Positive events denote bond formation or strengthening; negative events denote cleavage or weakening. The event count is $E(m)=\sum_{u<v}\mathbf 1[s_{uv}(m)\ne0]$. The evaluation includes hydrogen atoms and all atom pairs. For the WBO collection, $\delta_{uv}=0.3$ for pairs involving a metal and $0.5$ otherwise. These thresholds are independent of $\tau_{\mathrm{iso}}$. \Cref{fig:alternatives} provides a concrete example: changing the atom correspondence changes which pairs gain or lose bond order, even when the total event counts agree (A and C).
 
 The decoder returns one bijection witness per distinct signed event class, identifying patterns related by exact source permutations that preserve all thresholded bond-change tests. Matching-preserving shuffles can therefore yield different event classes. The decoder first certifies families whose assignments all yield equivalent events and excludes families outside the requested event window. It then encodes the remaining family constraints symbolically in Z3~\citep{demoura2008}. Each solution supplies a witness and its event pattern; excluding that entire event class allows the next distinct pattern to be found. This avoids enumerating individual bijections or permutation groups.
 
 For a window $E\leq K$, decoding is complete when every retained family is certified exhausted or excluded. A timeout leaves completeness unresolved. This certificate concerns the saved search output within the window; it does not establish exhaustive exploration of all chemically possible mappings. The default deduplication preserves families that contain different event counts, as illustrated in the heavy-atom projection in \Cref{fig:algorithm}c.
 
 \FloatBarrier
-\subsection{Why retain multiple correspondences?}
+\subsection{Alternative correspondences and chemical interpretation}
 
 One bijection cannot describe all retained bond-event alternatives or the correlated atom shuffles within them. GRAFT therefore returns a representative of each event class together with access to its supporting families and conditional symmetry queries. Distinct patterns can have equal event counts, and minimizing the count need not recover the reference correspondence.
 
