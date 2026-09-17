@@ -2,7 +2,7 @@
 
 The scientific text has been rewritten around the final algorithm and supported results. The following information still requires author input; none has been invented:
 
-1. Corresponding-author details, funding acknowledgments, individual contributions, and competing-interest declarations. The existing author order and supplied affiliations have been preserved. Placeholder declarations are omitted from the compiled paper.
+1. Corresponding-author details, individual contributions, and competing-interest declarations. The existing author order and supplied affiliations have been preserved. Placeholder declarations are omitted from the compiled paper.
 2. Provenance and selection of the 140 coordinate reaction pairs, the electronic-structure method/software used to obtain their cached WBO matrices, and redistribution permissions. The paper calls this a development collection without annotated mappings, not an independent accuracy benchmark.
 3. Permanent data/archive identifiers if required for submission. The code URL points to the existing repository on `main`.
 
