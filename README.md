@@ -74,17 +74,23 @@ for candidate in decoded.candidates:
 
 ## Grow, branch, decode
 
+A reaction can admit several atom correspondences, with different bond changes or symmetry-related atom assignments. Returning one mapping hides those choices, while listing every symmetry permutation quickly becomes unwieldy. GRAFT grows matching fragments, branches when alternative placements are available, and keeps symmetry compressed. Separate decoding exposes distinct bond-change candidates for inspection.
+
 ![GRAFT: Golden fragment growth, branching and two distinct decoded event classes](manuscript/animations/graft_research_preview/graft-grow-branch-decode.gif)
 
-A 22-second Golden example: fragments grow into conditional branches, and the two grown branches decode to two distinct event classes on the right. Two decoded event classes are illustrated, including the reference-equivalent class; the saved catalogue contains nine. Red × marks show breaking or weakening; green inward arrows show forming or strengthening.
+This Golden example follows the recorded growth and branching, then shows two distinct decoded event patterns, including one equivalent to the reference. The saved catalogue contains nine patterns. Red × marks indicate breaking or weakening; green inward arrows indicate forming or strengthening.
 
 [Full-resolution MP4](manuscript/animations/graft_research_preview/graft-grow-branch-decode.mp4) · [Offline interactive viewer](manuscript/animations/graft_research_preview/index.html) · [Example and provenance](manuscript/animations/graft_research_preview/README.md)
 
 ## Use atom matching to explore alternative reaction pathways
 
+Suppose you know the reactants and products, but want to investigate whether the reaction could follow more than one pathway. The product structure alone may not tell you which reactant atom ends up at each site. Committing to one atom mapping can hide alternative atom origins and the different bond changes they imply.
+
+GRAFT searches for alternative correspondences so you can turn those differences into concrete pathway hypotheses. These give you starting points for mechanistic analysis and TS calculations; establishing whether a pathway exists requires investigating the steps between the endpoints.
+
 ![GRAFT recovers two oxygen-fate patterns in a 65-atom gold-catalyzed rearrangement](manuscript/animations/gold_rearrangement/gold-oxygen-preview.gif)
 
-Different atom correspondences can suggest different ways a reaction could proceed. In this 65-atom gold-catalyzed rearrangement, GRAFT recovers two oxygen placements: the original epoxide oxygen can become the ester-link oxygen or the ketone oxygen. These alternatives are consistent with different pathways considered in the published study. The animation follows the actual fragment growth that finds them, showing how AAM can expose pathway hypotheses for further investigation. Endpoint matching proposes possibilities; it does not establish the intervening mechanism.
+In this gold-catalyzed rearrangement, GRAFT recovers two possible destinations for the original epoxide oxygen: the ester link or the ketone. They are consistent with different pathways considered in the published study. The video follows the actual fragment growth that finds both oxygen assignments in the 65-atom system.
 
 [3D film](manuscript/animations/gold_rearrangement/gold-oxygen-3d.mp4) · [Film viewer](manuscript/animations/gold_rearrangement/index.html) · [Full growth trajectory](manuscript/animations/gold_rearrangement/trajectory.html) · [Reproduce and inspect the witnesses](examples/gold_rearrangement/README.md)
 
@@ -116,25 +122,35 @@ These original schemes use PH₃; the animation uses the supplied AuPPh₃ endpo
 
 ## Use AAM as a molecular structure verifier
 
+Suppose a generative model produces an XYZ structure for a target molecule. Its atoms may be reordered and its conformation may look different, so comparing coordinates directly does not tell you whether it generated the intended connectivity.
+
+GRAFT matches the generated structure to the target and checks whether the inferred connections agree under that correspondence. A complete match with no missing or extra connections verifies the same connectivity under the chosen bond-detection rule. Bond orders, stereochemistry and stability require separate checks.
+
 ![GRAFT verifies a 135-atom candidate with one complete fragment and no connectivity changes](manuscript/animations/molecule_verification/molecule-verification-preview.gif)
 
-Check whether a generated structure has the intended molecular connectivity, even when its conformation and atom order differ from the target. Given two XYZ files, GRAFT matches their atoms and checks for missing or extra connections. This controlled 135-atom example matches as one complete fragment, with all 148 inferred connections preserved. The check verifies connectivity; bond orders, stereochemistry and stability require separate checks.
+This controlled demonstration uses a 135-atom target with a changed conformation and shuffled atom order to illustrate the check. GRAFT matches it as one complete fragment and preserves all 148 inferred connections.
 
 [3D video](manuscript/animations/molecule_verification/molecule-verification.mp4) · [Interactive film](manuscript/animations/molecule_verification/index.html) · [Try it with your XYZ files](examples/molecule_verification/README.md)
 
 ### Detect a broken structure
 
+A generated structure can contain every expected atom and still have a disconnected group. Atom counts alone would miss that error. The same AAM check can locate the missing connection and reject the structure.
+
 ![GRAFT detects an intentionally broken molecule despite complete atom coverage](manuscript/animations/molecule_verification_broken/broken-molecule-verification-preview.gif)
 
-Keep all 135 atoms, but disconnect one 21-atom group. The recorded search still maps every atom, now in **two fragments (114 + 21)**. The final check finds **one missing connection** and rejects the candidate. The animation shows the deliberate separation, the actual interrupted growth, and the failed verdict.
+Here we deliberately disconnect a 21-atom group. GRAFT still assigns all 135 atoms, but now needs two fragments and finds one missing connection. The video shows why complete atom coverage alone is insufficient for structure verification.
 
 [Broken-molecule video and evidence](manuscript/animations/molecule_verification_broken/README.md) · [Run the negative control](examples/molecule_verification/README.md#negative-control-break-one-connection)
 
 ## Use AAM to guide TS mode selection
 
+Suppose you have a TS guess and a frequency calculation with many vibrational modes. You need to identify the motion relevant to your intended reaction: which mode moves atoms along the bonds that should break and form? A frequency value alone does not identify that motion.
+
+GRAFT first maps the reactant and product to identify their bond changes, then matches the reaction core into the guess. It scores how well the mode displacements follow those changes and selects among the imaginary modes. This provides a reaction-guided choice of mode for a subsequent TS search.
+
 ![GRAFT maps bond changes and selects a recorded mode at a TS guess](manuscript/animations/ts_mode_selection/rp-to-ts-mode-preview.gif)
 
-Use the mapped bond changes to identify motion relevant to a proposed reaction. In this 57-atom example, GRAFT identifies O–H weakening and N–H strengthening, then selects a recorded imaginary mode at the TS guess that follows those changes. The close-up tracks the transferring hydrogen, with a stable mode shown for comparison. This guides mode selection at a **TS guess, not an optimized TS**.
+The video illustrates an O–H → N–H transfer in a 57-atom guess. The selected imaginary mode moves the highlighted hydrogen along the mapped bond changes; a stable mode is shown for contrast. This particular guess has one imaginary mode. The geometry remains a **TS guess, not an optimized TS**.
 
 [3D video and scoring evidence](manuscript/animations/ts_mode_selection/README.md) · [Interactive film](manuscript/animations/ts_mode_selection/index.html) · [Self-contained Python replay](examples/ts_mode_selection/README.md)
 
