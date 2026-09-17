@@ -1,35 +1,39 @@
-# Gold rearrangement — Grow. Branch. Decode.
+# Gold rearrangement — actual atom-by-atom growth
 
-A **22-second 3D film**, using the same presentation as the original Golden growth/branch/decode animation: matched molecules on the left, a growing tree on the right, one-second branch highlights, and two final candidate cards feeding the right-hand decoder.
+A **30-second 3D replay** of one recorded cut context. The matching grows atom by atom, branches from its actual shared states, and reaches the two featured oxygen alternatives. The other subtree is shown as **“… 2 other terminals”**; it has not been removed from the underlying trace.
 
-![GRAFT: 3D fragment growth and two oxygen assignments in a gold-catalyzed rearrangement](gold-oxygen-preview.gif)
+![Actual GRAFT atom-by-atom growth and the oxygen-placement split](gold-oxygen-preview.gif)
 
-[Full-resolution MP4](gold-oxygen-3d.mp4) · [Offline interactive viewer](index.html) · [Inputs, witnesses and reproduction](../../../examples/gold_rearrangement/README.md)
+[Film (MP4)](gold-oxygen-3d.mp4) · [Film viewer](index.html) · [Inspect every growth event and all four branches](trajectory.html) · [Inputs and reproduction](../../../examples/gold_rearrangement/README.md)
 
-Download and open `index.html` in a browser. It is self-contained and includes play/pause, scrubbing and “See candidates.”
+Both HTML viewers are self-contained and work offline after downloading. The detailed trajectory viewer exposes every live candidate, tested extension, deferred boundary, symmetry block and terminal branch from this cut.
 
-## Follow one oxygen
+## What the tree contains
 
-The ring and **O*** label identify the original epoxide oxygen. Fragment colors show the atom correspondence throughout growth. The final cards enlarge the organic core and track that same O* into the product:
+The illustrated cut is **C17–O18**, using one-based indices from the original XYZ. It is archive context 21: **15 saved states, 14 fragment transitions and four complete terminal branches**. The cut is a search constraint, not an assertion that this bond breaks in the reaction.
 
-- **Candidate 1:** O* becomes the ester-link oxygen, consistent with literature route a.
-- **Candidate 2:** O* becomes the ketone oxygen, consistent with literature routes b and c.
+The two featured paths share four fragment placements, reaching **63 assigned atoms**. Their next fragment is the epoxide oxygen. Two retained placements produce two 64-atom states, each completed by the remaining oxygen. The alternate earlier subtree contains the other two terminal branches and is collapsed visually to an ellipsis. Thus the film's two highlighted outputs are genuine siblings in one recorded search tree, not independent trajectories drawn as if they shared a prefix.
 
-The paper favors route a energetically. Routes b and c converge at intermediate 14 and share this endpoint oxygen pattern. Recovering these endpoint correspondences supports different pathway hypotheses; GRAFT did not compute the intermediate mechanisms or their kinetics.
+Growth uses captured live candidate representatives from a verified replay of the saved fragment calls. Each featured path contains **59 single-atom extensions and six seed placements**, together covering all 65 atoms. The replay also preserves ten deferred-edge decisions. All 88 retained film-frame records per path are checked against the detailed trace. The growing candidate count can rise and fall; these live candidates are not the same quantity as the four final terminal branches.
 
-Source: González Pérez et al., “Mechanism of the Gold-Catalyzed Rearrangement of (3-Acyloxyprop-1-ynyl)oxiranes: A Dual Role of the Catalyst,” *J. Org. Chem.* **2009**, 74, 2982–2991. [DOI: 10.1021/jo802516k](https://pubs.acs.org/doi/10.1021/jo802516k).
+## Timeline
 
-## Timeline and evidence
+- **0–14 s:** actual atom additions in the four shared fragments, including the AuPPh₃ ligand. Compressed candidate counts and boundary deferrals are shown.
+- **14–17 s:** the real oxygen-placement split; follow one placement and then replay the other from the same parent.
+- **17–19 s:** one-second blue/purple highlights track the original epoxide oxygen, **O***, with the camera paused.
+- **19–30 s:** decode the featured families and compare their product correspondences; the other two families remain indicated by the ellipsis.
 
-**0–7 s:** the full 65-atom AuPPh₃ reactant/product complexes and two saved fragment-growth histories. **7–9 s:** blue and purple pulses highlight the two assignments of O*, with the camera paused. **9–14 s:** complete families feed into the decoder. **14–22 s:** two distinct candidate cards remain next to the decoder.
+The final cards enlarge the organic core. Fragment colors show correspondence. Red crosses and green inward arrows annotate changes involving O*; black lines retain existing bonds. The badges count all signed threshold events in each full witness, including bond-order and metal changes. They are not counts of elementary reaction steps.
 
-The tree shows two selected histories from different cut-sweep contexts, not the entire search. Every displayed node is a saved fragment commit; node numbers count assigned atoms. The final witnesses pass complete family-membership queries and have distinct canonical bond-event signatures. This is selected-witness decoding, not exhaustive decoding of all returned families. No bijection enumeration or fragment competition is used.
+## Pathway interpretation
 
-The final cards show the organic heavy-atom core. Red crosses mark breaking/weakening involving O*; green inward arrows mark forming/strengthening involving O*. Existing bonds remain black. The badge counts **all** signed threshold events in the full witness, including bond-order and metal changes; only the O*-centered changes are annotated visually. These counts are not elementary reaction steps.
+Candidate 1 sends O* to the product's **ester-link oxygen**, consistent with literature route a. Candidate 2 sends O* to the **ketone oxygen**, consistent with routes b and c. Those two literature routes converge at intermediate 14 and share an endpoint oxygen pattern. The paper favors route a energetically. GRAFT recovered the correspondences from endpoints alone; it did not calculate the intermediate mechanisms or their kinetics.
 
-Coordinates are supplied optimized endpoints, rigidly aligned for presentation. Camera rotations and core close-ups do not change molecular geometry. Dashed gold contacts display Au-pair WBOs between 0.15 and 0.45; this display rule is separate from matching and event thresholds. No endpoint morph or simulated dynamics is shown. The search settings, independently inferred oxygen provenance and GFN2-xTB input preparation are documented in the linked example.
+Source: González Pérez et al., *J. Org. Chem.* **2009**, 74, 2982–2991. [DOI: 10.1021/jo802516k](https://pubs.acs.org/doi/10.1021/jo802516k). The input preparation and independent oxygen-provenance interpretation are documented in the linked example.
 
-## Rebuild
+The endpoint coordinates are rigidly aligned for display. The film is a search replay, not molecular dynamics. Core close-ups omit catalyst atoms only from the drawing. Dashed gold contacts use a display WBO range of 0.15–0.45, separate from matching and event thresholds. Other sweep contexts are outside this film's scope. The full family union is not exhaustively decoded here.
+
+## Rebuild or inspect
 
 ```bash
 python manuscript/scripts/gold_film/build.py
@@ -37,6 +41,14 @@ node manuscript/scripts/gold_film/render.cjs manuscript/animations/gold_rearrang
 python manuscript/scripts/gold_film/export_gif.py manuscript/animations/gold_rearrangement
 ```
 
-The build rechecks family membership, event signatures and rigid display-coordinate transformations. Rendering requires Playwright, Chrome and ffmpeg; `PLAYWRIGHT_MODULE`, `CHROME`, and `FFMPEG` can override their locations. These commands reuse the frozen evidence, without rerunning AAM.
+The builder verifies every featured growth frame against `trajectory.json.gz`, checks shared-prefix transitions and the collapsed subtree, and certifies both complete witnesses against their compressed families. The browser renderer checks the real tree, one-second highlights, paused camera and mapping injectivity. The MP4 is 1440 × 900 at 24 fps; the GIF is 960 × 600 at 12 fps.
 
-The MP4 is 1440 × 900 at 24 fps. The README GIF is 960 × 600 at 12 fps. `science-validation.json`, `rebuild-validation.json`, `browser-validation-3d.json` and `media-validation.json` record the checks. The earlier split 2D/3D presentation has been replaced; its history remains in Git.
+To regenerate an inspectable trace from the example's checkpoint:
+
+```bash
+python examples/gold_rearrangement/run_gold.py --output gold-output
+python manuscript/scripts/gold_film/capture_trajectory.py \
+  gold-output/aam.checkpoint gold-trace --context 21
+```
+
+The replay has a 300-second watchdog and checks its fragment results against the saved archive. The standalone detailed viewer keeps all four branches available; the promotional film collapses only the explicitly counted subtree.

@@ -8,5 +8,18 @@
   "family_membership_queries": [
     "recovered",
     "recovered"
+  ],
+  "recorded_previews_checked": 176,
+  "unit_growth_events_per_path": 59,
+  "actual_context": 21,
+  "actual_states": 15,
+  "actual_transitions": 14,
+  "actual_terminal_branches": 4,
+  "collapsed_terminal_branches": 2,
+  "shared_prefix_transitions": [
+    6015,
+    6016,
+    6018,
+    6020
   ]
 }

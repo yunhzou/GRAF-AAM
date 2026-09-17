@@ -3,23 +3,23 @@
   "media": [
     {
       "file": "gold-oxygen-3d.mp4",
-      "frames": 528,
-      "duration": 22.0,
+      "frames": 720,
+      "duration": 30.0,
       "size": [
         1440,
         900
       ],
       "fps": 24.0,
-      "sha256": "51141e818704c78b59407007270960838f7d5f579789fd1a242eff81a428ff9d"
+      "sha256": "f2b4743d670f49e0834405656a052374539fa06ff23670e8928b152fc43b1916"
     },
     {
       "file": "gold-oxygen-preview.gif",
-      "frames": 264,
-      "duration": 22.0,
+      "frames": 360,
       "size": [
         960,
         600
-      ]
+      ],
+      "duration": 30.0
     }
   ]
 }

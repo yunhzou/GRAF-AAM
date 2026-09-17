@@ -43,6 +43,6 @@ OMP_NUM_THREADS=1 python examples/gold_rearrangement/recompute_wbo.py \
   examples/gold_rearrangement/data/2PPh3.xyz /tmp/reactant-wbo.json
 ```
 
-`selected-families.json` stores the two compressed families and full witness checks. `oxygen-provenance-audit.json` records the independent stationary-structure tracing; this was performed after the search and used only for interpretation. Intermediate geometry files are not required to reproduce GRAFT's recovery. The source PDF and full supplied archive are not redistributed.
+`selected-families.json` stores the two film families and full witness checks. Both film witnesses are siblings in cut context 21, with a shared 63-atom prefix. The standalone recovery script can select a different representative with the same event class. The film includes verified atom-level replay; the linked detailed trajectory viewer retains all four branches in this cut. `oxygen-provenance-audit.json` records the independent stationary-structure tracing; this was performed after the search and used only for interpretation. Intermediate geometry files are not required to reproduce GRAFT's recovery. The source PDF and full supplied archive are not redistributed.
 
 [Animations and offline viewer](../../manuscript/animations/gold_rearrangement/README.md)

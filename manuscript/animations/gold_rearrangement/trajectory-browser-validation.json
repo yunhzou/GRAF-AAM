@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "errors": [],
+  "terminal_branches": 4,
+  "sampled_events": 20,
+  "actual_states": 15
+}
