@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "errors": [],
+  "video": true,
+  "viewport": [
+    1440,
+    900
+  ],
+  "frames_checked": 672,
+  "recorded_growth_steps_shown": 135,
+  "all_atom_additions_shown": true
+}

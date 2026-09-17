@@ -37,8 +37,8 @@ sessions = ["pymongo>=4.6"]
 graft = "graft.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yunhzou/coordinate_alignment"
-Repository = "https://github.com/yunhzou/coordinate_alignment"
+Homepage = "https://github.com/yunhzou/GRAF-AAM"
+Repository = "https://github.com/yunhzou/GRAF-AAM"
 
 [tool.setuptools.packages.find]
 where = ["src"]

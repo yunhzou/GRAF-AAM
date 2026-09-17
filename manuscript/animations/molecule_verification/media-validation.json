@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "mp4": {
+    "dimensions": [
+      1440,
+      900
+    ],
+    "fps": 24,
+    "duration_seconds": 28,
+    "frames": 672,
+    "decode_errors": 0
+  },
+  "gif": {
+    "dimensions": [
+      960,
+      600
+    ],
+    "frames": 336,
+    "duration_seconds": 28.0
+  },
+  "files": {
+    "molecule-verification.mp4": "16bb94b2ce9117664c6c117ff0abb59a699320fa1287f2759da85a78c3e86223",
+    "molecule-verification-preview.gif": "8a4cca5a35c63ebab97815d3f36fc7b200dc573f7ae7cfe686bcb1df34224318",
+    "poster.png": "7ad95166d75c7efb1d545987b848cbf5438f6a2c9c13ad3e0293ce4161764736"
+  }
+}

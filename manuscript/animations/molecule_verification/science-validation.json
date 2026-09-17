@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "atoms": 135,
+  "fragments": 1,
+  "unit_growth_events": 134,
+  "seed_placements": 1,
+  "missing_connections": 0,
+  "extra_connections": 0,
+  "trace_sha256": "17bf892a25d652bd4ad3104caecd1f938c8899965213e81f7d525a643fa7301d",
+  "all_display_frames_are_recorded": true,
+  "display_transforms_preserve_distances": true,
+  "scope": "Connectivity only; does not establish bond orders, stereochemistry, charge or stability."
+}

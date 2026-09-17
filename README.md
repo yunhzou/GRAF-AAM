@@ -52,6 +52,14 @@ Both routes match **Candidate 2**: the original epoxide oxygen becomes the keton
 
 These original schemes use PH₃; the animation uses the supplied AuPPh₃ endpoint structures. The displayed energies belong to the source paper. [All three pathway pictures, interpretation and attribution](manuscript/animations/gold_rearrangement/pathway-reference/README.md).
 
+## Verify a generated structure · 135 atoms
+
+![GRAFT verifies a 135-atom candidate with one complete fragment and no connectivity changes](manuscript/animations/molecule_verification/molecule-verification-preview.gif)
+
+Given a target XYZ and a candidate XYZ, recover a complete atom correspondence and check whether all inferred connections agree. This controlled demonstration uses a large holdout molecule with changed conformation and shuffled atom order. The film follows the actual one-fragment growth: **135 atoms, 148 inferred connections, no missing or extra connections**. Connectivity is inferred independently from each XYZ; bond orders, stereochemistry and stability require separate checks.
+
+[3D video](manuscript/animations/molecule_verification/molecule-verification.mp4) · [Interactive film](manuscript/animations/molecule_verification/index.html) · [Try it with your XYZ files](examples/molecule_verification/README.md)
+
 ## Current work and stable versions
 
 See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,
