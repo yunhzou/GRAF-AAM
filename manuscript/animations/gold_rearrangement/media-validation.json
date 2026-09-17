@@ -10,7 +10,7 @@
         900
       ],
       "fps": 24.0,
-      "sha256": "f2b4743d670f49e0834405656a052374539fa06ff23670e8928b152fc43b1916"
+      "sha256": "aa71db23853c6de4f2516c12b8adf3cb012eb0b6e414254e9d1038a9d359acf7"
     },
     {
       "file": "gold-oxygen-preview.gif",
@@ -19,7 +19,16 @@
         960,
         600
       ],
-      "duration": 30.0
+      "duration": 30.0,
+      "sha256": "f3a6272b772ec09551ca3a53cea3888bb395f8188b97c7cfcb80d6212eac172e"
+    },
+    {
+      "file": "poster-3d.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "300bc9ec6b8ac4c46bc8b64b397087205bff99787e59c20e3ea9b3999206e7d0"
     }
   ]
 }

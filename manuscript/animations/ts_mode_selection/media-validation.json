@@ -1,15 +1,34 @@
 {
   "status": "passed",
-  "mp4_frames": 720,
-  "mp4_size": [
-    1440,
-    900
-  ],
-  "mp4_fps": 24.0,
-  "gif_frames": 360,
-  "gif_size": [
-    960,
-    600
-  ],
-  "gif_duration_ms": 30000
+  "media": [
+    {
+      "file": "rp-to-ts-mode.mp4",
+      "frames": 720,
+      "duration": 30.0,
+      "size": [
+        1440,
+        900
+      ],
+      "fps": 24.0,
+      "sha256": "d729874c21a8180263cc910c29b85f05cb0ee7a182660a55e4e5090497bdff97"
+    },
+    {
+      "file": "rp-to-ts-mode-preview.gif",
+      "frames": 360,
+      "size": [
+        960,
+        600
+      ],
+      "duration": 30.0,
+      "sha256": "498a100d7a1b91908d51b1b758f28d6dc8c79f7ffaeb2d1064531a340a15fb13"
+    },
+    {
+      "file": "poster.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "666a66d840f0f884a3f6a764f2c368a24541f6208f8b2ba2624db30a8842b116"
+    }
+  ]
 }

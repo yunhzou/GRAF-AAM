@@ -46,7 +46,7 @@
   "errors": [],
   "external": [],
   "notebook": "docs/AAM_SIMPLE.ipynb",
-  "sha256": "a659785f760996979a16338767abebc35829f0cf0d1234517ace2c22b806d287",
+  "sha256": "21ba80d74140ff1f9b0f6fc654063aba3efeeb454eb2876f8e8023c30995a9e4",
   "code_cells": 16,
   "display_errors": 0,
   "static_pngs": 2,
@@ -81,5 +81,6 @@
       6
     ]
   },
-  "alternative_candidate_inspection": "passed"
+  "alternative_candidate_inspection": "passed",
+  "presentation_refresh": "2026-09-17: cached growth animation uses element colors for unassigned atoms; scientific outputs unchanged."
 }

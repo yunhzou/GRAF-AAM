@@ -1,0 +1,37 @@
+{
+  "film": "graft_research_preview",
+  "status": "passed",
+  "checks": [
+    {
+      "time": 0,
+      "checked": 29,
+      "elements": [
+        "N",
+        "C",
+        "O",
+        "F",
+        "H"
+      ],
+      "assigned": 1
+    },
+    {
+      "time": 5,
+      "checked": 10,
+      "elements": [
+        "O",
+        "C",
+        "H"
+      ],
+      "assigned": 20
+    }
+  ],
+  "errors": [],
+  "film_data_sha256": "6eb2b771605f36f688e9d20dd82ba0564cbe6f1c33c687df21aec586f093ea05",
+  "html_sha256": "ac53743bb681e42753fc1afaf51379b6893fdb2882d24b3a2cd93e8dcd721a27",
+  "scope": "Unassigned atoms use Jmol element colors; matched fragments and reaction highlights retain their palettes.",
+  "render": {
+    "film": "graft_research_preview",
+    "seconds": 65.77,
+    "encoder_threads": 2
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "film": "gold_rearrangement",
+  "status": "passed",
+  "checks": [
+    {
+      "time": 0,
+      "checked": 65,
+      "elements": [
+        "C",
+        "O",
+        "H",
+        "Au",
+        "P"
+      ],
+      "assigned": 0
+    },
+    {
+      "time": 5,
+      "checked": 47,
+      "elements": [
+        "C",
+        "O",
+        "H",
+        "Au"
+      ],
+      "assigned": 18
+    }
+  ],
+  "errors": [],
+  "film_data_sha256": "5352a3d517255f55f752363c82dff0739a0e27df060c4f1a4db0f62129fb48e5",
+  "html_sha256": "89934055794ce5c2d373d0473650c41905e93a127e1e22248d74a55379171ac6",
+  "scope": "Unassigned atoms use Jmol element colors; matched fragments and reaction highlights retain their palettes.",
+  "render": {
+    "film": "gold_rearrangement",
+    "seconds": 80.1,
+    "encoder_threads": 2
+  }
+}

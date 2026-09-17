@@ -6,14 +6,21 @@
 .mini{width:394px;height:126px}.mini.r{left:20px;top:76px;height:118px}.mini.p{left:20px;top:221px;height:124px}.mini-label.r{left:23px;top:60px}.mini-label.p{left:23px;top:204px}.mini-arrow{left:403px;top:194px}table.events{top:353px}.events td{height:27px}.mapping-note{bottom:14px}.mini-arrow{transform:rotate(90deg)}#links{position:absolute;inset:0;width:844px;height:430px;pointer-events:none;z-index:5}
 .event-overlay{position:absolute;inset:0;pointer-events:none;z-index:20}.events .sym{width:38px}.events .sym svg{vertical-align:middle}#finale .event-overlay{width:100%;height:100%}#finale{justify-content:center;gap:30px}.candidate{width:540px}.mini{width:500px}.mini-arrow{left:507px}.mapping-note{font-size:11px}.mini.r{height:132px}.mini-label.p{top:218px}.mini.p{top:235px;height:142px}table.events{top:389px}.events td{height:24px}.bundle.same{border-color:#ad943e;background:#fbf8e9}
 #finale{right:auto;width:844px;gap:18px;justify-content:flex-start}.candidate{width:413px;padding:17px}.candidate-head b{font-size:17px}.badge{font-size:10px}.mini{width:373px}.mini.r{left:20px;top:78px;height:120px}.mini.p{left:20px;top:216px;height:132px}.mini-label.r{top:61px;left:23px}.mini-label.p{top:198px;left:23px}.mini-arrow{left:386px;top:199px}table.events{top:359px;left:20px;width:calc(100% - 40px)}.events td{height:22px}.events .kind{width:88px}.mapping-note{font-size:10px;left:20px;bottom:14px}.reference-tag{position:absolute;top:43px;left:18px;color:#50785c;font-size:10px}.steps{gap:20px}.edition{font-size:10px;letter-spacing:1.5px}#treeNote{font-size:11px;line-height:1.7}#treePanel{height:516px}#tree{height:449px;top:33px}#caption{font-size:24px}#detail{font-size:13px}
-table.events td{height:21px;line-height:18px;padding:0}.events .sym{font-size:12px}.events .sym svg{width:26px;height:17px}#branchCue{position:absolute;left:15px;top:48px;padding:10px 16px;border:1px solid;border-radius:10px;background:#ffffffec;font-size:13px;font-weight:600;letter-spacing:.6px;z-index:25;pointer-events:none;display:none}.branch-overlay{position:absolute;inset:0;pointer-events:none;z-index:19}</style></head><body>
+table.events td{height:21px;line-height:18px;padding:0}.events .sym{font-size:12px}.events .sym svg{width:26px;height:17px}#branchCue{position:absolute;left:15px;top:48px;padding:10px 16px;border:1px solid;border-radius:10px;background:#ffffffec;font-size:13px;font-weight:600;letter-spacing:.6px;z-index:25;pointer-events:none;display:none}.branch-overlay{position:absolute;inset:0;pointer-events:none;z-index:19}#elementLegend{position:absolute;top:469px;left:6px;display:flex;gap:9px;font-size:10px;color:#62716c;white-space:nowrap}#elementLegend b{font-weight:500;margin-right:6px}</style></head><body>
 <div id="film"><header><div class="brand">GRAFT<span style="color:#c3a456">.</span></div><div class="edition">A SPACE OF ATOM CORRESPONDENCES</div><nav class="steps"><span id="s0"><b>01</b> GROW</span><span id="s1"><b>02</b> BRANCH</span><span id="s2"><b>03</b> DECODE</span></nav></header>
 <h1 id="headline"></h1><div id="subtitle"></div><div class="hairline"></div>
-<div id="main"><div id="molecules"><div id="branchCue"></div><div class="mol-title">REACTANT <span>source identities</span></div><div class="mol-title product">PRODUCT <span>matched identities</span></div><div class="molecule r" id="r"></div><div class="molecule p" id="p"></div><div id="pairlink">↔</div><svg id="links" viewBox="0 0 844 430"></svg><div id="legend"></div></div>
+<div id="main"><div id="molecules"><div id="branchCue"></div><div class="mol-title">REACTANT <span>source identities</span></div><div class="mol-title product">PRODUCT <span>matched identities</span></div><div class="molecule r" id="r"></div><div class="molecule p" id="p"></div><div id="pairlink">↔</div><svg id="links" viewBox="0 0 844 430"></svg><div id="legend"></div><div id="elementLegend"></div></div>
 <div id="treePanel"><h2 id="treeTitle">RETAINED FRAGMENT PLACEMENTS</h2><svg id="tree" viewBox="0 0 460 430"></svg><div id="treeNote"></div></div><div id="status"></div></div>
 <div id="compressed"></div><div id="finale"></div><div id="caption"></div><div id="detail"></div><div id="footer"><span id="sourceTag">COORDINATE CASE 101 / PR7 · ARCHIVED SEARCH CONTEXT</span><span>ILLUSTRATIVE CONFORMERS · SEARCH REPLAY, NOT DYNAMICS</span></div><div class="progress" id="progress"></div><div class="flash" id="flash"></div></div>
 <div id="controls"><button id="play">Play film</button><input type="range" id="seek" min="0" max="22" step=".05" value="0" aria-label="Film time"><span id="time">0:00 / 0:22</span><button id="end">See candidates</button></div><div id="notes"><b>Golden case 15.</b> <span id="scope"></span> Fragment colors carry the correspondence; red crosses and green inward arrows label bond events. All displayed witnesses come from the saved baseline cut sweep. The two grown branches decode to two distinct signed-event classes. Final cards are actual representatives from complete catalogue decoding, with the Golden reference-equivalent class labeled. <a href="film-data.json">Mappings and provenance</a> · <a href="science-validation.json">Validation</a></div>
 <script>
+
+// Chemical identity is visible until a fragment or reaction-core highlight replaces it.
+function elementStyle(v,elements,scale=.21,radius=.06){
+ for(const elem of new Set(elements))v.setStyle({elem},{stick:{radius:elem==='H'?radius*.65:radius,color:'#68717a'},sphere:{scale:elem==='H'?scale*.72:scale,color:$3Dmol.elementColors.Jmol[elem]??0x909090}});
+}
+function elementKey(elements){return [...new Set(elements)].sort().map(e=>`<span style="white-space:nowrap"><i style="display:inline-block;width:8px;height:8px;border:1px solid #bac3bb;border-radius:50%;margin-right:4px;background:#${($3Dmol.elementColors.Jmol[e]??0x909090).toString(16).padStart(6,'0')}"></i>${e}</span>`).join(' ');}
+
 const D=__DATA__, $=s=>document.getElementById(s), palette=['#e5bf55','#73b7ac','#aaa4d3','#d9a18a'];
 const clamp=x=>Math.max(0,Math.min(1,x)),ease=x=>{x=clamp(x);return x*x*(3-2*x)};
 const viewers={},views={}, cache={};let prevT=0;
@@ -33,6 +40,7 @@ function branchHalo(id,side,t){
 }
 $('scope').textContent=D.scope;
 $('legend').innerHTML=palette.map((c,i)=>`<span><i class="dot" style="background:${c}"></i>Fragment ${i+1}</span>`).join('');
+$('elementLegend').innerHTML='<b>Unassigned · element colors</b>'+elementKey(D.input.reactant.elements);
 const els=D.input.reactant.elements;
 function label(a){return els[a]+a}
 function eventMark(x,y,angle,loss,size=5){
@@ -51,7 +59,7 @@ function init(id,side){
  const ep=D.input[side==='r'?'reactant':'product'];
  v.addModel().addAtoms(ep.elements.map((elem,i)=>({elem,index:i,serial:i,x:ep.coordinates[i][0],y:ep.coordinates[i][1],z:ep.coordinates[i][2],
  bonds:ep.wbo[i].flatMap((w,j)=>i!==j&&w>D.config.graph_floor?[j]:[]),bondOrder:ep.wbo[i].flatMap((w,j)=>i!==j&&w>D.config.graph_floor?[1]:[])})));
- v.setStyle({},{stick:{radius:.07,color:'#343d37'},sphere:{scale:.22,color:'#cbd3cb'}});
+ elementStyle(v,ep.elements,.22,.07);
  v.zoomTo();v.rotate(15,'x');v.rotate(-12,'y');v.zoom(id.length>1?1.7:.92);views[id]=v.getView();viewers[id]=v;v.render();
 }
 init('r','r');init('p','p');for(let i=0;i<D.decoded_candidates.length;i++){init('r'+i,'r');init('p'+i,'p')}
@@ -60,7 +68,7 @@ function drawMol(id,side,pi,f,t,final=false){
  const key=JSON.stringify([pi,f.mapping,f.active,f.stage,final,f.groups,t>=11]);
  if(cache[id]!==key){
   cache[id]=key;v.removeAllLabels();v.removeAllShapes();
-  v.setStyle({},{stick:{radius:.065,color:'#c4ccc3'},sphere:{scale:.15,color:'#d9dfd6'}});
+  elementStyle(v,ep.elements,.21,.065);
   const active=new Set(f.active);
   for(const [a,b] of Object.entries(m)){
    const i=side==='r'?+a:b,g=active.has(+a)?f.stage-1:(f.groups||p.groups)[a];

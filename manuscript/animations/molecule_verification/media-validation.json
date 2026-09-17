@@ -1,26 +1,34 @@
 {
   "status": "passed",
-  "mp4": {
-    "dimensions": [
-      1440,
-      900
-    ],
-    "fps": 24,
-    "duration_seconds": 28,
-    "frames": 672,
-    "decode_errors": 0
-  },
-  "gif": {
-    "dimensions": [
-      960,
-      600
-    ],
-    "frames": 336,
-    "duration_seconds": 28.0
-  },
-  "files": {
-    "molecule-verification.mp4": "16bb94b2ce9117664c6c117ff0abb59a699320fa1287f2759da85a78c3e86223",
-    "molecule-verification-preview.gif": "8a4cca5a35c63ebab97815d3f36fc7b200dc573f7ae7cfe686bcb1df34224318",
-    "poster.png": "7ad95166d75c7efb1d545987b848cbf5438f6a2c9c13ad3e0293ce4161764736"
-  }
+  "media": [
+    {
+      "file": "molecule-verification.mp4",
+      "frames": 672,
+      "duration": 28.0,
+      "size": [
+        1440,
+        900
+      ],
+      "fps": 24.0,
+      "sha256": "02e507db571c187341d9f39c4d24ad3cf2a8e73187630911879b7627c665a0d8"
+    },
+    {
+      "file": "molecule-verification-preview.gif",
+      "frames": 336,
+      "size": [
+        960,
+        600
+      ],
+      "duration": 28.0,
+      "sha256": "29ec934d8acacad89b0cbecb5b5804b63d22184b8b826c7160e0682a70055866"
+    },
+    {
+      "file": "poster.png",
+      "size": [
+        1440,
+        900
+      ],
+      "sha256": "b48b1b76856b8e643d94a672bd0261428cac91446aafbd4a5cfee3e802c82fc0"
+    }
+  ]
 }

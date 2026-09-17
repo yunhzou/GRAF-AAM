@@ -1,5 +1,7 @@
 # From R/P mapping to guided TS mode selection
 
+Unassigned atoms use standard element colors (oxygen red, nitrogen blue, carbon gray, hydrogen white); fragment colors appear as matching progresses.
+
 ![Mapped bond events guide a mode choice at a real TS guess](rp-to-ts-mode-preview.gif)
 
 [30-second video](rp-to-ts-mode.mp4) · [Interactive film](index.html) · [Recorded input](inputs/recorded-case.json) · [Current TS result](current-ts-score.json)

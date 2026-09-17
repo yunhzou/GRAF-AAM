@@ -368,7 +368,7 @@ body[data-viewer-layout="anchor"] .vw{height:260px}}
 <div class="topbar trace-options"><label><input id="labels" type="checkbox" checked> Key atom labels</label>
 <label><input id="all-labels" type="checkbox"> All atom labels</label><label><input id="final-events" type="checkbox"> Final bond events</label>
 <button class="dl" id="focus">Focus current fragment</button><button class="dl" id="reset">Reset views</button>
-<span class="meta">Gold atoms: growing fragment / selected trial · gray context: unassigned · dark context: committed</span></div>
+<span class="meta">Gold atoms: growing fragment / selected trial · element colors: unassigned · larger context atoms: committed</span></div>
 <div class="ref-row no-gt">
 <div class="panel"><div class="ph"><span class="lbl">Reactant R</span><span class="rk">original atom indices</span></div><div class="vw"><div id="r" class="vwbox"></div></div></div>
 <div class="panel"><div class="ph"><span class="lbl">Product P</span><span class="rk">native product indices</span></div><div class="vw"><div id="p" class="vwbox"></div></div></div>
@@ -406,7 +406,7 @@ function paint(){
  if(row)active.add(f.trial.added);
  for(const side of ['r','p']){
   const v=viewers[side],ep=DATA.input[side==='r'?'reactant':'product'];v.removeAllShapes();v.removeAllLabels();
-  v.setStyle({},{stick:{radius:.085,color:'#c4c4c4'},sphere:{scale:.17,color:'#c4c4c4'}});
+  for(const elem of new Set(ep.elements))v.setStyle({elem},{stick:{radius:elem==='H'?.055:.085,color:'#68717a'},sphere:{scale:elem==='H'?.14:.21,color:$3Dmol.elementColors.Jmol[elem]??0x909090}});
   for(const [r,p] of Object.entries(m)){
    const i=side==='r'?+r:p;
    v.setStyle({index:i},active.has(+r)?{stick:{radius:.10,color:'#555555'},sphere:{scale:.30,color:'#ffd700'}}:

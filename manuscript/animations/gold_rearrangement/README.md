@@ -1,5 +1,7 @@
 # Gold rearrangement — actual atom-by-atom growth
 
+Unassigned atoms use standard element colors (oxygen red, nitrogen blue, carbon gray, hydrogen white); fragment colors appear as matching progresses.
+
 A **30-second 3D replay** of one recorded cut context. The matching grows atom by atom, branches from its actual shared states, and reaches the two featured oxygen alternatives. The other subtree is shown as **“… 2 other terminals”**; it has not been removed from the underlying trace.
 
 ![Actual GRAFT atom-by-atom growth and the oxygen-placement split](gold-oxygen-preview.gif)

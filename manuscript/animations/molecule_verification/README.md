@@ -1,5 +1,7 @@
 # Verify what your model built
 
+Unassigned atoms use standard element colors (oxygen red, nitrogen blue, carbon gray, hydrogen white); fragment colors appear as matching progresses.
+
 A **28-second 3D demonstration** of checking a candidate XYZ against a 135-atom target. The film shows the actual GRAFT atom-by-atom growth, with rotating structures, a traveling atom-pair highlight and a final connectivity check.
 
 ![135-atom GRAFT verification: grow one fragment and check all connections](molecule-verification-preview.gif)

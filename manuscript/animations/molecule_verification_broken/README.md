@@ -1,5 +1,7 @@
 # Same atoms. Different connectivity.
 
+Unassigned atoms use standard element colors (oxygen red, nitrogen blue, carbon gray, hydrogen white); fragment colors appear as matching progresses.
+
 A **30-second 3D negative control** accompanying the [successful verification film](../molecule_verification/README.md). One C–C connection is deliberately removed from the candidate XYZ by translating a 21-atom group. All 135 atoms remain present.
 
 ![A broken candidate retains every atom but fails connectivity verification](broken-molecule-verification-preview.gif)

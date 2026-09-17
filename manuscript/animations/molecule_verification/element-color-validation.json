@@ -1,0 +1,38 @@
+{
+  "film": "molecule_verification",
+  "status": "passed",
+  "checks": [
+    {
+      "time": 0,
+      "checked": 135,
+      "elements": [
+        "C",
+        "H",
+        "Rh",
+        "O",
+        "N"
+      ],
+      "assigned": 0
+    },
+    {
+      "time": 5,
+      "checked": 129,
+      "elements": [
+        "C",
+        "H",
+        "O",
+        "N"
+      ],
+      "assigned": 6
+    }
+  ],
+  "errors": [],
+  "film_data_sha256": "b8bf048030203c0dabc03d0756e62bc4b1b9bc9d130001cee9a6b20674d68a5b",
+  "html_sha256": "d94a4e4f34da7a737054be4ae1165e18f7e3899bb8816a70a46088e95b6372fe",
+  "scope": "Unassigned atoms use Jmol element colors; matched fragments and reaction highlights retain their palettes.",
+  "render": {
+    "film": "molecule_verification",
+    "seconds": 70.84,
+    "encoder_threads": 2
+  }
+}
