@@ -71,7 +71,7 @@ def one(args):
     summary=dict(case=args.case,name=problem.name,atoms=len(problem.reactant.elements),families=len(cat.families),
         available_decoded_candidates=available,minimum_only=args.minimum_only,
         input_candidates=len(candidates),minimum_candidates=sum(c.total==minimum for c in candidates),
-        saved_decode_complete=saved['complete'],source_run=str(args.source.resolve()),rows=rows,source_config=settings['config'],decode_config=settings['decode_config'])
+        chirality_config=dataclasses.asdict(ChiralityConfig()),saved_decode_complete=saved['complete'],source_run=str(args.source.resolve()),rows=rows,source_config=settings['config'],decode_config=settings['decode_config'])
     dump(out/'summary.json',summary)
     for ci,c in enumerate(candidates):
         print(f'case {args.case} candidate {ci+1}/{len(candidates)} chirality',flush=True)
@@ -104,7 +104,7 @@ def one(args):
         dump(out/'summary.json',summary)
     endpoints=[dict(elements=e.elements,coordinates=e.coordinates.tolist(),wbo=e.wbo.tolist()) for e in (problem.reactant,problem.product)]
     allowed=sum(r['status']=='allowed' for r in rows);changed=sum(r.get('changed_atoms',0)>0 for r in rows)
-    note=f'{allowed}/{len(rows)} candidates satisfy the chirality policy; {changed} required shuffles. Select before/corrected to compare. All successful mappings passed independent saved-family and exact-event checks. '
+    note=f'{allowed}/{len(rows)} candidates satisfy the chirality policy; {changed} required shuffles. Select before/corrected to compare. Allowed mappings passed independent saved-family and exact-event checks. '
     note+='The original 101-frame internal-coordinate interpolation is reused. Magenta marks nonbonded distances below 0.70 × summed covalent radii; endpoint bonds are excluded. This is a geometric diagnostic, not an optimized reaction path. '
     if allowed<len(rows):note+='Unresolved candidates show only their original decoded mapping; they are not chirality-corrected. '
     document=comparison_document(dict(index=args.case,name=problem.name,endpoints=endpoints,records=records,note=note))

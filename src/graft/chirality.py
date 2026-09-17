@@ -22,9 +22,9 @@ class ChiralityConfig:
     graph_floor: float = 0.2
     orientation_tolerance: float = 0.1
     group_orientation_tolerance: float = 0.0
-    mode: str = 'mutable'  # historical index orientation; 'all' is stricter
-    high_coordinate: str = 'maximal'  # maximal feasible basis, or strict
-    high_coordinate_scope: str = 'selected_family'  # or 'union' for a global basis
+    mode: str = 'all'  # 'mutable' is an explicit historical relaxation
+    high_coordinate: str = 'strict'  # 'maximal' is an explicit heuristic relaxation
+    high_coordinate_scope: str = 'union'  # only affects explicit maximal relaxation
     seconds: float | None = None
 
     def __post_init__(self):
@@ -44,11 +44,15 @@ class ChiralityConfig:
 
 @dataclass(frozen=True)
 class ChiralWitness:
-    status: str  # allowed / forbidden / unknown, within the saved family union
+    status: str  # allowed / relaxed / forbidden / unknown; saved family union only
     mapping: dict | None = None
     family_id: int | None = None
     actions: tuple = ()
     diagnostics: dict = field(default_factory=dict)
+
+
+class _OutsideSavedRelation(ValueError):
+    pass
 
 
 class _BudgetExpired(Exception):
@@ -100,9 +104,10 @@ def _program_domains(actions, degree):
 
 
 class _Workspace:
-    def __init__(self, decoded, candidate, config):
+    def __init__(self, decoded, candidate, config, assignments=None):
         import z3
         self.z3 = z3
+        self.assignments = dict(assignments or {})
         self.decoded, self.candidate, self.config = decoded, candidate, config
         self.problem = decoded.catalogue.problem
         self.start = time.perf_counter()
@@ -115,12 +120,16 @@ class _Workspace:
         self.pattern = decoded.index.describe([candidate.mapping[i] for i in range(decoded.index.n)])
         self.family_order = list(dict.fromkeys([*candidate.family_ids, *range(len(decoded.catalogue.families))]))
         self.compiled = {}
+        self.compilations = 0
+        self.forced_rejections = 0
+        self.first_forced_conflict = None
         self.bound_rejections = 0
         self.measures, self.mutable = {}, {}
         self.hard_rules = set()
         self.checks = 0
         self.refinements = 0
         self.mutability_queries = 0
+        self.families_checked = set()
 
     def budget(self):
         if time.perf_counter() >= self.deadline:
@@ -145,9 +154,11 @@ class _Workspace:
             family = self.decoded.catalogue.families[fid]
             compiled = compile_path(family.as_path(self.problem), self.problem, {},
                                     source_atoms=(), complete_reference=False)
+            compiled.solver.add(*(compiled.values[a][0] == p for a, p in self.assignments.items()))
             terms, total, _ = _event_model(compiled, self.decoded.index, self.deadline)
             compiled.solver.add(_same_event_pattern(terms, total, self.pattern))
             self.compiled[fid] = compiled
+            self.compilations += 1
         return self.compiled[fid]
 
     def check(self, compiled, constraints):
@@ -278,17 +289,23 @@ class _Workspace:
         for _robustness, center, shell, tol in frames:
             sr, _ = self.measure('r', center, shell, tol)
             sp, _ = self.measure('p', mapping[center], tuple(mapping[a] for a in shell), tol)
-            persistent = all(mapping[a] in self.np[mapping[center]] for a in shell)
-            status = ('inactive_lost_connection' if not persistent else
+            persistent = (self.high_active(mapping, center) and
+                          all(mapping[a] in self.np[mapping[center]] for a in shell))
+            status = ('inactive' if not persistent else
                       'undefined' if not sr or not sp else
                       'preserved' if sr == sp else 'violation')
             rows.append(dict(center=center, neighbors=shell, source_sign=sr, target_sign=sp, status=status))
         return rows
 
+    def high_active(self, mapping, center):
+        # Potential targets only control which frames are generated. The actual
+        # mapped center must be high-coordinate at at least one endpoint.
+        return len(self.nr[center]) > 4 or len(self.np[mapping[center]]) > 4
+
     def soft_violations(self, mapping, frames):
         rules = []
         for _robustness, center, shell, tol in frames:
-            if not all(mapping[a] in self.np[mapping[center]] for a in shell):
+            if not self.high_active(mapping, center) or not all(mapping[a] in self.np[mapping[center]] for a in shell):
                 continue
             sr, _ = self.measure('r', center, shell, tol)
             sp, _ = self.measure('p', mapping[center], tuple(mapping[a] for a in shell), tol)
@@ -301,16 +318,62 @@ class _Workspace:
         if result.get('family_id') is not None:
             return result
         for fid in self.family_order:
+            if not self.can_contain(fid, dict(result['mapping'])):
+                continue
             compiled = self.compile(fid)
             realized = self.check(compiled, [compiled.values[a][0] == p
                                            for a, p in dict(result['mapping']).items()])
             if realized is not None:
                 return dict(realized, family_id=fid)
-        raise ValueError('candidate witness is not contained in its saved AAM families')
+            self.compiled.pop(fid, None)
+        raise _OutsideSavedRelation('candidate witness is not contained in its saved AAM families')
+
+    def can_contain(self, fid, assignments):
+        family = self.decoded.catalogue.families[fid]
+        reachable = _program_domains(family.actions, len(family.mapping))
+        source = dict(family.mapping)
+        return all(a in source and p in reachable[source[a]] for a, p in assignments.items())
+
+    def forced_conflict(self, fid, frames):
+        """Reject only when singleton reachable images force an orientation flip.
+
+        The domains overapproximate the ordered correlated program. A singleton
+        is therefore fixed in every realization. This can prove infeasibility,
+        never feasibility, and does not enumerate mappings or group elements.
+        """
+        family = self.decoded.catalogue.families[fid]
+        reachable = _program_domains(family.actions, len(family.mapping))
+        domains = {a: reachable[p] for a, p in family.mapping}
+        fixed = {a: next(iter(images)) for a, images in domains.items() if len(images) == 1}
+        fixed.update(self.assignments)
+        def conflict(kind, center, shell, tol):
+            sr, _ = self.measure('r', center, shell, tol)
+            sp, _ = self.measure('p', fixed[center], tuple(fixed[a] for a in shell), tol)
+            return (dict(kind=kind, family_id=fid, center=center, neighbors=shell,
+                         target_center=fixed[center], target_neighbors=tuple(fixed[a] for a in shell),
+                         source_sign=sr, target_sign=sp) if sr and sp and sr != sp else None)
+        if self.config.mode == 'all':
+            for center, neighbors in enumerate(self.nr):
+                if center not in fixed or any(a not in fixed for a in neighbors):
+                    continue
+                shell = tuple(a for a in neighbors if fixed[a] in self.np[fixed[center]])
+                if len(shell) in (3, 4):
+                    bad = conflict('ordinary', center, shell, self.config.orientation_tolerance)
+                    if bad:
+                        return bad
+        for _robustness, center, shell, tol in frames:
+            if center not in fixed or any(a not in fixed for a in shell):
+                continue
+            if not self.high_active(fixed, center) or not all(fixed[a] in self.np[fixed[center]] for a in shell):
+                continue
+            bad = conflict('high_coordinate', center, shell, tol)
+            if bad:
+                return bad
+        return None
 
     def solve(self, frames, preferred=None, family_ids=None):
         soft_rules = set()
-        if preferred is not None:
+        if preferred is not None and all(dict(preferred['mapping']).get(a) == p for a, p in self.assignments.items()):
             mapping = dict(preferred['mapping'])
             bad, _ = self.ordinary(mapping)
             self.refinements += len(set(bad) - self.hard_rules)
@@ -320,6 +383,18 @@ class _Workspace:
             if not bad and not soft_rules:
                 return preferred
         for fid in self.family_order if family_ids is None else family_ids:
+            self.budget()
+            self.families_checked.add(fid)
+            if not self.can_contain(fid, self.assignments):
+                self.bound_rejections += 1
+                continue
+            conflict = self.forced_conflict(fid, frames)
+            if conflict is not None:
+                self.forced_rejections += 1
+                if self.first_forced_conflict is None:
+                    self.first_forced_conflict = conflict
+                self.compiled.pop(fid, None)
+                continue
             compiled = self.compile(fid)
             while True:
                 rules = self.hard_rules | soft_rules
@@ -336,33 +411,15 @@ class _Workspace:
                 self.refinements += len(new)
                 self.hard_rules.update(bad)
                 soft_rules.update(soft)
+            self.compiled.pop(fid, None)  # release an exhausted family model
         return None
 
 
-def select_chiral_witness(decoded, candidate, config=None):
-    """Select a coordinate-consistent witness for one decoded candidate.
-
-    Preserve its *concrete* broken/formed edges, not only their symmetry class.
-    Query all saved families, including families whose event decoding timed out.
-    Ordinary persistent three/four-ligand orientations are hard when the saved
-    relation permits a setwise ligand shuffle (``mode='mutable'``). Fixed
-    orientation changes are reported, not rejected: genuine reaction inversions
-    are possible. ``mode='all'`` enforces every defined ordinary orientation.
-
-    Higher-coordinate frames use a robustness-ordered maximal feasible basis
-    inside the selected saved family. ``high_coordinate_scope='union'`` instead
-    searches the whole union for each additional frame. Every excluded frame is
-    reported. ``high_coordinate='strict'`` requires all frames across the union.
-    A maximal basis is not a maximum-cardinality claim.
-    Undefined/planar orientations and lost ligand connections are not constrained.
-
-    No solution/count cap is added. ``seconds`` is an optional soft watchdog;
-    use process isolation for a hard wall limit. Unknown never means forbidden.
-    Selection uses orientation feasibility only, with no global geometry rank.
-    """
+def _select(decoded, candidate, config=None, *, assignments=None, preferred_mapping=None):
+    """Shared selector and fixed-assignment query implementation."""
     decoded._check_candidate(candidate)
     config = config or ChiralityConfig()
-    w = _Workspace(decoded, candidate, config)
+    w = _Workspace(decoded, candidate, config, assignments)
     accepted, excluded = [], []
     diagnostics = dict(policy='saved_family_index_orientation', event_scope='concrete_signed_edges',
                        mode=config.mode, high_coordinate=config.high_coordinate,
@@ -370,45 +427,73 @@ def select_chiral_witness(decoded, candidate, config=None):
                        graph_floor=config.graph_floor,
                        orientation_tolerance=config.orientation_tolerance,
                        group_orientation_tolerance=config.group_orientation_tolerance,
-                       candidate_id=candidate.id)
+                       candidate_id=candidate.id,
+                       guarantee='coordinate_orientation_not_CIP_or_clash_free',
+                       search_scope='all_saved_families',
+                       search_exhaustive=False)
     try:
         w.budget()
-        preferred = dict(mapping=sorted(candidate.mapping.items()), family_id=None, actions=())
-        result = w.solve([], preferred)
-        if result is not None:
-            frames = w.soft_frames(candidate.mapping)
-            if config.high_coordinate == 'strict':
-                result = w.solve(frames, result)
-                accepted = frames if result is not None else []
-            else:
-                family_ids = None
-                if frames and config.high_coordinate_scope == 'selected_family':
-                    result = w.locate(result)
-                    family_ids = (result['family_id'],)
-                    diagnostics['high_coordinate_family_id'] = result['family_id']
-                for frame in frames:
-                    w.budget()
-                    trial = w.solve([*accepted, frame], result, family_ids=family_ids)
-                    if trial is None:
-                        excluded.append(frame)
-                    else:
-                        accepted.append(frame)
-                        result = trial
+        proposed = dict(candidate.mapping if preferred_mapping is None else preferred_mapping)
+        # Even an already-valid preferred witness must have a certificate in the
+        # saved relation. Checking geometry alone could accept an external map.
+        preferred = None
+        if all(proposed.get(a) == p for a, p in w.assignments.items()):
+            try:
+                preferred = w.locate(dict(mapping=sorted(proposed.items()), family_id=None, actions=()))
+            except _OutsideSavedRelation:
+                pass
+        frames = w.soft_frames(candidate.mapping)
+        if config.high_coordinate == 'strict':
+            accepted = frames
+            result = w.solve(frames, preferred)
+        else:
+            result = w.solve([], preferred)
+        if result is not None and config.high_coordinate != 'strict':
+            family_ids = None
+            if frames and config.high_coordinate_scope == 'selected_family':
+                result = w.locate(result)
+                family_ids = (result['family_id'],)
+                diagnostics['high_coordinate_family_id'] = result['family_id']
+            for frame in frames:
+                w.budget()
+                trial = w.solve([*accepted, frame], result, family_ids=family_ids)
+                if trial is None:
+                    excluded.append(frame)
+                else:
+                    accepted.append(frame)
+                    result = trial
         if result is None:
             status, mapping = 'forbidden', None
-            diagnostics['reason'] = 'no saved mapping satisfies the requested orientation constraints'
+            diagnostics['reason'] = 'no saved mapping satisfies the fixed assignments, concrete events, and requested orientation constraints'
+            diagnostics['search_exhaustive'] = True
         else:
             status, mapping = 'allowed', dict(result['mapping'])
             _, ordinary = w.ordinary(mapping)
             diagnostics['ordinary_frames'] = ordinary
             diagnostics['high_coordinate_frames'] = w.frame_diagnostics(mapping, accepted)
+            diagnostics['all_high_coordinate_frames'] = w.frame_diagnostics(mapping, frames)
+            full_violations = [f for f in ordinary if f['status'] in ('violation', 'fixed_orientation_change')]
+            full_violations += [f for f in diagnostics['all_high_coordinate_frames'] if f['status'] == 'violation']
+            diagnostics['orientation_violations'] = full_violations
+            diagnostics['strict_orientation_satisfied'] = not full_violations
+            if full_violations:
+                status = 'relaxed'
             assert w.decoded.index.describe([mapping[i] for i in range(w.decoded.index.n)])['events'] == w.pattern['events']
             assert not w.ordinary(mapping)[0] and not w.soft_violations(mapping, accepted)
     except (_BudgetExpired, TimeoutError) as exc:
         status, mapping, result = 'unknown', None, None
         diagnostics['reason'] = str(exc)
+    if status == 'forbidden':
+        diagnostics['strict_orientation_satisfied'] = False
+    if config.high_coordinate != 'strict':
+        diagnostics['search_scope'] = 'all_saved_families_then_' + config.high_coordinate_scope + '_relaxation'
+    diagnostics['families_checked'] = len(w.families_checked)
+    diagnostics['saved_family_count'] = len(decoded.catalogue.families)
     diagnostics.update(seconds=time.perf_counter() - w.start, solver_checks=w.checks,
-                       compiled_families=len(w.compiled), local_refinements=w.refinements,
+                       compiled_families=w.compilations,
+                       resident_family_models=len(w.compiled),
+                       forced_orientation_rejections=w.forced_rejections,
+                       first_forced_conflict=w.first_forced_conflict, local_refinements=w.refinements,
                        mutability_bound_rejections=w.bound_rejections,
                        local_geometry_evaluations=len(w.measures), mutability_queries=w.mutability_queries,
                        retained_high_coordinate_frames=accepted, reconfigured_high_coordinate_frames=excluded,
@@ -417,3 +502,62 @@ def select_chiral_witness(decoded, candidate, config=None):
                          family_id=None if result is None else result.get('family_id'),
                          actions=() if result is None else tuple(result.get('actions', ())),
                          diagnostics=diagnostics)
+
+
+def _validate_assignments(decoded, assignments, *, complete=False):
+    fixed = dict(assignments)
+    n = decoded.index.n
+    if complete and set(fixed) != set(range(n)):
+        raise ValueError('preferred_mapping must assign every source atom')
+    if any(not isinstance(a, int) or not isinstance(p, int)
+           or a not in range(n) or p not in range(n) for a, p in fixed.items()):
+        raise ValueError('assignments require valid integer endpoint indices')
+    problem = decoded.catalogue.problem
+    if len(set(fixed.values())) != len(fixed) or any(
+            problem.reactant.elements[a] != problem.product.elements[p] for a, p in fixed.items()):
+        raise ValueError('assignments must be injective and element compatible')
+    return fixed
+
+
+def select_chiral_witness(decoded, candidate, config=None, *, preferred_mapping=None):
+    """Return a certified coordinate-orientation-preserving AAM witness.
+
+    Defaults require every defined ordinary persistent-shell orientation and
+    every defined persistent high-coordinate simplex to be preserved. Search
+    the whole saved family union, fixing concrete broken/formed edges. No frame
+    is silently dropped. ``forbidden`` proves infeasibility within that saved
+    relation; ``unknown`` is inconclusive. This is not a CIP/E-Z assignment,
+    a guarantee of a physical pathway, or an interpolation-clash optimizer.
+
+    ``preferred_mapping`` is an optional complete witness to retain if it is
+    both in the saved relation and feasible; otherwise search normally. With
+    no preference the decoded witness is tried first. Choosing one witness
+    does not remove other feasible families: use ``query_chiral_witness``.
+
+    Explicit historical mutable/maximal policies can return ``relaxed`` when
+    the selected mapping violates full orientation preservation. Such results
+    are never labeled ``allowed`` merely because the violated frames were
+    omitted. Maximal-basis selection is heuristic and not a complete filter.
+    """
+    decoded._check_candidate(candidate)
+    if preferred_mapping is not None:
+        preferred_mapping = _validate_assignments(decoded, preferred_mapping, complete=True)
+    return _select(decoded, candidate, config, preferred_mapping=preferred_mapping)
+
+
+def query_chiral_witness(decoded, candidate, assignments, config=None):
+    """Does a strict post-chirality witness extend these R->P assignments?
+
+    Supply the entire mapping for exact membership; unspecified atoms may move
+    jointly. Uses the same orientation predicate as default selection, with no
+    selected-family restriction or witness-dependent frame basis. Partial
+    assignments and saved anchors must coexist, and concrete events stay fixed.
+    A negative answer covers only saved complete families, not all chemistry.
+    """
+    decoded._check_candidate(candidate)
+    config = config or ChiralityConfig()
+    if config.mode != 'all' or config.high_coordinate != 'strict':
+        raise ValueError('subset queries require mode="all", high_coordinate="strict"')
+    fixed = _validate_assignments(decoded, assignments)
+    preferred = fixed if len(fixed) == decoded.index.n else None
+    return _select(decoded, candidate, config, assignments=fixed, preferred_mapping=preferred)

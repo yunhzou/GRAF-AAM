@@ -1,0 +1,570 @@
+{
+  "count": 140,
+  "checks": [
+    {
+      "casePosition": 0,
+      "choices": 2
+    },
+    {
+      "casePosition": 1,
+      "choices": 2
+    },
+    {
+      "casePosition": 2,
+      "choices": 4
+    },
+    {
+      "casePosition": 3,
+      "choices": 2
+    },
+    {
+      "casePosition": 4,
+      "choices": 6
+    },
+    {
+      "casePosition": 5,
+      "choices": 2
+    },
+    {
+      "casePosition": 6,
+      "choices": 8
+    },
+    {
+      "casePosition": 7,
+      "choices": 6
+    },
+    {
+      "casePosition": 8,
+      "choices": 2
+    },
+    {
+      "casePosition": 9,
+      "choices": 2
+    },
+    {
+      "casePosition": 10,
+      "choices": 2
+    },
+    {
+      "casePosition": 11,
+      "choices": 2
+    },
+    {
+      "casePosition": 12,
+      "choices": 2
+    },
+    {
+      "casePosition": 13,
+      "choices": 2
+    },
+    {
+      "casePosition": 14,
+      "choices": 2
+    },
+    {
+      "casePosition": 15,
+      "choices": 2
+    },
+    {
+      "casePosition": 16,
+      "choices": 2
+    },
+    {
+      "casePosition": 17,
+      "choices": 2
+    },
+    {
+      "casePosition": 18,
+      "choices": 2
+    },
+    {
+      "casePosition": 19,
+      "choices": 2
+    },
+    {
+      "casePosition": 20,
+      "choices": 2
+    },
+    {
+      "casePosition": 21,
+      "choices": 2
+    },
+    {
+      "casePosition": 22,
+      "choices": 2
+    },
+    {
+      "casePosition": 23,
+      "choices": 2
+    },
+    {
+      "casePosition": 24,
+      "choices": 2
+    },
+    {
+      "casePosition": 25,
+      "choices": 2
+    },
+    {
+      "casePosition": 26,
+      "choices": 4
+    },
+    {
+      "casePosition": 27,
+      "choices": 2
+    },
+    {
+      "casePosition": 28,
+      "choices": 4
+    },
+    {
+      "casePosition": 29,
+      "choices": 2
+    },
+    {
+      "casePosition": 30,
+      "choices": 2
+    },
+    {
+      "casePosition": 31,
+      "choices": 2
+    },
+    {
+      "casePosition": 32,
+      "choices": 2
+    },
+    {
+      "casePosition": 33,
+      "choices": 2
+    },
+    {
+      "casePosition": 34,
+      "choices": 2
+    },
+    {
+      "casePosition": 35,
+      "choices": 2
+    },
+    {
+      "casePosition": 36,
+      "choices": 2
+    },
+    {
+      "casePosition": 37,
+      "choices": 2
+    },
+    {
+      "casePosition": 38,
+      "choices": 2
+    },
+    {
+      "casePosition": 39,
+      "choices": 2
+    },
+    {
+      "casePosition": 40,
+      "choices": 2
+    },
+    {
+      "casePosition": 41,
+      "choices": 2
+    },
+    {
+      "casePosition": 42,
+      "choices": 2
+    },
+    {
+      "casePosition": 43,
+      "choices": 2
+    },
+    {
+      "casePosition": 44,
+      "choices": 2
+    },
+    {
+      "casePosition": 45,
+      "choices": 2
+    },
+    {
+      "casePosition": 46,
+      "choices": 2
+    },
+    {
+      "casePosition": 47,
+      "choices": 2
+    },
+    {
+      "casePosition": 48,
+      "choices": 2
+    },
+    {
+      "casePosition": 49,
+      "choices": 2
+    },
+    {
+      "casePosition": 50,
+      "choices": 2
+    },
+    {
+      "casePosition": 51,
+      "choices": 2
+    },
+    {
+      "casePosition": 52,
+      "choices": 2
+    },
+    {
+      "casePosition": 53,
+      "choices": 2
+    },
+    {
+      "casePosition": 54,
+      "choices": 2
+    },
+    {
+      "casePosition": 55,
+      "choices": 2
+    },
+    {
+      "casePosition": 56,
+      "choices": 2
+    },
+    {
+      "casePosition": 57,
+      "choices": 2
+    },
+    {
+      "casePosition": 58,
+      "choices": 2
+    },
+    {
+      "casePosition": 59,
+      "choices": 2
+    },
+    {
+      "casePosition": 60,
+      "choices": 2
+    },
+    {
+      "casePosition": 61,
+      "choices": 2
+    },
+    {
+      "casePosition": 62,
+      "choices": 2
+    },
+    {
+      "casePosition": 63,
+      "choices": 2
+    },
+    {
+      "casePosition": 64,
+      "choices": 4
+    },
+    {
+      "casePosition": 65,
+      "choices": 2
+    },
+    {
+      "casePosition": 66,
+      "choices": 2
+    },
+    {
+      "casePosition": 67,
+      "choices": 2
+    },
+    {
+      "casePosition": 68,
+      "choices": 2
+    },
+    {
+      "casePosition": 69,
+      "choices": 2
+    },
+    {
+      "casePosition": 70,
+      "choices": 2
+    },
+    {
+      "casePosition": 71,
+      "choices": 2
+    },
+    {
+      "casePosition": 72,
+      "choices": 2
+    },
+    {
+      "casePosition": 73,
+      "choices": 2
+    },
+    {
+      "casePosition": 74,
+      "choices": 2
+    },
+    {
+      "casePosition": 75,
+      "choices": 2
+    },
+    {
+      "casePosition": 76,
+      "choices": 2
+    },
+    {
+      "casePosition": 77,
+      "choices": 2
+    },
+    {
+      "casePosition": 78,
+      "choices": 2
+    },
+    {
+      "casePosition": 79,
+      "choices": 2
+    },
+    {
+      "casePosition": 80,
+      "choices": 2
+    },
+    {
+      "casePosition": 81,
+      "choices": 2
+    },
+    {
+      "casePosition": 82,
+      "choices": 2
+    },
+    {
+      "casePosition": 83,
+      "choices": 2
+    },
+    {
+      "casePosition": 84,
+      "choices": 2
+    },
+    {
+      "casePosition": 85,
+      "choices": 2
+    },
+    {
+      "casePosition": 86,
+      "choices": 2
+    },
+    {
+      "casePosition": 87,
+      "choices": 2
+    },
+    {
+      "casePosition": 88,
+      "choices": 2
+    },
+    {
+      "casePosition": 89,
+      "choices": 2
+    },
+    {
+      "casePosition": 90,
+      "choices": 4
+    },
+    {
+      "casePosition": 91,
+      "choices": 2
+    },
+    {
+      "casePosition": 92,
+      "choices": 2
+    },
+    {
+      "casePosition": 93,
+      "choices": 2
+    },
+    {
+      "casePosition": 94,
+      "choices": 2
+    },
+    {
+      "casePosition": 95,
+      "choices": 2
+    },
+    {
+      "casePosition": 96,
+      "choices": 2
+    },
+    {
+      "casePosition": 97,
+      "choices": 2
+    },
+    {
+      "casePosition": 98,
+      "choices": 2
+    },
+    {
+      "casePosition": 99,
+      "choices": 2
+    },
+    {
+      "casePosition": 100,
+      "choices": 2
+    },
+    {
+      "casePosition": 101,
+      "choices": 3
+    },
+    {
+      "casePosition": 102,
+      "choices": 4
+    },
+    {
+      "casePosition": 103,
+      "choices": 4
+    },
+    {
+      "casePosition": 104,
+      "choices": 3
+    },
+    {
+      "casePosition": 105,
+      "choices": 3
+    },
+    {
+      "casePosition": 106,
+      "choices": 3
+    },
+    {
+      "casePosition": 107,
+      "choices": 4
+    },
+    {
+      "casePosition": 108,
+      "choices": 4
+    },
+    {
+      "casePosition": 109,
+      "choices": 2
+    },
+    {
+      "casePosition": 110,
+      "choices": 2
+    },
+    {
+      "casePosition": 111,
+      "choices": 2
+    },
+    {
+      "casePosition": 112,
+      "choices": 2
+    },
+    {
+      "casePosition": 113,
+      "choices": 2
+    },
+    {
+      "casePosition": 114,
+      "choices": 4
+    },
+    {
+      "casePosition": 115,
+      "choices": 4
+    },
+    {
+      "casePosition": 116,
+      "choices": 2
+    },
+    {
+      "casePosition": 117,
+      "choices": 2
+    },
+    {
+      "casePosition": 118,
+      "choices": 2
+    },
+    {
+      "casePosition": 119,
+      "choices": 2
+    },
+    {
+      "casePosition": 120,
+      "choices": 4
+    },
+    {
+      "casePosition": 121,
+      "choices": 2
+    },
+    {
+      "casePosition": 122,
+      "choices": 2
+    },
+    {
+      "casePosition": 123,
+      "choices": 2
+    },
+    {
+      "casePosition": 124,
+      "choices": 3
+    },
+    {
+      "casePosition": 125,
+      "choices": 2
+    },
+    {
+      "casePosition": 126,
+      "choices": 2
+    },
+    {
+      "casePosition": 127,
+      "choices": 5
+    },
+    {
+      "casePosition": 128,
+      "choices": 2
+    },
+    {
+      "casePosition": 129,
+      "choices": 8
+    },
+    {
+      "casePosition": 130,
+      "choices": 2
+    },
+    {
+      "casePosition": 131,
+      "choices": 2
+    },
+    {
+      "casePosition": 132,
+      "choices": 2
+    },
+    {
+      "casePosition": 133,
+      "choices": 2
+    },
+    {
+      "casePosition": 134,
+      "choices": 2
+    },
+    {
+      "casePosition": 135,
+      "choices": 2
+    },
+    {
+      "casePosition": 136,
+      "choices": 2
+    },
+    {
+      "casePosition": 137,
+      "choices": 2
+    },
+    {
+      "casePosition": 138,
+      "choices": 2
+    },
+    {
+      "casePosition": 139,
+      "choices": 2
+    }
+  ],
+  "errors": [],
+  "requests": [],
+  "catalog_labels_checked": true,
+  "mapping_views": 332,
+  "viewer_sha256": "f27d1d6eeeca727f0c5fd9eb55a65e77ea383f7fdc987666054de936aafd076e"
+}

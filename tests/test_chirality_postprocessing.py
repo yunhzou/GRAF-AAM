@@ -5,7 +5,7 @@ import pytest
 from graft import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
 from graft.final_branches import FinalBranchCatalogue, FinalFamily
 from graft.postprocessing import decode_events, EventDecodeConfig
-from graft.chirality import ChiralityConfig, select_chiral_witness
+from graft.chirality import ChiralityConfig, select_chiral_witness, query_chiral_witness
 from graft.alignment.index_chirality import _simplex_measure
 
 
@@ -64,14 +64,15 @@ def test_no_chiral_work_for_already_valid_mapping():
     c.mapping=dict(enumerate(range(5)))
     result=select_chiral_witness(d,c)
     assert result.status=='allowed' and result.mapping==c.mapping
-    assert result.diagnostics['solver_checks']==0
+    assert result.diagnostics['solver_checks']==1  # exact membership certificate
     assert not hasattr(result, "fixed_mapping_rmsd")
 
 
 def test_fixed_inversion_is_reported_and_strict_mode_rejects():
     e,x,w=tetra();d=decoded_family(e,x,swapped(x),w);c=d.candidates[0]
-    result=select_chiral_witness(d,c)
-    assert result.status=='allowed'
+    result=select_chiral_witness(d,c,ChiralityConfig(mode='mutable'))
+    assert result.status=='relaxed'
+    assert result.diagnostics['strict_orientation_satisfied'] is False
     assert result.diagnostics['ordinary_frames'][0]['status']=='fixed_orientation_change'
     assert select_chiral_witness(d,c,ChiralityConfig(mode='all')).status=='forbidden'
 
@@ -113,7 +114,7 @@ def test_exact_event_edges_cannot_change_to_repair_orientation():
     # same event class but is outside the chosen concrete event/core.
     strict=select_chiral_witness(d,c,ChiralityConfig(mode='all'))
     assert strict.status=='forbidden'
-    assert select_chiral_witness(d,c).diagnostics['ordinary_frames'][0]['status']=='fixed_orientation_change'
+    assert select_chiral_witness(d,c,ChiralityConfig(mode='mutable')).diagnostics['ordinary_frames'][0]['status']=='fixed_orientation_change'
 
 
 def test_union_queries_families_not_recorded_as_candidate_support():
@@ -129,8 +130,9 @@ def test_high_coordinate_reconfiguration_is_explicit():
     rng=np.random.default_rng(51);e=('Sc',)+('O',)*6;x=np.vstack([np.zeros(3),rng.normal(size=(6,3))]);w=np.zeros((7,7));w[0,1:]=.5;w[1:,0]=.5
     p=x.copy();p[:,0]*=-1
     d=decoded_family(e,x,p,w);c=d.candidates[0]
-    result=select_chiral_witness(d,c)
-    assert result.status=='allowed' and result.diagnostics['reconfigured_high_coordinate_frames']
+    result=select_chiral_witness(d,c,ChiralityConfig(high_coordinate='maximal'))
+    assert result.status=='relaxed' and result.diagnostics['reconfigured_high_coordinate_frames']
+    assert result.diagnostics['orientation_violations']
     assert select_chiral_witness(d,c,ChiralityConfig(high_coordinate='strict')).status=='forbidden'
 
 
@@ -179,7 +181,11 @@ def test_hard_constraints_agree_with_event_filtered_exhaustive_oracle(mode):
                   and _simplex_measure(p,0,tuple(m[a] for a in (1,2,3,4)),.1).sign==sign]
             same_event=[m for m in maps if d.index.describe([m[i] for i in range(5)])['events']==candidate.events]
             if mode=='mutable' and len(same_event)==1:good=same_event
-            assert result.status==('allowed' if good else 'forbidden')
+            expected = 'forbidden'
+            if good:
+                preserved = any(_simplex_measure(p,0,tuple(m[a] for a in (1,2,3,4)),.1).sign==sign for m in good)
+                expected = 'relaxed' if mode=='mutable' and not preserved else 'allowed'
+            assert result.status==expected
             if good:assert result.mapping in good
 
 
@@ -210,8 +216,8 @@ def test_high_coordinate_retained_basis_is_satisfied_and_maximal():
     p=x.copy();p[:,0]*=-1
     g=list(range(7));g[1],g[2]=2,1
     d=decoded_family(e,x,p,w,actions=[('group',(tuple(g),))]);c=d.candidates[0]
-    result=select_chiral_witness(d,c)
-    assert result.status=='allowed'
+    result=select_chiral_witness(d,c,ChiralityConfig(high_coordinate='maximal'))
+    assert result.status=='relaxed'
     from graft.chirality import _Workspace
     workspace=_Workspace(d,c,ChiralityConfig())
     retained=result.diagnostics['retained_high_coordinate_frames']
@@ -231,7 +237,7 @@ def test_solver_unknown_is_not_a_chirality_conflict(monkeypatch):
     assert result.status=='unknown' and result.mapping is None
 
 
-def test_high_coordinate_scope_is_explicit_and_family_local_by_default():
+def test_historical_high_coordinate_scope_is_explicit_and_relaxed():
     rng=np.random.default_rng(51)
     e=('Sc',)+('O',)*6
     x=np.vstack([np.zeros(3),rng.normal(size=(6,3))])
@@ -242,9 +248,9 @@ def test_high_coordinate_scope_is_explicit_and_family_local_by_default():
     extra=FinalFamily(tuple(enumerate(g)),tuple((0,a) for a in range(1,7)),(),(.2,1.0))
     d=decoded_family(e,x,p,w,extra=(extra,));c=d.candidates[0]
     c.mapping=identity;c.family_ids=[0,1]
-    local=select_chiral_witness(d,c)
-    union=select_chiral_witness(d,c,ChiralityConfig(high_coordinate_scope='union'))
-    assert local.status==union.status=='allowed'
+    local=select_chiral_witness(d,c,ChiralityConfig(high_coordinate='maximal',high_coordinate_scope='selected_family'))
+    union=select_chiral_witness(d,c,ChiralityConfig(high_coordinate='maximal',high_coordinate_scope='union'))
+    assert local.status==union.status=='relaxed'
     assert local.mapping==identity and local.family_id==0
     assert local.diagnostics['high_coordinate_family_id']==0
     assert local.diagnostics['high_coordinate_scope']=='selected_family'
@@ -292,7 +298,131 @@ def test_impossible_fixed_shuffle_needs_no_family_solver(monkeypatch):
     import graft.chirality as module
     e,x,w=tetra();d=decoded_family(e,x,swapped(x),w);c=d.candidates[0]
     monkeypatch.setattr(module._Workspace,'compile',lambda *a:pytest.fail('unnecessary compilation'))
+    workspace=module._Workspace(d,c,ChiralityConfig(mode='mutable'))
+    bad,rows=workspace.ordinary(c.mapping)
+    assert not bad and workspace.bound_rejections==1
+    assert rows[0]['status']=='fixed_orientation_change'
+
+
+
+def test_default_contract_is_strict_union_and_reports_infeasibility():
+    config=ChiralityConfig()
+    assert (config.mode,config.high_coordinate,config.high_coordinate_scope)==('all','strict','union')
+    e,x,w=tetra();d=decoded_family(e,x,swapped(x),w);c=d.candidates[0]
     result=select_chiral_witness(d,c)
+    assert result.status=='forbidden' and result.mapping is None
+    assert result.diagnostics['search_exhaustive']
+    assert result.diagnostics['families_checked']==len(d.catalogue.families)
+
+
+def test_exact_and_partial_subset_queries_preserve_alternative_family():
+    e,x,w=tetra();perm=(0,1,3,4,2)  # even cycle: both mappings preserve orientation
+    extra=FinalFamily(tuple(enumerate(perm)),tuple((0,a) for a in range(1,5)),(),(.2,1))
+    d=decoded_family(e,x,x,w,extra=[extra]);c=d.candidates[0];c.mapping=dict(enumerate(range(5)));c.family_ids=[0]
+    chosen=select_chiral_witness(d,c)
+    other=dict(enumerate(perm))
+    assert chosen.mapping!=other
+    assert query_chiral_witness(d,c,other).status=='allowed'
+    partial=query_chiral_witness(d,c,{2:3})
+    assert partial.status=='allowed' and partial.mapping[2]==3
+    preferred=select_chiral_witness(d,c,preferred_mapping=other)
+    assert preferred.status=='allowed' and preferred.mapping==other
+    impossible=dict(enumerate((0,1,3,2,4)))
+    assert query_chiral_witness(d,c,impossible).status=='forbidden'
+
+
+def test_external_geometrically_valid_preference_cannot_escape_aam():
+    e,x,w=tetra();d=decoded_family(e,x,x,w);c=d.candidates[0]
+    other=dict(enumerate((0,1,3,4,2)))
+    assert query_chiral_witness(d,c,other).status=='forbidden'
+    assert select_chiral_witness(d,c,preferred_mapping=other).mapping==c.mapping
+
+
+def test_same_element_high_coordination_elsewhere_does_not_constrain_tetra_center():
+    # A moving center may cross a face without changing the four-ligand affine
+    # orientation. An unrelated high-coordinate C must not activate triples.
+    e,x,w=tetra();e=('C','H','H','H','H','C','O','O','O','O','O')
+    rng=np.random.default_rng(4)
+    r=np.vstack([x,[8,0,0],rng.normal(size=(5,3))+[8,0,0]])
+    weights=np.zeros((11,11));weights[:5,:5]=w;weights[5,6:]=.5;weights[6:,5]=.5
+    p=r.copy();p[0]=[5,0,0]
+    d=decoded_family(e,r,p,weights);c=d.candidates[0]
+    result=query_chiral_witness(d,c,dict(enumerate(range(11))))
     assert result.status=='allowed'
-    assert result.diagnostics['mutability_bound_rejections']==1
-    assert result.diagnostics['ordinary_frames'][0]['status']=='fixed_orientation_change'
+    assert all(f['status']=='inactive' for f in result.diagnostics['all_high_coordinate_frames'] if f['center']==0)
+
+
+def test_query_and_selection_agree_for_tiny_correlated_high_coordinate_oracle():
+    # Independent finite oracle contains four ordered pool outcomes, not the
+    # closure of the two overlapping pools. It checks both membership and sign.
+    from itertools import combinations
+    rng=np.random.default_rng(123)
+    e=('Sc',)+('O',)*5;r=np.vstack([np.zeros(3),rng.normal(size=(5,3))])
+    p=r.copy();p[[1,2]]=p[[2,1]]
+    w=np.zeros((6,6));w[0,1:]=.5;w[1:,0]=.5
+    actions=(('pool',(1,2)),('pool',(2,3)))
+    d=decoded_family(e,r,p,w,actions=actions);c=d.candidates[0]
+    permitted=[]
+    for a in [(1,2),(2,1)]:
+        for b in [(2,3),(3,2)]:
+            first=dict(zip((1,2),a));second=dict(zip((2,3),b))
+            permitted.append({i:second.get(first.get(i,i),first.get(i,i)) for i in range(6)})
+    good=[]
+    for mapping in permitted:
+        valid=True
+        for size in (3,4):
+            for shell in combinations(range(1,6),size):
+                tol=0 if size==3 else .1
+                sr=_simplex_measure(r,0,shell,tol).sign
+                sp=_simplex_measure(p,0,tuple(mapping[a] for a in shell),tol).sign
+                valid &= not(sr and sp and sr!=sp)
+        result=query_chiral_witness(d,c,mapping)
+        assert result.status==('allowed' if valid else 'forbidden')
+        if valid:good.append(mapping)
+    result=select_chiral_witness(d,c)
+    assert result.status==('allowed' if good else 'forbidden')
+    assert result.mapping in good
+
+
+def test_subset_queries_reject_reference_dependent_relaxed_policy():
+    e,x,w=tetra();d=decoded_family(e,x,x,w)
+    with pytest.raises(ValueError,match='subset queries require'):
+        query_chiral_witness(d,d.candidates[0],{},ChiralityConfig(high_coordinate='maximal'))
+
+
+def test_subset_query_unknown_is_not_reported_as_empty():
+    e,x,w=tetra();d=decoded_family(e,x,x,w)
+    result=query_chiral_witness(d,d.candidates[0],{},ChiralityConfig(seconds=0))
+    assert result.status=='unknown' and not result.diagnostics['search_exhaustive']
+
+
+def test_forced_rejection_bounds_match_full_solver_on_small_relations(monkeypatch):
+    import graft.chirality as module
+    e,x,w=tetra()
+    for actions in [(),(('pool',(2,3,4)),),(('pool',(2,3)),('pool',(3,4)))]:
+        for p in [x,swapped(x)]:
+            d=decoded_family(e,x,p,w,actions=actions);c=d.candidates[0]
+            bound=select_chiral_witness(d,c)
+            with monkeypatch.context() as m:
+                m.setattr(module._Workspace,'forced_conflict',lambda *a:None)
+                full=select_chiral_witness(d,c)
+            assert full.status==bound.status
+            if bound.status=='forbidden':
+                assert bound.diagnostics['search_exhaustive']
+
+
+def test_exhausted_family_solver_models_are_released():
+    e,x,w=tetra();extra=FinalFamily(tuple(enumerate(range(5))),tuple((0,a) for a in range(1,5)),(),(.2,1))
+    d=decoded_family(e,x,swapped(x),w,extra=[extra]);c=d.candidates[0]
+    result=select_chiral_witness(d,c)
+    assert result.status=='forbidden'
+    assert result.diagnostics['resident_family_models']==0
+
+
+def test_subset_queries_preserve_saved_anchor_constraints():
+    e,x,w=tetra();problem=AAMProblem(MolecularEndpoint(e,x,w),MolecularEndpoint(e,swapped(x),w))
+    aam=search_aam(problem,AAMSearchConfig(sweep_cuts=False,branch_limit=200,anchors=((3,3),)),workers=1)
+    d=decode_events(aam);c=d.candidates[0]
+    assert query_chiral_witness(d,c,{3:4}).status=='forbidden'
+    result=query_chiral_witness(d,c,{3:3})
+    assert result.status=='allowed' and result.mapping[3]==3

@@ -1,5 +1,7 @@
 # Holdout chirality and interpolation audit
 
+> Historical mutable/maximal-policy audit. Its zero enforced-violation counts do not certify full orientation preservation. See the [strict audit](../chirality_strict_audit_20260917/README.md) and updated API for explicit infeasibility and exact subset queries. To reproduce this historical policy and code exactly, use commit `cc65225`; current defaults have changed.
+
 All **140 reactions / 166 minimum-event candidates** completed under a
 300-second per-case watchdog. Every returned mapping passed an independent
 saved-family membership check and preserved its candidate's concrete signed

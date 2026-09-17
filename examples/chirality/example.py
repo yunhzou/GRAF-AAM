@@ -6,7 +6,7 @@ Requires the package's postprocessing extra. No external molecule or xTB needed.
 import numpy as np
 from graft import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
 from graft.postprocessing import decode_events
-from graft.chirality import ChiralityConfig, select_chiral_witness
+from graft.chirality import ChiralityConfig, select_chiral_witness, query_chiral_witness
 
 # CH3F: three identical H ligands make index-orientation shuffles possible.
 elements = ('C', 'F', 'H', 'H', 'H')
@@ -28,6 +28,7 @@ for candidate in decoded.minimum_candidates:
     selected = select_chiral_witness(decoded, candidate, ChiralityConfig(mode='all'))
     assert selected.status == 'allowed'
     assert decoded.query(candidate, selected.mapping).status == 'allowed'
+    assert query_chiral_witness(decoded, candidate, selected.mapping).status == 'allowed'
     print('Bond events:', candidate.total)
     print('Selected mapping:', selected.mapping)
     print('Orientation frames:', selected.diagnostics['ordinary_frames'])

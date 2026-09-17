@@ -1,0 +1,1864 @@
+[
+  {
+    "case": 0,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 1,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 19,
+        "clashing_frames": 15
+      }
+    ]
+  },
+  {
+    "case": 2,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 3,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 12,
+        "sum_frame_clashes": 338,
+        "clashing_frames": 60
+      }
+    ]
+  },
+  {
+    "case": 4,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 20,
+        "clashing_frames": 14
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      },
+      {
+        "candidate": 2,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 14,
+        "clashing_frames": 14
+      }
+    ]
+  },
+  {
+    "case": 5,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 5,
+        "clashing_frames": 5
+      }
+    ]
+  },
+  {
+    "case": 6,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 22,
+        "clashing_frames": 22
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 5,
+        "clashing_frames": 5
+      },
+      {
+        "candidate": 2,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 22,
+        "clashing_frames": 22
+      }
+    ]
+  },
+  {
+    "case": 7,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 5,
+        "sum_frame_clashes": 89,
+        "clashing_frames": 34
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 47,
+        "clashing_frames": 39
+      },
+      {
+        "candidate": 2,
+        "status": "forbidden",
+        "peak_clashes": 5,
+        "sum_frame_clashes": 90,
+        "clashing_frames": 34
+      }
+    ]
+  },
+  {
+    "case": 8,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 10,
+        "sum_frame_clashes": 302,
+        "clashing_frames": 71
+      }
+    ]
+  },
+  {
+    "case": 9,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 5,
+        "sum_frame_clashes": 98,
+        "clashing_frames": 31
+      }
+    ]
+  },
+  {
+    "case": 10,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 11,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 75,
+        "clashing_frames": 30
+      }
+    ]
+  },
+  {
+    "case": 12,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 8,
+        "sum_frame_clashes": 158,
+        "clashing_frames": 42
+      }
+    ]
+  },
+  {
+    "case": 13,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 24,
+        "clashing_frames": 24
+      }
+    ]
+  },
+  {
+    "case": 14,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 15,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 9,
+        "sum_frame_clashes": 272,
+        "clashing_frames": 63
+      }
+    ]
+  },
+  {
+    "case": 16,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 17,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 56,
+        "clashing_frames": 35
+      }
+    ]
+  },
+  {
+    "case": 18,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 19,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 20,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 21,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 4,
+        "sum_frame_clashes": 32,
+        "clashing_frames": 17
+      }
+    ]
+  },
+  {
+    "case": 22,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 23,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 24,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 25,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 23,
+        "sum_frame_clashes": 512,
+        "clashing_frames": 67
+      }
+    ]
+  },
+  {
+    "case": 26,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 15,
+        "sum_frame_clashes": 359,
+        "clashing_frames": 54
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 15,
+        "sum_frame_clashes": 373,
+        "clashing_frames": 57
+      }
+    ]
+  },
+  {
+    "case": 27,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 14,
+        "sum_frame_clashes": 388,
+        "clashing_frames": 64
+      }
+    ]
+  },
+  {
+    "case": 28,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 9,
+        "sum_frame_clashes": 270,
+        "clashing_frames": 75
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 10,
+        "sum_frame_clashes": 234,
+        "clashing_frames": 62
+      }
+    ]
+  },
+  {
+    "case": 29,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 2,
+        "clashing_frames": 2
+      }
+    ]
+  },
+  {
+    "case": 30,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 2,
+        "clashing_frames": 2
+      }
+    ]
+  },
+  {
+    "case": 31,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 14,
+        "sum_frame_clashes": 365,
+        "clashing_frames": 59
+      }
+    ]
+  },
+  {
+    "case": 32,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 4,
+        "sum_frame_clashes": 104,
+        "clashing_frames": 35
+      }
+    ]
+  },
+  {
+    "case": 33,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 115,
+        "clashing_frames": 36
+      }
+    ]
+  },
+  {
+    "case": 34,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 21,
+        "clashing_frames": 21
+      }
+    ]
+  },
+  {
+    "case": 35,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 11,
+        "sum_frame_clashes": 231,
+        "clashing_frames": 47
+      }
+    ]
+  },
+  {
+    "case": 36,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 57,
+        "clashing_frames": 37
+      }
+    ]
+  },
+  {
+    "case": 37,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 15,
+        "sum_frame_clashes": 443,
+        "clashing_frames": 73
+      }
+    ]
+  },
+  {
+    "case": 38,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 39,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 20,
+        "clashing_frames": 20
+      }
+    ]
+  },
+  {
+    "case": 40,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 14,
+        "clashing_frames": 14
+      }
+    ]
+  },
+  {
+    "case": 41,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 39,
+        "clashing_frames": 33
+      }
+    ]
+  },
+  {
+    "case": 42,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 43,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 11,
+        "clashing_frames": 11
+      }
+    ]
+  },
+  {
+    "case": 44,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 118,
+        "clashing_frames": 44
+      }
+    ]
+  },
+  {
+    "case": 45,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 5,
+        "sum_frame_clashes": 89,
+        "clashing_frames": 48
+      }
+    ]
+  },
+  {
+    "case": 46,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 7,
+        "sum_frame_clashes": 158,
+        "clashing_frames": 37
+      }
+    ]
+  },
+  {
+    "case": 47,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 11,
+        "clashing_frames": 7
+      }
+    ]
+  },
+  {
+    "case": 48,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 16,
+        "clashing_frames": 16
+      }
+    ]
+  },
+  {
+    "case": 49,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 29,
+        "clashing_frames": 17
+      }
+    ]
+  },
+  {
+    "case": 50,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 115,
+        "clashing_frames": 36
+      }
+    ]
+  },
+  {
+    "case": 51,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 21,
+        "clashing_frames": 21
+      }
+    ]
+  },
+  {
+    "case": 52,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 11,
+        "sum_frame_clashes": 231,
+        "clashing_frames": 47
+      }
+    ]
+  },
+  {
+    "case": 53,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 57,
+        "clashing_frames": 37
+      }
+    ]
+  },
+  {
+    "case": 54,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 15,
+        "sum_frame_clashes": 443,
+        "clashing_frames": 73
+      }
+    ]
+  },
+  {
+    "case": 55,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 118,
+        "clashing_frames": 44
+      }
+    ]
+  },
+  {
+    "case": 56,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 5,
+        "sum_frame_clashes": 89,
+        "clashing_frames": 48
+      }
+    ]
+  },
+  {
+    "case": 57,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 7,
+        "sum_frame_clashes": 158,
+        "clashing_frames": 37
+      }
+    ]
+  },
+  {
+    "case": 58,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 11,
+        "clashing_frames": 7
+      }
+    ]
+  },
+  {
+    "case": 59,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 60,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 11,
+        "clashing_frames": 11
+      }
+    ]
+  },
+  {
+    "case": 61,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 62,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 63,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 64,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 81,
+        "clashing_frames": 45
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 65,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 66,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 9,
+        "clashing_frames": 9
+      }
+    ]
+  },
+  {
+    "case": 67,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 68,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 33,
+        "sum_frame_clashes": 935,
+        "clashing_frames": 82
+      }
+    ]
+  },
+  {
+    "case": 69,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 30,
+        "sum_frame_clashes": 1039,
+        "clashing_frames": 75
+      }
+    ]
+  },
+  {
+    "case": 70,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 14,
+        "clashing_frames": 14
+      }
+    ]
+  },
+  {
+    "case": 71,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 72,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 157,
+        "clashing_frames": 53
+      }
+    ]
+  },
+  {
+    "case": 73,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 74,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 75,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 4,
+        "sum_frame_clashes": 83,
+        "clashing_frames": 38
+      }
+    ]
+  },
+  {
+    "case": 76,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 39,
+        "clashing_frames": 28
+      }
+    ]
+  },
+  {
+    "case": 77,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 36,
+        "clashing_frames": 27
+      }
+    ]
+  },
+  {
+    "case": 78,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 79,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 80,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 68,
+        "clashing_frames": 45
+      }
+    ]
+  },
+  {
+    "case": 81,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 4,
+        "sum_frame_clashes": 117,
+        "clashing_frames": 46
+      }
+    ]
+  },
+  {
+    "case": 82,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 6,
+        "clashing_frames": 6
+      }
+    ]
+  },
+  {
+    "case": 83,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 7,
+        "sum_frame_clashes": 207,
+        "clashing_frames": 60
+      }
+    ]
+  },
+  {
+    "case": 84,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 3,
+        "clashing_frames": 3
+      }
+    ]
+  },
+  {
+    "case": 85,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 86,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 29,
+        "sum_frame_clashes": 695,
+        "clashing_frames": 58
+      }
+    ]
+  },
+  {
+    "case": 87,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 88,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 3,
+        "clashing_frames": 3
+      }
+    ]
+  },
+  {
+    "case": 89,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 7,
+        "clashing_frames": 7
+      }
+    ]
+  },
+  {
+    "case": 90,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 19,
+        "sum_frame_clashes": 395,
+        "clashing_frames": 64
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 21,
+        "sum_frame_clashes": 421,
+        "clashing_frames": 64
+      }
+    ]
+  },
+  {
+    "case": 91,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 4,
+        "sum_frame_clashes": 51,
+        "clashing_frames": 26
+      }
+    ]
+  },
+  {
+    "case": 92,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 49,
+        "clashing_frames": 27
+      }
+    ]
+  },
+  {
+    "case": 93,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 53,
+        "clashing_frames": 32
+      }
+    ]
+  },
+  {
+    "case": 94,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 4,
+        "sum_frame_clashes": 92,
+        "clashing_frames": 32
+      }
+    ]
+  },
+  {
+    "case": 95,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 134,
+        "clashing_frames": 39
+      }
+    ]
+  },
+  {
+    "case": 96,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 97,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 4,
+        "sum_frame_clashes": 90,
+        "clashing_frames": 41
+      }
+    ]
+  },
+  {
+    "case": 98,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 99,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 68,
+        "clashing_frames": 38
+      }
+    ]
+  },
+  {
+    "case": 100,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 61,
+        "clashing_frames": 39
+      }
+    ]
+  },
+  {
+    "case": 101,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 19,
+        "clashing_frames": 19
+      }
+    ]
+  },
+  {
+    "case": 102,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 24,
+        "clashing_frames": 24
+      }
+    ]
+  },
+  {
+    "case": 103,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 26,
+        "clashing_frames": 26
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 104,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 105,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 131,
+        "clashing_frames": 59
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 151,
+        "clashing_frames": 50
+      }
+    ]
+  },
+  {
+    "case": 106,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 129,
+        "clashing_frames": 58
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 153,
+        "clashing_frames": 50
+      }
+    ]
+  },
+  {
+    "case": 107,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 3,
+        "clashing_frames": 3
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 108,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 2,
+        "clashing_frames": 2
+      }
+    ]
+  },
+  {
+    "case": 109,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 110,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 111,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 112,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 113,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 114,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 104,
+        "clashing_frames": 38
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 27,
+        "clashing_frames": 27
+      }
+    ]
+  },
+  {
+    "case": 115,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 20,
+        "clashing_frames": 20
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 4,
+        "clashing_frames": 4
+      }
+    ]
+  },
+  {
+    "case": 116,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 14,
+        "sum_frame_clashes": 425,
+        "clashing_frames": 63
+      }
+    ]
+  },
+  {
+    "case": 117,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 5,
+        "sum_frame_clashes": 117,
+        "clashing_frames": 35
+      }
+    ]
+  },
+  {
+    "case": 118,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 119,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 18,
+        "clashing_frames": 13
+      }
+    ]
+  },
+  {
+    "case": 120,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 121,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 122,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 123,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 64,
+        "clashing_frames": 29
+      }
+    ]
+  },
+  {
+    "case": 124,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 4,
+        "clashing_frames": 4
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 125,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 126,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 3,
+        "sum_frame_clashes": 59,
+        "clashing_frames": 31
+      }
+    ]
+  },
+  {
+    "case": 127,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      },
+      {
+        "candidate": 1,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 45,
+        "clashing_frames": 30
+      },
+      {
+        "candidate": 2,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 128,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 129,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 7,
+        "sum_frame_clashes": 166,
+        "clashing_frames": 45
+      },
+      {
+        "candidate": 1,
+        "status": "forbidden",
+        "peak_clashes": 9,
+        "sum_frame_clashes": 197,
+        "clashing_frames": 48
+      },
+      {
+        "candidate": 2,
+        "status": "forbidden",
+        "peak_clashes": 5,
+        "sum_frame_clashes": 153,
+        "clashing_frames": 50
+      },
+      {
+        "candidate": 3,
+        "status": "forbidden",
+        "peak_clashes": 6,
+        "sum_frame_clashes": 175,
+        "clashing_frames": 50
+      }
+    ]
+  },
+  {
+    "case": 130,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 131,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 132,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 1,
+        "sum_frame_clashes": 21,
+        "clashing_frames": 21
+      }
+    ]
+  },
+  {
+    "case": 133,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 134,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 135,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  },
+  {
+    "case": 136,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "forbidden",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 51,
+        "clashing_frames": 31
+      }
+    ]
+  },
+  {
+    "case": 137,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 40,
+        "clashing_frames": 31
+      }
+    ]
+  },
+  {
+    "case": 138,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 2,
+        "sum_frame_clashes": 39,
+        "clashing_frames": 34
+      }
+    ]
+  },
+  {
+    "case": 139,
+    "rows": [
+      {
+        "candidate": 0,
+        "status": "allowed",
+        "peak_clashes": 0,
+        "sum_frame_clashes": 0,
+        "clashing_frames": 0
+      }
+    ]
+  }
+]

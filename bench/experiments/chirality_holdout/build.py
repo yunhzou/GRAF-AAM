@@ -49,7 +49,7 @@ def build(repo,source,output):
                 unresolved=[dict(case=c['case'],candidate=c['candidate'],status=c['status'],reason=c['selected']['diagnostics'].get('reason')) for c in all_candidates if c['status']!='allowed'],
                 regressions=[dict(case=c['case'],candidate=c['candidate'],minimum=c['minimum'],before=c['before'],after=c['after']) for c in paired if c['after']['max_clashes']>c['before']['max_clashes']],
                 interpolation='existing graft.alignment.interpolation.internal_coordinate_interpolation, 101 frames',
-                clash_threshold=.70,config=dict(chirality_mode='mutable',high_coordinate='maximal',high_coordinate_scope='selected_family',graph_floor=.2,orientation_tolerance=.1,minimum_only=all(r.get('minimum_only') for r in rows)),
+                clash_threshold=.70,config=dict(**(rows[0].get('chirality_config') or dict(mode='mutable',high_coordinate='maximal',high_coordinate_scope='selected_family',graph_floor=.2,orientation_tolerance=.1)),minimum_only=all(r.get('minimum_only') for r in rows)),
                 sources={f:hashlib.sha256((repo/f).read_bytes()).hexdigest() for f in ['src/graft/chirality.py','src/graft/alignment/interpolation.py','src/graft/static/reaction_viewer.html']})
     dump(output/'summary.json',report)
     with gzip.open(output/'case-results.json.gz','wt') as f:json.dump(rows,f,separators=(',',':'))

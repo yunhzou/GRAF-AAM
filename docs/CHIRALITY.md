@@ -1,143 +1,79 @@
 # Chirality after signed-event decoding
 
-This experimental API lives on `dev/chirality-postprocessing`; publication
-`main` is unchanged. It reconnects coordinate/index-orientation selection to
-the current saved AAM families. Search and bond-event decoding remain separate.
+Experimental API on `dev/chirality-postprocessing`. Search and event decoding remain separate. The default is a **strict coordinate-orientation filter over all saved AAM families**, followed by selection of one feasible witness. It does not optimize global RMSD, interpolate coordinates, or rank collision-free paths.
 
 ```python
-from graft.postprocessing import decode_events
-from graft.chirality import ChiralityConfig, select_chiral_witness
+from graft.chirality import select_chiral_witness, query_chiral_witness
 
-decoded = decode_events(aam)
-candidate = decoded.candidates[0]
-selected = select_chiral_witness(decoded, candidate)
-if selected.status == "allowed":
-    mapping = selected.mapping  # complete R -> P witness
-    print(selected.diagnostics["ordinary_frames"])
-else:
-    print(selected.status, selected.diagnostics["reason"])
+candidate = decoded.minimum_candidates[0]
+result = select_chiral_witness(decoded, candidate)
+if result.status == "allowed":
+    mapping = result.mapping
+elif result.status == "forbidden":
+    print("No orientation-preserving mapping exists in these saved AAM families")
+else:  # unknown: watchdog/solver could not establish the answer
+    print(result.diagnostics["reason"])
+
+# Test an entire old mapping, or ask whether a few assignments can coexist.
+check = query_chiral_witness(decoded, candidate, old_mapping)
+conditional = query_chiral_witness(decoded, candidate, {source_atom: product_atom})
 ```
 
-A self-contained executable example is in
-[`examples/chirality/example.py`](../examples/chirality/example.py).
+The query is an implicit representation of the filtered subset. No bijections or group closures are expanded. Selecting one witness does not discard other feasible families. A preferred witness can be retained with `select_chiral_witness(decoded, candidate, preferred_mapping=old_mapping)`; it is used only after certification of membership, exact events, and orientation. A preference is not a hard constraint; use the query to require particular assignments.
 
-## Meaning of the constraint
+## What the filter means
 
-This is **index orientation**, including permutations of chemically identical
-ligands. It is not CIP assignment. The old orientation determinants and
-permutation-invariant degeneracy rule are reused.
+At bond floor 0.2, find the reactant neighbors that remain bonded to each mapped product center. Three persistent neighbors define a center-relative signed volume. Four define the signed volume of their affine tetrahedron. Require sign preservation when both endpoints are geometrically defined.
 
-For each mapped center, find the reactant neighbors that remain bonded to its
-product image at `graph_floor`. Three persistent ligands define a
-center-relative orientation; four define an affine tetrahedron of the ligands.
-Changes from four to five total ligands do not erase the persistent four-ligand
-constraint. A planar or geometrically undefined frame carries no sign.
+At centers with more than four neighbors **at either actual mapped endpoint**, also require all defined persistent three- and four-neighbor frame orientations to agree. An unrelated high-coordinate atom of the same element does not activate extra constraints on a four-coordinate center. Four-neighbor frames use a permutation-invariant volume normalization; ordinary degeneracy tolerance is 0.1, and the high-coordinate triple tolerance is 0.0 with a numerical roundoff guard. These tolerances are configurable.
 
-The default `mode="mutable"` preserves an ordinary frame when the saved AAM
-union permits a nontrivial setwise ligand shuffle with its center fixed. This
-mutability is proved using the actual correlated actions, not inferred from
-independent atom orbits. An unavoidable fixed orientation change is reported as
-`fixed_orientation_change`; it can represent a genuine reaction inversion.
-For structure verification, use `mode="all"` to reject every defined ordinary
-orientation reversal, including one at a center without assignment freedom.
-Neither mode establishes E/Z stereochemistry or isotopic/CIP identity.
+A frame with a lost connection or undefined endpoint orientation is inactive. The filter does not assign CIP or E/Z labels, distinguish isotopes absent from the input, or establish that a proposed reaction must preserve stereochemistry. Real reactions can invert centers or rearrange coordination. Consequently, a strict conflict is a statement about these orientation requirements and the **saved** AAM search results, not proof that the reaction or every possible atom mapping is impossible.
 
-For higher coordination, ordinary hard constraints are installed first. The
-selector certifies a saved family containing the current witness. Within that
-family, source triples and four-ligand simplices are considered in decreasing
-endpoint geometric robustness. Retain a frame only if it can coexist with all
-previously retained frames and the ordinary constraints. Excluded frames are
-reported in `reconfigured_high_coordinate_frames`.
+All decoded candidates keep their concrete broken and formed edges, including the selected metal threshold. This is stronger than preserving an event class up to endpoint symmetry. Saved anchors and correlated, ordered symmetry actions remain authoritative.
 
-This is a **maximal feasible basis within the selected family**, not an optimum
-across the AAM union or evidence for a physical pathway. The selected family ID
-is reported. `high_coordinate_scope="union"` explicitly enables the more
-expensive union-wide basis search. `high_coordinate="strict"` always searches
-the union and requires all frames. Ordinary chirality selection and mutability
-checks retain their union-wide scope in every mode. Lost connections and
-undefined endpoint orientations make a frame inactive.
+## Results and infeasibility
 
-The old solver grouped dependent frames into automorphism orbits of one
-analytical coset. The new saved relation can be an ordered product or a union
-that is not a group. Consequently the new basis is defined over explicit local
-source frames in that relation; it does not promise the old orbit grouping,
-selected mapping. The ordinary constraint and its coordinate measurement are
-retained. Both APIs select a feasible oriented witness without global geometry
-ranking.
+- `allowed`: a complete saved-family witness satisfies every applicable requested orientation constraint. Membership is certified even if the preferred witness already looks geometrically valid.
+- `forbidden`: every saved family was ruled out for the requested assignments, events, and orientation constraints. `search_exhaustive=True` records this scope. There is no replacement mapping.
+- `unknown`: a timeout or inconclusive solver result; never interpreted as an empty subset.
+- `relaxed`: an explicitly requested historical relaxation returned a mapping with full-orientation violations. Its violations are listed; it is **not** a strict successful correction.
 
-## What is certified
+An `allowed` result is not a clash-free interpolation guarantee. Even several mappings that preserve all local signs can differ in torsion, fragment placement, and interpolation quality. Those are separate questions. The selected witness is first feasible, with an optional user preference; it is not claimed to be the best geometric representative.
 
-An allowed result is either the original saved witness, checked geometrically,
-or a realization of an existing saved family's exact action program. It
-preserves the candidate's **concrete signed broken/formed edges**, including
-explicit hydrogens and the decoder's metal threshold. This keeps the selected
-reaction core fixed; it is stricter than equality modulo the decoder's event
-symmetry. It can intentionally exclude another member of the same event class
-whose changed bonds involve different source atoms.
+The default selector and subset query use the same stable predicate, independent of whichever witness happens to be found first. In particular, they do not greedily choose one high-coordinate frame basis, discard competing bases, and then present that choice as the entire allowed subset.
 
-All saved families are eligible, including ones absent from the candidate's
-support list because decoding was interrupted. No new symmetry is reconstructed
-and no orbit is treated as an independent swap permission. Anchors encoded in
-the saved families remain binding. The input AAM and decoded candidates are
-not modified.
+## Explicit historical relaxation
 
-`forbidden` means no mapping in those saved complete families meets this policy,
-not that the chemical reaction is impossible. `unknown` records an interrupted
-proof and is never converted into a conflict. An original unchanged witness
-has `family_id=None` and no new action certificate; a repaired witness carries
-the realizing family ID and action sequence.
+```python
+from graft.chirality import ChiralityConfig
 
-## Why this stays compact
+historical = ChiralityConfig(
+    mode="mutable",
+    high_coordinate="maximal",
+    high_coordinate_scope="selected_family",
+)
+relaxed = select_chiral_witness(decoded, candidate, historical)
+print(relaxed.status, relaxed.diagnostics.get("orientation_violations", []))
+```
 
-Single-atom reachable sets first reject impossible shuffle queries. They are
-rejection bounds only: no positive answer or mapping is inferred from independent
-orbits. The existing symbolic family compiler keeps ordered and coupled choices intact.
-The selector checks a proposed witness and, when needed, adds a local orientation
-constraint. One constraint covers all six orders of a three-ligand frame or all
-24 orders of a four-ligand frame: target geometry is computed for the unordered
-ligand set, and the parity of the ordered indices supplies its sign. The rule
-is guarded by its actual center, ligand set and persistent connections.
+`mutable` permits fixed ordinary orientation reversals when the saved relation has no setwise ligand shuffle. `maximal` greedily retains a feasible high-coordinate frame basis and reports omitted frames. It is a heuristic relaxation, not a complete representation of all admissible reconfiguration choices. It remains opt-in for comparison with older work; subset queries reject these reference-dependent policies. The old viewer's “zero selected violations” excluded deliberately relaxed frames, so it was not evidence of full preservation.
 
-Thus a failed frame excludes its entire wrong-parity local assignment class,
-not just one full mapping. There is no list of all group elements or atom
-bijections. Geometry, compiled families and mutability answers are cached for
-the call. A witness that already satisfies all constraints can return without
-compiling a solver. Solver checks and local refinements are reported explicitly.
-Worst-case symbolic search is still combinatorial; these checks are not a
-polynomial-time guarantee.
+## Configuration
 
-## Controls
-
-| Setting | Default | Meaning |
+| Option | Default | Meaning |
 |---|---|---|
-| `graph_floor` | `0.2` | Persistent connectivity |
-| `orientation_tolerance` | `0.1` | Ordinary/affine normalized-volume degeneracy |
-| `group_orientation_tolerance` | `0.0` | High-coordinate triple degeneracy, with numerical error protection |
-| `mode` | `"mutable"` | Historical shuffle-sensitive index orientation; `"all"` is stricter |
-| `high_coordinate` | `"maximal"` | Report a maximal feasible basis; `"strict"` requires all frames |
-| `high_coordinate_scope` | `"selected_family"` | Scope of maximal-basis refinement; `"union"` searches every saved family |
-| `seconds` | `None` | Optional soft time budget; no mapping-count or branch cap is added |
+| `mode` | `"all"` | All defined ordinary orientations; `"mutable"` explicitly relaxes fixed changes |
+| `high_coordinate` | `"strict"` | All applicable higher-coordinate frames; `"maximal"` is historical relaxation |
+| `high_coordinate_scope` | `"union"` | Only controls the explicit maximal relaxation; strict always searches the full union |
+| `graph_floor` | `0.2` | Endpoint connectivity threshold |
+| `orientation_tolerance` | `0.1` | Ordinary and four-neighbor frame degeneracy threshold |
+| `group_orientation_tolerance` | `0.0` | Higher-coordinate three-neighbor frame threshold |
+| `seconds` | `None` | Optional soft watchdog; use isolated processes for a hard limit |
 
-Use an external process watchdog for a hard limit. A timeout returns `unknown`
-when observed inside the selector. Search limits remain the caller's existing
-AAM configuration and are not changed here.
+Rejection bounds use singleton images of the ordered family action program. They can prove an unavoidable orientation conflict but never certify a mapping. All positive answers use the full correlated solver. Exhausted family models are released to keep memory bounded by active work; this does not cap the number of families searched.
 
-The selector returns a feasible mapping and orientation diagnostics, with no
-RMSD calculation or ranking. The analytical `select_rp_mappings` API likewise
-selects the first feasible saved branch/event coset, retaining its source
-witness whenever feasible. Its fixed-correspondence rigid-fit diagnostic is
-computed only after selection and cannot change the mapping.
+## Validation
 
-## Holdout interpolation audit
+Tests cover exact and partial subset membership, cross-family alternatives, unchanged inputs, fixed inversions, conflicting correlated permutations, exact event preservation, anchors, proper rotations and relabeling, planar frames, solver timeouts, explicit relaxed statuses, and finite exhaustive oracles for small symmetry programs. The example in `examples/chirality/example.py` is self-contained.
 
-The experiment in `bench/experiments/chirality_holdout/run.py` reuses saved AAM
-checkpoints and decoded candidates. It independently checks family membership
-and concrete event equality, then calls the original
-`internal_coordinate_interpolation` routine for 101 frames before and after
-selection. No global RMSD ranking or geometry optimization is introduced.
-The original 3D viewer supplies playback, a frame slider, and clash highlighting.
-An endpoint-consistent assignment does not guarantee a collision-free path;
-posing, conformational motion, and the interpolation construction also matter.
-
-The [140-case audit and offline viewer](../reports/chirality_holdout_20260917/README.md)
-contain all 166 saved minimum-event candidates and their before/after animations.
+The old/new holdout audit is recorded in `reports/chirality_strict_audit_20260917/`. Earlier `reports/chirality_holdout_20260917/` results used the historical mutable/maximal policy and are superseded for strict chirality claims.
