@@ -68,6 +68,14 @@ Keep all 135 atoms, but disconnect one 21-atom group. The recorded search still 
 
 [Broken-molecule video and evidence](manuscript/animations/molecule_verification_broken/README.md) · [Run the negative control](examples/molecule_verification/README.md#negative-control-break-one-connection)
 
+## From R/P mapping to a guided TS mode
+
+![GRAFT maps bond changes and selects a recorded mode at a TS guess](manuscript/animations/ts_mode_selection/rp-to-ts-mode-preview.gif)
+
+A 57-atom holdout example: map the endpoints, identify O–H weakening and N–H strengthening, then use the existing TS workflow to select a recorded imaginary mode at the guess. A reaction-core close-up shows the transferring hydrogen. A stable mode is shown for contrast; this guess has one imaginary mode. The geometry is a **TS guess, not an optimized TS**.
+
+[3D video and scoring evidence](manuscript/animations/ts_mode_selection/README.md) · [Interactive film](manuscript/animations/ts_mode_selection/index.html) · [Self-contained Python replay](examples/ts_mode_selection/README.md)
+
 ## Current work and stable versions
 
 See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,

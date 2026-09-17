@@ -1,0 +1,992 @@
+[
+  {
+    "index": 0,
+    "frequency": -1129.9292,
+    "overlap": 0.8698656968878472,
+    "eligible": true
+  },
+  {
+    "index": 1,
+    "frequency": 26.9805,
+    "overlap": 0.01239599777335961,
+    "eligible": false
+  },
+  {
+    "index": 2,
+    "frequency": 29.5749,
+    "overlap": 0.022227004186942807,
+    "eligible": false
+  },
+  {
+    "index": 3,
+    "frequency": 43.0046,
+    "overlap": 0.019490229259222357,
+    "eligible": false
+  },
+  {
+    "index": 4,
+    "frequency": 45.4556,
+    "overlap": 0.0303965520041868,
+    "eligible": false
+  },
+  {
+    "index": 5,
+    "frequency": 45.9277,
+    "overlap": 0.01629288622332888,
+    "eligible": false
+  },
+  {
+    "index": 6,
+    "frequency": 51.4916,
+    "overlap": 0.02030854642734773,
+    "eligible": false
+  },
+  {
+    "index": 7,
+    "frequency": 53.5176,
+    "overlap": 0.02208237896866218,
+    "eligible": false
+  },
+  {
+    "index": 8,
+    "frequency": 73.6394,
+    "overlap": 0.01959811022829155,
+    "eligible": false
+  },
+  {
+    "index": 9,
+    "frequency": 80.3434,
+    "overlap": 0.006924695546872743,
+    "eligible": false
+  },
+  {
+    "index": 10,
+    "frequency": 96.5973,
+    "overlap": 0.01830449597361945,
+    "eligible": false
+  },
+  {
+    "index": 11,
+    "frequency": 115.7428,
+    "overlap": 0.037205238474970995,
+    "eligible": false
+  },
+  {
+    "index": 12,
+    "frequency": 124.2542,
+    "overlap": 0.02597669514249686,
+    "eligible": false
+  },
+  {
+    "index": 13,
+    "frequency": 128.8197,
+    "overlap": 0.000801923225611751,
+    "eligible": false
+  },
+  {
+    "index": 14,
+    "frequency": 136.2198,
+    "overlap": 0.011081463977037185,
+    "eligible": false
+  },
+  {
+    "index": 15,
+    "frequency": 147.4247,
+    "overlap": 0.0716355054131717,
+    "eligible": false
+  },
+  {
+    "index": 16,
+    "frequency": 153.1187,
+    "overlap": 0.012159807662407759,
+    "eligible": false
+  },
+  {
+    "index": 17,
+    "frequency": 162.3361,
+    "overlap": 0.051488683063713604,
+    "eligible": false
+  },
+  {
+    "index": 18,
+    "frequency": 179.3026,
+    "overlap": 0.03375290745195719,
+    "eligible": false
+  },
+  {
+    "index": 19,
+    "frequency": 189.3625,
+    "overlap": 0.10746139046225033,
+    "eligible": false
+  },
+  {
+    "index": 20,
+    "frequency": 219.8655,
+    "overlap": 0.03194461780596638,
+    "eligible": false
+  },
+  {
+    "index": 21,
+    "frequency": 227.2118,
+    "overlap": 0.0003554883007878967,
+    "eligible": false
+  },
+  {
+    "index": 22,
+    "frequency": 234.8181,
+    "overlap": 0.00486536973757255,
+    "eligible": false
+  },
+  {
+    "index": 23,
+    "frequency": 240.8681,
+    "overlap": 0.015290512597337774,
+    "eligible": false
+  },
+  {
+    "index": 24,
+    "frequency": 254.5486,
+    "overlap": 0.03208763252385801,
+    "eligible": false
+  },
+  {
+    "index": 25,
+    "frequency": 265.7549,
+    "overlap": 0.07441029047758083,
+    "eligible": false
+  },
+  {
+    "index": 26,
+    "frequency": 268.5517,
+    "overlap": 0.0639748247818239,
+    "eligible": false
+  },
+  {
+    "index": 27,
+    "frequency": 273.84,
+    "overlap": 0.038505648476415924,
+    "eligible": false
+  },
+  {
+    "index": 28,
+    "frequency": 277.4164,
+    "overlap": 0.03309796628755192,
+    "eligible": false
+  },
+  {
+    "index": 29,
+    "frequency": 282.0202,
+    "overlap": 0.07891979972444339,
+    "eligible": false
+  },
+  {
+    "index": 30,
+    "frequency": 289.3283,
+    "overlap": 0.015298333575436529,
+    "eligible": false
+  },
+  {
+    "index": 31,
+    "frequency": 300.2292,
+    "overlap": 0.12266085045460164,
+    "eligible": false
+  },
+  {
+    "index": 32,
+    "frequency": 310.9298,
+    "overlap": 0.024102325405621565,
+    "eligible": false
+  },
+  {
+    "index": 33,
+    "frequency": 323.5784,
+    "overlap": 0.05074949992655945,
+    "eligible": false
+  },
+  {
+    "index": 34,
+    "frequency": 332.2079,
+    "overlap": 0.06879919965182307,
+    "eligible": false
+  },
+  {
+    "index": 35,
+    "frequency": 361.1127,
+    "overlap": 0.002889199533118768,
+    "eligible": false
+  },
+  {
+    "index": 36,
+    "frequency": 373.7964,
+    "overlap": 0.10715345855311972,
+    "eligible": false
+  },
+  {
+    "index": 37,
+    "frequency": 380.6339,
+    "overlap": 0.0356488622703073,
+    "eligible": false
+  },
+  {
+    "index": 38,
+    "frequency": 390.2373,
+    "overlap": 0.158175390589149,
+    "eligible": false
+  },
+  {
+    "index": 39,
+    "frequency": 417.6955,
+    "overlap": 0.14310027691060798,
+    "eligible": false
+  },
+  {
+    "index": 40,
+    "frequency": 425.2148,
+    "overlap": 0.08292684200283212,
+    "eligible": false
+  },
+  {
+    "index": 41,
+    "frequency": 442.6452,
+    "overlap": 0.02185278100501964,
+    "eligible": false
+  },
+  {
+    "index": 42,
+    "frequency": 459.3037,
+    "overlap": 0.015032480287388303,
+    "eligible": false
+  },
+  {
+    "index": 43,
+    "frequency": 469.8682,
+    "overlap": 0.0005481406870501658,
+    "eligible": false
+  },
+  {
+    "index": 44,
+    "frequency": 472.6874,
+    "overlap": 0.018626765795382798,
+    "eligible": false
+  },
+  {
+    "index": 45,
+    "frequency": 473.7801,
+    "overlap": 0.004975667912425386,
+    "eligible": false
+  },
+  {
+    "index": 46,
+    "frequency": 498.1744,
+    "overlap": 0.0237724732714931,
+    "eligible": false
+  },
+  {
+    "index": 47,
+    "frequency": 524.751,
+    "overlap": 0.017934928161999944,
+    "eligible": false
+  },
+  {
+    "index": 48,
+    "frequency": 581.9345,
+    "overlap": 0.02304603383445817,
+    "eligible": false
+  },
+  {
+    "index": 49,
+    "frequency": 582.2761,
+    "overlap": 0.025658543607398387,
+    "eligible": false
+  },
+  {
+    "index": 50,
+    "frequency": 586.7973,
+    "overlap": 0.015062408685017748,
+    "eligible": false
+  },
+  {
+    "index": 51,
+    "frequency": 590.1507,
+    "overlap": 0.0014329866777475328,
+    "eligible": false
+  },
+  {
+    "index": 52,
+    "frequency": 612.5645,
+    "overlap": 0.07442378192730122,
+    "eligible": false
+  },
+  {
+    "index": 53,
+    "frequency": 636.0161,
+    "overlap": 0.06643283321524598,
+    "eligible": false
+  },
+  {
+    "index": 54,
+    "frequency": 648.1807,
+    "overlap": 0.0086998051861423,
+    "eligible": false
+  },
+  {
+    "index": 55,
+    "frequency": 655.2572,
+    "overlap": 0.012137147126213345,
+    "eligible": false
+  },
+  {
+    "index": 56,
+    "frequency": 658.4946,
+    "overlap": 0.01320526376079845,
+    "eligible": false
+  },
+  {
+    "index": 57,
+    "frequency": 684.5907,
+    "overlap": 0.004524440344573267,
+    "eligible": false
+  },
+  {
+    "index": 58,
+    "frequency": 750.9193,
+    "overlap": 0.0007183970188316139,
+    "eligible": false
+  },
+  {
+    "index": 59,
+    "frequency": 769.4188,
+    "overlap": 0.20208977930626643,
+    "eligible": false
+  },
+  {
+    "index": 60,
+    "frequency": 820.8535,
+    "overlap": 0.009820348317046746,
+    "eligible": false
+  },
+  {
+    "index": 61,
+    "frequency": 849.5706,
+    "overlap": 0.09716535811149206,
+    "eligible": false
+  },
+  {
+    "index": 62,
+    "frequency": 878.8981,
+    "overlap": 0.0006971715113026649,
+    "eligible": false
+  },
+  {
+    "index": 63,
+    "frequency": 882.0197,
+    "overlap": 0.00784749267449596,
+    "eligible": false
+  },
+  {
+    "index": 64,
+    "frequency": 907.0383,
+    "overlap": 0.0020809206022805184,
+    "eligible": false
+  },
+  {
+    "index": 65,
+    "frequency": 922.7739,
+    "overlap": 0.00813098354199621,
+    "eligible": false
+  },
+  {
+    "index": 66,
+    "frequency": 928.0706,
+    "overlap": 0.00329693845962807,
+    "eligible": false
+  },
+  {
+    "index": 67,
+    "frequency": 934.0639,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 68,
+    "frequency": 946.7863,
+    "overlap": 0.0012990122310704694,
+    "eligible": false
+  },
+  {
+    "index": 69,
+    "frequency": 951.4539,
+    "overlap": 0.005933318739842698,
+    "eligible": false
+  },
+  {
+    "index": 70,
+    "frequency": 960.3434,
+    "overlap": 0.0018294434466554071,
+    "eligible": false
+  },
+  {
+    "index": 71,
+    "frequency": 962.2634,
+    "overlap": 0.029123998054014482,
+    "eligible": false
+  },
+  {
+    "index": 72,
+    "frequency": 966.3627,
+    "overlap": 0.01483335814000191,
+    "eligible": false
+  },
+  {
+    "index": 73,
+    "frequency": 967.8591,
+    "overlap": 0.008507898001014785,
+    "eligible": false
+  },
+  {
+    "index": 74,
+    "frequency": 975.5229,
+    "overlap": 0.005697620546674957,
+    "eligible": false
+  },
+  {
+    "index": 75,
+    "frequency": 1000.6865,
+    "overlap": 0.001471797649778105,
+    "eligible": false
+  },
+  {
+    "index": 76,
+    "frequency": 1002.5853,
+    "overlap": 0.03287986593439166,
+    "eligible": false
+  },
+  {
+    "index": 77,
+    "frequency": 1005.6992,
+    "overlap": 0.008437669254910934,
+    "eligible": false
+  },
+  {
+    "index": 78,
+    "frequency": 1007.8217,
+    "overlap": 0.0018847410004277187,
+    "eligible": false
+  },
+  {
+    "index": 79,
+    "frequency": 1008.3519,
+    "overlap": 0.02568419656977234,
+    "eligible": false
+  },
+  {
+    "index": 80,
+    "frequency": 1011.1886,
+    "overlap": 0.003744492002258319,
+    "eligible": false
+  },
+  {
+    "index": 81,
+    "frequency": 1013.9812,
+    "overlap": 0.0002746218891726701,
+    "eligible": false
+  },
+  {
+    "index": 82,
+    "frequency": 1029.0615,
+    "overlap": 0.0038666231403669624,
+    "eligible": false
+  },
+  {
+    "index": 83,
+    "frequency": 1049.6368,
+    "overlap": 0.05813034950991691,
+    "eligible": false
+  },
+  {
+    "index": 84,
+    "frequency": 1080.3689,
+    "overlap": 0.00034927085808093237,
+    "eligible": false
+  },
+  {
+    "index": 85,
+    "frequency": 1088.9847,
+    "overlap": 0.008700811457534947,
+    "eligible": false
+  },
+  {
+    "index": 86,
+    "frequency": 1092.9864,
+    "overlap": 0.0029351958316559167,
+    "eligible": false
+  },
+  {
+    "index": 87,
+    "frequency": 1106.4677,
+    "overlap": 0.009856479425889459,
+    "eligible": false
+  },
+  {
+    "index": 88,
+    "frequency": 1114.7518,
+    "overlap": 0.00012076937035829082,
+    "eligible": false
+  },
+  {
+    "index": 89,
+    "frequency": 1117.8096,
+    "overlap": 0.011892655654080066,
+    "eligible": false
+  },
+  {
+    "index": 90,
+    "frequency": 1144.2766,
+    "overlap": 0.008187062480987599,
+    "eligible": false
+  },
+  {
+    "index": 91,
+    "frequency": 1179.6832,
+    "overlap": 0.0070138612488759135,
+    "eligible": false
+  },
+  {
+    "index": 92,
+    "frequency": 1186.3496,
+    "overlap": 0.020316243861237964,
+    "eligible": false
+  },
+  {
+    "index": 93,
+    "frequency": 1191.9198,
+    "overlap": 0.0006635252341938762,
+    "eligible": false
+  },
+  {
+    "index": 94,
+    "frequency": 1201.1016,
+    "overlap": 0.0030270039553933832,
+    "eligible": false
+  },
+  {
+    "index": 95,
+    "frequency": 1213.4097,
+    "overlap": 0.035120082389786554,
+    "eligible": false
+  },
+  {
+    "index": 96,
+    "frequency": 1240.4336,
+    "overlap": 0.011825536643785117,
+    "eligible": false
+  },
+  {
+    "index": 97,
+    "frequency": 1254.4465,
+    "overlap": 0.013055957955270375,
+    "eligible": false
+  },
+  {
+    "index": 98,
+    "frequency": 1260.4966,
+    "overlap": 0.001195919146058099,
+    "eligible": false
+  },
+  {
+    "index": 99,
+    "frequency": 1269.2035,
+    "overlap": 0.012797493619867881,
+    "eligible": false
+  },
+  {
+    "index": 100,
+    "frequency": 1283.3671,
+    "overlap": 0.017308014864376775,
+    "eligible": false
+  },
+  {
+    "index": 101,
+    "frequency": 1285.9087,
+    "overlap": 0.033661300715727586,
+    "eligible": false
+  },
+  {
+    "index": 102,
+    "frequency": 1309.7378,
+    "overlap": 0.03600447762112047,
+    "eligible": false
+  },
+  {
+    "index": 103,
+    "frequency": 1332.4241,
+    "overlap": 0.005612040741037366,
+    "eligible": false
+  },
+  {
+    "index": 104,
+    "frequency": 1337.8126,
+    "overlap": 0.0005341710357244833,
+    "eligible": false
+  },
+  {
+    "index": 105,
+    "frequency": 1350.5104,
+    "overlap": 0.013786001739944362,
+    "eligible": false
+  },
+  {
+    "index": 106,
+    "frequency": 1354.2364,
+    "overlap": 0.005583555187215821,
+    "eligible": false
+  },
+  {
+    "index": 107,
+    "frequency": 1355.1982,
+    "overlap": 0.006156121083102045,
+    "eligible": false
+  },
+  {
+    "index": 108,
+    "frequency": 1357.7244,
+    "overlap": 0.002204038251008594,
+    "eligible": false
+  },
+  {
+    "index": 109,
+    "frequency": 1375.5219,
+    "overlap": 0.14276086331684854,
+    "eligible": false
+  },
+  {
+    "index": 110,
+    "frequency": 1396.9029,
+    "overlap": 0.002077192126825242,
+    "eligible": false
+  },
+  {
+    "index": 111,
+    "frequency": 1403.5905,
+    "overlap": 0.012556190280110254,
+    "eligible": false
+  },
+  {
+    "index": 112,
+    "frequency": 1408.7751,
+    "overlap": 0.0015705311989593369,
+    "eligible": false
+  },
+  {
+    "index": 113,
+    "frequency": 1418.875,
+    "overlap": 0.0018354658400702537,
+    "eligible": false
+  },
+  {
+    "index": 114,
+    "frequency": 1421.0904,
+    "overlap": 0.012150551329126374,
+    "eligible": false
+  },
+  {
+    "index": 115,
+    "frequency": 1435.1441,
+    "overlap": 0.011364336789726152,
+    "eligible": false
+  },
+  {
+    "index": 116,
+    "frequency": 1444.5888,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 117,
+    "frequency": 1447.8711,
+    "overlap": 0.003516450100240982,
+    "eligible": false
+  },
+  {
+    "index": 118,
+    "frequency": 1449.2704,
+    "overlap": 0.003496001273165215,
+    "eligible": false
+  },
+  {
+    "index": 119,
+    "frequency": 1451.2123,
+    "overlap": 0.00349356297177636,
+    "eligible": false
+  },
+  {
+    "index": 120,
+    "frequency": 1453.5516,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 121,
+    "frequency": 1468.2679,
+    "overlap": 0.000442024461264456,
+    "eligible": false
+  },
+  {
+    "index": 122,
+    "frequency": 1473.5855,
+    "overlap": 0.0006897296507007971,
+    "eligible": false
+  },
+  {
+    "index": 123,
+    "frequency": 1476.6855,
+    "overlap": 0.0006593341244573044,
+    "eligible": false
+  },
+  {
+    "index": 124,
+    "frequency": 1480.1942,
+    "overlap": 0.0020533830102230336,
+    "eligible": false
+  },
+  {
+    "index": 125,
+    "frequency": 1484.7235,
+    "overlap": 0.002798534146182502,
+    "eligible": false
+  },
+  {
+    "index": 126,
+    "frequency": 1489.1384,
+    "overlap": 0.009803225563458987,
+    "eligible": false
+  },
+  {
+    "index": 127,
+    "frequency": 1491.7569,
+    "overlap": 0.012313043262801963,
+    "eligible": false
+  },
+  {
+    "index": 128,
+    "frequency": 1495.6111,
+    "overlap": 0.0015198823423827282,
+    "eligible": false
+  },
+  {
+    "index": 129,
+    "frequency": 1497.8037,
+    "overlap": 0.007975723562039485,
+    "eligible": false
+  },
+  {
+    "index": 130,
+    "frequency": 1506.5038,
+    "overlap": 0.007484160276290602,
+    "eligible": false
+  },
+  {
+    "index": 131,
+    "frequency": 1513.0087,
+    "overlap": 0.004603511882541806,
+    "eligible": false
+  },
+  {
+    "index": 132,
+    "frequency": 1582.1906,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 133,
+    "frequency": 1597.4554,
+    "overlap": 0.0034316800741328187,
+    "eligible": false
+  },
+  {
+    "index": 134,
+    "frequency": 1606.5568,
+    "overlap": 0.005598138078437325,
+    "eligible": false
+  },
+  {
+    "index": 135,
+    "frequency": 1706.6087,
+    "overlap": 0.021406729756575517,
+    "eligible": false
+  },
+  {
+    "index": 136,
+    "frequency": 2972.4379,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 137,
+    "frequency": 2977.6299,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 138,
+    "frequency": 2987.1704,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 139,
+    "frequency": 2997.1471,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 140,
+    "frequency": 2999.1116,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 141,
+    "frequency": 3006.3632,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 142,
+    "frequency": 3028.4541,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 143,
+    "frequency": 3029.0122,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 144,
+    "frequency": 3037.2163,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 145,
+    "frequency": 3038.3417,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 146,
+    "frequency": 3039.3441,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 147,
+    "frequency": 3043.3094,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 148,
+    "frequency": 3044.2421,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 149,
+    "frequency": 3045.6316,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 150,
+    "frequency": 3047.8595,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 151,
+    "frequency": 3049.1977,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 152,
+    "frequency": 3053.4609,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 153,
+    "frequency": 3055.3229,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 154,
+    "frequency": 3056.1875,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 155,
+    "frequency": 3057.5183,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 156,
+    "frequency": 3062.8257,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 157,
+    "frequency": 3065.0283,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 158,
+    "frequency": 3068.2613,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 159,
+    "frequency": 3073.8988,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 160,
+    "frequency": 3075.8735,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 161,
+    "frequency": 3083.7353,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 162,
+    "frequency": 3092.092,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 163,
+    "frequency": 3120.9226,
+    "overlap": 0.0,
+    "eligible": false
+  },
+  {
+    "index": 164,
+    "frequency": 3126.7373,
+    "overlap": 0.0,
+    "eligible": false
+  }
+]

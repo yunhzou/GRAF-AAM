@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "atom_count": 57,
+  "selected_mode_index": 0,
+  "selected_frequency": -1129.9292,
+  "selected_overlap": 0.8698656968878472,
+  "selected_score": 0.46603618745623404,
+  "previous_score": 0.46603373877568904,
+  "score_agrees_with_previous_within": 1e-05,
+  "imaginary_modes": 1,
+  "stable_comparator_index": 19,
+  "stable_comparator_overlap": 0.10746139046225033,
+  "bond_length_derivatives": [
+    1.1048981389679007,
+    -1.0025273334416287
+  ],
+  "all_atom_motion_preserved": true,
+  "common_display_amplitude": 0.6,
+  "display_frequency_is_illustrative": true,
+  "optimized_ts_claimed": false,
+  "input_sha256": "a18c583d5f501fba7c7ee4db3b463f587eef476d2680e39365678bb4dbe78795"
+}

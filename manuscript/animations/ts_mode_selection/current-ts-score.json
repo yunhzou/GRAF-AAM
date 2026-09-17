@@ -1,0 +1,73 @@
+{
+  "schema": "rxn_core.ts/v2",
+  "target": "TS guess",
+  "elapsed_seconds": 0.017269709147512913,
+  "mechanisms": [
+    {
+      "id": 1,
+      "status": "scored",
+      "reason": null,
+      "reactant_core_assignments": 1,
+      "product_core_assignments": 1,
+      "candidate_count": 1,
+      "selected": {
+        "assignment": {
+          "12": 12,
+          "14": 14,
+          "49": 49
+        },
+        "sources": [
+          "product",
+          "reactant"
+        ],
+        "score": 0.46603618745623404,
+        "overlap": 0.8698656968878472,
+        "wbo_progress": 0.5357564841602446,
+        "mode_index": 0,
+        "frequency": -1129.9292,
+        "event_terms": [
+          {
+            "kind": "broken",
+            "reactant_bond": [
+              12,
+              49
+            ],
+            "product_bond": [
+              12,
+              49
+            ],
+            "target_bond": [
+              12,
+              49
+            ],
+            "wbo_reactant": 0.7369359454038491,
+            "wbo_product": 0.1263926825142374,
+            "wbo_target": 0.4011189981505494,
+            "event_weight": 0.6105432628896117,
+            "target_progress": 0.55002973198644
+          },
+          {
+            "kind": "formed",
+            "reactant_bond": [
+              12,
+              14
+            ],
+            "product_bond": [
+              12,
+              14
+            ],
+            "target_bond": [
+              12,
+              14
+            ],
+            "wbo_reactant": 0.10400156975039934,
+            "wbo_product": 0.7661939906851943,
+            "wbo_target": 0.45006101772814855,
+            "event_weight": 0.662192420934795,
+            "target_progress": 0.522596509771629
+          }
+        ]
+      }
+    }
+  ]
+}

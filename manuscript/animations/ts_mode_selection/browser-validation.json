@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "errors": [],
+  "video": true,
+  "viewport": [
+    1440,
+    900
+  ],
+  "atoms": 57,
+  "modes": [
+    {
+      "index": 19,
+      "frequency": 189.3625,
+      "overlap": 0.10746139046225033,
+      "selected": false
+    },
+    {
+      "index": 0,
+      "frequency": -1129.9292,
+      "overlap": 0.8698656968878472,
+      "selected": true
+    }
+  ],
+  "seekOrderIndependent": true
+}
