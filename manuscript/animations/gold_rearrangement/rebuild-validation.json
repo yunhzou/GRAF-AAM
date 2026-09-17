@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "complete_atom_count": 65,
+  "distinct_classes": [
+    "rxn_core.signed_events/v1:9ad67b99317b3c01166fefddd6a5adb498ef9169f39fcf087e24fbea7d3df2e2",
+    "rxn_core.signed_events/v1:81494c617cb5140f7f655640813c4582e99887bab6af3fa7054ab6c6cdff80f0"
+  ],
+  "family_membership_queries": [
+    "recovered",
+    "recovered"
+  ]
+}

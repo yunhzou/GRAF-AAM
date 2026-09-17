@@ -20,6 +20,14 @@ A 22-second Golden example: fragments grow into conditional branches, and the tw
 
 [Full-resolution MP4](manuscript/animations/graft_research_preview/graft-grow-branch-decode.mp4) · [Offline interactive viewer](manuscript/animations/graft_research_preview/index.html) · [Example and provenance](manuscript/animations/graft_research_preview/README.md)
 
+## Gold-catalyzed rearrangement · 65 atoms
+
+![GRAFT recovers two oxygen-fate patterns in a 65-atom gold-catalyzed rearrangement](manuscript/animations/gold_rearrangement/gold-oxygen-preview.gif)
+
+Two endpoint mappings assign the original epoxide oxygen to different product sites: the ester link or the ketone. Both patterns were recovered by the default GRAFT search and are consistent with different pathways considered in the published study. Routes b and c share one endpoint pattern; recovering a mapping does not establish the intervening mechanism.
+
+[2D film](manuscript/animations/gold_rearrangement/gold-oxygen-2d.mp4) · [3D full-complex film](manuscript/animations/gold_rearrangement/gold-oxygen-3d.mp4) · [Offline viewer](manuscript/animations/gold_rearrangement/index.html) · [Reproduce and inspect the witnesses](examples/gold_rearrangement/README.md)
+
 ## Current work and stable versions
 
 See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,

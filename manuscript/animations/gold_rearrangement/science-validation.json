@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "atoms": 65,
+  "endpoint_only_search": true,
+  "anchors_used": false,
+  "competition_enabled": false,
+  "distinct_event_classes": 2,
+  "complete_witnesses": 2,
+  "full_family_queries": "recovered",
+  "replayed_fragment_calls": "exact",
+  "organic_carbon_framework_preserved": true,
+  "oxygen_maps_1based": [
+    {
+      "5": 24,
+      "16": 26,
+      "18": 5
+    },
+    {
+      "5": 5,
+      "16": 26,
+      "18": 24
+    }
+  ],
+  "scope": "Two selected certified witnesses from an endpoint-only search. This is not exhaustive event decoding or a computed trajectory.",
+  "route_caveat": "Paper routes b and c share one endpoint oxygen pattern. Recovery does not establish a mechanism or its kinetics.",
+  "preprocessing": "Original supplied geometries; new GFN2-xTB WBOs, charge +1, negative numerical WBOs clipped to zero.",
+  "canonical_ids": [
+    "rxn_core.signed_events/v1:9ad67b99317b3c01166fefddd6a5adb498ef9169f39fcf087e24fbea7d3df2e2",
+    "rxn_core.signed_events/v1:81494c617cb5140f7f655640813c4582e99887bab6af3fa7054ab6c6cdff80f0"
+  ]
+}

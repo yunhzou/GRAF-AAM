@@ -1,0 +1,34 @@
+{
+  "atoms": 65,
+  "config": {
+    "cut_floor": 0.2,
+    "graph_floor": 0.2,
+    "iso_tolerance": 1.0,
+    "event_threshold": 0.5,
+    "metal_event_threshold": 0.3,
+    "seed_count": 1,
+    "branch_limit": 100,
+    "task_chunksize": 1,
+    "symmetry_repair": true,
+    "symmetry_repair_min_changes": 1,
+    "symmetry_repair_max_evaluations": 20000,
+    "anchors": [],
+    "seed_selection": "random",
+    "random_seed": 42,
+    "sweep_cuts": true
+  },
+  "backend": "reused_native",
+  "workers": 4,
+  "search_seconds": 0.778894041897729,
+  "elapsed_through_selected_checks_seconds": 3.385558041976765,
+  "final_fragment_branches": 1796,
+  "saved_families": 2795,
+  "saved_paths": 2795,
+  "incomplete_paths": 0,
+  "scope": "Two certified selected witnesses; not exhaustive event decoding.",
+  "canonical_ids": {
+    "a": "rxn_core.signed_events/v1:9ad67b99317b3c01166fefddd6a5adb498ef9169f39fcf087e24fbea7d3df2e2",
+    "b_and_c": "rxn_core.signed_events/v1:81494c617cb5140f7f655640813c4582e99887bab6af3fa7054ab6c6cdff80f0"
+  },
+  "status": "passed"
+}

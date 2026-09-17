@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "errors": [],
+  "mode": "2d",
+  "frames_checked": 91,
+  "distinct_final_classes": 2,
+  "viewport": [
+    1600,
+    900
+  ],
+  "video": true
+}
