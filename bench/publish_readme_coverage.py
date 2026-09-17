@@ -57,6 +57,8 @@ def build(root):
     fig.text(.055,.068,'GRAFT / SLAP: coverage among alternatives. LocalMapper / RXNMapper: one-bijection accuracy.',fontsize=10,color='#697d71')
     fig.text(.055,.032,'Primary strict re-evaluation · GRAFT: bidirectional sweep, cap 100 · all failures and unresolved cases included',fontsize=9,color='#849282')
     for ext in ['png','svg']:fig.savefig(output/f'golden-coverage.{ext}',dpi=180,facecolor=fig.get_facecolor())
+    svg=output/'golden-coverage.svg'
+    svg.write_text('\n'.join(line.rstrip() for line in svg.read_text().splitlines())+'\n')
     plt.close(fig);print('Verified',len(rows),'table rows against archived evidence; rendered Golden coverage figure.')
 
 if __name__=='__main__':build(Path(__file__).resolve().parents[1])
