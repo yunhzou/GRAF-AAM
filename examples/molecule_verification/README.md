@@ -19,7 +19,7 @@ python examples/molecule_verification/verify.py \
   --target target.xyz --candidate model_output.xyz --output verification-output
 ```
 
-The importable example function is `verify(target, candidate, output, capture=False)`. It uses `MolecularEndpoint`, `AAMProblem`, `AAMSearchConfig` and `search_aam` from `graft`. Add `--capture` to save the actual atom-by-atom trajectory for a successful match.
+The importable example function is `verify(target, candidate, output, capture=False)`. It uses `MolecularEndpoint`, `AAMProblem`, `AAMSearchConfig` and `search_aam` from `graft`. Add `--capture` to save the actual atom-by-atom trajectory for a successful match or a retained complete diagnostic witness.
 
 A result of `verified_connectivity` requires all of the following for the same retained witness:
 
@@ -27,7 +27,7 @@ A result of `verified_connectivity` requires all of the following for the same r
 - The uncut search places the entire connected target in one fragment.
 - Every inferred connection is preserved, and the candidate has no extra connections.
 
-A single complete fragment **alone is not sufficient**, because the growth matcher need not constrain source nonedges. The final adjacency check covers both edges and nonedges. A result of `not_verified` means this search did not establish the criterion; it is not a proof that no isomorphism exists. This example is for a connected target, rather than a multi-component mixture.
+A single complete fragment **alone is not sufficient**, because the growth matcher need not constrain source nonedges. The final adjacency check covers both edges and nonedges. A result of `different_connectivity` means element counts, edge counts or component counts differ, which independently rules out graph isomorphism. A result of `not_verified` means this search did not establish the criterion; it is not a proof that no isomorphism exists. This example is for a connected target, rather than a multi-component mixture.
 
 ## What the demonstration contains
 
@@ -50,3 +50,19 @@ XYZ files contain coordinates and elements, but no bond orders. Here, RDKit infe
 The search uses `iso_tolerance=0.1`, `graph_floor=0.5`, one seed, branch cap 100, no cut sweep and one worker. Cuts are disabled because this task asks whether the whole connected structure is preserved; it is not a reaction-alternative search. The final adjacency comparison is exact on the inferred binary graphs.
 
 Passing establishes connectivity under this inference rule. It does not certify bond orders, charge, stereochemistry, conformation quality or energetic stability. The reported search time excludes graph inference, trajectory replay and video rendering.
+
+## Negative control: break one connection
+
+[Watch the broken-molecule film](../../manuscript/animations/molecule_verification_broken/README.md).
+
+`candidate-broken.xyz` keeps the same 135 atoms but moves a 21-atom group away, removing exactly one inferred C–C connection and adding none. Connectivity is inferred again from the changed coordinates. The target has one component and 148 connections; the broken candidate has two components and 147 connections.
+
+```bash
+python examples/molecule_verification/verify.py \
+  --candidate examples/molecule_verification/candidate-broken.xyz \
+  --output verification-broken-output --capture
+```
+
+The recorded diagnostic witness maps all 135 atoms in **two fragments (114 + 21)** and has **one missing connection**. The result is `different_connectivity`: complete atom coverage alone does not establish the same molecule. The component and edge counts establish the mismatch independently of the selected mapping or any search cap.
+
+Regenerate the negative input with `python examples/molecule_verification/prepare_broken.py --output /tmp/graft-broken`. The script checks that only the selected bridge is lost. Its supplied bridge indices are specific to this demonstration. [Preparation evidence](break-preparation.json) records the translation and moved atoms. Equivalent ligand attachments can be shuffled by symmetry; the film's final red marker follows the returned GRAFT witness, whose target atom indices can differ from the construction indices.

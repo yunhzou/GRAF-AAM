@@ -52,3 +52,23 @@ def test_bundled_135_atom_xyz_candidate_passes(tmp_path):
     assert report['status']=='verified_connectivity'
     assert report['atoms']==135 and report['fragments']==1
     assert report['target_edges']==148 and report['missing']==report['extra']==0
+
+
+def test_broken_xyz_maps_all_atoms_but_fails_connectivity(tmp_path):
+    report=API["verify"](EXAMPLE/"target.xyz",EXAMPLE/"candidate-broken.xyz",tmp_path,capture=True)
+    assert report['status']=='different_connectivity'
+    assert report['complete'] and len(report['mapping'])==135
+    assert report['target_components']==1 and report['candidate_components']==2
+    assert report['target_edges']==148 and report['candidate_edges']==147
+    assert report['fragments']==2 and report['missing']==1 and report['extra']==0
+    assert (tmp_path/'trajectory.json.gz').is_file()
+
+
+def test_broken_preparation_removes_only_the_documented_bridge():
+    import json
+    original=API["endpoint_from_xyz"](EXAMPLE/"candidate.xyz")
+    broken=API["endpoint_from_xyz"](EXAMPLE/"candidate-broken.xyz")
+    prep=json.loads((EXAMPLE/"break-preparation.json").read_text())
+    expected=original.wbo.copy()
+    a,b=prep['candidate_edge'];expected[a,b]=expected[b,a]=0
+    assert original.elements==broken.elements and np.array_equal(broken.wbo,expected)

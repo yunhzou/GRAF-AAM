@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "atoms": 135,
+  "fragments": 2,
+  "fragment_sizes": [
+    114,
+    21
+  ],
+  "seed_placements": 2,
+  "unit_growth_events": 133,
+  "recorded_boundary_deferrals": 2,
+  "missing_connections": 1,
+  "extra_connections": 0,
+  "candidate_components": 2,
+  "all_growth_frames_are_recorded": true,
+  "construction_animation_is_illustrative": true,
+  "actual_broken_candidate_edge": [
+    66,
+    60
+  ],
+  "trace_sha256": "fe201d4022da24c437cb98f1d5e1e0e3328bfea5a63ecbc663a79b1855e23796"
+}

@@ -1,0 +1,26 @@
+{
+  "status": "passed",
+  "mp4": {
+    "dimensions": [
+      1440,
+      900
+    ],
+    "fps": 24,
+    "frames": 720,
+    "duration_seconds": 30,
+    "decode_errors": 0
+  },
+  "gif": {
+    "dimensions": [
+      960,
+      600
+    ],
+    "frames": 360,
+    "duration_seconds": 30.0
+  },
+  "files": {
+    "broken-molecule-verification.mp4": "8eb00c443318f34ee70cb1b7a5217042a43c6475d6e1fefd25c5374903d88f9e",
+    "broken-molecule-verification-preview.gif": "8da041958f5119c31b95aafe7ce132af69facb10dcd7d8391531668b5380a2dc",
+    "poster.png": "c64fff144da1c0e7dbf65dd283950119b702c05f7e7a35b695937310a8c76ef0"
+  }
+}

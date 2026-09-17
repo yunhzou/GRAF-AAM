@@ -12,6 +12,7 @@ import hashlib
 import json
 import time
 import numpy as np
+import networkx as nx
 from rdkit import Chem
 from rdkit.Chem import rdDetermineBonds
 from graft import AAMProblem, AAMSearchConfig, MolecularEndpoint, search_aam
@@ -56,29 +57,43 @@ def verify(target, candidate, output, capture=False):
                         execution='reused_native' if available() else 'reference')
     elapsed = time.perf_counter()-start
     selected = None
-    # A complete fragment alone is insufficient: reject extra candidate edges too.
+    diagnostic = None
+    diagnostic_key = None
+    # Keep a full diagnostic witness even when the match needs several fragments.
+    # This does not enumerate symmetry-related bijections.
     for terminal in result.graph.terminals:
         path = next(result.graph.paths(terminal))
         placements = [result.graph.transitions[e] for e in path.transitions
                       if result.graph.transitions[e].match is not None]
-        if len(placements) != 1:
-            continue
         mapping = dict(result.graph.states[terminal].mapping)
         check = connection_check(problem, mapping)
-        if check['same_connectivity']:
-            selected = (terminal, mapping, check)
+        if check['complete']:
+            key = (check['missing'] + check['extra'], len(placements), terminal)
+            if diagnostic_key is None or key < diagnostic_key:
+                diagnostic_key = key
+                diagnostic = (terminal, mapping, check, len(placements))
+        if len(placements) == 1 and check['same_connectivity']:
+            selected = (terminal, mapping, check, 1)
             break
+    components = [nx.number_connected_components(nx.from_numpy_array(e.wbo >= .5))
+                  for e in (problem.reactant, problem.product)]
+    edge_counts = [int(np.triu(e.wbo >= .5, 1).sum())
+                   for e in (problem.reactant, problem.product)]
+    incompatible = (not problem.balanced or components[0] != components[1]
+                    or edge_counts[0] != edge_counts[1])
     output = Path(output);output.mkdir(parents=True, exist_ok=True)
     write_aam_checkpoint(result, output/'aam.checkpoint')
-    report = dict(status='verified_connectivity' if selected else 'not_verified',
-        atoms=problem.source_atom_count, target_edges=int(np.triu(problem.reactant.wbo,1).sum()),
+    report = dict(status='verified_connectivity' if selected else ('different_connectivity' if incompatible else 'not_verified'),
+        atoms=problem.source_atom_count, target_edges=edge_counts[0], candidate_edges=edge_counts[1],
+        target_components=components[0], candidate_components=components[1],
         config=vars(config), search_seconds=elapsed, workers=1,
         input_sha256={Path(p).name:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in (target,candidate)},
         connectivity_inference=dict(method='RDKit DetermineConnectivity', useVdw=True, covFactor=1.25),
         scope='Connectivity only; does not establish bond orders, stereochemistry, charge or stability.')
-    if selected:
-        terminal,mapping,check=selected
-        report.update(terminal=terminal,fragments=1,mapping=mapping,**check)
+    witness = selected or diagnostic
+    if witness:
+        terminal,mapping,check,fragments=witness
+        report.update(terminal=terminal,fragments=fragments,mapping=mapping,**check)
         if capture:
             from graft.search_trajectory import build_trajectory
             trace=build_trajectory([dict(aam=result, context=0, terminals=[terminal])], title='Molecule verification: recorded atom-by-atom growth')

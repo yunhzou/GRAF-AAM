@@ -60,6 +60,14 @@ Given a target XYZ and a candidate XYZ, recover a complete atom correspondence a
 
 [3D video](manuscript/animations/molecule_verification/molecule-verification.mp4) · [Interactive film](manuscript/animations/molecule_verification/index.html) · [Try it with your XYZ files](examples/molecule_verification/README.md)
 
+### Negative control · one broken connection
+
+![GRAFT detects an intentionally broken molecule despite complete atom coverage](manuscript/animations/molecule_verification_broken/broken-molecule-verification-preview.gif)
+
+Keep all 135 atoms, but disconnect one 21-atom group. The recorded search still maps every atom, now in **two fragments (114 + 21)**. The final check finds **one missing connection** and rejects the candidate. The animation shows the deliberate separation, the actual interrupted growth, and the failed verdict.
+
+[Broken-molecule video and evidence](manuscript/animations/molecule_verification_broken/README.md) · [Run the negative control](examples/molecule_verification/README.md#negative-control-break-one-connection)
+
 ## Current work and stable versions
 
 See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,
