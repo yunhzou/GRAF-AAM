@@ -1,5 +1,9 @@
 # Chirality integration: focused validation
 
+Historical record for `fbbf6df`, before removal of global RMSD optimization.
+See [the subsequent validation](../chirality_no_rmsd_20260917/README.md) for the
+current selection policy and timings.
+
 Implemented on `dev/chirality-postprocessing`, separate from publication `main`.
 The new `graft.chirality.select_chiral_witness` consumes current decoded event
 candidates and the original compressed action programs. See the

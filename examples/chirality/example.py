@@ -31,4 +31,3 @@ for candidate in decoded.minimum_candidates:
     print('Bond events:', candidate.total)
     print('Selected mapping:', selected.mapping)
     print('Orientation frames:', selected.diagnostics['ordinary_frames'])
-    print('Fixed-mapping RMSD (not globally optimized):', selected.fixed_mapping_rmsd)

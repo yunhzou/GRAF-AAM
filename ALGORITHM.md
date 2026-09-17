@@ -2,15 +2,15 @@
 
 This document describes the current reactant-to-product atom alignment
 algorithm, the data structures produced by AAM, and the post-AAM selection
-steps for symmetry, mechanism identity, index chirality, and RMSD. It also
+steps for symmetry, mechanism identity, and index chirality. It also
 records the main problems found during the TS01/TS04 and full-batch
 investigation so the old witness-based design is not accidentally restored.
 
 The central principle is:
 
 > AAM returns analytical families of valid atom bijections. A random witness
-> is provenance, not the solution. Mechanism identity, chirality, and RMSD
-> selection must operate on the exact family represented by graph symmetry.
+> is provenance, not the solution. Mechanism identity and chirality constraints
+> must operate on the exact family represented by graph symmetry.
 
 ## Public computational architecture
 
@@ -71,7 +71,7 @@ request/calculation/cache counts are part of `AAMSearchMetrics`.
 `compile_mechanism_families()` compiles its event-conditioned families;
 `compile_mapping_families()` instead compiles complete raw structural families
 without event grouping. `select_rp_mappings()` applies chirality constraints and
-then fixed-mapping RMSD ranking. `analyze_transition_state()` composes two
+selects a feasible oriented witness. `analyze_transition_state()` composes two
 partial AAM searches with mode scoring. None of these stages reads JSON,
 writes files, invokes the viewer, or silently recomputes an alternative atom
 mapping.
@@ -111,7 +111,7 @@ RPResult
    |- selected AtomBijection
    |- broken/formed bonds and core atoms
    |- chirality audit
-   `- exact fixed-mapping RMSD
+   `- fixed-correspondence rigid-fit diagnostic
 
 TSResult
 `- TSMechanismResult[]
@@ -136,7 +136,7 @@ The primary implementation is in:
 - `src/graft/alignment/sweep.py`: cut sweep and mechanism grouping;
 - `src/graft/alignment/post_aam.py`: typed post-AAM data model;
 - `src/graft/alignment/index_chirality.py`: analytical families,
-  chirality, and fixed-mapping RMSD selection;
+  chirality, and fixed-correspondence rigid fitting;
 - `src/graft/aam.py`: typed full AAM search;
 - `src/graft/analytical.py`: exact coset compilation and containment;
 - `src/graft/rp.py`: R/P composition;
@@ -154,7 +154,7 @@ The implementation originally mixed several distinct concepts:
 2. noisy atom-orbit or symmetry indicators accumulated from multiple paths;
 3. fragment automorphisms that actually describe allowed assignments;
 4. different growth paths that happen to produce the same mechanism;
-5. final geometry-based choices such as chirality and RMSD.
+5. final orientation constraints and display alignment.
 
 This produced several observable problems:
 
@@ -166,8 +166,8 @@ This produced several observable problems:
 - group-level ligand permutations disappeared when branches were deduplicated;
 - chirality was checked on arbitrary witnesses, although witnesses are not a
   generating set and have no privileged geometric meaning;
-- RMSD was used to rank sampled witnesses instead of the exact
-  chirality-valid family;
+- global RMSD ranking imposed an unnecessary geometry objective on mapping
+  selection; it has now been removed;
 - exact but redundant paths made post-processing much slower than AAM;
 - interpolation artifacts were sometimes mistaken for mapping errors.
 
@@ -195,7 +195,7 @@ signed chirality relations
 exact chirality-valid atom action
         |
         v
-minimum fixed-mapping proper-fit RMSD
+select a feasible constraint witness
         |
         v
 one selected R -> P_aligned mapping and its selected symmetry metadata
@@ -281,7 +281,7 @@ P elements/WBO/XYZ -------------->+-----------v-----------+
                          +--------------------+--------------------+
                                               |
                          +--------------------v--------------------+
-                         | minimize fixed-mapping proper-fit RMSD  |
+                         | select a feasible oriented witness     |
                          +--------------------+--------------------+
                                               |
                                 selected complete R -> P mapping
@@ -430,7 +430,7 @@ state. An anchored atom may seed growth, but it can also remain outside every
 grown fragment. During analytical compilation, such an uncovered anchor is
 represented as an individually fixed singleton fragment. Missing non-anchor
 atoms remain an error. Anchor colors are also carried into the relational
-graph, so family dedupe, chirality, symmetry repair, and RMSD selection cannot
+graph, so family dedupe, chirality, symmetry repair, and witness selection cannot
 move an anchored pair.
 
 ### 7.2 Exact live dedupe
@@ -584,7 +584,7 @@ stricter than preserving the concrete event realized by the selected mapping.
 The algorithm therefore traverses the finite quotient of the structural AAM
 group by this conservative stabilizer. It retains one representative for each
 quotient coset whose actual broken/formed event equals the mechanism event.
-Only these event-family representatives proceed to chirality and RMSD.
+Only these event-family representatives proceed to chirality selection.
 
 This is a Schreier-style traversal of event cosets, not enumeration of group
 elements or atom bijections. TS01, for example, has two same-event quotient
@@ -712,137 +712,39 @@ PR8 demonstrates the distinction: 19 R48 frames are simultaneously
 preserved, while the nearly coplanar `[34,41,43]` frame is recorded as
 reconfigured instead of invalidating the entire mapping family.
 
-## 12. RMSD Selection Inside the Exact Family
+## 12. Feasible Oriented Witness Selection
 
-Every maximal `AAMBranch` carries the authoritative compiled mapping family:
-its representative, exact target generators, target orbits, group order, and
-the in-memory colored relation used to prove family equality/containment.
-Post-AAM selection reuses this object; endpoint chemistry and fragment
-symmetry are not recomputed.
+The saved AAM family defines the allowed assignments. Chirality selection
+requires an assignment that satisfies its orientation, event, and anchor
+constraints. It does not rank assignments by global RMSD.
 
-There are two exact execution strategies. SymPy Schreier-Sims first measures
-the group and overlapping-support component orders without enumerating group
-elements:
+The current signed-event decoder uses the compact symbolic selector described
+in [CHIRALITY.md](docs/CHIRALITY.md). It returns the original witness when valid;
+otherwise it solves the saved action program with local orientation constraints.
+Concrete broken/formed edges stay fixed.
 
-1. when the complete action is at most 1,000,000 and every component is at
-   most 4,096, components are closed and filtered directly;
-2. for a larger entangled action, chirality colors are added to the already
-   compiled AAM relation and pynauty returns the exact chirality subgroup.
+The analytical-family API retains two constraint-solving routes: direct
+filtering of small correlated action factors, or oriented isomorphism of the
+compiled relation for large entangled groups. Unconstrained factors remain at
+identity. Within a feasible coset, the source witness is preferred; otherwise a
+deterministic constraint witness is used. R/P selection stops at the first
+feasible saved branch/event coset. It does not optimize across feasible branches.
 
-The second route is not a fallback and does not rematch atoms. It is the
-algebraically appropriate representation for wreath-product-like groups where
-materializing one support component would itself be combinatorial. Both
-routes operate on the same AAM family and return an exact subgroup/coset.
+The legacy R/P result still includes a proper rigid-fit diagnostic for that
+single selected correspondence. This fit removes translation and rotation,
+cannot change atom assignments, and never participates in selection. The
+signed-event chirality API does not calculate or return it.
 
-Factors touching chirality frames, a hard anchor, or a potentially changing
-bond event are filtered explicitly. Event sensitivity is tested over every
-action of a local factor, not just the supplied generator list, so a generator
-product cannot silently change the chosen mechanism. Factors independent of
-all constraints remain as generators for exact RMSD minimization.
+## 13. Post-AAM Performance
 
-Completed branch representatives contribute correlated mutability detection,
-but they are not treated as random RMSD candidates. Each maximal family is
-evaluated independently across its same-event structural quotient cosets;
-within each coset, only exact chirality-valid group actions are scored.
+The symbolic selector caches geometry, family compilation, and mutability
+queries. An already valid witness can return without a solver. Local parity
+constraints reject whole wrong-orientation assignment classes rather than
+individual full bijections. There is no global RMSD search or full mapping list.
 
-For any candidate mapping, RMSD uses immutable correspondence:
-
-```text
-P_R_order[r] = xyz_P[m(r)]
-
-center R and P_R_order
-compute proper Kabsch rotation, det(rotation) = +1
-RMSD = sqrt(mean(||R - rotated(P_R_order)||^2))
-```
-
-Kabsch removes only global translation and proper rotation. It never performs
-assignment, symmetry matching, or atom remapping.
-
-### 12.1 Covariance representation
-
-For centered coordinates, the coordinate norms are invariant under every
-permutation. Proper-fit RMSD therefore depends only on the 3x3 covariance:
-
-```text
-C(m) = sum_r outer(P[m(r)], R[r])
-RMSD(m)^2 = (||R||^2 + ||P||^2 - 2 proper_score(C(m))) / N
-```
-
-No global mapping list is constructed.
-
-### 12.2 Exact factor search
-
-Generator supports are joined when they overlap. Disjoint support components
-are exact commuting factors:
-
-```text
-G = G1 x G2 x ... x Gk
-```
-
-Each local action contributes one additive 3x3 covariance matrix. Local
-action matrices are stored in a binary tree; every tree node is enclosed by a
-rigorous Frobenius ball. A greedy descent supplies only an incumbent. For a
-partial covariance and all remaining action balls:
-
-```text
-proper_score(C + remaining)
-    <= proper_score(C + sum(ball centers))
-       + sqrt(3) * sum(ball radii)
-```
-
-This is an upper bound on the best possible Kabsch score and therefore a
-lower bound on RMSD. If it cannot improve the incumbent, the complete group
-subtree is discarded. Tie-breaking remains deterministic by rounded RMSD and
-the complete mapping tuple.
-
-The search is exact. On the direct route, local connected-factor actions are
-closed explicitly but the global product is never enumerated as atom
-bijections. On the entangled route, orientation restriction first reduces the
-compiled family (for example, the Ni TS11 family becomes 324 valid actions),
-then the same exact covariance search scores the reduced action.
-
-## 13. Post-AAM Parallelism and Performance
-
-Post-processing previously recomputed endpoint-only event behavior for every
-growth path. On a 133-atom case this performed roughly 830,000 repeated event
-comparisons per family.
-
-The current immutable compiler context precomputes once:
-
-- endpoint active graphs;
-- element/threshold pair classes;
-- R-side event behavior vectors;
-- P-side event behavior vectors.
-
-It is shared by family compilation and chirality evaluation. Exact relation
-records are cached for containment checks. Families are compiled in process
-batches, with up to 48 workers for large branch sets.
-
-The structural family `G` can contain several right cosets of the conservative
-event stabilizer `K`. Their quotient is constructed directly with a
-Schreier--Sims transversal, never by quadratic pairwise relation-membership
-tests. Concrete event signatures for the quotient representatives are checked
-in bounded vectorized batches. A retained member `K g` reuses the already
-compiled target subgroup `K`; changing `g` does not justify recompiling the
-pynauty relation. The compiled subgroup also proves that its complete action
-preserves the selected event, so only the final selected mapping requires an
-independent event assertion.
-
-After quotient construction, `(branch, event-coset)` pairs are independent
-exact work units. They are scheduled across up to 48 workers and reduced by
-the deterministic global order `(RMSD, mapping tuple, branch, coset)`. This is
-only a scheduling transformation: no family, constraint, or RMSD candidate is
-discarded.
-
-Measured on the 133-atom Pd TS12 case with eight CPUs:
-
-```text
-initial exact post-AAM: 29.02 s
-current exact post-AAM: 11.5-11.6 s
-```
-
-The old witness baseline was faster because it proved less and sampled
-witnesses. The current result retains the exact family and gives lower RMSD.
+See [the verification report](reports/chirality_no_rmsd_20260917/README.md)
+for current checks and timings. Section 18 records historical validation of the
+older analytical pipeline; those timings are not measurements of this revision.
 
 ## 14. Bounded Symmetry Repair During AAM Scoring
 
@@ -854,7 +756,7 @@ exact pynauty subgroup actions and scores bond-event count/WBO change.
 
 `symmetry_repair_max_evals`, normally 20000, is a hard diagnostic cap. This
 step normalizes a concrete completed representative for event scoring. It does
-not replace analytical family compilation or final chirality/RMSD selection.
+not replace analytical family compilation or final chirality selection.
 
 ## 15. Viewer Semantics
 
@@ -881,12 +783,12 @@ artifacts.
 
 The current code deliberately avoids the following shortcuts:
 
-- selecting a random or first witness;
+- selecting a witness without verifying its family and constraints;
 - treating witnesses as generators;
 - combining independent atom orbits as if their swaps were uncorrelated;
 - deduplicating mechanisms from endpoint orbit pairs;
 - merging live automorphic branches without encoding their hierarchy;
-- geometry-based remapping before RMSD;
+- geometry-based ranking or remapping during chirality selection;
 - accepting chirality through a fallback mapping outside the AAM family;
 - silently changing WBO tolerance between edge verification and pynauty.
 
@@ -909,10 +811,12 @@ If every minimum-event mechanism is rejected, R/P selection raises an
 | `symmetry_repair_max_evals` | `20000` | bounded completed-representative repair |
 | analytical compile workers | up to `48` | process parallelism for large branch sets |
 
-## 18. Verification Record
+## 18. Historical Analytical-Pipeline Verification
 
-The current implementation is covered by 154 automated tests. Important
-checks include:
+The following records predate the current signed-event chirality API and the
+removal of global RMSD optimization. They are retained as historical evidence,
+not as current timing or test-count claims. That implementation had 154 tests.
+Checks included:
 
 - cached and uncached relational graphs are identical;
 - a generated 8192-action group gives the same selected mapping and RMSD as
@@ -943,7 +847,7 @@ The direct stored-group regression gates additionally show:
   mechanism certificate; regression checks therefore compare canonical event
   certificates rather than arbitrary symmetry-equivalent atom labels.
 
-The final revision `3b1e34c` was rerun over the complete 140-case manifest:
+The historical revision `3b1e34c` was rerun over the complete 140-case manifest:
 
 - 140/140 cases succeeded, producing 166 mechanisms;
 - every selected mechanism reports zero index-chirality violations;

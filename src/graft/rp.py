@@ -29,7 +29,6 @@ def _select_branch_mapping(result, mechanism):
     family_source_mappings = [
         branch.aam_branch.representative.as_dict()
         for branch in mechanism.branches]
-    successes = []
     failures = []
     for branch_index, branch in enumerate(mechanism.branches):
         family = branch.family
@@ -63,15 +62,13 @@ def _select_branch_mapping(result, mechanism):
                     branch_family_mappings=family_source_mappings,
                     aam_family_generators=coset_family.target_generators,
                     compiled_aam_family=coset_family)
-                selected = selection.selected_mapping
-                rmsd = fixed_mapping_aligned_rmsd(
-                    selected, reactant.coordinates, product.coordinates)
-                successes.append((
-                    round(float(rmsd), 12),
-                    tuple(selected[index]
-                          for index in range(problem.atom_count)),
-                    int(branch_index), int(coset_index),
-                    dict(selected), dict(selection.metadata)))
+                metadata = dict(selection.metadata)
+                metadata.update(selected_analytical_branch_index=branch_index,
+                                selected_event_coset_index=coset_index,
+                                analytical_branch_count=len(mechanism.branches),
+                                event_coset_failure_count=len(failures),
+                                branch_selection_policy="first_feasible_saved_branch_and_event_coset")
+                return branch_index, dict(selection.selected_mapping), metadata
             except IndexChiralityConflict as exc:
                 failures.append({
                     "branch_index": int(branch_index),
@@ -79,23 +76,14 @@ def _select_branch_mapping(result, mechanism):
                     "reason": str(exc),
                     "diagnostics": getattr(exc, "diagnostics", None),
                 })
-    if not successes:
-        raise IndexChiralityConflict(
-            "no exact AAM event coset satisfies index chirality",
-            diagnostics={"failures": failures})
-    successes.sort(key=lambda item: item[:4])
-    _rounded, _mapping_key, branch_index, coset_index, mapping, metadata = (
-        successes[0])
-    metadata["selected_analytical_branch_index"] = int(branch_index)
-    metadata["selected_event_coset_index"] = int(coset_index)
-    metadata["analytical_branch_count"] = len(mechanism.branches)
-    metadata["event_coset_failure_count"] = len(failures)
-    return branch_index, mapping, metadata
+    raise IndexChiralityConflict(
+        "no exact AAM event coset satisfies index chirality",
+        diagnostics={"failures": failures})
 
 
 def select_rp_mappings(
         analytical: AnalyticalAAMResult) -> RPResult:
-    """Apply index chirality and fixed-mapping RMSD to exact AAM families."""
+    """Select feasible oriented witnesses; rigid-fit RMSD is diagnostic only."""
     if not isinstance(analytical, AnalyticalAAMResult):
         raise TypeError("select_rp_mappings requires an AnalyticalAAMResult")
     started = time.perf_counter()

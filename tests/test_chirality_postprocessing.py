@@ -50,6 +50,7 @@ def test_repair_pool_with_one_parity_constraint(monkeypatch):
     c=decoded.candidates[0];c.mapping=dict(enumerate(range(5)))
     import graft.alignment.index_chirality as legacy
     monkeypatch.setattr(legacy,'_generated_atom_permutations',lambda *a:pytest.fail('expanded actions'))
+    monkeypatch.setattr(np.linalg,'svd',lambda *a,**k:pytest.fail('geometry fit during selection'))
     selected=select_chiral_witness(decoded,c)
     assert selected.status=='allowed' and selected.mapping!=c.mapping
     assert _simplex_measure(swapped(x),0,tuple(selected.mapping[a] for a in range(1,5)),.1).sign==_simplex_measure(x,0,(1,2,3,4),.1).sign
@@ -64,7 +65,7 @@ def test_no_chiral_work_for_already_valid_mapping():
     result=select_chiral_witness(d,c)
     assert result.status=='allowed' and result.mapping==c.mapping
     assert result.diagnostics['solver_checks']==0
-    assert result.fixed_mapping_rmsd<1e-12
+    assert not hasattr(result, "fixed_mapping_rmsd")
 
 
 def test_fixed_inversion_is_reported_and_strict_mode_rejects():

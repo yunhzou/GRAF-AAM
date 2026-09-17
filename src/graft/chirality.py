@@ -12,7 +12,7 @@ import time
 import numpy as np
 
 from .alignment.index_chirality import (
-    _simplex_measure, fixed_mapping_aligned_rmsd,
+    _simplex_measure,
 )
 
 
@@ -44,7 +44,6 @@ class ChiralWitness:
     mapping: dict | None = None
     family_id: int | None = None
     actions: tuple = ()
-    fixed_mapping_rmsd: float | None = None
     diagnostics: dict = field(default_factory=dict)
 
 
@@ -282,8 +281,7 @@ def select_chiral_witness(decoded, candidate, config=None):
 
     No solution/count cap is added. ``seconds`` is an optional soft watchdog;
     use process isolation for a hard wall limit. Unknown never means forbidden.
-    The returned RMSD is a proper fit of the selected fixed mapping, not a
-    proof of the minimum RMSD over all chirality-valid mappings.
+    Selection uses orientation feasibility only, with no global geometry rank.
     """
     decoded._check_candidate(candidate)
     config = config or ChiralityConfig()
@@ -291,7 +289,7 @@ def select_chiral_witness(decoded, candidate, config=None):
     accepted, excluded = [], []
     diagnostics = dict(policy='saved_family_index_orientation', event_scope='concrete_signed_edges',
                        mode=config.mode, high_coordinate=config.high_coordinate,
-                       rmsd_optimized=False, graph_floor=config.graph_floor,
+                       graph_floor=config.graph_floor,
                        orientation_tolerance=config.orientation_tolerance,
                        group_orientation_tolerance=config.group_orientation_tolerance,
                        candidate_id=candidate.id)
@@ -314,7 +312,7 @@ def select_chiral_witness(decoded, candidate, config=None):
                         accepted.append(frame)
                         result = trial
         if result is None:
-            status, mapping, rmsd = 'forbidden', None, None
+            status, mapping = 'forbidden', None
             diagnostics['reason'] = 'no saved mapping satisfies the requested orientation constraints'
         else:
             status, mapping = 'allowed', dict(result['mapping'])
@@ -323,14 +321,15 @@ def select_chiral_witness(decoded, candidate, config=None):
             diagnostics['high_coordinate_frames'] = w.frame_diagnostics(mapping, accepted)
             assert w.decoded.index.describe([mapping[i] for i in range(w.decoded.index.n)])['events'] == w.pattern['events']
             assert not w.ordinary(mapping)[0] and not w.soft_violations(mapping, accepted)
-            rmsd = fixed_mapping_aligned_rmsd(mapping, w.r.coordinates, w.p.coordinates)
     except (_BudgetExpired, TimeoutError) as exc:
-        status, mapping, rmsd, result = 'unknown', None, None, None
+        status, mapping, result = 'unknown', None, None
         diagnostics['reason'] = str(exc)
     diagnostics.update(seconds=time.perf_counter() - w.start, solver_checks=w.checks,
                        compiled_families=len(w.compiled), local_refinements=w.refinements,
                        local_geometry_evaluations=len(w.measures), mutability_queries=w.mutability_queries,
                        retained_high_coordinate_frames=accepted, reconfigured_high_coordinate_frames=excluded,
                        atom_bijections_enumerated=0)
-    return ChiralWitness(status, mapping, None if result is None else result.get('family_id'),
-                         () if result is None else tuple(result.get('actions', ())), rmsd, diagnostics)
+    return ChiralWitness(status=status, mapping=mapping,
+                         family_id=None if result is None else result.get('family_id'),
+                         actions=() if result is None else tuple(result.get('actions', ())),
+                         diagnostics=diagnostics)

@@ -258,3 +258,18 @@ def test_no_event_mechanism_has_explicit_unscorable_ts_status():
     assert mechanism.selected is None
     assert mechanism.reactant_core_aam is None
     assert mechanism.product_core_aam is None
+
+
+def test_rp_selects_first_feasible_family_without_geometry_ranking(monkeypatch):
+    import graft.rp as module
+    analytical = compile_mechanism_families(group_mechanisms(search_aam(
+        AAMProblem(_endpoint("R"), _endpoint("P")),
+        AAMSearchConfig(seed_count=1, sweep_cuts=False))), minimum_events_only=True)
+    monkeypatch.setattr(module, "fixed_mapping_aligned_rmsd",
+                        lambda *a, **k: pytest.fail("geometry score during selection"))
+    mechanism = analytical.mechanisms[0]
+    branch, mapping, metadata = module._select_branch_mapping(analytical, mechanism)
+    assert branch == 0
+    assert mapping == mechanism.branches[0].aam_branch.representative.as_dict()
+    assert metadata["branch_selection_policy"] == "first_feasible_saved_branch_and_event_coset"
+    assert not any("rmsd" in key for key in metadata)

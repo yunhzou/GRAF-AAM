@@ -1,0 +1,12 @@
+{
+  "tests_passed": 105,
+  "example_passed": true,
+  "files": {
+    "src/graft/chirality.py": "ea8ef9e09ded5093aeda175a6fed884be01e8f702e84020b393ff0c0e2312dbb",
+    "src/graft/alignment/index_chirality.py": "a427aaf885b71d0b90a0d63279edf52323351501f88bc72e127703d68a043011",
+    "src/graft/rp.py": "9e6741a996badd7a8971660836f21ba9e16353d208bb18846f744954af0fa03e",
+    "tests/test_chirality_postprocessing.py": "c6dc084d79f81816d29363a83cebc54b9195d6f1f5d85111d772675aba59204c",
+    "tests/test_index_chirality.py": "ccc53260d397cf82de842deef216659894ea6e76cbf097809c4bca7b0e905d07",
+    "tests/test_typed_aam_api.py": "b2c5b487385507f3188e87d29525c45b42eaf81cd53321bbe4d226d7633eec66"
+  }
+}

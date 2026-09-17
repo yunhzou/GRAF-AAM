@@ -355,7 +355,7 @@ class RPMechanism:
 
 @dataclass(frozen=True)
 class RPResult:
-    """Final R/P mappings after analytical chirality and RMSD processing."""
+    """Final R/P chirality witnesses with a subsequent rigid-fit diagnostic."""
 
     analytical: AnalyticalAAMResult
     mechanisms: tuple[RPMechanism, ...]

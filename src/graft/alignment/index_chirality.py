@@ -19,7 +19,7 @@ from ..frag import bond_event_threshold, build_graph
 from ..matcher.orbits import _wbo_tolerance_bucket_lookup
 
 
-INDEX_CHIRALITY_SCHEMA = "rxn_core.index_chirality/v5"
+INDEX_CHIRALITY_SCHEMA = "rxn_core.index_chirality/v6"
 ORIENTATION_DEGENERACY_TOL = 0.1
 # Group orientation is topological: only a determinant indistinguishable from
 # zero at working precision is undefined.  The local-center tolerance above
@@ -215,64 +215,6 @@ def fixed_mapping_aligned_rmsd(mapping, coords_R, coords_P):
     aligned = centered_P @ rotation
     return float(np.sqrt(np.mean(np.sum(
         (aligned - centered_R) ** 2, axis=1))))
-
-
-def _fixed_mappings_aligned_rmsd(mappings, coords_R, coords_P):
-    """Vectorized equivalent of :func:`fixed_mapping_aligned_rmsd`.
-
-    Every product coordinate array is indexed by its supplied immutable
-    mapping before a batched proper Kabsch fit.  This changes only scheduling:
-    there is no correspondence search or symmetry rematching.
-    """
-    mappings = list(mappings)
-    if not mappings:
-        return np.empty(0, dtype=float)
-    reactant = np.asarray(coords_R, dtype=float)
-    product_xyz = np.asarray(coords_P, dtype=float)
-    atom_count = len(reactant)
-    indices = np.asarray([
-        [int(mapping[r]) for r in range(atom_count)]
-        for mapping in mappings
-    ], dtype=int)
-    products = product_xyz[indices]
-    centered_P = products - products.mean(axis=1, keepdims=True)
-    centered_R = reactant - reactant.mean(axis=0)
-    covariance = np.einsum(
-        'kni,nj->kij', centered_P, centered_R, optimize=True)
-    u, _singular, vt = np.linalg.svd(covariance)
-    rotations = u @ vt
-    reflected = np.linalg.det(rotations) < 0.0
-    if np.any(reflected):
-        u = u.copy()
-        u[reflected, :, -1] *= -1.0
-        rotations = u @ vt
-    aligned = centered_P @ rotations
-    return np.sqrt(np.mean(np.sum(
-        (aligned - centered_R[None, :, :]) ** 2, axis=2), axis=1))
-
-
-def _proper_fit_scores(covariances):
-    """Maximum ``trace(Q.T @ C)`` for proper rotations and 3x3 ``C``."""
-    covariances = np.asarray(covariances, dtype=float)
-    scalar = covariances.ndim == 2
-    if scalar:
-        covariances = covariances[None, :, :]
-    u, singular, vt = np.linalg.svd(covariances)
-    signs = np.where(np.linalg.det(u @ vt) < 0.0, -1.0, 1.0)
-    scores = singular[:, 0] + singular[:, 1] + signs * singular[:, 2]
-    return float(scores[0]) if scalar else scores
-
-
-@dataclass(frozen=True)
-class _CovarianceActionNode:
-    """A rigorous Frobenius ball around a set of local group actions."""
-
-    center: np.ndarray
-    radius: float
-    size: int
-    minimum_key: tuple[int, ...]
-    action_index: int | None = None
-    children: tuple["_CovarianceActionNode", ...] = ()
 
 
 def _orientation_measure(coords, origin, other_points, *,
@@ -572,7 +514,7 @@ def _generated_atom_permutations(raw_generators, degree):
 
     Relation vertices can permute while every atom stays fixed.  Restricting
     generators to the atom prefix before closure ensures such kernel elements
-    never become RMSD candidates.
+    do not inflate the distinct atom action.
     """
     degree = int(degree)
     identity = tuple(range(degree))
@@ -653,239 +595,6 @@ def _independent_atom_action_factors_cached(raw_generators, degree):
         }))
         factors.append((support, local_actions))
     return tuple(sorted(factors, key=lambda item: item[0]))
-
-
-def _minimum_rmsd_group_action(canonical_mapping, raw_generators,
-                               coords_R, coords_P):
-    """Find the exact minimum-RMSD atom action without global enumeration.
-
-    Independent symmetry factors form a search tree.  For every partial
-    assignment, pair-distance disagreement among already fixed atoms gives a
-    rigorous lower bound on any proper-fit RMSD below that node:
-
-        RMSD >= sqrt(sum_ij (dR_ij - dP_ij)^2) / N.
-
-    Therefore a complete remaining coset can be skipped when its bound is
-    worse than the incumbent.  This is exact branch-and-bound, not a local or
-    greedy selection; the greedy pass only supplies an initial incumbent.
-    """
-    canonical_mapping = dict(canonical_mapping)
-    atom_count = len(canonical_mapping)
-    factors = list(_independent_atom_action_factors(
-        raw_generators, atom_count))
-    group_order = 1
-    for _support, actions in factors:
-        group_order *= len(actions)
-    if not factors:
-        rmsd = fixed_mapping_aligned_rmsd(
-            canonical_mapping, coords_R, coords_P)
-        return canonical_mapping, rmsd, {
-            'group_order': 1, 'evaluated_leaf_count': 1,
-            'pruned_leaf_count': 0, 'factor_orders': [],
-        }
-    # The centered coordinate norms are permutation-invariant.  For mapping
-    # ``m``, proper-fit RMSD depends only on the 3x3 covariance
-    #
-    #     C(m) = sum_r outer(P[m(r)], R[r]).
-    #
-    # Independent automorphism factors contribute additively to C.  Search
-    # their covariance-space product directly; never materialize the global
-    # Cartesian product of atom bijections.
-    factors.sort(key=lambda item: (-len(item[0]), -len(item[1]), item[0]))
-    reactant = np.asarray(coords_R, dtype=float)
-    product = np.asarray(coords_P, dtype=float)
-    centered_R = reactant - reactant.mean(axis=0)
-    centered_P = product - product.mean(axis=0)
-    norm_sum = float(np.sum(centered_R * centered_R)
-                     + np.sum(centered_P * centered_P))
-
-    factor_details = []
-    movable_R = set()
-    for support, actions in factors:
-        support_set = set(support)
-        affected_R = tuple(sorted(
-            r for r, p in canonical_mapping.items() if p in support_set))
-        movable_R.update(affected_R)
-        raw_images = tuple(
-            tuple(int(action[canonical_mapping[r]]) for r in affected_R)
-            for action in actions)
-        matrices = np.asarray([
-            sum((np.outer(centered_P[p], centered_R[r])
-                 for r, p in zip(affected_R, images)),
-                start=np.zeros((3, 3), dtype=float))
-            for images in raw_images
-        ])
-        action_images = raw_images
-        factor_details.append((affected_R, action_images, matrices))
-
-    fixed_R = tuple(sorted(set(range(atom_count)) - movable_R))
-    fixed_covariance = sum((
-        np.outer(centered_P[canonical_mapping[r]], centered_R[r])
-        for r in fixed_R
-    ), start=np.zeros((3, 3), dtype=float))
-
-    def rmsd_from_score(score):
-        squared = max((norm_sum - 2.0 * float(score)) / atom_count, 0.0)
-        return float(np.sqrt(squared))
-
-    def build_action_tree(matrices, images, indices):
-        indices = np.asarray(indices, dtype=int)
-        values = matrices[indices]
-        center = np.mean(values, axis=0)
-        radius = float(np.max(np.linalg.norm(
-            values - center, axis=(1, 2)))) if len(indices) > 1 else 0.0
-        minimum_key = min(images[int(index)] for index in indices)
-        if len(indices) == 1:
-            return _CovarianceActionNode(
-                center=center, radius=0.0, size=1,
-                minimum_key=minimum_key,
-                action_index=int(indices[0]))
-        flat = values.reshape(len(indices), 9)
-        split_axis = int(np.argmax(np.ptp(flat, axis=0)))
-        order = sorted(
-            range(len(indices)),
-            key=lambda offset: (
-                float(flat[offset, split_axis]),
-                images[int(indices[offset])]),
-        )
-        midpoint = len(order) // 2
-        left_indices = indices[order[:midpoint]]
-        right_indices = indices[order[midpoint:]]
-        children = (
-            build_action_tree(matrices, images, left_indices),
-            build_action_tree(matrices, images, right_indices),
-        )
-        return _CovarianceActionNode(
-            center=center, radius=radius, size=len(indices),
-            minimum_key=minimum_key, children=children)
-
-    roots = tuple(
-        build_action_tree(matrices, images, np.arange(len(images)))
-        for _affected, images, matrices in factor_details)
-    suffix_orders = [1] * (len(factor_details) + 1)
-    suffix_centers = [np.zeros((3, 3), dtype=float)
-                      for _ in range(len(factor_details) + 1)]
-    suffix_radii = [0.0] * (len(factor_details) + 1)
-    for index in range(len(factor_details) - 1, -1, -1):
-        suffix_orders[index] = suffix_orders[index + 1] * roots[index].size
-        suffix_centers[index] = (
-            suffix_centers[index + 1] + roots[index].center)
-        suffix_radii[index] = suffix_radii[index + 1] + roots[index].radius
-
-    def mapping_from_choices(choices):
-        mapping = dict(canonical_mapping)
-        for (affected_R, action_images, _matrices), action_index in zip(
-                factor_details, choices):
-            mapping.update(zip(affected_R, action_images[action_index]))
-        return mapping
-
-    # Coordinate ascent supplies only an incumbent.  Every discarded subtree
-    # below is still proven unable to improve that incumbent by a rigorous
-    # covariance-ball upper bound.
-    choices = []
-    covariance = fixed_covariance.copy()
-    for affected_R, action_images, matrices in factor_details:
-        identity_images = tuple(canonical_mapping[r] for r in affected_R)
-        try:
-            action_index = action_images.index(identity_images)
-        except ValueError as exc:
-            raise IndexChiralityError(
-                "symmetry factor omitted its identity action") from exc
-        choices.append(action_index)
-        covariance += matrices[action_index]
-    for _pass in range(2):
-        for factor_index, (_affected, images, matrices) in enumerate(
-                factor_details):
-            base = covariance - matrices[choices[factor_index]]
-            scores = _proper_fit_scores(base[None, :, :] + matrices)
-            best_score = float(np.max(scores))
-            candidates = [
-                index for index, score in enumerate(scores)
-                if abs(float(score) - best_score) <= 1e-12
-            ]
-            selected_index = min(candidates, key=lambda index: images[index])
-            covariance = base + matrices[selected_index]
-            choices[factor_index] = selected_index
-
-    best_mapping = mapping_from_choices(choices)
-    best_score = float(_proper_fit_scores(covariance))
-    best_rmsd = rmsd_from_score(best_score)
-    best_rank = (round(best_rmsd, 12),
-                 tuple(best_mapping[r] for r in range(atom_count)))
-    evaluated = 0
-    pruned = 0
-    visited_action_nodes = 0
-    sqrt_three = float(np.sqrt(3.0))
-
-    def bound_for(partial_covariance, factor_index, node):
-        relaxed_center = (
-            partial_covariance + node.center
-            + suffix_centers[factor_index + 1])
-        relaxed_radius = (
-            node.radius + suffix_radii[factor_index + 1])
-        return (float(_proper_fit_scores(relaxed_center))
-                + sqrt_three * relaxed_radius)
-
-    def search_factor(factor_index, partial_covariance, selected_choices):
-        nonlocal best_mapping, best_score, best_rmsd, best_rank
-        nonlocal evaluated, pruned, visited_action_nodes
-
-        def visit(node):
-            nonlocal best_mapping, best_score, best_rmsd, best_rank
-            nonlocal evaluated, pruned, visited_action_nodes
-            visited_action_nodes += 1
-            upper_score = bound_for(partial_covariance, factor_index, node)
-            lower_rmsd = rmsd_from_score(upper_score)
-            if round(lower_rmsd, 12) > best_rank[0]:
-                pruned += node.size * suffix_orders[factor_index + 1]
-                return
-            if node.action_index is not None:
-                action_index = node.action_index
-                covariance_here = (
-                    partial_covariance
-                    + factor_details[factor_index][2][action_index])
-                choices_here = selected_choices + (action_index,)
-                if factor_index + 1 < len(factor_details):
-                    search_factor(
-                        factor_index + 1, covariance_here, choices_here)
-                    return
-                evaluated += 1
-                score = float(_proper_fit_scores(covariance_here))
-                rmsd = rmsd_from_score(score)
-                mapping = mapping_from_choices(choices_here)
-                rank = (round(rmsd, 12),
-                        tuple(mapping[r] for r in range(atom_count)))
-                if rank < best_rank:
-                    best_mapping = mapping
-                    best_score = score
-                    best_rmsd = rmsd
-                    best_rank = rank
-                return
-            ordered_children = sorted(
-                node.children,
-                key=lambda child: (
-                    -bound_for(partial_covariance, factor_index, child),
-                    child.minimum_key),
-            )
-            for child in ordered_children:
-                visit(child)
-
-        visit(roots[factor_index])
-
-    search_factor(0, fixed_covariance, ())
-    # Covariance norm subtraction loses precision near an exact fit.
-    # Re-evaluate the winning correspondence from coordinate residuals.
-    best_rmsd = fixed_mapping_aligned_rmsd(best_mapping, coords_R, coords_P)
-    return best_mapping, best_rmsd, {
-        'group_order': int(group_order),
-        'evaluated_leaf_count': int(evaluated),
-        'pruned_leaf_count': int(pruned),
-        'factor_orders': [len(actions) for _support, actions in factors],
-        'covariance_factor_orders': [
-            len(images) for _affected, images, _matrices in factor_details],
-        'visited_action_node_count': int(visited_action_nodes),
-        'search_method': 'exact_covariance_action_ball_tree',
-    }
 
 
 class AnalyticalMappingFamily:
@@ -1365,26 +1074,24 @@ def select_group_chiral_witness(
             else:
                 reversed_frames.append(record)
         mapping_key = tuple(mapping[r] for r in sorted(mapping))
-        fixed_rmsd = fixed_mapping_aligned_rmsd(
-            mapping, coords_R, coords_P)
         rank = (
             -len(preserved),
             len(reversed_frames),
             degenerate_count,
             missing_count,
-            fixed_rmsd,
+            mapping != source,
             mapping_key,
         )
         evaluated.append((
             rank, witness_index, mapping, preserved, reversed_frames,
-            degenerate_count, missing_count, fixed_rmsd))
+            degenerate_count, missing_count))
     evaluated.sort(key=lambda item: item[0])
     (_rank, witness_index, selected, preserved, reversed_frames,
-     degenerate_count, missing_count, selected_rmsd) = evaluated[0]
+     degenerate_count, missing_count) = evaluated[0]
     metadata = {
         "schema_version": "rxn_core.group_chirality_witness/v1",
         "policy": (
-            "maximize_preserved_orientation_then_minimize_fixed_mapping_rmsd"),
+            "maximize_preserved_orientation_then_prefer_source"),
         "candidate_witness_count": len(candidate_records),
         "high_coordinate_centers_R": sorted(high_coordinate_centers),
         "reference_frame_count": len(reference_frames),
@@ -1394,9 +1101,6 @@ def select_group_chiral_witness(
         "missing_frame_count": int(missing_count),
         "selected_witness_index": witness_index,
         "selected_mapping_changed": selected != source,
-        "selected_fixed_mapping_aligned_rmsd": float(selected_rmsd),
-        "rmsd_policy": (
-            "exact_mapping_then_proper_rigid_fit_no_permutation"),
         "selected_reversed_frames": reversed_frames,
     }
     return GroupChiralityWitnessSelection(
@@ -1538,7 +1242,7 @@ def _select_from_stored_aam_group(
         orientation_degeneracy_tol, anchor_map, group_chirality_frames,
         branch_family_mappings, static_context,
         event_invariant_group=False):
-    """Filter and score the finalized AAM group without graph reconstruction."""
+    """Filter the finalized AAM group and retain a feasible witness."""
     degree = len(source)
     identity = tuple(range(degree))
     graph_R = static_context['graph_R']
@@ -1811,18 +1515,12 @@ def _select_from_stored_aam_group(
                 "evaluated_constraint_action_count": evaluated_actions,
             })
 
-    unconstrained_generators = tuple(
-        action for _support, actions in unconstrained for action in actions
-        if action != identity)
-    ranked = []
-    for base in valid_bases:
-        selected, rmsd, search = _minimum_rmsd_group_action(
-            base, unconstrained_generators, coords_R, coords_P)
-        ranked.append((round(rmsd, 12), tuple(selected[r]
-                                              for r in range(degree)),
-                       selected, rmsd, search))
-    ranked.sort(key=lambda item: item[:2])
-    _rank, _key, selected, selected_rmsd, rmsd_search = ranked[0]
+    # Unconstrained factors keep their identity action. Do not move atoms
+    # merely to improve a global geometry score.
+    selected = min(valid_bases, key=lambda mapping: (
+        mapping != source, tuple(mapping[r] for r in range(degree))))
+    from math import prod
+    valid_count = len(valid_bases) * prod(len(actions) for _, actions in unconstrained)
     if mapping_event_signature(
             selected, wbo_R, wbo_P, elements_R,
             dwbo_threshold=dwbo_threshold,
@@ -1845,23 +1543,8 @@ def _select_from_stored_aam_group(
         "stored_aam_family_generator_count": len(stored_generators),
         "selected_fragment_count": fragment_count,
         "evaluated_constraint_action_count": evaluated_actions,
-        "chirality_valid_atom_bijection_count": len(valid_bases),
-        "rmsd_candidate_count": sum(
-            int(item[4]["group_order"]) for item in ranked),
-        "rmsd_evaluated_leaf_count": sum(
-            int(item[4]["evaluated_leaf_count"]) for item in ranked),
-        "rmsd_pruned_leaf_count": sum(
-            int(item[4]["pruned_leaf_count"]) for item in ranked),
-        "rmsd_symmetry_factor_orders": rmsd_search["factor_orders"],
-        "rmsd_covariance_factor_orders": rmsd_search.get(
-            "covariance_factor_orders", rmsd_search["factor_orders"]),
-        "rmsd_visited_action_node_count": rmsd_search.get(
-            "visited_action_node_count", 1),
-        "rmsd_search_method": rmsd_search.get(
-            "search_method", "trivial_group"),
-        "selected_fixed_mapping_aligned_rmsd": float(selected_rmsd),
-        "rmsd_policy": (
-            "stored_AAM_group_chirality_filter_then_exact_covariance_search"),
+        "chirality_valid_atom_bijection_count": valid_count,
+        "selection_policy": "source_if_feasible_else_first_constraint_witness",
         "source_index_chirality_violation_count": int(source_violations),
         "selected_index_chirality_violation_count": 0,
         "defined_frame_count": len(local_frames),
@@ -2308,8 +1991,12 @@ def select_index_chirality_assignment(
     canonical_mapping = {
         r: int(isomorphism[source[r]]) for r in source
     }
-    selected, selected_rmsd, rmsd_search = _minimum_rmsd_group_action(
-        canonical_mapping, oriented_generators, coords_R, coords_P)
+    # Both relational graphs share incidence topology. Equal vertex colors
+    # certify that the original witness already satisfies every constraint.
+    selected = (dict(source) if oriented_relation.colors_A == oriented_relation.colors_B
+                else canonical_mapping)
+    atom_generators = tuple(tuple(g[:len(source)]) for g in oriented_generators)
+    valid_count = _permutation_group_order(atom_generators, len(source))
     validate_mapping(selected, elements_R, elements_P)
 
     source_signature = mapping_event_signature(
@@ -2370,25 +2057,12 @@ def select_index_chirality_assignment(
             "mantissa": float(group_mantissa),
             "decimal_exponent": int(group_exponent),
         },
-        "chirality_valid_atom_bijection_count": rmsd_search['group_order'],
+        "chirality_valid_atom_bijection_count": valid_count,
         "chirality_relation_automorphism_group_order": {
             "mantissa": float(oriented_mantissa),
             "decimal_exponent": int(oriented_exponent),
         },
-        "rmsd_candidate_count": rmsd_search['group_order'],
-        "rmsd_evaluated_leaf_count": rmsd_search['evaluated_leaf_count'],
-        "rmsd_pruned_leaf_count": rmsd_search['pruned_leaf_count'],
-        "rmsd_symmetry_factor_orders": rmsd_search['factor_orders'],
-        "rmsd_covariance_factor_orders": rmsd_search.get(
-            'covariance_factor_orders', rmsd_search['factor_orders']),
-        "rmsd_visited_action_node_count": rmsd_search.get(
-            'visited_action_node_count', 1),
-        "rmsd_search_method": rmsd_search.get(
-            'search_method', 'trivial_group'),
-        "selected_fixed_mapping_aligned_rmsd": float(selected_rmsd),
-        "rmsd_policy": (
-            "exact_covariance_group_action_search_then_fixed_mapping_"
-            "proper_fit_no_remapping_no_global_bijection_enumeration"),
+        "selection_policy": "source_if_feasible_else_canonical_oriented_isomorphism",
         "selected_fragment_count": len(fragments),
         "preserved_group_chirality_frame_count": len(group_frames),
         "reconfigured_group_chirality_frame_count": len(

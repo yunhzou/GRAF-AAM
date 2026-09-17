@@ -55,8 +55,9 @@ The old solver grouped dependent frames into automorphism orbits of one
 analytical coset. The new saved relation can be an ordered product or a union
 that is not a group. Consequently the new basis is defined over explicit local
 source frames in that relation; it does not promise the old orbit grouping,
-selected mapping, or optimized RMSD. The ordinary constraint and its coordinate
-measurement are retained. The legacy analytical-family/RMSD API stays available.
+selected mapping. The ordinary constraint and its coordinate measurement are
+retained. Both APIs select a feasible oriented witness without global geometry
+ranking.
 
 ## What is certified
 
@@ -97,7 +98,7 @@ compiling a solver. Solver checks and local refinements are reported explicitly.
 Worst-case symbolic search is still combinatorial; these checks are not a
 polynomial-time guarantee.
 
-## Controls and geometry ranking
+## Controls
 
 | Setting | Default | Meaning |
 |---|---|---|
@@ -112,7 +113,8 @@ Use an external process watchdog for a hard limit. A timeout returns `unknown`
 when observed inside the selector. Search limits remain the caller's existing
 AAM configuration and are not changed here.
 
-`fixed_mapping_rmsd` is a proper Kabsch fit of the selected correspondence.
-**It is not the global minimum RMSD over all allowed shuffles.** This API is a
-fast feasibility selector. The older `select_rp_mappings` pipeline retains its
-separate analytical-family optimization contract.
+The selector returns a feasible mapping and orientation diagnostics, with no
+RMSD calculation or ranking. The analytical `select_rp_mappings` API likewise
+selects the first feasible saved branch/event coset, retaining its source
+witness whenever feasible. Its fixed-correspondence rigid-fit diagnostic is
+computed only after selection and cannot change the mapping.
