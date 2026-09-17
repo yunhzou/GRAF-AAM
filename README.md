@@ -80,11 +80,11 @@ A 22-second Golden example: fragments grow into conditional branches, and the tw
 
 [Full-resolution MP4](manuscript/animations/graft_research_preview/graft-grow-branch-decode.mp4) · [Offline interactive viewer](manuscript/animations/graft_research_preview/index.html) · [Example and provenance](manuscript/animations/graft_research_preview/README.md)
 
-## Gold-catalyzed rearrangement · 65 atoms
+## Use atom matching to explore alternative reaction pathways
 
 ![GRAFT recovers two oxygen-fate patterns in a 65-atom gold-catalyzed rearrangement](manuscript/animations/gold_rearrangement/gold-oxygen-preview.gif)
 
-Actual atom-by-atom growth through one recorded search tree in the 65-atom gold example. The two oxygen alternatives share the same 63-atom prefix; the other subtree is shown as “… 2 other terminals.” Two endpoint mappings assign O* to different product sites: the ester link or the ketone. Both patterns were recovered by the default GRAFT search and are consistent with different pathways considered in the published study. Routes b and c share one endpoint pattern; recovering a mapping does not establish the intervening mechanism.
+Different atom correspondences can suggest different ways a reaction could proceed. In this 65-atom gold-catalyzed rearrangement, GRAFT recovers two oxygen placements: the original epoxide oxygen can become the ester-link oxygen or the ketone oxygen. These alternatives are consistent with different pathways considered in the published study. The animation follows the actual fragment growth that finds them, showing how AAM can expose pathway hypotheses for further investigation. Endpoint matching proposes possibilities; it does not establish the intervening mechanism.
 
 [3D film](manuscript/animations/gold_rearrangement/gold-oxygen-3d.mp4) · [Film viewer](manuscript/animations/gold_rearrangement/index.html) · [Full growth trajectory](manuscript/animations/gold_rearrangement/trajectory.html) · [Reproduce and inspect the witnesses](examples/gold_rearrangement/README.md)
 
@@ -114,15 +114,15 @@ These original schemes use PH₃; the animation uses the supplied AuPPh₃ endpo
 
 </details>
 
-## Verify a generated structure · 135 atoms
+## Use AAM as a molecular structure verifier
 
 ![GRAFT verifies a 135-atom candidate with one complete fragment and no connectivity changes](manuscript/animations/molecule_verification/molecule-verification-preview.gif)
 
-Given a target XYZ and a candidate XYZ, recover a complete atom correspondence and check whether all inferred connections agree. This controlled demonstration uses a large holdout molecule with changed conformation and shuffled atom order. The film follows the actual one-fragment growth: **135 atoms, 148 inferred connections, no missing or extra connections**. Connectivity is inferred independently from each XYZ; bond orders, stereochemistry and stability require separate checks.
+Check whether a generated structure has the intended molecular connectivity, even when its conformation and atom order differ from the target. Given two XYZ files, GRAFT matches their atoms and checks for missing or extra connections. This controlled 135-atom example matches as one complete fragment, with all 148 inferred connections preserved. The check verifies connectivity; bond orders, stereochemistry and stability require separate checks.
 
 [3D video](manuscript/animations/molecule_verification/molecule-verification.mp4) · [Interactive film](manuscript/animations/molecule_verification/index.html) · [Try it with your XYZ files](examples/molecule_verification/README.md)
 
-### Negative control · one broken connection
+### Detect a broken structure
 
 ![GRAFT detects an intentionally broken molecule despite complete atom coverage](manuscript/animations/molecule_verification_broken/broken-molecule-verification-preview.gif)
 
@@ -130,11 +130,11 @@ Keep all 135 atoms, but disconnect one 21-atom group. The recorded search still 
 
 [Broken-molecule video and evidence](manuscript/animations/molecule_verification_broken/README.md) · [Run the negative control](examples/molecule_verification/README.md#negative-control-break-one-connection)
 
-## From R/P mapping to a guided TS mode
+## Use AAM to guide TS mode selection
 
 ![GRAFT maps bond changes and selects a recorded mode at a TS guess](manuscript/animations/ts_mode_selection/rp-to-ts-mode-preview.gif)
 
-A 57-atom holdout example: map the endpoints, identify O–H weakening and N–H strengthening, then use the existing TS workflow to select a recorded imaginary mode at the guess. A reaction-core close-up shows the transferring hydrogen. A stable mode is shown for contrast; this guess has one imaginary mode. The geometry is a **TS guess, not an optimized TS**.
+Use the mapped bond changes to identify motion relevant to a proposed reaction. In this 57-atom example, GRAFT identifies O–H weakening and N–H strengthening, then selects a recorded imaginary mode at the TS guess that follows those changes. The close-up tracks the transferring hydrogen, with a stable mode shown for comparison. This guides mode selection at a **TS guess, not an optimized TS**.
 
 [3D video and scoring evidence](manuscript/animations/ts_mode_selection/README.md) · [Interactive film](manuscript/animations/ts_mode_selection/index.html) · [Self-contained Python replay](examples/ts_mode_selection/README.md)
 
