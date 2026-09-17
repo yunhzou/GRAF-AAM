@@ -65,6 +65,9 @@ for row in sources['snapshots']:
 tex='\n'.join(p.read_text() for p in (MAN/'includes').glob('*.tex') if p.name in ['paper.tex','supplement.tex','include-abstract.tex'])
 for obsolete in ['Adaptive no-sweep','Separate experimental versions','Holdout follow-ups','earlier publication engine','N_{\\mathrm{order\\ changed}}']:
  assert obsolete not in tex,obsolete
+paper=(MAN/'includes/paper.tex').read_text()
+assert paper.index(r'\label{fig:alternatives}') < paper.index(r'\section{Evaluation}')
+assert 'Final representation and complete window decoding' not in paper
 bib=(MAN/'references.bib').read_text()
 for group in re.findall(r'\\cite\w*\{([^}]+)\}',tex):
  for key in group.split(','):assert re.search(r'@\w+\{'+re.escape(key)+',',bib),key
@@ -78,6 +81,7 @@ log=(MAN/'build/preprint.log').read_text()
 assert not re.search(r'(?:Citation|Reference).*undefined|There were undefined|Overfull \\[hv]box|Missing character:',log), 'Inspect TeX log'
 r=PdfReader(MAN/'manuscript.pdf');pages=[p.extract_text() for p in r.pages];alltext='\n'.join(pages)
 assert '??' not in alltext
+assert not re.search(r'\bMac\b|same-host|worker count|ran concurrently',alltext), 'Keep execution details in the reproducibility records'
 for value in [f"{seed['methods']['seeds1']['golden_recovery_percent']:.2f}",f"{seed['methods']['seeds3']['golden_recovery_percent']:.2f}",'120,052','300','162','168']:
  assert value in alltext,value
 assert 'Golden reference recovery and runtime' in alltext

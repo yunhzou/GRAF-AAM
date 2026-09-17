@@ -12,7 +12,7 @@ The manuscript presents the final algorithm: weighted continuous fragment growth
 - `evidence/molecule_example.json`: checked SMILES, mappings, and heavy-atom event lists for the constructed illustration.
 - `figs/fig2_golden.{pdf,svg,png}`: Golden reference-family recovery and direction-specific mean CPU cost.
 - `figs/fig3_coordinate.{pdf,svg,png}`: GRAFT and prior-method minimum-event comparisons, minimum-count distributions, and measured stage costs on 140 cases.
-- `figs/fig4_alternatives.{pdf,svg,png}`: Golden case 9, with the recovered reference and two alternatives. Red × marks and green inward arrows identify bond changes; pastel colors identify actual saved fragments. The discussion motivates allowed reaction-core assignments and mapping-dependent endpoint interpolation as downstream uses.
+- `figs/fig4_alternatives.{pdf,svg,png}`: Golden case 9, with the recovered reference and two alternatives. Red × marks and green inward arrows identify bond changes; pastel colors identify actual saved fragments. The Methods demonstration motivates multiple event candidates; the Discussion describes potential downstream uses.
 - `evidence/golden_case9.json` and `golden_case9_verification.json`: full witnesses, source fragment groups, source hashes, original-RDF reference verification, and H-event lower bounds for the selected heavy mappings.
 - `evidence/multicandidate_example.json` and `evidence/output_multiplicity.json`: current-API example and archived comparator-output audit for the discussion.
 - `manuscript_bundle.zip`: compact paper, source, figure, and evidence bundle.
@@ -43,11 +43,11 @@ pdftoppm -scale-to 1400 -png manuscript.pdf build/page
 
 Paired no-sweep controls are included in the main Golden results table. Evidence: `reports/golden_unswept_20260913/`; GRAFT 1,489/1,851, SLAP 1,661/1,851 (one unresolved). No new mapping searches were run. The molecular figure now checks alcohol-site matches including attached H and shows three conditional assignment levels.
 
-Runtime detail is in Table 3 (same-Mac mean/median/95th-percentile CPU by endpoint-size orientation, paired with recovery), Figure 2, and the unified comparison in Table 2. `timing_comparison.json` retains per-case measurements and matched-cohort identities. Archived default-call CPU times are marked with a superscript in Table 2 because their CPU model is not recorded; no cross-CPU speed ranking is implied.
+Runtime detail is in Table 3 (paired mean/median/95th-percentile CPU by endpoint-size orientation, paired with recovery), Figure 3, and the unified comparison in Table 2. `timing_comparison.json` retains per-case measurements and matched-cohort identities. Archived default-call CPU times are marked with a superscript in Table 2 because their CPU model is not recorded; no cross-CPU speed ranking is implied.
 
 The 140-reaction coordinate collection compares bond events under unverified mappings; it is not a mapping-accuracy benchmark. The cap control returns complete mappings for 138 reactions at cap 100 and all 140 at cap 2,000; cases 123 and 125 are the two search-completion losses. Table 4 reports the baseline-only bond-event comparison at cap 2,000, Table 5 reports archived stage costs, and Table A4 reports fresh full-pipeline timing. Against SLAP sweep and native SLAP, lower/equal/higher event counts are 4/136/0 and 15/125/0, respectively. Final event-pattern evidence is in `reports/published_baseline_20260915/`; older competition-enabled decoding reports are excluded.
 
-Figure 4 uses Golden case 9: the recovered reference and two alternative mappings. Compact red × marks for losses and paired green inward arrows for gains sit on the affected bonds in Figures 1 and 4, retaining fragment colors and the original black bond lines. Golden labels concern heavy atoms; totals explicitly include unannotated H assignments. The three selected witnesses are not an exhaustive decoded set. Evidence: `golden_case9.json` and `golden_case9_verification.json`.
+Figure 2 uses Golden case 9: the recovered reference and two alternative mappings. Compact red × marks for losses and paired green inward arrows for gains sit on the affected bonds in Figures 1 and 2, retaining fragment colors and the original black bond lines. Golden labels concern heavy atoms; totals explicitly include unannotated H assignments. The three selected witnesses are not an exhaustive decoded set. Evidence: `golden_case9.json` and `golden_case9_verification.json`.
 
 ## 3D research preview
 

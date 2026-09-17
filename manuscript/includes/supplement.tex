@@ -9,12 +9,12 @@ The repository's \texttt{manuscript/REPRODUCIBILITY.md} links the benchmark scri
 
 For the coordinate comparison, GRAFT uses supplied WBO matrices and SLAP uses the original XYZ-derived binary graphs. SLAP's returned heavy-atom assignments receive hydrogen refinement under its original bond-change objective, then are rescored on the WBO matrices. Thus, the comparison uses a common event score but different input representations. It covers the returned SLAP witnesses, not an exhaustive expansion of its hydrogen label families. The WBO-generation method is not recorded in the available metadata, so regeneration of these matrices from molecular structures is not established.
 
-The paired search timings use the Apple M4 Pro CPU and one numerical-library thread. Averages use \CommonCases{} common completed reactions. Reference verification and interrupted work are excluded. GRAFT includes checkpoint I/O; SLAP excludes I/O. Higher-seed runs measured on different CPUs are excluded from this paired comparison. Stage-specific timing scopes are given with the corresponding tables.
+The paired search timings use an Apple M4 Pro CPU. Averages use \CommonCases{} common completed reactions. Reference verification and interrupted work are excluded. GRAFT includes checkpoint I/O; SLAP excludes I/O. Higher-seed runs measured on different CPUs are excluded from this paired comparison. For the coordinate stage comparison, GRAFT search includes checkpoint I/O; SLAP mapping excludes input preparation and export, and its hydrogen refinement includes I/O. Shared event rescoring and failed or replaced attempts are excluded. Golden GRAFT timing includes symmetry finalization; SLAP includes graph construction, mapping, and export. In the primary Golden evaluation, uncut and swept SLAP have one and three unresolved cases, respectively; all GRAFT verdicts are resolved.
 
 \subsection{Default comparator protocol}
 \label{sec:default-comparators}
 
-Released comparators receive the same label-free Golden inputs, without prediction repair or reference-guided ranking. Invalid outputs and failures remain in the denominator. SLAP is evaluated over all returned candidates, with binary and weighted modes reported separately. The repository records the released models, versions, and adapter settings.
+Released comparators receive the same label-free Golden inputs, without prediction repair or reference-guided ranking. Invalid outputs and failures remain in the denominator. SLAP is evaluated over all returned candidates, using binary mode for the default comparison and both modes for bidirectional comparisons. The repository records the released models, versions, and adapter settings.
 
 \subsection{Decoding scope}
 
@@ -46,7 +46,7 @@ Independent reconstruction agrees with the supplied references in all eleven cas
 \subsection{Branch-cap and CPU-time ablation on Golden}
 \label{sec:cap-ablation}
 
-We reran the twelve configurations in \Cref{tab:golden-caps} on all 1,851 Golden reactions using one CPU thread on an AMD EPYC 9J14 processor. Both search directions are unioned. SLAP unions its binary and weighted modes. Search and reference verification have separate fixed resource budgets. The recorded cap-100 recovery counts reproduce the main evaluation. At cap 2,000, unresolved counts increase with seed count. Among reactions resolved at both caps, no swept configuration gains or loses a reference recovery.
+We reran the twelve configurations in \Cref{tab:golden-caps} on all 1,851 Golden reactions using an AMD EPYC 9J14 CPU. Both search directions are unioned. SLAP unions its binary and weighted modes. Search and reference verification have separate fixed resource budgets. The recorded cap-100 recovery counts reproduce the main evaluation. At cap 2,000, unresolved counts increase with seed count. Among reactions resolved at both caps, no swept configuration gains or loses a reference recovery.
 
 \begin{table}[htbp]
 \centering\footnotesize

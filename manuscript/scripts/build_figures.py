@@ -192,12 +192,12 @@ text=(f"A fresh run of the final implementation completed search and event decod
 (MAN/'includes/generated-end-to-end-text.tex').write_text(text)
 wall=st['end_to_end']['wall_seconds'];cpu=e2e['manifest']['cpu']
 scope=(f"We measured one-seed, cap-2,000 cut-sweep search followed by the public event decoder on the {cpu} CPU. "
- "Four reactions ran concurrently, with one numerical thread per reaction. CPU times are per reaction, not divided by the worker count. "
+ "CPU times are reported per reaction. "
  "The event thresholds and windows match the bond-event comparison, with no class-count cap. "
  f"All {n} completed reactions reproduce the archived event-class sets and family counts. "
  f"Median end-to-end wall time is {wall['median']:.2f} seconds. "
- "Timing includes input loading, checkpoint I/O, final-family construction, decoding, candidate serialization, and progress recording; "
+ "Timing includes input loading, checkpoint I/O, final-family construction, decoding, and candidate serialization; "
  "initial imports and reference-set verification are excluded. "
  + ("Interrupted cases are indexed "+', '.join(map(str,e2e['incomplete_cases']))+" in the released records; their partial results are not completion certificates. " if missing else "All 140 reactions finish within the five-minute watchdog. ")
- + "Per-case timings, source hashes, and reproduction commands are provided with the code.\n")
+ + "Detailed timing records and reproduction instructions are provided with the code.\n")
 (MAN/'includes/generated-end-to-end-scope.tex').write_text(scope)
