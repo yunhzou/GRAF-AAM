@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "graft"
 version = "0.2.0"
-description = "WBO-graph atom alignment + per-mode reactive scoring + ranked HTML viewer for transition-state initial guesses"
+description = "Fragment-based atom–atom matching with symmetry-aware alternatives and bond-event decoding"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
-keywords = ["chemistry", "transition-state", "xtb", "wbo", "alignment"]
+keywords = ["chemistry", "atom-mapping", "fragments", "symmetry", "transition-state", "wbo"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -37,8 +37,8 @@ sessions = ["pymongo>=4.6"]
 graft = "graft.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yunhzou/GRAF-AAM"
-Repository = "https://github.com/yunhzou/GRAF-AAM"
+Homepage = "https://github.com/yunhzou/GRAFT-AAM"
+Repository = "https://github.com/yunhzou/GRAFT-AAM"
 
 [tool.setuptools.packages.find]
 where = ["src"]

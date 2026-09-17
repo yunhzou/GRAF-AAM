@@ -1,16 +1,76 @@
-# GRAFT (`graft`)
+# GRAFT: fragment-based atom–atom matching
 
-The default GRAFT pipeline uses one seed ordering per cut, the uncut plus single-edge sweep, and branch cap 100. Match with `search_aam`, then decode bond-event alternatives separately. See the [Python API example](docs/PYTHON_API.md). Fragment competition is an experimental, explicit opt-in extension and is off by default; it is not part of the published method.
+**Match atoms. Recover alternatives. Understand structural change.**
 
-Symmetry-aware WBO atom mapping, analytical R/P alignment, and
-mechanism-local transition-state analysis.
+GRAFT is a Python library for atom–atom matching (AAM) between molecular structures. It grows matching fragments, branches over alternative placements, and keeps symmetry-related correspondences in a compressed representation. A separate decoder turns those families into distinct bond-change candidates, each with an explicit atom mapping and queryable symmetry information.
 
-Paper benchmarks: [results and artifact index](reports/README.md) ·
-[benchmark scripts and reproduction guide](bench/README.md).
-[Final end-to-end timing](reports/final_end_to_end_20260916/README.md) records search plus bond-event decoding, including watchdog interruptions.
+Use GRAFT to map reactants to products, analyze how molecular structures differ, verify generated structures against a target, or carry reaction-core correspondences into transition-state workflows. It works with molecular graphs and supplied bond-order matrices, including continuous Wiberg bond orders (WBOs).
 
-Interactive views use [two shared styles](docs/VIEWERS.md): the original white
-R/P/TS presentation and the catalog/results presentation.
+**Golden reference coverage: 99.08% with the default one-seed sweep; 99.41% with ten seeds.** These scores measure recovery among alternatives across all 1,851 reactions.
+
+[Try the notebook](docs/AAM_SIMPLE.ipynb) · [Python API](docs/PYTHON_API.md) · [Paper](manuscript/manuscript.pdf) · [Benchmark evidence](reports/README.md)
+
+## Golden benchmark: coverage of mapping alternatives
+
+![Golden benchmark: GRAFT covers 99.08% of references by default and 99.41% with ten seeds](docs/assets/golden-coverage.png)
+
+**Coverage means that the annotated heavy-atom correspondence is present among the returned alternatives**, allowing equivalent endpoint symmetries. It measures reference inclusion, not whether an automatically ranked first candidate is correct. For methods returning one bijection, the same check measures that bijection's accuracy. Failures and unresolved cases remain in the denominator.
+
+<!-- golden-coverage-table:start -->
+
+| Method | Search setting | Output | References covered | Coverage |
+|---|---|---|---:|---:|
+| **GRAFT** | **1 seed, sweep (default)** | Compressed families | **1,834 / 1,851** | **99.08%** |
+| GRAFT | 3 seeds, sweep | Compressed families | 1,837 / 1,851 | 99.24% |
+| GRAFT | 10 seeds, sweep | Compressed families | 1,840 / 1,851 | 99.41% |
+| SLAP | Bidirectional + our sweep | Multiple candidates | 1,796 / 1,851 | 97.03% |
+| SLAP | Bidirectional, no sweep | Multiple candidates | 1,661 / 1,851 | 89.74% |
+| SLAP | Default, no sweep (binary) | Multiple candidates | 1,591 / 1,851 | 85.95% |
+| LocalMapper | Default, no sweep | One bijection | 1,605 / 1,851 | 86.71% |
+| RXNMapper | Default, no sweep | One bijection | 1,547 / 1,851 | 83.58% |
+| Chython | Default, no sweep | One bijection | 1,561 / 1,851 | 84.33% |
+| Reaction Decoder Tool (RDT) | Default, no sweep | One bijection | 1,030 / 1,851 | 55.65% |
+| Indigo | Default, no sweep | One bijection | 692 / 1,851 | 37.39% |
+
+<!-- golden-coverage-table:end -->
+
+GRAFT rows use bidirectional search and branch cap 100. Bidirectional combines searches starting from each endpoint. The cut sweep is part of default GRAFT; **SLAP + our sweep** applies our search extension to SLAP and is not its original published score. The bidirectional SLAP rows combine its binary and weighted modes; the released default row uses binary only. All numbers above come from our strict re-evaluation, including LocalMapper, the prior accuracy-SOTA baseline discussed in the paper.
+
+[Full comparison and CPU timings](manuscript/manuscript.pdf) · [Coverage data and source hashes](docs/assets/golden-coverage.json) · [Comparator audit](reports/golden_competitor_recheck_20260913/README.md) · [Branch-cap ablation](reports/golden_controlled_20260915/README.md) · [Rebuild the plot/table](bench/publish_readme_coverage.py)
+
+## What you can do with GRAFT
+
+- **Atom–atom matching:** recover alternative reactant/product correspondences and inspect the fragments supporting each match.
+- **Structure analytics:** compare bond-change patterns, locate reaction cores, and query which atom shuffles preserve a candidate's events.
+- **Structure verification:** compare a generated XYZ with a target and identify missing or extra connections under a chosen connectivity rule.
+- **Reaction and TS workflows:** explore correspondence-dependent pathway hypotheses, align endpoints, and score recorded modes at a TS guess.
+
+Different atom assignments can imply different bond changes and reaction-core motions. Keeping alternatives makes those choices available for inspection and downstream calculations. Endpoint correspondence alone does not establish a reaction pathway.
+
+## Get started
+
+```bash
+git clone git@github.com:yunhzou/GRAFT-AAM.git
+cd GRAFT-AAM
+python -m pip install -e ".[notebook]"
+```
+
+Open [the self-contained AAM notebook](docs/AAM_SIMPLE.ipynb) for embedded molecules, public Python imports, matching, unique candidates, symmetry queries, and py3Dmol visualization. For a smaller installation without notebook dependencies, use `python -m pip install -e ".[postprocessing]"`. Building the native extensions requires a C++17 compiler. xTB is needed separately only if you want to compute WBO inputs; matching supplied arrays does not invoke it.
+
+The core workflow has two steps:
+
+```python
+from graft import search_aam
+from graft.postprocessing import decode_events
+
+aam = search_aam(problem)       # Compressed fragment-matching families
+decoded = decode_events(aam)     # Distinct bond-event candidates
+
+for candidate in decoded.candidates:
+    print(candidate.events, candidate.mapping)
+```
+
+`problem` holds the two endpoints' elements, coordinates, and bond-order matrices; see the [complete example below](#python-api) or run the notebook. Search and decoding remain separate so you can inspect the raw families or change the event definition without rerunning matching.
 
 ## Grow, branch, decode
 
@@ -29,14 +89,15 @@ Actual atom-by-atom growth through one recorded search tree in the 65-atom gold 
 [3D film](manuscript/animations/gold_rearrangement/gold-oxygen-3d.mp4) · [Film viewer](manuscript/animations/gold_rearrangement/index.html) · [Full growth trajectory](manuscript/animations/gold_rearrangement/trajectory.html) · [Reproduce and inspect the witnesses](examples/gold_rearrangement/README.md)
 
 
+<details>
+<summary>View the original published pathway schemes for the gold example</summary>
+
 ### Published pathway reference
 
 Original **Scheme 2 (route a)** from [González Pérez et al., *J. Org. Chem.* 2009, DOI: 10.1021/jo802516k](https://pubs.acs.org/doi/10.1021/jo802516k). It is consistent with **Candidate 1** in the animation: the original epoxide oxygen becomes the ester-link oxygen.
 
 ![Original published Scheme 2: gold-catalyzed rearrangement via route a](manuscript/animations/gold_rearrangement/pathway-reference/scheme-2-route-a.png)
 
-<details>
-<summary>Show the alternative published pathways: routes b and c</summary>
 
 **Scheme 4 — route b, initial 1,2-ester migration.**
 
@@ -48,9 +109,10 @@ Original **Scheme 2 (route a)** from [González Pérez et al., *J. Org. Chem.* 2
 
 Both routes match **Candidate 2**: the original epoxide oxygen becomes the ketone oxygen. They converge at intermediate 14 and share the same endpoint oxygen pattern.
 
-</details>
 
 These original schemes use PH₃; the animation uses the supplied AuPPh₃ endpoint structures. The displayed energies belong to the source paper. [All three pathway pictures, interpretation and attribution](manuscript/animations/gold_rearrangement/pathway-reference/README.md).
+
+</details>
 
 ## Verify a generated structure · 135 atoms
 
@@ -76,13 +138,6 @@ A 57-atom holdout example: map the endpoints, identify O–H weakening and N–H
 
 [3D video and scoring evidence](manuscript/animations/ts_mode_selection/README.md) · [Interactive film](manuscript/animations/ts_mode_selection/index.html) · [Self-contained Python replay](examples/ts_mode_selection/README.md)
 
-## Current work and stable versions
-
-See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,
-active development, and archived experiments. The
-[manuscript folder](manuscript) on `main`
-contains the manuscript PDF, figures, animations, and reproducible figure data.
-
 ## Design
 
 The main Python workflow keeps search and event decoding separate:
@@ -98,13 +153,9 @@ The optional geometry/TS workflow consumes the same AAM result:
 `group_mechanisms` → `compile_mechanism_families` → `select_rp_mappings`
 → `analyze_transition_state`.
 
-AAM is the authoritative source of mapping information. Its result retains
-a fragment-decision graph with shared prefixes/reconvergence, compressed
-placements, exact target generators, seed/cut provenance, and cap records.
-Mechanisms are an optional post-processing result, not the core container.
-`match_fragment` is independently reusable by AAM and retro detection.
-R/P and TS processing consume those objects;
-they do not reconstruct an alternative AAM model from serialized records.
+The search stores fragment choices and correlated symmetry operations without expanding every atom bijection. Decoding groups the retained alternatives by their signed bond events. You can inspect a candidate's witness, ask which shuffles are allowed, or replay the search that produced it.
+
+Default search uses one seed ordering per cut, uncut plus single-edge sweep, and branch cap 100. The [configuration guide](docs/PYTHON_API.md) covers tolerances, anchors, search directions, and chirality limitations. Fragment competition remains experimental, optional, and off by default.
 
 See [the search-graph API](docs/AAM_SEARCH_GRAPH_API.md) for the object model,
 conditional fragment API, persistence, and path replay;
@@ -114,24 +165,7 @@ building-block recommendation using the same matcher and saved AAM graphs.
 The separate [big-block / gap-first beta](docs/RETRO_BETA.md) defers augmentation
 until a reactant is selected; it does not replace the full workflow.
 
-## Install
-
-```bash
-python -m pip install -e ".[postprocessing]"
-```
-
-Installation builds the native bookkeeping extensions and requires a C++17
-compiler; build isolation installs pybind11. Python still owns the AAM search
-graph, fragment hierarchy and retro pipeline. The `_group_ops` extension
-accelerates exact permutation/occupation operations, not search-policy changes.
-
-Install xTB separately only when endpoint WBO matrices must be computed. The
-typed core API accepts already materialized coordinates and WBO matrices and
-does not invoke xTB.
-
 ## Python API
-
-The Python package and command are now named `graft` (formerly `rxn_core` / `rxn-core`). Reinstall from this checkout and rebuild the optional native engine after updating. Use `import graft` and `from graft.postprocessing import decode_events`. Existing saved results remain readable; versioned archive identifiers and event IDs retain their original names for compatibility. `GRAFT_NATIVE=0` selects Python growth; the former `RXN_CORE_NATIVE` setting is still accepted as a fallback.
 
 Start with the executed, self-contained [AAM notebook](docs/AAM_SIMPLE.ipynb): embedded molecules, matching, raw branch inspection, unique bond-event candidates, certified symmetry queries, py3Dmol inspection, and a growth animation for each sweep. All inputs and display helpers are in the notebook; no benchmark files are needed. The [Python API guide](docs/PYTHON_API.md) lists anchors, directions, conditional matching, all configuration controls, and current chirality limitations. Install its dependencies with `python -m pip install -e ".[notebook]"`.
 
@@ -287,8 +321,24 @@ endpoint-consensus merging, and imaginary-mode scoring.
 See the [cleanup record](docs/PUBLICATION_CLEANUP.md) for source relocations,
 removed superseded artifacts, and recovery paths.
 
+## Current work and stable versions
+
+See the [branch guide](docs/BRANCHES.md) for preserved pre-acceleration baselines,
+active development, and archived experiments. The
+[manuscript folder](manuscript) on `main`
+contains the manuscript PDF, figures, animations, and reproducible figure data.
+
+## Compatibility
+
+<details>
+<summary>Upgrading from the former rxn_core package</summary>
+
+The Python package and command are now named `graft` (formerly `rxn_core` / `rxn-core`). Reinstall from this checkout and rebuild the optional native engine after updating. Use `import graft` and `from graft.postprocessing import decode_events`. Existing saved results remain readable; versioned archive identifiers and event IDs retain their original names for compatibility. `GRAFT_NATIVE=0` selects Python growth; the former `RXN_CORE_NATIVE` setting is still accepted as a fallback.
+
+</details>
+
 ## Authors
 
-Yunheng Zou; Olalla Nieto Faza; Shifa Hussain; **Varinia Bernales (PI)**;
-**Alán Aspuru-Guzik (PI)**. PI means principal investigator. Full affiliations
+Yunheng Zou; Olalla Nieto Faza; Shifa Hussain; **Varinia Bernales†**;
+**Alán Aspuru-Guzik†**. † Principal investigators. Full affiliations
 are listed in the [manuscript](manuscript/manuscript.pdf).

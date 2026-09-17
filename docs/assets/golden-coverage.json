@@ -1,0 +1,125 @@
+{
+  "denominator": 1851,
+  "metric": "Reference inclusion among returned alternatives; single-bijection accuracy for single-output methods.",
+  "graft_branch_cap": 100,
+  "graft_directions": "bidirectional",
+  "rows": [
+    {
+      "method": "GRAFT",
+      "setting": "1 seed, sweep (default)",
+      "output": "Compressed families",
+      "recovered": 1834,
+      "denominator": 1851,
+      "coverage_percent": 99.0815775256618,
+      "key": "graft1"
+    },
+    {
+      "method": "GRAFT",
+      "setting": "3 seeds, sweep",
+      "output": "Compressed families",
+      "recovered": 1837,
+      "denominator": 1851,
+      "coverage_percent": 99.24365207995677,
+      "key": "graft3"
+    },
+    {
+      "method": "GRAFT",
+      "setting": "10 seeds, sweep",
+      "output": "Compressed families",
+      "recovered": 1840,
+      "denominator": 1851,
+      "coverage_percent": 99.40572663425175,
+      "key": "graft10"
+    },
+    {
+      "method": "SLAP",
+      "setting": "Bidirectional + our sweep",
+      "output": "Multiple candidates",
+      "recovered": 1796,
+      "denominator": 1851,
+      "coverage_percent": 97.02863317125878,
+      "key": "slap_sweep"
+    },
+    {
+      "method": "SLAP",
+      "setting": "Bidirectional, no sweep",
+      "output": "Multiple candidates",
+      "recovered": 1661,
+      "denominator": 1851,
+      "coverage_percent": 89.73527822798488,
+      "key": "slap_bidirectional"
+    },
+    {
+      "method": "SLAP",
+      "setting": "Default, no sweep (binary)",
+      "output": "Multiple candidates",
+      "recovered": 1591,
+      "denominator": 1851,
+      "coverage_percent": 85.95353862776878,
+      "key": "slap_binary"
+    },
+    {
+      "method": "LocalMapper",
+      "setting": "Default, no sweep",
+      "output": "One bijection",
+      "recovered": 1605,
+      "denominator": 1851,
+      "coverage_percent": 86.70988654781199,
+      "key": "localmapper"
+    },
+    {
+      "method": "RXNMapper",
+      "setting": "Default, no sweep",
+      "output": "One bijection",
+      "recovered": 1547,
+      "denominator": 1851,
+      "coverage_percent": 83.57644516477579,
+      "key": "rxnmapper"
+    },
+    {
+      "method": "Chython",
+      "setting": "Default, no sweep",
+      "output": "One bijection",
+      "recovered": 1561,
+      "denominator": 1851,
+      "coverage_percent": 84.33279308481902,
+      "key": "chython"
+    },
+    {
+      "method": "Reaction Decoder Tool (RDT)",
+      "setting": "Default, no sweep",
+      "output": "One bijection",
+      "recovered": 1030,
+      "denominator": 1851,
+      "coverage_percent": 55.64559697460832,
+      "key": "rdt"
+    },
+    {
+      "method": "Indigo",
+      "setting": "Default, no sweep",
+      "output": "One bijection",
+      "recovered": 692,
+      "denominator": 1851,
+      "coverage_percent": 37.38519719070773,
+      "key": "indigo"
+    }
+  ],
+  "sources": [
+    {
+      "path": "manuscript/evidence/seed_comparison.json",
+      "sha256": "ec3d8b4f77ecd71a34a6618e71e0d032a641cf96e69dc1b61c2a6ce23518da56"
+    },
+    {
+      "path": "manuscript/evidence/slap_sweep.json",
+      "sha256": "740cd679895a902c885c1fbbc6c628cfc607fe3fb7b4ed87864827d40f3c2288"
+    },
+    {
+      "path": "manuscript/evidence/competitors.json",
+      "sha256": "0380c810f4ceeaddc1f07557a65a99c3af22d8903890c06b3bcdd9cc13edc774"
+    },
+    {
+      "path": "manuscript/evidence/unswept.json",
+      "sha256": "1cdfbb43cda0e695460fc1f380bf20389322f98202588f785ef215a9905e4774"
+    }
+  ]
+}
