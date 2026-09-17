@@ -2,7 +2,7 @@
 
 This 65-atom example tests whether an endpoint-only GRAFT search retains oxygen correspondences compatible with different mechanisms considered by González Pérez et al., *J. Org. Chem.* **2009**, 74, 2982–2991 ([DOI: 10.1021/jo802516k](https://pubs.acs.org/doi/10.1021/jo802516k)).
 
-The endpoints are the supplied AuPPh₃ complexes **2 → 9**, including the catalyst and explicit hydrogens. They are not the catalyst-free structures 1 → 10. The 2D film shows the 30-atom organic component with hydrogens suppressed; the 3D film shows all 65 atoms.
+The endpoints are the supplied AuPPh₃ complexes **2 → 9**, including the catalyst and explicit hydrogens. They are not the catalyst-free structures 1 → 10. The 3D growth view shows all 65 atoms; the final candidate cards enlarge the organic heavy-atom core and follow the original epoxide oxygen, O*.
 
 ## Result
 

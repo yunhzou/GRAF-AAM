@@ -3,37 +3,23 @@
   "media": [
     {
       "file": "gold-oxygen-3d.mp4",
-      "frames": 720,
-      "duration": 30.0,
+      "frames": 528,
+      "duration": 22.0,
       "size": [
-        1600,
+        1440,
         900
       ],
       "fps": 24.0,
-      "bytes": 2294394,
-      "sha256": "b200b10e561f8559a09c7fa66bfe5f6dc8ad741e32a8fcb4251a68b881b537f6"
-    },
-    {
-      "file": "gold-oxygen-2d.mp4",
-      "frames": 720,
-      "duration": 30.0,
-      "size": [
-        1600,
-        900
-      ],
-      "fps": 24.0,
-      "bytes": 667519,
-      "sha256": "2b4e463dc8c546704d761e568c2b3c79ba54e561fa96e926daae1f5cb38ff190"
+      "sha256": "51141e818704c78b59407007270960838f7d5f579789fd1a242eff81a428ff9d"
     },
     {
       "file": "gold-oxygen-preview.gif",
-      "frames": 360,
+      "frames": 264,
+      "duration": 22.0,
       "size": [
         960,
-        540
-      ],
-      "duration": 30.0,
-      "bytes": 1424570
+        600
+      ]
     }
   ]
 }

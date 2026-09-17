@@ -27,5 +27,11 @@
   "canonical_ids": [
     "rxn_core.signed_events/v1:9ad67b99317b3c01166fefddd6a5adb498ef9169f39fcf087e24fbea7d3df2e2",
     "rxn_core.signed_events/v1:81494c617cb5140f7f655640813c4582e99887bab6af3fa7054ab6c6cdff80f0"
-  ]
+  ],
+  "presentation": {
+    "style": "Original Golden 3D growth/branch/decode layout",
+    "focus_source_atom_zero_based": 4,
+    "final_event_annotations": "Organic-core events involving the original epoxide oxygen only; badges count full-witness events",
+    "duration_seconds": 22
+  }
 }
