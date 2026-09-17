@@ -18,21 +18,23 @@ Use GRAFT to map reactants to products, analyze how molecular structures differ,
 
 <!-- golden-coverage-table:start -->
 
-| Method | Search setting | Output | References covered | Coverage |
-|---|---|---|---:|---:|
-| **GRAFT** | **1 seed, sweep (default)** | Compressed families | **1,834 / 1,851** | **99.08%** |
-| GRAFT | 3 seeds, sweep | Compressed families | 1,837 / 1,851 | 99.24% |
-| GRAFT | 10 seeds, sweep | Compressed families | 1,840 / 1,851 | 99.41% |
-| SLAP | Bidirectional + our sweep | Multiple candidates | 1,796 / 1,851 | 97.03% |
-| SLAP | Bidirectional, no sweep | Multiple candidates | 1,661 / 1,851 | 89.74% |
-| SLAP | Default, no sweep (binary) | Multiple candidates | 1,591 / 1,851 | 85.95% |
-| LocalMapper | Default, no sweep | One bijection | 1,605 / 1,851 | 86.71% |
-| RXNMapper | Default, no sweep | One bijection | 1,547 / 1,851 | 83.58% |
-| Chython | Default, no sweep | One bijection | 1,561 / 1,851 | 84.33% |
-| Reaction Decoder Tool (RDT) | Default, no sweep | One bijection | 1,030 / 1,851 | 55.65% |
-| Indigo | Default, no sweep | One bijection | 692 / 1,851 | 37.39% |
+| Method | Search setting | Output | References covered | Coverage | Mean CPU s/reaction |
+|---|---|---|---:|---:|---:|
+| **GRAFT** | **1 seed, sweep (default)** | Compressed families | **1,834 / 1,851** | **99.08%** | **0.963** |
+| GRAFT | 3 seeds, sweep | Compressed families | 1,837 / 1,851 | 99.24% | 2.265 |
+| GRAFT | 10 seeds, sweep | Compressed families | 1,840 / 1,851 | 99.41% | 6.993 |
+| SLAP | Bidirectional + our sweep | Multiple candidates | 1,796 / 1,851 | 97.03% | 2.793 |
+| SLAP | Bidirectional, no sweep | Multiple candidates | 1,661 / 1,851 | 89.74% | 0.105 |
+| SLAP | Default, no sweep (binary) | Multiple candidates | 1,591 / 1,851 | 85.95% | 0.075† |
+| LocalMapper | Default, no sweep | One bijection | 1,605 / 1,851 | 86.71% | 0.294† |
+| RXNMapper | Default, no sweep | One bijection | 1,547 / 1,851 | 83.58% | 0.056† |
+| Chython | Default, no sweep | One bijection | 1,561 / 1,851 | 84.33% | 0.612† |
+| Reaction Decoder Tool (RDT) | Default, no sweep | One bijection | 1,030 / 1,851 | 55.65% | 1.021† |
+| Indigo | Default, no sweep | One bijection | 692 / 1,851 | 37.39% | 0.184† |
 
 <!-- golden-coverage-table:end -->
+
+Unmarked CPU times are paired search averages over the same 1,403 completed reactions on the same CPU, excluding separate bond-event decoding. † Archived completed mapper calls from a separate timing group; these times are not directly comparable with the unmarked values.
 
 GRAFT rows use bidirectional search and branch cap 100. Bidirectional combines searches starting from each endpoint. The cut sweep is part of default GRAFT; **SLAP + our sweep** applies our search extension to SLAP and is not its original published score. The bidirectional SLAP rows combine its binary and weighted modes; the released default row uses binary only. All numbers above come from our strict re-evaluation, including LocalMapper, the prior accuracy-SOTA baseline discussed in the paper.
 
@@ -76,11 +78,21 @@ for candidate in decoded.candidates:
 
 A reaction can admit several atom correspondences, with different bond changes or symmetry-related atom assignments. Returning one mapping hides those choices, while listing every symmetry permutation quickly becomes unwieldy. GRAFT grows matching fragments, branches when alternative placements are available, and keeps symmetry compressed. Separate decoding exposes distinct bond-change candidates for inspection.
 
+![Manuscript overview: fragment growth, three levels of conditional branching, cut sweep, and symmetry-aware event decoding](manuscript/figs/fig1_algorithm.png)
+
+Each earlier fragment placement constrains the later branches. The cut sweep changes the growth conditions, while decoding separates bond-change patterns within the retained families.
+
 ![GRAFT: Golden fragment growth, branching and two distinct decoded event classes](manuscript/animations/graft_research_preview/graft-grow-branch-decode.gif)
 
 This Golden example follows the recorded growth and branching, then shows two distinct decoded event patterns, including one equivalent to the reference. The saved catalogue contains nine patterns. Red × marks indicate breaking or weakening; green inward arrows indicate forming or strengthening.
 
 [Full-resolution MP4](manuscript/animations/graft_research_preview/graft-grow-branch-decode.mp4) · [Offline interactive viewer](manuscript/animations/graft_research_preview/index.html) · [Example and provenance](manuscript/animations/graft_research_preview/README.md)
+
+## Alternative mappings in Golden case 9
+
+![Golden case 9: GRAFT recovers the annotated reference and alternatives with different oxygen and carbon correspondences](manuscript/figs/fig4_alternatives.png)
+
+In this manuscript example, GRAFT recovers the annotated heavy-atom correspondence alongside alternatives with different atom origins and bond changes. The alternative with fewer total bond events is not the annotated reference, illustrating why selecting only the minimum-event mapping can discard useful information. This illustration uses branch cap 2,000; the benchmark table above reports cap 100.
 
 ## Use atom matching to explore alternative reaction pathways
 
