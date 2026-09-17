@@ -1,7 +1,7 @@
 from itertools import permutations
 
-from rxn_core import AAMProblem,AAMSearchConfig,search_aam
-from rxn_core.pattern_collection import PatternEquivalence,extract_path_patterns
+from graft import AAMProblem,AAMSearchConfig,search_aam
+from graft.pattern_collection import PatternEquivalence,extract_path_patterns
 from test_family_scoring import endpoint
 from golden_evaluation import prepare
 

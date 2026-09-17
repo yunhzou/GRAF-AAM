@@ -1,6 +1,6 @@
 """Publish the audited forward-only elementary-step comparison."""
 
-from rxn_core.viewers import style_document
+from graft.viewers import style_document
 import argparse
 from collections import Counter
 import csv

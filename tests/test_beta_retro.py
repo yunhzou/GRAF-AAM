@@ -1,13 +1,13 @@
 """The beta is an opt-in scheduling policy, not a change to AAM semantics."""
 from dataclasses import replace
 
-from rxn_core.fragment_matching import FragmentCandidate, FragmentDetectionConfig
-from rxn_core.fragment_matching.connected import find_connected_fragments
-from rxn_core.retrosynthesis.beta import (
+from graft.fragment_matching import FragmentCandidate, FragmentDetectionConfig
+from graft.fragment_matching.connected import find_connected_fragments
+from graft.retrosynthesis.beta import (
     BetaPlacement, FragmentQueryBank, recommend_big_blocks,
 )
-from rxn_core.smiles import smiles_to_weighted_graph
-from rxn_core.subgraph import _coerce_graph
+from graft.smiles import smiles_to_weighted_graph
+from graft.subgraph import _coerce_graph
 
 
 def graph(smiles):
@@ -91,7 +91,7 @@ def test_no_cover_is_an_explicit_partial_result():
 
 
 def test_connected_stage_never_augments_and_preserves_search_evidence(monkeypatch):
-    import rxn_core.fragment_matching.detection as detection
+    import graft.fragment_matching.detection as detection
     def forbidden(*args, **kwargs):
         raise AssertionError('bank-wide connected scan must not augment')
     monkeypatch.setattr(detection, '_augment_initial_family', forbidden)
@@ -135,7 +135,7 @@ def test_gap_local_indices_and_hydrogen_are_preserved():
 
 
 def test_caps_are_not_reported_as_complete(monkeypatch):
-    import rxn_core.fragment_matching.connected as connected
+    import graft.fragment_matching.connected as connected
     monkeypatch.setattr(connected, '_initial_fragment_placements',
         lambda *args, **kwargs: ((), 1, 101, False, False, 1, 0, False, ()))
     result = find_connected_fragments(graph('C'), graph('C'))

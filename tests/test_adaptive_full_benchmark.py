@@ -3,9 +3,9 @@ from types import SimpleNamespace
 import numpy as np
 
 from adaptive_full_benchmark import holdout_classes, elapsed_seconds
-from rxn_core import AAMProblem, AAMSearchConfig
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.search_orientation import AAMSearchPlan
+from graft import AAMProblem, AAMSearchConfig
+from graft.domain import MolecularEndpoint
+from graft.search_orientation import AAMSearchPlan
 
 
 def test_holdout_comparison_normalizes_direction_and_counts_hydrogens():

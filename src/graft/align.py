@@ -1,6 +1,6 @@
 """Compatibility facade for cache loading and R-frame coordinate helpers.
 
-The implementations live in :mod:`rxn_core.chemistry_computations`.
+The implementations live in :mod:`graft.chemistry_computations`.
 """
 from __future__ import annotations
 

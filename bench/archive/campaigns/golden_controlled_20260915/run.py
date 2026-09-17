@@ -17,8 +17,8 @@ def setting(key):return next(c for c in configurations() if c['key']==key)
 def folder(case,key,direction):return ROOT/'results'/str(case)/key/direction
 
 def plan_for(case,cfg,direction):
- from rxn_core import AAMProblem,MolecularEndpoint,AAMSearchConfig
- from rxn_core.search_orientation import AAMSearchPlan
+ from graft import AAMProblem,MolecularEndpoint,AAMSearchConfig
+ from graft.search_orientation import AAMSearchPlan
  raw=read(BASE/'golden-inputs'/str(case)/'input.json')
  problem=AAMProblem(*(MolecularEndpoint(**raw[s]) for s in ('reactant','product')),raw.get('name',''))
  config=AAMSearchConfig(seed_count=cfg['seed'],branch_limit=cfg['cap'],sweep_cuts=cfg['sweep'])
@@ -32,8 +32,8 @@ def begin(dest,**info):
  return baseline,start
 
 def graft_search(case,cfg,direction,dest):
- from rxn_core import search_aam_checkpoints
- import rxn_core.aam as core
+ from graft import search_aam_checkpoints
+ import graft.aam as core
  plan=plan_for(case,cfg,direction)
  compute={'cpu_seconds':0.,'wall_seconds':0.}
  # Read-only timers around unchanged native search calls; output handling remains

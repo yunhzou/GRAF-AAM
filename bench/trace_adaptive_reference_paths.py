@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 from adaptive_full_benchmark import read, save
-from rxn_core.artifacts import read_aam_checkpoint
+from graft.artifacts import read_aam_checkpoint
 
 
 def key(state):

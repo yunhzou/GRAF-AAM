@@ -9,7 +9,7 @@ import re
 import time
 from pathlib import Path
 
-from rxn_core import (
+from graft import (
     AAMProblem,
     AAMSearchConfig,
     AtomBijection,
@@ -25,9 +25,9 @@ from rxn_core import (
     ts_record,
     write_rp_bundle,
 )
-from rxn_core.chemistry_computations import parse_xyz
-from rxn_core.chemistry_computations.xtb import read_wbo_file
-from rxn_core.modes import parse_g98_modes
+from graft.chemistry_computations import parse_xyz
+from graft.chemistry_computations.xtb import read_wbo_file
+from graft.modes import parse_g98_modes
 
 
 def _endpoint(cache, label):

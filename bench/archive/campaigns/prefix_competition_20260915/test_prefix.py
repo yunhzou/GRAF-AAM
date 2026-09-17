@@ -2,9 +2,9 @@ from pathlib import Path
 import sys,json,os
 PACKAGE=Path(__file__).resolve().parent;S=Path(os.environ.get('GRAFT_EXPERIMENT_WORK',PACKAGE/'work')).resolve();sys.path.insert(0,str(S/'engine/src'))
 import numpy as np
-from rxn_core.frag import build_graph
-from rxn_core.fragment import match_fragment,FragmentMatchContext,FragmentMatchConfig
-from rxn_core.fragment_choices import FragmentChoices
+from graft.frag import build_graph
+from graft.fragment import match_fragment,FragmentMatchContext,FragmentMatchConfig
+from graft.fragment_choices import FragmentChoices
 
 def test_mapped_prefixes():
  for n in [5,8]:

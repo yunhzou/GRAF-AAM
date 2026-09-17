@@ -10,8 +10,8 @@ from pathlib import Path
 
 import numpy as np
 
-from rxn_core.alignment.interpolation import proper_align_coordinates
-from rxn_core.chemistry_computations.xyz import parse_xyz, write_xyz_str
+from graft.alignment.interpolation import proper_align_coordinates
+from graft.chemistry_computations.xyz import parse_xyz, write_xyz_str
 
 
 def _safe_name(value: str) -> str:

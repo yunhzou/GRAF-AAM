@@ -29,8 +29,8 @@ class Reader:
    self.buffer=self.buffer[end:];return value
 
 def child():
- from rxn_core import AAMProblem,MolecularEndpoint
- from rxn_core.final_branches import FinalBranchCatalogue,FinalFamily
+ from graft import AAMProblem,MolecularEndpoint
+ from graft.final_branches import FinalBranchCatalogue,FinalFamily
  start=time.perf_counter();rows=[]
  for c in range(140):
   raw=json.loads((ROOT/f'work/full140_inputs/{c}/input.json').read_text());problem=AAMProblem(*(MolecularEndpoint(**raw[s]) for s in ('reactant','product')))

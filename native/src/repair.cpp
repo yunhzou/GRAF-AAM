@@ -1,5 +1,5 @@
 // Exact kernel for the per-group search inside
-// rxn_core.alignment.branch.symmetry_repair_mapping.
+// graft.alignment.branch.symmetry_repair_mapping.
 //
 // One call performs, for one target group, exactly what the Python loop
 // body does: the breadth-first enumeration of the group's target tuples under

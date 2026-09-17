@@ -8,7 +8,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 import numpy as np
-from rxn_core.alignment.sweep import cut_sweep_items
+from graft.alignment.sweep import cut_sweep_items
 
 
 def read(path):

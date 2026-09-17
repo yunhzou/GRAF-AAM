@@ -1,6 +1,6 @@
 """Build an audited minimum-event catalogue, figures, and an offline viewer."""
 
-from rxn_core.viewers import style_document
+from graft.viewers import style_document
 import argparse
 from collections import Counter
 import csv
@@ -13,9 +13,9 @@ import tarfile
 
 import numpy as np
 from holdout_minimum_events import AAM,EventPatterns,read,save,sha
-from rxn_core import AAMProblem
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.family_scoring import bond_events
+from graft import AAMProblem
+from graft.domain import MolecularEndpoint
+from graft.family_scoring import bond_events
 
 METHODS=('aam','native_slap','slap_sweep')
 

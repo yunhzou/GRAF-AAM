@@ -1,11 +1,11 @@
 import numpy as np
 import pytest
 
-from rxn_core import build_graph
-from rxn_core.alignment.index_chirality import (
+from graft import build_graph
+from graft.alignment.index_chirality import (
     compile_analytical_mapping_family,
 )
-from rxn_core.alignment.post_aam import (
+from graft.alignment.post_aam import (
     AffineChiralityConstraint,
     AtomBijection,
     AtomPermutation,

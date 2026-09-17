@@ -6,9 +6,9 @@ import json
 from pathlib import Path
 import time
 
-from rxn_core.fragment_matching import detect_fragments, FragmentDetectionConfig
-from rxn_core.fragment_matching.serialization import fragment_detection_to_record
-from rxn_core.smiles import smiles_to_weighted_graph
+from graft.fragment_matching import detect_fragments, FragmentDetectionConfig
+from graft.fragment_matching.serialization import fragment_detection_to_record
+from graft.smiles import smiles_to_weighted_graph
 
 
 def main():

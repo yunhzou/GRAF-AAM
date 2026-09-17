@@ -5,7 +5,7 @@ p=argparse.ArgumentParser();p.add_argument('--repo',type=Path,required=True);p.a
 package=Path(__file__).resolve().parent
 work=Path(os.environ.get('GRAFT_EXPERIMENT_WORK',package/'work')).resolve()
 repo=args.repo.resolve();manifest=json.loads((package/'manifest.json').read_text())
-original=(repo/'src/rxn_core/competition.py').read_bytes()
+original=(repo/'src/graft/competition.py').read_bytes()
 if hashlib.sha256(original).hexdigest()!=manifest['original_competition_sha256']:
  raise SystemExit('Source changed: use the source_commit recorded in manifest.json.')
 engine=work/'engine'
@@ -15,6 +15,6 @@ shutil.copytree(repo/'src',engine/'src',ignore=shutil.ignore_patterns('__pycache
 for name in ['setup.py','pyproject.toml','README.md']:shutil.copy2(repo/name,engine/name)
 (work/'competition-original.py').write_bytes(original)
 subprocess.run(['patch','-p1','-i',str(package/'competition.patch')],cwd=engine,check=True)
-assert hashlib.sha256((engine/'src/rxn_core/competition.py').read_bytes()).hexdigest()==manifest['experimental_competition_sha256']
+assert hashlib.sha256((engine/'src/graft/competition.py').read_bytes()).hexdigest()==manifest['experimental_competition_sha256']
 if not args.skip_build:subprocess.run([sys.executable,'setup.py','build_ext','--inplace'],cwd=engine,check=True)
 print(engine)

@@ -149,9 +149,9 @@ def report(args):
 def refine(args):
     """Optimize only native SLAP H-label assignments; never expand permutations."""
     import z3
-    from rxn_core import AAMProblem
-    from rxn_core.domain import MolecularEndpoint
-    from rxn_core.family_scoring import event_objective
+    from graft import AAMProblem
+    from graft.domain import MolecularEndpoint
+    from graft.family_scoring import event_objective
     row=json.loads((args.run/f'{args.index}.json').read_text())
     raw=json.loads((args.source/'inputs'/str(args.index)/'input.json').read_text())
     problem=AAMProblem(*(MolecularEndpoint(**raw[k]) for k in ('reactant','product')))

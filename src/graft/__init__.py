@@ -97,6 +97,6 @@ __all__ = [
 
 __version__ = "0.2.0"
 
-# Raw search helpers; signed-event decoding remains in rxn_core.postprocessing.
+# Raw search helpers; signed-event decoding remains in graft.postprocessing.
 from .search_orientation import DirectedAAMResult, search_aam_directions
 __all__ += ["DirectedAAMResult", "search_aam_directions"]

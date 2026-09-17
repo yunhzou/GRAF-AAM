@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def tempo():
-    from rxn_core.cli import _endpoint_cache
+    from graft.cli import _endpoint_cache
     base = ROOT / "docs/example_runs/pr1.tempo_ts3/work/endpoints"
     return _endpoint_cache(str(base / "R"), "R"), _endpoint_cache(str(base / "P"), "P")
 
@@ -44,7 +44,7 @@ def _tetraphenylmethane():
 
 
 def tetraphenyl():
-    from rxn_core.domain import MolecularEndpoint
+    from graft.domain import MolecularEndpoint
     elements, bonds, rings = _tetraphenylmethane()
     n = len(elements)
     rng = random.Random(7)
@@ -101,7 +101,7 @@ def _tetra_tbu_methane():
 
 def tetratbu():
     """1,3-hydrogen shift between two methyls of the same tert-butyl arm."""
-    from rxn_core.domain import MolecularEndpoint
+    from graft.domain import MolecularEndpoint
     elements, bonds, methyls = _tetra_tbu_methane()
     n = len(elements)
     rng = random.Random(11)

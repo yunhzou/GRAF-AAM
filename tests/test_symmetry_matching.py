@@ -4,10 +4,10 @@ import math
 import numpy as np
 import pytest
 
-from rxn_core import classify_bonds
-from rxn_core import build_graph
-from rxn_core import bond_overlap_per_mode, rxn_overlap_per_mode
-from rxn_core.alignment import (
+from graft import classify_bonds
+from graft import build_graph
+from graft import bond_overlap_per_mode, rxn_overlap_per_mode
+from graft.alignment import (
     cut_sweep,
     match_wbo_graphs,
     run_cut_sweep_chunk,
@@ -15,7 +15,7 @@ from rxn_core.alignment import (
     _generate_seed_orders,
     symmetry_repair_mapping,
 )
-from rxn_core.alignment.sweep import (
+from graft.alignment.sweep import (
     attach_completed_candidate_groups,
     _branch_symmetry_record,
     _color_groups_from_blocks,
@@ -25,8 +25,8 @@ from rxn_core.alignment.sweep import (
     _pool_add,
     complete_chosen_automorphism_groups,
 )
-import rxn_core.alignment.branch as branch_mod
-from rxn_core.matcher import (
+import graft.alignment.branch as branch_mod
+from graft.matcher import (
     _PartialMappingCanonicalizer,
     _SymBlock,
     _SymCand,
@@ -38,9 +38,9 @@ from rxn_core.matcher import (
     _support_witness_for_value,
     _symmetry_state,
 )
-from rxn_core.matcher.orbits import _wbo_tolerance_bucket_lookup
-from rxn_core.growth.result import _IsoResult
-from rxn_core.growth import IslandBranchLimitExceeded, grow_island
+from graft.matcher.orbits import _wbo_tolerance_bucket_lookup
+from graft.growth.result import _IsoResult
+from graft.growth import IslandBranchLimitExceeded, grow_island
 
 
 def _represented_count(cand):
@@ -170,7 +170,7 @@ def test_cut_sweep_compact_metrics_are_opt_in_and_respect_branch_cap():
 
 
 def test_heavy_only_cut_items_keep_hydrogens_but_do_not_cut_xh_edges():
-    from rxn_core.alignment.sweep import cut_sweep_items
+    from graft.alignment.sweep import cut_sweep_items
 
     elements = ["C", "C", "H", "H"]
     wbo = np.zeros((4, 4))
@@ -226,7 +226,7 @@ def test_parallel_cut_sweep_persists_disjoint_reduction_buckets(tmp_path):
 
 
 def test_one_cut_chunk_parallelizes_across_seed_orders(monkeypatch):
-    import rxn_core.alignment.sweep as sweep_module
+    import graft.alignment.sweep as sweep_module
 
     observed = {}
 
@@ -257,7 +257,7 @@ def test_one_cut_chunk_parallelizes_across_seed_orders(monkeypatch):
 
 
 def test_parallel_cut_sweep_consumes_results_in_cut_seed_order(monkeypatch):
-    import rxn_core.alignment.sweep as sweep_module
+    import graft.alignment.sweep as sweep_module
 
     consumed_work = []
 
@@ -320,7 +320,7 @@ def test_live_branch_cap_discards_only_overflowing_parent_subtree(monkeypatch):
             ]
         return [_IsoResult({1: 2}, fragment={1})]
 
-    import rxn_core.fragment as fragment_mod
+    import graft.fragment as fragment_mod
     monkeypatch.setattr(fragment_mod, "grow_island", fake_grow)
     monkeypatch.setattr(
         branch_mod, "_chemistry_orbit_signature",
@@ -369,7 +369,7 @@ def test_mapping_variation_blocks_capture_branch_dedupe_pool():
 
 
 def test_branch_symmetry_record_closes_open_pool_with_mapping_owner():
-    from rxn_core.fragment import FragmentPlacement
+    from graft.fragment import FragmentPlacement
     branch = branch_mod._Branch()
     branch.commit(
         FragmentPlacement.from_match(_IsoResult(
@@ -694,7 +694,7 @@ def test_cross_branch_assignment_relation_preserves_observed_shuffles():
 
 def test_completed_candidate_groups_are_cached_after_branch_reduction(
         monkeypatch):
-    from rxn_core.matcher.canonical import (
+    from graft.matcher.canonical import (
         _CandidateAutomorphismCanonicalizer,
     )
 
@@ -1289,7 +1289,7 @@ def test_core_atoms_do_not_reorder_seed_sequence(monkeypatch):
         seen.append(seed)
         return []
 
-    import rxn_core.fragment as fragment_mod
+    import graft.fragment as fragment_mod
     monkeypatch.setattr(fragment_mod, "grow_island", fake_grow_island)
 
     branch_mod.find_islands(

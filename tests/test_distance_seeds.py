@@ -1,7 +1,7 @@
 import networkx as nx
 import pytest
-from rxn_core import AAMSearchConfig
-from rxn_core.alignment.branch import _generate_seed_orders
+from graft import AAMSearchConfig
+from graft.alignment.branch import _generate_seed_orders
 
 
 def orders(graph, count=10, seed=42, policy='distance'):
@@ -49,8 +49,8 @@ def test_invalid_policy_is_rejected():
 
 def test_checkpoint_identity_distinguishes_policy_without_breaking_random():
     from dataclasses import replace
-    from rxn_core.aam import checkpoint_manifest
-    from rxn_core import AAMProblem
+    from graft.aam import checkpoint_manifest
+    from graft import AAMProblem
     from test_aam_search_policy import endpoint
     problem = AAMProblem(endpoint(2), endpoint(2))
     config = AAMSearchConfig()

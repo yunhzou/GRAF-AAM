@@ -4,7 +4,7 @@ import random
 
 import pytest
 
-from rxn_core._group_ops import (occupation_orbit, project_generators,
+from graft._group_ops import (occupation_orbit, project_generators,
                                  conjugate_generators, OccupationLimitExceeded)
 
 

@@ -6,10 +6,10 @@ from types import SimpleNamespace
 import numpy as np
 import z3
 
-from rxn_core.event_patterns import SignedEventIndex, _event_model, _event_count_constraint
-from rxn_core.family_query import compile_path
-from rxn_core.final_branches import FinalFamily
-from rxn_core.frag import classify_bonds, is_metal_element
+from graft.event_patterns import SignedEventIndex, _event_model, _event_count_constraint
+from graft.family_query import compile_path
+from graft.final_branches import FinalFamily
+from graft.frag import classify_bonds, is_metal_element
 from reference_event_model import _event_model as reference_event_model
 from test_event_patterns import problem
 

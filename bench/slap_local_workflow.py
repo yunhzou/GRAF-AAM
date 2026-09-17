@@ -9,12 +9,12 @@ import sys
 import time
 
 from slap_guided_pilot import propose, save, SOURCE
-from rxn_core import AAMProblem, AAMSearchConfig
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.aam import _initialize_search, _search_cut
-from rxn_core.frag import build_graph
-from rxn_core.search_symmetry import finalize_graph_symmetry
-from rxn_core.artifacts import write_graph_checkpoint
+from graft import AAMProblem, AAMSearchConfig
+from graft.domain import MolecularEndpoint
+from graft.aam import _initialize_search, _search_cut
+from graft.frag import build_graph
+from graft.search_symmetry import finalize_graph_symmetry
+from graft.artifacts import write_graph_checkpoint
 from compare_elementary_outputs import event_counts
 
 
@@ -99,7 +99,7 @@ def relocate(args):
 
 
 def report(args):
-    from rxn_core.family_scoring import bond_events
+    from graft.family_scoring import bond_events
     rows=[json.loads((args.run/f'{i}.json').read_text()) for i in range(140)]
     checked=0
     for row in rows:

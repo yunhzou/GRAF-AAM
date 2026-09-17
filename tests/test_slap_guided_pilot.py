@@ -2,8 +2,8 @@
 import sys
 from pathlib import Path
 import numpy as np
-from rxn_core import AAMProblem
-from rxn_core.domain import MolecularEndpoint
+from graft import AAMProblem
+from graft.domain import MolecularEndpoint
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'bench'))
 from slap_guided_pilot import guided_order

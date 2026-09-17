@@ -1,18 +1,18 @@
 import numpy as np
 
-from rxn_core import WeightedGraph
-from rxn_core.alignment.post_aam import (
+from graft import WeightedGraph
+from graft.alignment.post_aam import (
     AAMHierarchy,
     AtomPermutation,
     FragmentMatch,
     SymmetryDomain,
 )
-from rxn_core.fragment_matching import FragmentCandidate
-from rxn_core.retrosynthesis.enumeration import (
+from graft.fragment_matching import FragmentCandidate
+from graft.retrosynthesis.enumeration import (
     CoverageEnumerationConfig,
     enumerate_coverage_patterns,
 )
-from rxn_core.retrosynthesis.compressed_coverage import (
+from graft.retrosynthesis.compressed_coverage import (
     CoverageRecommendationConfig,
     assign_candidate_items,
     assign_occupation_signatures,
@@ -21,7 +21,7 @@ from rxn_core.retrosynthesis.compressed_coverage import (
     place_candidate_items,
     recommend_compressed_coverage_patterns,
 )
-from rxn_core.fragment_matching.serialization import (
+from graft.fragment_matching.serialization import (
     fragment_candidate_from_record,
     fragment_candidate_to_record,
 )

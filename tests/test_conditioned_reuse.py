@@ -2,12 +2,12 @@
 import numpy as np
 import pytest
 
-from rxn_core.alignment.branch import find_islands
-from rxn_core.conditioned_symmetry import ConditionedSymmetryWorkspace
-from rxn_core.cut_replay import FragmentRepair
-from rxn_core.matcher import _nauty_orbits
-from rxn_core.matcher.state import candidate_from_record
-from rxn_core.search_symmetry import finalize_graph_symmetry, SymmetryWorkspace
+from graft.alignment.branch import find_islands
+from graft.conditioned_symmetry import ConditionedSymmetryWorkspace
+from graft.cut_replay import FragmentRepair
+from graft.matcher import _nauty_orbits
+from graft.matcher.state import candidate_from_record
+from graft.search_symmetry import finalize_graph_symmetry, SymmetryWorkspace
 from test_cut_replay import graph, raw
 
 

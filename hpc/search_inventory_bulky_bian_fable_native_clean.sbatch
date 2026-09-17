@@ -20,7 +20,7 @@ SHARD_COUNT=28
 
 cd "$REPO_ROOT"
 
-PYTHONPATH=src RXN_CORE_NATIVE=1 srun "$PYTHON_BIN" tools/search_mcule_retro.py \
+PYTHONPATH=src GRAFT_NATIVE=1 srun "$PYTHON_BIN" tools/search_mcule_retro.py \
   --target-smiles "$TARGET_SMILES" \
   --catalog data/inventory/processed/inventory_structure_bank.csv.gz \
   --catalog-format csv \

@@ -10,10 +10,10 @@ def save(p,v):
  p.parent.mkdir(parents=True,exist_ok=True);tmp=p.with_suffix('.tmp');tmp.write_text(json.dumps(v,indent=2)+'\n');tmp.replace(p)
 
 def worker(case,mode,stage):
- from rxn_core.artifacts import read_aam_checkpoint,write_aam_checkpoint
- from rxn_core.final_branches import FinalBranchCatalogue
- from rxn_core.event_patterns import SignedEventIndex,extract_path_events
- from rxn_core.competition import compete_fragments,CompetitionConfig
+ from graft.artifacts import read_aam_checkpoint,write_aam_checkpoint
+ from graft.final_branches import FinalBranchCatalogue
+ from graft.event_patterns import SignedEventIndex,extract_path_events
+ from graft.competition import compete_fragments,CompetitionConfig
  out=S/'runs'/str(case)/mode;out.mkdir(parents=True,exist_ok=True)
  start=time.perf_counter();cpu=time.process_time()
  src=PACKAGE/f'inputs/case{case}.pkl.gz'

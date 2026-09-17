@@ -5,8 +5,8 @@ import time
 from itertools import chain
 
 from golden_policy_campaign import save
-from rxn_core.pattern_collection import PatternEquivalence,extract_path_patterns
-from rxn_core.search_graph import SearchPath
+from graft.pattern_collection import PatternEquivalence,extract_path_patterns
+from graft.search_graph import SearchPath
 
 
 def first_paths(graph):

@@ -7,14 +7,14 @@
 
 set -euo pipefail
 
-: "${RXN_CORE_ROOT:?set RXN_CORE_ROOT to an immutable source snapshot}"
-: "${RXN_CORE_PYTHON:?set RXN_CORE_PYTHON to the project interpreter}"
+: "${GRAFT_ROOT:?set GRAFT_ROOT to an immutable source snapshot}"
+: "${GRAFT_PYTHON:?set GRAFT_PYTHON to the project interpreter}"
 : "${TS_MANIFEST:?set TS_MANIFEST to one tier manifest}"
 : "${TS_OUTPUT_ROOT:?set TS_OUTPUT_ROOT}"
 : "${TS_WORK_ROOT:?set TS_WORK_ROOT}"
 : "${TS_BENCHMARK_ROOT:?set TS_BENCHMARK_ROOT}"
 
-export PYTHONPATH="$RXN_CORE_ROOT/src"
+export PYTHONPATH="$GRAFT_ROOT/src"
 export OPENBLAS_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
@@ -25,8 +25,8 @@ if [[ -n "${TS_RESOLVED_RP_ROOT:-}" ]]; then
   extra_args+=(--resolved-rp-root "$TS_RESOLVED_RP_ROOT")
 fi
 
-"$RXN_CORE_PYTHON" \
-  "$RXN_CORE_ROOT/tools/run_typed_ts_case.py" \
+"$GRAFT_PYTHON" \
+  "$GRAFT_ROOT/tools/run_typed_ts_case.py" \
   --manifest "$TS_MANIFEST" \
   --work-root "$TS_WORK_ROOT" \
   --benchmark-root "$TS_BENCHMARK_ROOT" \

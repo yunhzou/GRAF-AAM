@@ -16,8 +16,8 @@ import time
 import numpy as np
 from rdkit import Chem
 
-from rxn_core.chemistry_computations.xtb import load_cached_xtb
-from rxn_core.matcher.primitives import _growth_edge_supported
+from graft.chemistry_computations.xtb import load_cached_xtb
+from graft.matcher.primitives import _growth_edge_supported
 
 
 def digest(path):

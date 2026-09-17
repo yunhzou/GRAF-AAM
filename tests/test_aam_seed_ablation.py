@@ -6,8 +6,8 @@ import unittest
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'bench'))
 from aam_seed_ablation import claim,save,result_folder
-from rxn_core.alignment.branch import _generate_seed_orders
-from rxn_core.aam import cut_seed
+from graft.alignment.branch import _generate_seed_orders
+from graft.aam import cut_seed
 import networkx as nx
 
 

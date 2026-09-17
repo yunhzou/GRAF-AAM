@@ -16,10 +16,10 @@ import pynauty
 from compare_elementary_outputs import features,certificate,event_counts,events_row
 from golden_evaluation import colored_graph
 from golden_competitors import save
-from rxn_core import AAMProblem
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.artifacts import read_aam_checkpoint
-from rxn_core.family_query import query_path
+from graft import AAMProblem
+from graft.domain import MolecularEndpoint
+from graft.artifacts import read_aam_checkpoint
+from graft.family_query import query_path
 
 
 def analyze(args):

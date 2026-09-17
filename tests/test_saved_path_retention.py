@@ -1,7 +1,7 @@
 from dataclasses import replace
 
 from golden_evaluation import prepare
-from rxn_core import AAMSearchConfig, search_aam
+from graft import AAMSearchConfig, search_aam
 from verify_saved_path_retention import identical_path
 
 

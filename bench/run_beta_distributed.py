@@ -16,11 +16,11 @@ import time
 import os
 import resource
 
-from rxn_core.retrosynthesis.slurm_budget import SlurmBudget
+from graft.retrosynthesis.slurm_budget import SlurmBudget
 
-from rxn_core.fragment_matching import FragmentDetectionConfig
-from rxn_core.retrosynthesis.beta import FragmentQueryBank, recommend_big_blocks, proposal_rank
-from rxn_core.smiles import smiles_to_weighted_graph
+from graft.fragment_matching import FragmentDetectionConfig
+from graft.retrosynthesis.beta import FragmentQueryBank, recommend_big_blocks, proposal_rank
+from graft.smiles import smiles_to_weighted_graph
 
 
 class CatalogGraphs(Mapping):
@@ -251,7 +251,7 @@ def main():
                 target_fragments=[sorted(dict(p.mapping)[atom] for atom in fragment)
                                  for fragment in p.candidate.retained_fragments])
                 for p in recommendation.placements])
-    from rxn_core.retrosynthesis.beta_assembly import placement_pattern, pareto_assembly_ranks, assembly_key
+    from graft.retrosynthesis.beta_assembly import placement_pattern, pareto_assembly_ranks, assembly_key
     pareto_ranks=pareto_assembly_ranks(bank.completed_assemblies,bank.target)
     pattern_ids={}
     def patterned(recommendation):

@@ -4,7 +4,7 @@ import re
 
 import numpy as np
 
-from rxn_core.viewers import ASSETS, align_product, stylesheet
+from graft.viewers import ASSETS, align_product, stylesheet
 
 
 def test_only_two_shared_viewer_styles():

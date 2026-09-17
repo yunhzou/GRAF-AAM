@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from rxn_core.benchmark_regression import evaluate_record, load_contract
+from graft.benchmark_regression import evaluate_record, load_contract
 
 
 CONTRACT = Path(__file__).parents[1] / "bench" / "contracts" / "aam_regression_contract.json"

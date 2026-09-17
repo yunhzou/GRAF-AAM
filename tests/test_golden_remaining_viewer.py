@@ -1,6 +1,6 @@
 import itertools
 import numpy as np
-from rxn_core import AAMProblem,MolecularEndpoint
+from graft import AAMProblem,MolecularEndpoint
 from golden_evaluation import rank_key
 from view_golden_remaining import ranker,INDICES
 

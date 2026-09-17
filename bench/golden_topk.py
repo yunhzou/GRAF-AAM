@@ -15,7 +15,7 @@ import pynauty
 
 from golden_evaluation import colored_graph,project,rank_key,evaluate_planned
 from golden_policy_campaign import load_case,save,guarded
-from rxn_core.artifacts import read_aam_checkpoint
+from graft.artifacts import read_aam_checkpoint
 
 
 def init(args):

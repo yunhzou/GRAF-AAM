@@ -2,11 +2,11 @@
 import numpy as np
 import pytest
 
-from rxn_core.cut_replay import CutReplay
-from rxn_core.frag import build_graph
-from rxn_core.growth import native
-from rxn_core.matcher import _nauty_orbits
-from rxn_core.alignment.branch import find_islands
+from graft.cut_replay import CutReplay
+from graft.frag import build_graph
+from graft.growth import native
+from graft.matcher import _nauty_orbits
+from graft.alignment.branch import find_islands
 
 pytestmark = pytest.mark.skipif(not native.built(), reason="native engine not built")
 
@@ -122,7 +122,7 @@ def test_full_search_graph_is_identical():
 
 
 def test_shared_finalization_preserves_all_generators_and_reports_reuse():
-    from rxn_core.search_symmetry import finalize_graph_symmetry, SymmetryWorkspace
+    from graft.search_symmetry import finalize_graph_symmetry, SymmetryWorkspace
     source=graph(8,[(i,i+1) for i in range(7)]+[(0,3)])
     target=graph(8,[(i,i+1) for i in range(7)]+[(2,5)])
     workspace=SymmetryWorkspace(target,1.)

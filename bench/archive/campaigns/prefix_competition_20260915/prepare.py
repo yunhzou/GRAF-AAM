@@ -12,7 +12,7 @@ if engine.exists():raise SystemExit('Choose a fresh GRAFT_EXPERIMENT_WORK direct
 engine.mkdir(parents=True)
 for name in ['src','native']:shutil.copytree(repo/name,engine/name,ignore=shutil.ignore_patterns('__pycache__'))
 for name in ['setup.py','pyproject.toml','README.md']:shutil.copy2(repo/name,engine/name)
-shutil.copy2(repo/'src/rxn_core/competition.py',work/'competition-original.py')
+shutil.copy2(repo/'src/graft/competition.py',work/'competition-original.py')
 subprocess.run(['patch','-p1','-i',str(package/'prefix.patch')],cwd=engine,check=True)
 for path,hashes in manifest['source_hashes'].items():
  assert hashlib.sha256((engine/path).read_bytes()).hexdigest()==hashes['experimental']

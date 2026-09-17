@@ -1,9 +1,9 @@
 from itertools import permutations
 import numpy as np
 
-from rxn_core import AAMProblem,AAMSearchConfig,search_aam
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.family_scoring import minimize_events,bond_events
+from graft import AAMProblem,AAMSearchConfig,search_aam
+from graft.domain import MolecularEndpoint
+from graft.family_scoring import minimize_events,bond_events
 from golden_evaluation import prepare
 from view_golden_remaining import ranker
 

@@ -7,11 +7,11 @@ from pathlib import Path
 import pickle
 import time
 
-from rxn_core.retrosynthesis.beta_assembly import (
+from graft.retrosynthesis.beta_assembly import (
     assembly_metrics, assembly_key, dominates, pareto_assembly_ranks, placement_pattern, rank_complete_assemblies,
 )
-from rxn_core.smiles import smiles_to_weighted_graph
-from rxn_core.subgraph import _coerce_graph
+from graft.smiles import smiles_to_weighted_graph
+from graft.subgraph import _coerce_graph
 
 
 def read(path):

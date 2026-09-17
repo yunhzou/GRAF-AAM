@@ -10,9 +10,9 @@ import time
 
 from rdkit import Chem
 
-from rxn_core.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
-from rxn_core.fragment_matching.detection import _coerce_graph
-from rxn_core.matcher.orbits import (
+from graft.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
+from graft.fragment_matching.detection import _coerce_graph
+from graft.matcher.orbits import (
     _nauty_colored_wbo_graph,
     _wbo_tolerance_bucket_lookup,
 )

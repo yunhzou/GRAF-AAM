@@ -9,11 +9,11 @@ import pickle
 import sys
 
 from rdkit import Chem
-from rxn_core.retrosynthesis.catalog_index import candidate_entry
-from rxn_core.retrosynthesis.compressed_coverage import candidate_target_domains
-from rxn_core.retrosynthesis.ranking import build_ranked_assembly, validate_atom_ownership
-from rxn_core.smiles import smiles_to_weighted_graph
-from rxn_core.subgraph import _coerce_graph
+from graft.retrosynthesis.catalog_index import candidate_entry
+from graft.retrosynthesis.compressed_coverage import candidate_target_domains
+from graft.retrosynthesis.ranking import build_ranked_assembly, validate_atom_ownership
+from graft.smiles import smiles_to_weighted_graph
+from graft.subgraph import _coerce_graph
 
 
 def main():

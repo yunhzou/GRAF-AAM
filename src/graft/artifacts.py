@@ -19,6 +19,22 @@ from .domain import (
 from .search_graph import AAMSearchGraph
 
 
+class _CheckpointUnpickler(pickle.Unpickler):
+    """Resolve pre-rename globals in trusted internal checkpoints.
+
+    This is namespace compatibility, not a safe loader for untrusted pickle.
+    """
+
+    def find_class(self, module, name):
+        if module == "rxn_core" or module.startswith("rxn_core."):
+            module = "graft" + module[len("rxn_core"):]
+        return super().find_class(module, name)
+
+
+def _load_checkpoint(stream):
+    return _CheckpointUnpickler(stream).load()
+
+
 def _aam_header(result):
     from dataclasses import asdict
     def endpoint(molecule):
@@ -74,7 +90,7 @@ def read_aam_checkpoint(path):
     enabled=gc.isenabled()
     try:
         gc.disable()
-        with gzip.open(path,'rb') as stream:record=pickle.load(stream)
+        with gzip.open(path,'rb') as stream:record=_load_checkpoint(stream)
         if record['schema']!='rxn_core.aam_checkpoint/v1':
             raise ValueError('Unsupported AAM checkpoint schema')
         return _aam_result(record,record['graph'])
@@ -96,7 +112,7 @@ def _write_graph_checkpoint(graph,path,schema):
 
 def read_graph_checkpoint(path):
     """Load only internally produced finalized-cut checkpoints."""
-    with gzip.open(path,'rb') as stream:schema,graph=pickle.load(stream)
+    with gzip.open(path,'rb') as stream:schema,graph=_load_checkpoint(stream)
     if schema!='rxn_core.finalized_cut/v1':raise ValueError('Unsupported cut checkpoint schema')
     return graph
 
@@ -139,7 +155,7 @@ def read_raw_cut(path, *, tuple_pool=None):
     """Read only trusted internal binary cuts; JSON remains interchange-safe."""
     path=Path(path)
     if path.name.endswith('.raw.pkl.gz'):
-        with gzip.open(path,'rb') as stream:schema,graph=pickle.load(stream)
+        with gzip.open(path,'rb') as stream:schema,graph=_load_checkpoint(stream)
         if schema!='rxn_core.raw_cut/v1':raise ValueError('Unsupported raw cut checkpoint schema')
         return graph
     if path.suffix=='.json':

@@ -1,5 +1,5 @@
 """
-Low-level utilities used by rxn_core:
+Low-level utilities used by graft:
 
   build_graph               — WBO graph (edge iff WBO >= bond_cut)
   expand_mapping            — element-multiset pairing of unmapped neighbors

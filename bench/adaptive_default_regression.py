@@ -13,12 +13,12 @@ from adaptive_fragment_pilot import save
 
 
 def worker(args):
-    from rxn_core import AAMProblem, AAMSearchConfig
-    from rxn_core.domain import MolecularEndpoint
-    import rxn_core.aam as aam
-    from rxn_core.artifacts import write_graph_checkpoint
-    from rxn_core.conditioned_symmetry import ConditionedSymmetryWorkspace
-    from rxn_core.search_symmetry import finalize_graph_symmetry
+    from graft import AAMProblem, AAMSearchConfig
+    from graft.domain import MolecularEndpoint
+    import graft.aam as aam
+    from graft.artifacts import write_graph_checkpoint
+    from graft.conditioned_symmetry import ConditionedSymmetryWorkspace
+    from graft.search_symmetry import finalize_graph_symmetry
 
     rows=[]
     for repeat in range(3):

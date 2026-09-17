@@ -10,8 +10,8 @@ def read(p):return json.loads(Path(p).read_text())
 def save(p,x):
  p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);q=p.with_suffix('.tmp');q.write_text(json.dumps(x)+'\n');q.replace(p)
 def worker(case,sweep,stage):
- from rxn_core import AAMProblem,MolecularEndpoint,AAMSearchConfig,search_aam
- from rxn_core.artifacts import read_aam_checkpoint,write_aam_checkpoint
+ from graft import AAMProblem,MolecularEndpoint,AAMSearchConfig,search_aam
+ from graft.artifacts import read_aam_checkpoint,write_aam_checkpoint
  out=S/f'runs/{case}/{int(sweep)}';out.mkdir(parents=True,exist_ok=True)
  c=time.process_time();w=time.perf_counter()
  if stage=='search':
@@ -21,7 +21,7 @@ def worker(case,sweep,stage):
   write_aam_checkpoint(a,out/'baseline.pkl.gz')
   result=dict(config=asdict(cfg),metrics=asdict(a.metrics),full_terminals=sum(len(a.graph.states[t].mapping)==p.source_atom_count for t in a.graph.terminals),contexts=len(a.graph.contexts),capped=a.graph.capped)
  elif stage in ['local','prefix']:
-  from rxn_core.competition import compete_fragments,CompetitionConfig
+  from graft.competition import compete_fragments,CompetitionConfig
   a=read_aam_checkpoint(out/'baseline.pkl.gz');cfg=CompetitionConfig(proposal_mode=stage,operation_budget=128)
   (out/stage).mkdir(exist_ok=True)
   r=compete_fragments(a,cfg)
@@ -30,8 +30,8 @@ def worker(case,sweep,stage):
    write_aam_checkpoint(a,out/f'{stage}/repair{i}.pkl.gz')
   result=dict(config=asdict(cfg),counts=r.counts,repairs=len(r.repairs),pending=r.pending,offers=r.offers)
  elif stage=='decode':
-  from rxn_core.final_branches import FinalBranchCatalogue
-  from rxn_core.event_patterns import SignedEventIndex,extract_path_events
+  from graft.final_branches import FinalBranchCatalogue
+  from graft.event_patterns import SignedEventIndex,extract_path_events
   a=read_aam_checkpoint(out/'baseline.pkl.gz');p=a.problem;cat=FinalBranchCatalogue(p).add_aam(a,'baseline');modes=['none','local','prefix'];family_ids={};counts={}
   def group_ids(mode):
    return [i for i,f in enumerate(cat.families) if any(x['archive']=='baseline' or x['archive'].startswith(mode+':') for x in f.provenance)]

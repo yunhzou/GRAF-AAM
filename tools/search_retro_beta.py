@@ -8,10 +8,10 @@ import json
 from pathlib import Path
 import pickle
 
-from rxn_core.fragment_matching import FragmentDetectionConfig
-from rxn_core.retrosynthesis.beta import FragmentQueryBank, recommend_big_blocks
-from rxn_core.retrosynthesis.config import DEFAULT_ISO_TOLERANCE
-from rxn_core.smiles import smiles_to_weighted_graph
+from graft.fragment_matching import FragmentDetectionConfig
+from graft.retrosynthesis.beta import FragmentQueryBank, recommend_big_blocks
+from graft.retrosynthesis.config import DEFAULT_ISO_TOLERANCE
+from graft.smiles import smiles_to_weighted_graph
 
 
 def main():

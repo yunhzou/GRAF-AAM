@@ -6,10 +6,10 @@ import time
 import pynauty
 
 from golden_policy_campaign import load_case,save
-from rxn_core.alignment.branch import find_islands,_generate_seed_orders
-from rxn_core.artifacts import write_graph_checkpoint
-from rxn_core.frag import build_graph
-from rxn_core.matcher.policy import AttributeNodeMatchPolicy
+from graft.alignment.branch import find_islands,_generate_seed_orders
+from graft.artifacts import write_graph_checkpoint
+from graft.frag import build_graph
+from graft.matcher.policy import AttributeNodeMatchPolicy
 from golden_evaluation import colored_graph,project
 from investigate_golden_mapping import original_reference_certificate
 

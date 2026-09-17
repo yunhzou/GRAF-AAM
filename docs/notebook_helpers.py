@@ -2,7 +2,7 @@
 
 from rdkit import Chem
 from rdkit.Chem import AllChem
-from rxn_core import MolecularEndpoint
+from graft import MolecularEndpoint
 
 
 def endpoint(smiles, label):

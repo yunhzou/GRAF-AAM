@@ -1,6 +1,6 @@
 import numpy as np
 
-from rxn_core import WeightedGraph, WeightedNode, match_weighted_subgraph
+from graft import WeightedGraph, WeightedNode, match_weighted_subgraph
 
 
 def _edge_matrix(n, edges):

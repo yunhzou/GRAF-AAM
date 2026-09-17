@@ -1,12 +1,12 @@
-"""Build the native AAM engine extension (rxn_core._engine).
+"""Build the native AAM engine extension (graft._engine).
 
     .venv/bin/python native/build_engine.py
 
 Compiles the vendored nauty core (native/nauty, Apache-2.0) together with
 native/src/engine.cpp, freeze.cpp, autgrp.cpp and repair.cpp into
-src/rxn_core/_engine.<abi>.so.  Requires pybind11
-and a C++17 compiler.  The extension is optional: rxn_core falls back to the
-pure-Python engine when the extension is absent or RXN_CORE_NATIVE=0.
+src/graft/_engine.<abi>.so.  Requires pybind11
+and a C++17 compiler.  The extension is optional: graft falls back to the
+pure-Python engine when the extension is absent or GRAFT_NATIVE=0.
 """
 import shutil
 import sys
@@ -25,7 +25,7 @@ nauty_sources = [str(NAUTY / name) for name in (
     "nauty.c", "nautil.c", "naugraph.c", "schreier.c", "naurng.c")]
 
 ext = Extension(
-    "rxn_core._engine",
+    "graft._engine",
     sources=[str(NATIVE / "src" / "engine.cpp"),
              str(NATIVE / "src" / "freeze.cpp"),
              str(NATIVE / "src" / "autgrp.cpp"),
@@ -58,14 +58,14 @@ class Build(build_ext):
 
 
 def main():
-    dist = Distribution({"name": "rxn_core_engine", "ext_modules": [ext]})
+    dist = Distribution({"name": "graft_engine", "ext_modules": [ext]})
     cmd = Build(dist)
     cmd.build_lib = str(BUILD / "lib")
     cmd.build_temp = str(BUILD / "tmp")
     cmd.ensure_finalized()
     cmd.run()
-    built = next((BUILD / "lib" / "rxn_core").glob("_engine*.so"))
-    target = ROOT / "src" / "rxn_core" / built.name
+    built = next((BUILD / "lib" / "graft").glob("_engine*.so"))
+    target = ROOT / "src" / "graft" / built.name
     shutil.copy2(built, target)
     print("built", target)
 

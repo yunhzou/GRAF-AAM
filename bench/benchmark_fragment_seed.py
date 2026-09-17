@@ -10,14 +10,14 @@ import time
 
 from rdkit import Chem
 
-from rxn_core.fragment_matching import FragmentDetectionConfig, prepare_fragment_target
-from rxn_core.fragment_matching.detection import (
+from graft.fragment_matching import FragmentDetectionConfig, prepare_fragment_target
+from graft.fragment_matching.detection import (
     _grow_initial_seed,
     _initial_seed_order,
     _prepare_fragment_detection,
 )
-from rxn_core.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
-from rxn_core.matcher import _nauty_orbits
+from graft.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
+from graft.matcher import _nauty_orbits
 
 
 def main():

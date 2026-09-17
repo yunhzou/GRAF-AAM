@@ -15,9 +15,9 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
 
-from rxn_core.fragment_matching import FragmentDetectionConfig, detect_fragments
-from rxn_core.retrosynthesis import assemble_fragment_cover
-from rxn_core.smiles import smiles_to_weighted_graph
+from graft.fragment_matching import FragmentDetectionConfig, detect_fragments
+from graft.retrosynthesis import assemble_fragment_cover
+from graft.smiles import smiles_to_weighted_graph
 
 
 PAGE = landscape(A4)

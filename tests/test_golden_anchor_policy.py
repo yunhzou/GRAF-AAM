@@ -1,5 +1,5 @@
 import numpy as np
-from rxn_core import AAMProblem,MolecularEndpoint
+from graft import AAMProblem,MolecularEndpoint
 from golden_anchor_policy import proposals
 
 

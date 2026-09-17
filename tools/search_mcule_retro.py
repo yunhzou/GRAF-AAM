@@ -20,16 +20,16 @@ from pathlib import Path
 from rdkit import Chem, RDLogger
 from msgspec import json as fast_json
 
-from rxn_core.fragment_matching import (
+from graft.fragment_matching import (
     FragmentDetectionConfig,
     FragmentDetectionExecution,
     detect_fragments,
     detect_fragments_parallel,
     prepare_fragment_target,
 )
-from rxn_core.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
-from rxn_core.fragment_matching.serialization import fragment_detection_to_record
-from rxn_core.retrosynthesis.config import DEFAULT_ISO_TOLERANCE
+from graft.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
+from graft.fragment_matching.serialization import fragment_detection_to_record
+from graft.retrosynthesis.config import DEFAULT_ISO_TOLERANCE
 
 
 _TARGET = None

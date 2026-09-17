@@ -22,10 +22,10 @@ def _save(path, value):
 
 
 def run(args):
-    from rxn_core import AAMProblem, MolecularEndpoint
-    from rxn_core.artifacts import read_aam_checkpoint
-    from rxn_core.final_branches import FinalBranchCatalogue
-    from rxn_core.event_patterns import SignedEventIndex, extract_path_events
+    from graft import AAMProblem, MolecularEndpoint
+    from graft.artifacts import read_aam_checkpoint
+    from graft.final_branches import FinalBranchCatalogue
+    from graft.event_patterns import SignedEventIndex, extract_path_events
     start = time.perf_counter()
     args.output.mkdir(parents=True, exist_ok=True)
     inputs = {}

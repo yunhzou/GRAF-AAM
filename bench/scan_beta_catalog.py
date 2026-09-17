@@ -11,12 +11,12 @@ import time
 
 import numpy as np
 
-from rxn_core.frag import WeightedGraph
-from rxn_core.fragment_matching import FragmentDetectionConfig, prepare_fragment_target
-from rxn_core.fragment_matching.connected import find_connected_fragments
-from rxn_core.fragment_matching.symmetry import materialize_target_coverage_orbit
-from rxn_core.retrosynthesis.beta import BetaPlacement
-from rxn_core.smiles import smiles_to_weighted_graph
+from graft.frag import WeightedGraph
+from graft.fragment_matching import FragmentDetectionConfig, prepare_fragment_target
+from graft.fragment_matching.connected import find_connected_fragments
+from graft.fragment_matching.symmetry import materialize_target_coverage_orbit
+from graft.retrosynthesis.beta import BetaPlacement
+from graft.smiles import smiles_to_weighted_graph
 
 
 def initialize(manifest, query):

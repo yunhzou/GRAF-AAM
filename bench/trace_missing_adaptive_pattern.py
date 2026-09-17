@@ -8,11 +8,11 @@ import time
 import numpy as np
 from adaptive_fragment_pilot import save
 from compare_elementary_outputs import features,certificate,event_counts
-from rxn_core.artifacts import read_graph_checkpoint,write_graph_checkpoint
-from rxn_core.frag import build_graph
-from rxn_core.matcher import _nauty_orbits
-from rxn_core.native_search import find_islands_native
-from rxn_core.search_symmetry import finalize_graph_symmetry
+from graft.artifacts import read_graph_checkpoint,write_graph_checkpoint
+from graft.frag import build_graph
+from graft.matcher import _nauty_orbits
+from graft.native_search import find_islands_native
+from graft.search_symmetry import finalize_graph_symmetry
 
 
 def main(args):

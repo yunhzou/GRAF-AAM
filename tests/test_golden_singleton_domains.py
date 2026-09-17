@@ -6,8 +6,8 @@ import pynauty
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'bench'))
 from golden_evaluation import colored_graph,symbolic_path_query,evaluate
-from rxn_core import AAMProblem,AAMSearchConfig,search_aam
-from rxn_core.domain import MolecularEndpoint
+from graft import AAMProblem,AAMSearchConfig,search_aam
+from graft.domain import MolecularEndpoint
 
 
 def test_saved_singleton_domain_can_cross_conditioned_automorphism_orbits():

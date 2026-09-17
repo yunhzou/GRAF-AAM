@@ -1,4 +1,4 @@
-from rxn_core._native import paired_mapping_invariant
+from graft._native import paired_mapping_invariant
 
 
 def test_native_paired_mapping_invariant_refines_sparse_relations():

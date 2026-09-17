@@ -6,8 +6,8 @@ from pathlib import Path
 import pickle
 import sys
 
-from rxn_core.retrosynthesis.beta import FragmentQueryBank, proposal_rank, recommend_big_blocks
-from rxn_core.smiles import smiles_to_weighted_graph
+from graft.retrosynthesis.beta import FragmentQueryBank, proposal_rank, recommend_big_blocks
+from graft.smiles import smiles_to_weighted_graph
 
 
 def module(name):

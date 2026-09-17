@@ -19,11 +19,11 @@ DATA = Path(__file__).resolve().parent / 'data'
 
 
 def run(output, workers=4):
-    from rxn_core import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
-    from rxn_core.artifacts import write_aam_checkpoint
-    from rxn_core.event_patterns import SignedEventIndex
-    from rxn_core.family_query import query_path
-    from rxn_core.growth.native import available
+    from graft import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
+    from graft.artifacts import write_aam_checkpoint
+    from graft.event_patterns import SignedEventIndex
+    from graft.family_query import query_path
+    from graft.growth.native import available
 
     raw = [json.loads((DATA / name).read_text()) for name in ('reactant.json', 'product.json')]
     problem = AAMProblem(*(MolecularEndpoint(d['elements'], d['coordinates'], d['wbo']) for d in raw),

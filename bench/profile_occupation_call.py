@@ -8,7 +8,7 @@ import pickle
 import sys
 import time
 
-from rxn_core._group_ops import occupation_orbit
+from graft._group_ops import occupation_orbit
 
 
 def main():

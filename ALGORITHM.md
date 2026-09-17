@@ -130,20 +130,20 @@ automorphism.
 
 The primary implementation is in:
 
-- `src/rxn_core/matcher/`: compressed fragment candidate matching;
-- `src/rxn_core/growth/`: weighted island growth;
-- `src/rxn_core/alignment/branch.py`: multi-island branch construction;
-- `src/rxn_core/alignment/sweep.py`: cut sweep and mechanism grouping;
-- `src/rxn_core/alignment/post_aam.py`: typed post-AAM data model;
-- `src/rxn_core/alignment/index_chirality.py`: analytical families,
+- `src/graft/matcher/`: compressed fragment candidate matching;
+- `src/graft/growth/`: weighted island growth;
+- `src/graft/alignment/branch.py`: multi-island branch construction;
+- `src/graft/alignment/sweep.py`: cut sweep and mechanism grouping;
+- `src/graft/alignment/post_aam.py`: typed post-AAM data model;
+- `src/graft/alignment/index_chirality.py`: analytical families,
   chirality, and fixed-mapping RMSD selection;
-- `src/rxn_core/aam.py`: typed full AAM search;
-- `src/rxn_core/analytical.py`: exact coset compilation and containment;
-- `src/rxn_core/rp.py`: R/P composition;
-- `src/rxn_core/core_aam.py`: exact partial AAM for mechanism cores;
-- `src/rxn_core/ts.py`: typed TS composition and mode scoring;
-- `src/rxn_core/cli.py`: typed command-line composition;
-- `src/rxn_core/artifacts.py`: JSON, aligned XYZ, and self-contained HTML
+- `src/graft/aam.py`: typed full AAM search;
+- `src/graft/analytical.py`: exact coset compilation and containment;
+- `src/graft/rp.py`: R/P composition;
+- `src/graft/core_aam.py`: exact partial AAM for mechanism cores;
+- `src/graft/ts.py`: typed TS composition and mode scoring;
+- `src/graft/cli.py`: typed command-line composition;
+- `src/graft/artifacts.py`: JSON, aligned XYZ, and self-contained HTML
   boundary adapters.
 
 ## 1. What the Investigation Changed

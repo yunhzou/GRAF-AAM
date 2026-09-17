@@ -8,9 +8,9 @@ import z3
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'bench'))
 from metal_binary_events import binary_metal_input,DeltaPatterns,delta_objective,query_pattern,scalar_events
-from rxn_core import AAMProblem,AAMSearchConfig,search_aam
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.family_query import compile_path
+from graft import AAMProblem,AAMSearchConfig,search_aam
+from graft.domain import MolecularEndpoint
+from graft.family_query import compile_path
 
 
 def raw_problem(elements,r_edges,p_edges):

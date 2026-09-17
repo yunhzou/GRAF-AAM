@@ -8,9 +8,9 @@ import shutil
 import tarfile
 
 from holdout_missing_pattern_seeds import CASES,SEEDS,AAM,EventPatterns,read,save,sha
-from rxn_core import AAMProblem
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.family_scoring import bond_events
+from graft import AAMProblem
+from graft.domain import MolecularEndpoint
+from graft.family_scoring import bond_events
 
 
 def publish(args):

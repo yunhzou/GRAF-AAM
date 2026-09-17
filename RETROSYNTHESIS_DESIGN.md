@@ -107,7 +107,7 @@ patterns, recommendation ranking, or retrosynthesis.
 Public package:
 
 ```text
-rxn_core.fragment_matching
+graft.fragment_matching
 ```
 
 Public operation:
@@ -289,18 +289,18 @@ non-overlapping target covers, and ranks precursor-set recommendations.
 Public package:
 
 ```text
-rxn_core.retrosynthesis
+graft.retrosynthesis
 ```
 
 Detection never imports or calls assembly.  Assembly depends on detection's
 `FragmentCandidate` record.
 
-Neither API is re-exported from the root `rxn_core` namespace.  Callers import
+Neither API is re-exported from the root `graft` namespace.  Callers import
 the component they use explicitly:
 
 ```text
-from rxn_core.fragment_matching import detect_fragments
-from rxn_core.retrosynthesis import assemble_fragment_cover
+from graft.fragment_matching import detect_fragments
+from graft.retrosynthesis import assemble_fragment_cover
 ```
 
 ### 6. Candidate indexing
@@ -417,34 +417,34 @@ stage consumes saved intermediates and writes a new versioned artifact.
 ## 11. Module boundaries
 
 ```text
-rxn_core.fragment_matching.models
+graft.fragment_matching.models
     detection config, fragment candidates, results, cap diagnostics
 
-rxn_core.fragment_matching.detection
+graft.fragment_matching.detection
     connected-island growth and fragment candidate generation
 
-rxn_core.fragment_matching.augmentation
+graft.fragment_matching.augmentation
     boundary cutting, augmented target construction, candidate projection
 
-rxn_core.fragment_matching.serialization
+graft.fragment_matching.serialization
     strict fragment-detection artifact conversion
 
-rxn_core.fragment_matching.rdkit_adapter
+graft.fragment_matching.rdkit_adapter
     optional RDKit-to-weighted-graph conversion
 
-rxn_core.retrosynthesis.models
+graft.retrosynthesis.models
     assembly result records
 
-rxn_core.retrosynthesis.coverage
+graft.retrosynthesis.coverage
     in-memory assembly validation for domain candidates
 
-rxn_core.retrosynthesis.catalog_index
+graft.retrosynthesis.catalog_index
     persisted-record normalization, controlled ownership variants, mask index
 
-rxn_core.retrosynthesis.enumeration
+graft.retrosynthesis.enumeration
     bounded exact, modular, and recommendation coverage-pattern search
 
-rxn_core.retrosynthesis.ranking
+graft.retrosynthesis.ranking
     candidate and assembly score construction; no I/O
 
 tools/search_mcule_retro.py

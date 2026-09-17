@@ -4,11 +4,11 @@ from types import SimpleNamespace
 import numpy as np
 import z3
 
-from rxn_core import AAMProblem
-from rxn_core.domain import MolecularEndpoint
+from graft import AAMProblem
+from graft.domain import MolecularEndpoint
 from score_real_ts_families import compile_slap
 from publish_real_ts_comparison import scalar_events
-from rxn_core.family_scoring import bond_events
+from graft.family_scoring import bond_events
 
 
 def problem():

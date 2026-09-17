@@ -11,7 +11,7 @@ import time
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 import search_mcule_retro as scanner
-from rxn_core.fragment_matching import symmetry
+from graft.fragment_matching import symmetry
 
 
 def main():

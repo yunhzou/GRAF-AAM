@@ -10,11 +10,11 @@ import time
 
 from rdkit import Chem
 
-from rxn_core.fragment_matching import FragmentDetectionConfig, prepare_fragment_target
-from rxn_core.fragment_matching.detection import _prepare_fragment_detection
-from rxn_core.fragment_matching.parallel import _parallel_initial_fragment_placements
-from rxn_core.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
-from rxn_core.matcher.canonical import _PartialMappingCanonicalizer
+from graft.fragment_matching import FragmentDetectionConfig, prepare_fragment_target
+from graft.fragment_matching.detection import _prepare_fragment_detection
+from graft.fragment_matching.parallel import _parallel_initial_fragment_placements
+from graft.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
+from graft.matcher.canonical import _PartialMappingCanonicalizer
 
 
 def main():

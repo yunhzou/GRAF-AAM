@@ -4,10 +4,10 @@ import gzip,json,os,sys
 package=Path(__file__).resolve().parent
 work=Path(os.environ.get('GRAFT_EXPERIMENT_WORK',package/'work')).resolve()
 sys.path.insert(0,str(work/'engine/src'))
-from rxn_core.artifacts import read_aam_checkpoint
-from rxn_core.final_branches import FinalFamily
-from rxn_core.family_query import query_path
-from rxn_core.event_patterns import SignedEventIndex
+from graft.artifacts import read_aam_checkpoint
+from graft.final_branches import FinalFamily
+from graft.family_query import query_path
+from graft.event_patterns import SignedEventIndex
 proofs=json.loads(gzip.decompress((package/'novel-candidates.json.gz').read_bytes()))
 for proof in proofs:
  a=read_aam_checkpoint(package.parent/f"unrestricted_competition_20260915/inputs/case{proof['case']}.pkl.gz")

@@ -14,13 +14,13 @@ import resource
 import time
 import numpy as np
 
-from rxn_core.aam import cut_seed
-from rxn_core.alignment.branch import _generate_seed_orders, find_islands
-from rxn_core.alignment.sweep import cut_sweep_items
-from rxn_core.artifacts import write_graph_checkpoint
-from rxn_core.frag import build_graph
-from rxn_core.matcher import _nauty_orbits
-from rxn_core.search_symmetry import finalize_graph_symmetry
+from graft.aam import cut_seed
+from graft.alignment.branch import _generate_seed_orders, find_islands
+from graft.alignment.sweep import cut_sweep_items
+from graft.artifacts import write_graph_checkpoint
+from graft.frag import build_graph
+from graft.matcher import _nauty_orbits
+from graft.search_symmetry import finalize_graph_symmetry
 
 
 def save(path, value):
@@ -41,7 +41,7 @@ def run(args):
     profiler=cProfile.Profile()
     matcher=find_islands
     if args.backend=='native':
-        from rxn_core.native_search import find_islands_native
+        from graft.native_search import find_islands_native
         matcher=find_islands_native
     records=[]
     for ordinal,cut in enumerate(cuts):

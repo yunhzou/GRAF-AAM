@@ -16,14 +16,14 @@ import time
 from types import SimpleNamespace
 
 import numpy as np
-from rxn_core import AAMProblem, AAMSearchConfig
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.aam import _initialize_search, _search_cut
-from rxn_core.alignment.branch import find_islands
-from rxn_core.frag import build_graph
-from rxn_core.matcher import _nauty_orbits
-from rxn_core.search_symmetry import finalize_graph_symmetry
-from rxn_core.artifacts import write_graph_checkpoint
+from graft import AAMProblem, AAMSearchConfig
+from graft.domain import MolecularEndpoint
+from graft.aam import _initialize_search, _search_cut
+from graft.alignment.branch import find_islands
+from graft.frag import build_graph
+from graft.matcher import _nauty_orbits
+from graft.search_symmetry import finalize_graph_symmetry
+from graft.artifacts import write_graph_checkpoint
 from compare_elementary_outputs import event_counts, events_row, features, certificate, refine
 
 SOURCE=Path('/project/yunhengzou/coordinate_alignment/aam_benchmarks/elementary140_tol1_20260909')
@@ -295,7 +295,7 @@ def submit_refinement(args):
 
 
 def report_local(args):
-    from rxn_core.family_scoring import bond_events
+    from graft.family_scoring import bond_events
     summary=json.loads((args.run/'summary.json').read_text());policies={}
     audit=0
     for policy in ('changed_edges','incident_edges'):

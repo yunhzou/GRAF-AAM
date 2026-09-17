@@ -17,9 +17,9 @@ sys.path.insert(0, str(ROOT / 'src'))
 
 
 def capture(archive, output, context=21):
-    from rxn_core.artifacts import read_aam_checkpoint
-    from rxn_core.search_trajectory import build_trajectory
-    from rxn_core.viewers import growth_trace_html
+    from graft.artifacts import read_aam_checkpoint
+    from graft.search_trajectory import build_trajectory
+    from graft.viewers import growth_trace_html
     aam = read_aam_checkpoint(archive)
     terminals = [t for t in aam.graph.terminals if aam.graph.states[t].context == context]
     document = build_trajectory([dict(aam=aam, context=context, terminals=terminals)],

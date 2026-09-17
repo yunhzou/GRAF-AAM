@@ -6,7 +6,7 @@ import sys
 
 import pytest
 
-from rxn_core.retrosynthesis.slurm_budget import SlurmBudget
+from graft.retrosynthesis.slurm_budget import SlurmBudget
 
 
 @pytest.mark.parametrize('limit', [2, 3, 8, 32, 64, 100])

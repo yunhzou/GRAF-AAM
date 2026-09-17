@@ -46,6 +46,6 @@ packages={}
 for name in ['numpy','scipy','sympy','pynauty','z3-solver','rdkit','psutil']:
  try:packages[name]=importlib.metadata.version(name)
  except importlib.metadata.PackageNotFoundError:packages[name]=None
-run.save(S/'runtime-proof.json',dict(python=sys.version,packages=packages,native_binaries={str(p.relative_to(S)):run.sha(p) for p in (S/'engine/src/rxn_core').glob('*.so')},cpu_models=r['cpu_models']))
+run.save(S/'runtime-proof.json',dict(python=sys.version,packages=packages,native_binaries={str(p.relative_to(S)):run.sha(p) for p in (S/'engine/src/graft').glob('*.so')},cpu_models=r['cpu_models']))
 run.save(S/'finalization.json',dict(status='tables_ready_for_review',processed_cases=1851,common_completed_cases=len(r['common_completed_cases']),source_manifest_sha256=run.sha(S/'manifest.json'),files={n:run.sha(S/n) for n in ['controlled-results.json.gz','comparison.csv','directional.csv','COMPARISON.md','runtime-proof.json']},scope='These are measured results awaiting manuscript integration and visual review. No paper or Git publication is automatic.'))
 print('Comparison tables ready for review',flush=True)

@@ -2,8 +2,8 @@ import numpy as np
 import pytest
 from itertools import permutations
 
-import rxn_core.alignment.index_chirality as index_chirality_module
-from rxn_core.alignment.index_chirality import (
+import graft.alignment.index_chirality as index_chirality_module
+from graft.alignment.index_chirality import (
     IndexChiralityConflict,
     _fixed_mappings_aligned_rmsd,
     _generated_atom_permutations,

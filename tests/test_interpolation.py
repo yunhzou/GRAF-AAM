@@ -1,6 +1,6 @@
 import numpy as np
 
-from rxn_core.alignment.interpolation import (
+from graft.alignment.interpolation import (
     _dihedral,
     _rotation_fraction,
     _wrap_angle,

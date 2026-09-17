@@ -1,4 +1,4 @@
-# GRAFT (`rxn_core`)
+# GRAFT (`graft`)
 
 The default GRAFT pipeline uses one seed ordering per cut, the uncut plus single-edge sweep, and branch cap 100. Match with `search_aam`, then decode bond-event alternatives separately. See the [Python API example](docs/PYTHON_API.md). Fragment competition is an experimental, explicit opt-in extension and is off by default; it is not part of the published method.
 
@@ -107,11 +107,13 @@ does not invoke xTB.
 
 ## Python API
 
+The Python package and command are now named `graft` (formerly `rxn_core` / `rxn-core`). Reinstall from this checkout and rebuild the optional native engine after updating. Use `import graft` and `from graft.postprocessing import decode_events`. Existing saved results remain readable; versioned archive identifiers and event IDs retain their original names for compatibility. `GRAFT_NATIVE=0` selects Python growth; the former `RXN_CORE_NATIVE` setting is still accepted as a fallback.
+
 Start with the executed, self-contained [AAM notebook](docs/AAM_SIMPLE.ipynb): embedded molecules, matching, raw branch inspection, unique bond-event candidates, certified symmetry queries, py3Dmol inspection, and a growth animation for each sweep. All inputs and display helpers are in the notebook; no benchmark files are needed. The [Python API guide](docs/PYTHON_API.md) lists anchors, directions, conditional matching, all configuration controls, and current chirality limitations. Install its dependencies with `python -m pip install -e ".[notebook]"`.
 
 ```python
-from rxn_core import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
-from rxn_core.postprocessing import EventDecodeConfig, decode_events
+from graft import AAMProblem, MolecularEndpoint, AAMSearchConfig, search_aam
+from graft.postprocessing import EventDecodeConfig, decode_events
 
 # Arrays for both endpoints are embedded in docs/AAM_SIMPLE.ipynb.
 problem = AAMProblem(
@@ -148,7 +150,7 @@ retains all represented event counts by default, including nonminimum
 alternatives. Search and final event tolerances are configured independently.
 
 Anchors use `AAMSearchConfig(anchors=((r_atom, p_atom),))`.
-`from rxn_core import search_aam_directions` exposes forward, reverse,
+`from graft import search_aam_directions` exposes forward, reverse,
 smaller-first, larger-first, and both-direction searches. The
 [API guide](docs/PYTHON_API.md) documents conditional fragment matching,
 fixed-query isomorphism, serialization, and the current chirality TODO.
@@ -157,7 +159,7 @@ For one animation per sweep, use the in-memory result directly:
 
 ```python
 from pathlib import Path
-from rxn_core.viewers import aam_growth_html
+from graft.viewers import aam_growth_html
 
 Path("aam_growth.html").write_text(aam_growth_html(aam), encoding="utf-8")
 ```
@@ -169,7 +171,7 @@ interactive views require a trusted Jupyter notebook.
 
 `align_reaction`, `group_mechanisms`, `compile_mechanism_families`,
 `select_rp_mappings`, and `analyze_transition_state` remain importable from
-`rxn_core` for the optional geometry/TS workflow, illustrated in
+`graft` for the optional geometry/TS workflow, illustrated in
 [TUTORIAL.ipynb](docs/TUTORIAL.ipynb).
 
 ## CLI
@@ -177,7 +179,7 @@ interactive views require a trusted Jupyter notebook.
 NPZ endpoint files contain `elements`, `coordinates`, and `wbo` arrays:
 
 ```bash
-rxn-core \
+graft \
   --stage rp \
   --reactant-npz R.npz \
   --product-npz P.npz \
@@ -190,7 +192,7 @@ Existing xTB cache directories containing one XYZ and a `wbo` file can be
 used directly:
 
 ```bash
-rxn-core --reactant-cache cache/R --product-cache cache/P \
+graft --reactant-cache cache/R --product-cache cache/P \
   --workers 48 --output alignment
 ```
 
@@ -199,7 +201,7 @@ mechanism, a reusable `reaction.json`, and a self-contained `view.html`.
 The TS verifier/scorer can then be entered independently without R/P search:
 
 ```bash
-rxn-core --stage ts \
+graft --stage ts \
   --reactant-npz R.npz --product-npz P.npz \
   --reaction-json alignment/reaction.json \
   --target-npz guess_1.npz --target-npz guess_2.npz \
@@ -249,7 +251,7 @@ endpoint-consensus merging, and imaginary-mode scoring.
 
 | Location | Contents |
 |---|---|
-| `src/rxn_core/` | Importable matching, search, separate decoding, geometry, and viewers |
+| `src/graft/` | Importable matching, search, separate decoding, geometry, and viewers |
 | `docs/` | Executed notebooks and public API documentation |
 | `bench/` | Benchmark entry points and shared evaluators; see the [guide](bench/README.md) |
 | `bench/experiments/` | Optional research experiments, excluded from the published default |

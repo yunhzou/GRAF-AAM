@@ -4,16 +4,16 @@ from dataclasses import replace
 from run import S,PACKAGE
 sys.path.insert(0,str(S/'engine/src'))
 from run import save,read
-from rxn_core.artifacts import read_aam_checkpoint,write_aam_checkpoint
-from rxn_core.frag import build_graph
-from rxn_core.matcher import _nauty_orbits
-from rxn_core.native_search import find_islands_native
-from rxn_core.search_graph import AAMSearchGraph
-from rxn_core.search_symmetry import finalize_graph_symmetry
-from rxn_core.domain import AAMResult,AAMSearchMetrics
-from rxn_core.final_branches import FinalBranchCatalogue
-from rxn_core.event_patterns import SignedEventIndex,extract_path_events
-from rxn_core.competition import compete_fragments,CompetitionConfig
+from graft.artifacts import read_aam_checkpoint,write_aam_checkpoint
+from graft.frag import build_graph
+from graft.matcher import _nauty_orbits
+from graft.native_search import find_islands_native
+from graft.search_graph import AAMSearchGraph
+from graft.search_symmetry import finalize_graph_symmetry
+from graft.domain import AAMResult,AAMSearchMetrics
+from graft.final_branches import FinalBranchCatalogue
+from graft.event_patterns import SignedEventIndex,extract_path_events
+from graft.competition import compete_fragments,CompetitionConfig
 
 def run(case):
  c=time.process_time();out=S/f'seed-control/{case}';out.mkdir(parents=True,exist_ok=True)

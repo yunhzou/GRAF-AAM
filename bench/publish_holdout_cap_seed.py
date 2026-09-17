@@ -20,10 +20,10 @@ def sha(path):
 
 
 def publish(run, destination):
-    from rxn_core import AAMProblem
-    from rxn_core.domain import MolecularEndpoint
-    from rxn_core.family_scoring import bond_events
-    from rxn_core.artifacts import read_aam_checkpoint
+    from graft import AAMProblem
+    from graft.domain import MolecularEndpoint
+    from graft.family_scoring import bond_events
+    from graft.artifacts import read_aam_checkpoint
     manifest = read(run/'manifest.json')
     rows, summary = read(run/'case_metrics.json'), read(run/'summary.json')
     assert len(rows) == summary['paired_complete_cases'] == 140

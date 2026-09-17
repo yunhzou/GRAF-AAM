@@ -1,7 +1,7 @@
 from itertools import permutations
 from benchmark_pattern_collection import baseline_keys
-from rxn_core import AAMProblem
-from rxn_core.pattern_collection import PatternEquivalence
+from graft import AAMProblem
+from graft.pattern_collection import PatternEquivalence
 from test_family_scoring import endpoint
 
 

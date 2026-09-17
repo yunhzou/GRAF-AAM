@@ -1,16 +1,16 @@
 from dataclasses import replace
 import numpy as np
 import pytest
-from rxn_core import AAMProblem, MolecularEndpoint
-from rxn_core.search_graph import (
+from graft import AAMProblem, MolecularEndpoint
+from graft.search_graph import (
     AAMSearchGraph,
     SearchContext,
     SearchState,
     FragmentTransition,
     SearchStop,
 )
-from rxn_core.search_validation import RepresentativeValidationWorkspace
-from rxn_core.family_scoring import validate_representative
+from graft.search_validation import RepresentativeValidationWorkspace
+from graft.family_scoring import validate_representative
 
 
 def example(target_weight=1.0, cuts=(), deferred=()):

@@ -48,9 +48,9 @@ def config_record(args):
 def child(args):
     import random
     import numpy as np
-    from rxn_core import AAMProblem, AAMSearchConfig, MolecularEndpoint, search_aam
-    from rxn_core.artifacts import read_aam_checkpoint
-    from rxn_core.event_patterns import SignedEventIndex, extract_path_events
+    from graft import AAMProblem, AAMSearchConfig, MolecularEndpoint, search_aam
+    from graft.artifacts import read_aam_checkpoint
+    from graft.event_patterns import SignedEventIndex, extract_path_events
     from validate_event_examples import compare_saved_slap
     case = args.case
     folder = args.run / f'case{case}'

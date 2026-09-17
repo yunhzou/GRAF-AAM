@@ -5,9 +5,9 @@ import json
 from pathlib import Path
 import numpy as np
 from compare_elementary_outputs import features, certificate
-from rxn_core import AAMProblem
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.family_scoring import bond_events
+from graft import AAMProblem
+from graft.domain import MolecularEndpoint
+from graft.family_scoring import bond_events
 
 
 def audit(base, overlap=None, comparison=None):

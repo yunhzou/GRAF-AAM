@@ -5,7 +5,7 @@ import argparse
 import json
 from pathlib import Path
 
-from rxn_core import aam_from_record, write_aam_bundle
+from graft import aam_from_record, write_aam_bundle
 
 
 def main():

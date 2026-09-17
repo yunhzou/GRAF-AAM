@@ -16,12 +16,12 @@ import numpy as np
 import z3
 
 from compare_real_ts_mappings import load_slap, save
-from rxn_core import AAMProblem
-from rxn_core.domain import MolecularEndpoint
-from rxn_core.artifacts import read_graph_checkpoint
-from rxn_core.family_query import compile_path
-from rxn_core.family_scoring import bond_events, event_objective, invariant_score
-from rxn_core.search_graph import frozen_value
+from graft import AAMProblem
+from graft.domain import MolecularEndpoint
+from graft.artifacts import read_graph_checkpoint
+from graft.family_query import compile_path
+from graft.family_scoring import bond_events, event_objective, invariant_score
+from graft.search_graph import frozen_value
 
 
 def compile_slap(result, ro, po, problem):

@@ -13,15 +13,15 @@ import time
 
 from rdkit import Chem
 
-from rxn_core.fragment_matching import (
+from graft.fragment_matching import (
     FragmentDetectionConfig,
     FragmentDetectionExecution,
     detect_fragments,
     detect_fragments_parallel,
     prepare_fragment_target,
 )
-from rxn_core.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
-from rxn_core.fragment_matching.serialization import fragment_candidate_to_record
+from graft.fragment_matching.rdkit_adapter import molecule_to_weighted_graph
+from graft.fragment_matching.serialization import fragment_candidate_to_record
 
 
 def _inventory_row(path, source_id, row_index, id_column):

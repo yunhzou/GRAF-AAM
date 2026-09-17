@@ -10,7 +10,7 @@ symmetry blocks/multiplicity that represent many injective concrete mappings.
 The outer ``list[_SymCand]`` stores multiple canonical-distinct local states.
 
 The main function is intentionally private because it operates on internal
-growth objects.  The public molecule-level APIs are in ``rxn_core.alignment``.
+growth objects.  The public molecule-level APIs are in ``graft.alignment``.
 """
 from __future__ import annotations
 

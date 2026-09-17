@@ -1,6 +1,6 @@
 """Build the offline viewer and MP4/GIF movies from recorded events."""
 
-from rxn_core.viewers import style_document
+from graft.viewers import style_document
 import json
 import os
 from pathlib import Path

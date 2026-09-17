@@ -1,9 +1,9 @@
-from rxn_core.retrosynthesis.ranking import (
+from graft.retrosynthesis.ranking import (
     assembly_rank,
     build_ranked_assembly,
     validate_atom_ownership,
 )
-from rxn_core.retrosynthesis.catalog_index import exact_source_copy_capacity
+from graft.retrosynthesis.catalog_index import exact_source_copy_capacity
 
 
 def _item(precursor_id, structure_key, retained, total,
