@@ -1,8 +1,11 @@
 # Author and affiliation provenance
 
 Yunheng Zou supplied the author order and PI designations in the writing session.
-Affiliation numbers 1–9 and the assignments to Zou (1, 6), Bernales (2, 7), and
-Aspuru-Guzik (1–9) follow the institutional reference supplied by him.
+Affiliation numbers 1–9 follow the institutional reference supplied by him.
+On 17 September 2026, he corrected Yunheng Zou to affiliations 2, 6, and 8
+(Computer Science, Vector Institute, and NVIDIA), and Varinia Bernales to
+affiliations 2 and 5 (Computer Science and the Acceleration Consortium).
+Aspuru-Guzik retains affiliations 1–9.
 
 He subsequently confirmed the second author's full name as **Olalla Nieto Faza**
 and her institution as the University of Vigo in Spain. Her name and Department
